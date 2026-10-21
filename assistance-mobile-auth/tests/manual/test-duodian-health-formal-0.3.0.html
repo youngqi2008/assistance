@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>银商助理测试页 · 多点健康正式资源</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px/1.6 system-ui,-apple-system,"PingFang SC",sans-serif;background:#f5f6f8;color:#111827}main{max-width:480px;margin:auto;padding:20px 20px 32px}header{display:flex;min-height:44px;align-items:center;justify-content:space-between}h1{font-size:18px;margin:0;font-weight:600}header button{border:0;background:none;padding:0;width:32px;color:#8a8f98;font-size:25px}.order{text-align:center;padding-top:20px}.order p{font-size:18px;font-weight:600;margin:0}.amount{display:block;margin-top:20px;font-size:44px;line-height:1;font-weight:600;letter-spacing:-1px}.card{margin-top:24px;padding:16px 20px;border-radius:16px;background:white;box-shadow:0 12px 30px #0f172a0f}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #eef1f4}.row:first-child{padding-top:0}.row:last-child{border:0;padding-bottom:0}.row span{color:#8a8f98}.row strong{font-weight:600}.actions{margin-top:20px;display:grid;gap:12px}button{cursor:pointer;font:inherit}button:disabled{cursor:wait;opacity:.65}.action{width:100%;min-height:52px;border:1px solid #19be00;border-radius:10px;background:white;color:#159900;font-size:16px;font-weight:600;padding:10px 8px}.primary{background:#19be00;color:white;box-shadow:0 3px 0 #15990022}#status{margin:12px 0 0;color:#475569;overflow-wrap:anywhere}#status:empty,#result:empty{display:none}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.note{font-size:12px;color:#8a8f98;margin:12px 0}details{margin-top:16px;padding:12px 14px;border:1px solid #e2e8f0;border-radius:10px;background:white}summary{cursor:pointer;color:#475569}label{display:block;margin:12px 0;color:#475569}input:not([type=checkbox]),textarea{font:inherit;padding:10px;width:100%;max-width:100%;border:1px solid #cbd5e1;border-radius:6px;background:white;color:#273449}textarea{height:128px;font-size:12px}input[type=checkbox]{accent-color:#19be00}.explanation{margin-top:24px;color:#64748b;font-size:12px}.explanation h2{font-size:13px;font-weight:600}button:focus-visible,summary:focus-visible{outline:2px solid #0082ff;outline-offset:3px}@media(max-width:340px){main{padding:12px 16px 24px}.order{padding-top:12px}.amount{margin-top:16px}.card{margin-top:20px;padding:14px 16px}.actions{margin-top:16px}}
+.result-card h2{margin:0;font-size:14px;font-weight:600}.result-card pre{margin:8px 0 0}.result-card[hidden]{display:none}
+.sdk-info{margin-top:16px;padding:12px 14px;border-radius:10px;background:white;font-size:12px;color:#64748b;overflow-wrap:anywhere}.sdk-info p{margin:4px 0}.sdk-info code{font-size:11px}
+</style></head>
+<body><main aria-label="订单支付"><header><span aria-hidden="true" style="font-size:32px">×</span><h1>银商助理测试页</h1><button id="settings" type="button" aria-label="设置">⚙</button></header>
+<section class="order" aria-label="订单金额"><p>快捷支付签约订单</p><strong class="amount">¥0.01</strong></section>
+<section class="card" aria-label="订单详情"><div class="row"><span>商品</span><strong>快捷支付签约</strong></div><div class="row"><span>手机号（演示）</span><strong>138****8000</strong></div><div class="row"><span>支付方式</span><strong>银行卡快捷支付</strong></div></section>
+<div class="actions"><button id="open" class="action primary" data-start type="button">测试多点健康三要素授权</button><button id="native" class="action" data-start type="button">测试无关闭X + 系统键盘</button></div>
+<p id="status" role="status"></p>
+<section id="resultCard" class="card result-card rr-block" data-rrweb-sensitive="true" aria-label="认证返回结果" hidden><h2>认证返回结果</h2><pre id="result" class="rr-block" data-rrweb-sensitive="true"></pre></section>
+<section id="noticeCard" class="card result-card rr-block" data-rrweb-sensitive="true" aria-label="认证通知" hidden><h2>认证通知（流程未结束）</h2><pre id="notices" class="rr-block" data-rrweb-sensitive="true"></pre></section>
+<p class="note">0.3.0 多点健康测试 · 订单和手机号为演示值</p>
+<section class="sdk-info" aria-label="SDK 资源诊断"><p>正式 SDK · 预期版本 <span id="sdkVersion">0.3.0</span></p><p><code id="sdkUrl">https://ginkgo.chinaums.com/sign-pay-pro/assist/0.3.0/assistance-mobile-auth/assistance-mobile-auth.duodian-health.0.3.0.umd.cjs</code></p><p id="sdkStatus" role="status">正在加载 SDK</p><p>资源加载状态与运营商初始化、认证结果分别显示。</p></section>
+<details id="advanced"><summary>高级设置</summary>
+<label>业务 AppId <input id="appId" value="8a9481c79c05c8bd019f6a0a6c002457"></label>
+<label>移动认证参数（留空使用既有联调配置）<textarea id="authParams" class="rr-block" data-rrweb-sensitive="true" placeholder="可输入实际下发的完整正式 authParams JSON"></textarea></label>
+<label><input id="closable" type="checkbox" checked>显示关闭入口</label><label><input id="keyboard" type="checkbox" checked>使用屏幕键盘</label>
+<label>追加协议（JSON 数组，name / link）<textarea id="agreements">[]</textarea></label>
+</details>
+<div class="explanation"><h2>测试说明</h2><p>此页加载正式 URL 的 SDK。默认参数由既有联调参数助手生成，使用既有联调配置，不代表已取得正式环境有效认证参数。可在高级设置输入实际下发的完整正式参数。</p><p>实际取号和认证需要运营商网络及有效配置；此页不会模拟认证成功。高级设置支持追加协议；系统键盘入口隐藏弹层关闭按钮。</p></div></main>
+<script>
+(() => {
+  const state = window.__formalSdkLoad = { phase: 'loading' };
+  window.addEventListener('error', event => {
+    if (event.target?.id === 'formalSdk') state.phase = 'failed';
+  }, true);
+  window.addEventListener('load', event => {
+    if (event.target?.id === 'formalSdk') state.phase = 'loaded';
+  }, true);
+})();
+</script>
+<script id="formalSdk" src="https://ginkgo.chinaums.com/sign-pay-pro/assist/0.3.0/assistance-mobile-auth/assistance-mobile-auth.duodian-health.0.3.0.umd.cjs"></script>
+<script src="./assist/0.3.0/test-host-params.js"></script>
+<script>
+(() => {
+  let sdk;
+  let opening = false;
+  const status = document.querySelector('#status');
+  const sdkStatus = document.querySelector('#sdkStatus');
+  const sdkScript = document.querySelector('#formalSdk');
+  const sdkReady = () => typeof window.AssistanceMobileAuth?.createAssistanceMobileAuthSdk === 'function';
+  const updateSdkStatus = () => {
+    sdkStatus.textContent = sdkReady() ? 'SDK 已加载，可开始测试' : window.__formalSdkLoad.phase === 'failed'
+      ? 'SDK 加载失败，请检查上方正式 URL、网络与浏览器策略'
+      : window.__formalSdkLoad.phase === 'loaded' ? 'SDK 资源已返回，但预期接口不可用' : '正在加载 SDK';
+  };
+  sdkScript.addEventListener('load', () => { window.__formalSdkLoad.phase = 'loaded'; updateSdkStatus(); });
+  sdkScript.addEventListener('error', () => { window.__formalSdkLoad.phase = 'failed'; updateSdkStatus(); });
+  updateSdkStatus();
+  const resultNode = document.querySelector('#result');
+  const noticesNode = document.querySelector('#notices');
+  const resultCard = document.querySelector('#resultCard');
+  const noticeCard = document.querySelector('#noticeCard');
+  const displayValue = value => {
+    if (value == null) return '';
+    if (typeof value === 'string') return value;
+    if (Object.prototype.toString.call(value) === '[object Error]') {
+      return JSON.stringify({...value, name: value.name, message: value.message}, null, 2);
+    }
+    return JSON.stringify(value, null, 2);
+  };
+  const showResult = (label, payload) => {
+    status.textContent = label;
+    resultNode.textContent = displayValue(payload);
+    resultCard.hidden = false;
+  };
+  const startButtons = document.querySelectorAll('[data-start]');
+  const openButton = document.querySelector('#open');
+  document.querySelector('#settings').addEventListener('click', () => {
+    document.querySelector('#advanced').open = true;
+    document.querySelector('#advanced').scrollIntoView({block:'nearest'});
+  });
+  const open = async (overrides = {}) => {
+    if (opening) return;
+    opening = true;
+    startButtons.forEach(button => { button.disabled = true; });
+    openButton.setAttribute('aria-busy', 'true');
+    resultNode.textContent = '';
+    noticesNode.textContent = '';
+    resultCard.hidden = true;
+    noticeCard.hidden = true;
+    let terminalCallback = false;
+    status.textContent = '正在打开';
+    try {
+      updateSdkStatus();
+      if (!sdkReady()) { status.textContent = sdkStatus.textContent; return; }
+      sdk?.destroy();
+      let authParams, agreements;
+      const input = document.querySelector('#authParams').value.trim();
+      try {
+        authParams = input ? JSON.parse(input) : undefined;
+        agreements = JSON.parse(document.querySelector('#agreements').value);
+      } catch {
+        status.textContent = '参数格式有误，请检查高级设置中的 JSON';
+        return;
+      }
+      if (!input) {
+        if (typeof window.AssistanceCustomPageTestHost?.createTestHostAuthParams !== 'function') {
+          status.textContent = '联调参数助手未加载，请重试加载或在高级设置填写实际下发的完整认证参数';
+          return;
+        }
+        authParams = window.AssistanceCustomPageTestHost.createTestHostAuthParams();
+      }
+      sdk = AssistanceMobileAuth.createAssistanceMobileAuthSdk({
+        appId: document.querySelector('#appId').value.trim(), authParams, agreements,
+        closable: overrides.closable ?? document.querySelector('#closable').checked,
+        useCustomKeyboard: overrides.useCustomKeyboard ?? document.querySelector('#keyboard').checked,
+        onError: payload => { terminalCallback = true; showResult('验证失败', payload); },
+        onCancel: payload => { terminalCallback = true; showResult('验证已取消', payload); },
+        onErrorNotice: payload => {
+          if (terminalCallback) return;
+          noticesNode.textContent = displayValue(payload);
+          noticeCard.hidden = false;
+          status.textContent = '认证暂未完成，请检查输入或稍后重试';
+        },
+        onBeforeLogin: () => { status.textContent = '正在验证'; },
+        onStateChange: event => { status.textContent = event.type === 'idLast4Complete' ? '输入完整，可以授权' : '请补全身份证后四位'; },
+      });
+      const result = await sdk.open({requestId:'duodian-health-test'});
+      if (!terminalCallback) showResult(result?.status === 'success' ? '验证完成' : '验证已结束', result);
+    } catch (error) {
+      if (!terminalCallback) showResult('验证未完成，请检查配置、网络或稍后重试', error);
+    } finally {
+      opening = false;
+      startButtons.forEach(button => { button.disabled = false; });
+      openButton.removeAttribute('aria-busy');
+    }
+  };
+  openButton.addEventListener('click', () => { void open(); });
+  document.querySelector('#native').addEventListener('click', () => { void open({closable:false,useCustomKeyboard:false}); });
+})();
+</script></body></html>

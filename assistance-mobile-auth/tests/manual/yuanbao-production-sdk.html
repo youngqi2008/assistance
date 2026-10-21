@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>正式 SDK 测试</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f4f6fa; color: #263246; font: 15px/1.6 system-ui, sans-serif; }
+    main { max-width: 760px; margin: 32px auto; padding: 24px; background: white; border-radius: 16px; }
+    h1 { margin: 0 0 16px; font-size: 24px; }
+    p { margin: 12px 0; }
+    code, pre, a { overflow-wrap: anywhere; }
+    a { color: #2856c9; }
+    .actions { display: grid; gap: 12px; margin: 24px 0; }
+    button { padding: 12px 16px; border: 0; border-radius: 8px; background: #2856c9; color: white; font: inherit; cursor: pointer; }
+    button:disabled { opacity: .5; cursor: wait; }
+    pre { min-height: 100px; padding: 16px; border-radius: 8px; background: #f4f6fa; white-space: pre-wrap; }
+    small { color: #637086; }
+    @media (max-width: 600px) { main { margin: 16px; padding: 20px; } }
+  </style>
+</head>
+<body>
+<main>
+  <h1>正式 SDK 测试</h1>
+  <p>分别测试现有 UMD 入口和客户参数 ESM 入口。两个入口使用同一个 appId；SDK 返回的错误会原样显示。</p>
+  <p>SDK：<a id="sdk-url" href="https://ginkgo.chinaums.com/sign-pay-pro/assist/0.2.6/assistance-mobile-auth/assistance-mobile-auth.0.2.6.umd.cjs">https://ginkgo.chinaums.com/sign-pay-pro/assist/0.2.6/assistance-mobile-auth/assistance-mobile-auth.0.2.6.umd.cjs</a></p>
+  <p id="sdk-state" role="status">SDK 加载中…</p>
+  <div class="actions">
+    <button id="test-app" type="button" disabled>测试授权</button>
+    <small>appId：8a9481c79c05c8bd019eed11ac2b1e79</small>
+  </div>
+  <p>当前 appId：<code id="selected-app">未选择</code></p>
+  <p id="request-state" role="status">等待测试</p>
+  <pre id="result" aria-label="调用结果">尚无结果</pre>
+  <h2>客户参数 ESM 入口</h2>
+  <p>ESM：<a id="esm-url" href="https://ginkgo.chinaums.com/sign-pay-pro/assist/0.2.6/assistance-mobile-auth/assistance-mobile-auth.0.2.6.js">https://ginkgo.chinaums.com/sign-pay-pro/assist/0.2.6/assistance-mobile-auth/assistance-mobile-auth.0.2.6.js</a></p>
+  <div class="actions"><button id="test-esm" type="button">按客户参数调用 ESM</button></div>
+  <p id="esm-sdk-state" role="status">ESM 尚未加载</p>
+  <p id="esm-request-state" role="status">等待测试</p>
+  <pre id="esm-result" aria-label="ESM 调用结果">尚无结果</pre>
+  <h2>本页实际执行的 ESM 调用代码</h2>
+  <pre id="esm-code" aria-label="ESM 前端调用代码"></pre>
+  <small>结果仅显示在当前页面，不打印到控制台、不持久化或额外上报。授权返回不代表后续业务处理成功。</small>
+</main>
+<script>
+  const SDK_URL = 'https://ginkgo.chinaums.com/sign-pay-pro/assist/0.2.6/assistance-mobile-auth/assistance-mobile-auth.0.2.6.umd.cjs';
+  const APP_ID = '8a9481c79c05c8bd019eed11ac2b1e79';
+  const button = document.getElementById('test-app');
+  const sdkState = document.getElementById('sdk-state');
+  const requestState = document.getElementById('request-state');
+  const result = document.getElementById('result');
+  let ready = false;
+  let busy = false;
+  let activeSdk = null;
+  let attempt = 0;
+
+  function refreshButtons() {
+    button.disabled = !ready || busy;
+  }
+  function cleanup() {
+    const sdk = activeSdk;
+    activeSdk = null;
+    if (sdk) sdk.destroy();
+  }
+  async function run() {
+    if (!ready || busy) return;
+    busy = true;
+    const current = ++attempt;
+    let callbackError;
+    refreshButtons();
+    document.getElementById('selected-app').textContent = APP_ID;
+    requestState.textContent = '授权处理中…';
+    result.textContent = '等待 SDK 返回…';
+    try {
+      cleanup();
+      activeSdk = window.AssistanceMobileAuth.createAssistanceMobileAuthSdk({
+        appId: APP_ID, display: 'modal', useCustomKeyboard: true,
+        onError(error) { if (attempt === current && busy) callbackError = error; }
+      });
+      const payload = await activeSdk.open({ scene: 'native-number' });
+      if (attempt !== current) return;
+      requestState.textContent = '授权结果已返回';
+      result.textContent = JSON.stringify(payload, null, 2);
+    } catch (error) {
+      if (attempt !== current) return;
+      requestState.textContent = '调用未完成';
+      result.textContent = JSON.stringify({
+        code: callbackError?.code ?? error?.code,
+        message: callbackError?.message ?? error?.message ?? String(error)
+      }, null, 2);
+    } finally {
+      if (attempt === current) {
+        attempt++;
+        try { cleanup(); } finally { busy = false; refreshButtons(); }
+      }
+    }
+  }
+  button.addEventListener('click', () => { void run(); });
+  window.addEventListener('pagehide', () => { attempt++; cleanup(); busy = false; refreshButtons(); });
+
+  const script = document.createElement('script');
+  script.src = SDK_URL;
+  script.async = true;
+  script.onload = () => {
+    ready = typeof window.AssistanceMobileAuth?.createAssistanceMobileAuthSdk === 'function';
+    sdkState.textContent = ready ? 'SDK 已就绪' : 'SDK 加载失败：未找到创建函数';
+    refreshButtons();
+  };
+  script.onerror = () => { sdkState.textContent = 'SDK 加载失败，请检查网络后刷新页面'; };
+  document.head.appendChild(script);
+
+  const ESM_URL = 'https://ginkgo.chinaums.com/sign-pay-pro/assist/0.2.6/assistance-mobile-auth/assistance-mobile-auth.0.2.6.js';
+  const esmButton = document.getElementById('test-esm');
+  const esmSdkState = document.getElementById('esm-sdk-state');
+  const esmRequestState = document.getElementById('esm-request-state');
+  const esmResult = document.getElementById('esm-result');
+  const deviceId = crypto.randomUUID();
+  let esmBusy = false;
+  let esmAttempt = 0;
+
+  // This exact function is displayed below. The callbacks only update this page.
+  async function runEsmCustomerFlow(requestId, onStatus) {
+    const { createAssistanceMobileAuthSdk } = await import(ESM_URL);
+    onStatus('SDK 已加载');
+    const sdk = createAssistanceMobileAuthSdk({
+      appId: APP_ID,
+      styleOption: {
+        submitBtnStyle: { height: '52px', bgColor: '#3B6EE5', fontColor: '#FFFFFF', fontSize: '24px', name: '同意并继续' },
+        submitBtnDisabledStyle: { height: '52px', bgColor: '#9A9A9A', fontColor: '#FFFFFF', fontSize: '24px', name: '同意并继续' },
+        submitBtnLoadingStyle: { height: '52px', bgColor: '#3B6EE5', fontColor: '#FFFFFF', fontSize: '24px', name: '同意并继续' },
+        phoneStyle: { fontColor: '#000000', fontSize: '14px' },
+        localTipStyle: { fontColor: '#959595', fontSize: '10px' },
+        unlocalTipStyle: { fontColor: '#959595', fontSize: '10px' },
+        stateStyle: { fontColor: '#959595', fontSize: '10px', borderRadius: '8px' },
+        authTextStyle: { fontColor: '#959595', fontSize: '10px', borderRadius: '8px' },
+        authExpireStyle: { fontColor: '#959595', fontSize: '10px', borderRadius: '8px' },
+        checkboxStyle: { width: '14px', height: '14px', checkedColor: '#3B6EE5', borderColor: '#959595' }
+      },
+      onReady() {},
+      onSuccess(payload) {},
+      onCancel() { onStatus('取消授权'); },
+      onError(error) { onStatus('授权失败', error); },
+      onClose() { onStatus('弹窗关闭'); },
+      onErrorNotice(notice) { onStatus('授权错误', notice); }
+    });
+    try {
+      const precheck = await sdk.precheck({ scene: 'native-number', requestId, timeoutMs: 3000 });
+      if (!precheck || !precheck.eligible) return { precheck };
+      onStatus('预检通过');
+      return { result: await sdk.open({ scene: 'native-number', requestId }) };
+    } finally {
+      sdk.destroy();
+    }
+  }
+
+  async function runEsmFromButton() {
+    if (esmBusy) return;
+    esmBusy = true;
+    esmButton.disabled = true;
+    const current = ++esmAttempt;
+    const requestId = deviceId + '-' + Date.now().toString(36);
+    esmSdkState.textContent = 'ESM 加载中…';
+    esmRequestState.textContent = '授权处理中…';
+    esmResult.textContent = '等待 SDK 返回…';
+    const onStatus = (state, payload) => {
+      if (current !== esmAttempt) return;
+      if (state === 'SDK 已加载') esmSdkState.textContent = state;
+      else esmRequestState.textContent = state;
+      if (payload !== undefined) esmResult.textContent = JSON.stringify(payload, null, 2);
+    };
+    try {
+      const outcome = await runEsmCustomerFlow(requestId, onStatus);
+      if (current !== esmAttempt) return;
+      esmRequestState.textContent = 'precheck' in outcome ? '预检未通过' : '授权结果已返回';
+      esmResult.textContent = JSON.stringify(outcome, null, 2);
+    } catch (error) {
+      if (current !== esmAttempt) return;
+      if (esmSdkState.textContent === 'ESM 加载中…') esmSdkState.textContent = 'ESM 加载失败';
+      esmRequestState.textContent = '调用未完成';
+      esmResult.textContent = JSON.stringify({ code: error?.code, message: error?.message ?? String(error) }, null, 2);
+    } finally {
+      if (current === esmAttempt) { esmBusy = false; esmButton.disabled = false; }
+    }
+  }
+  esmButton.addEventListener('click', () => { void runEsmFromButton(); });
+  document.getElementById('esm-code').textContent =
+    `const ESM_URL = ${JSON.stringify(ESM_URL)};\nconst APP_ID = ${JSON.stringify(APP_ID)};\nconst deviceId = crypto.randomUUID();\n\n${runEsmCustomerFlow.toString()}\n\n${runEsmFromButton.toString()}\n\nesmButton.addEventListener('click', () => { void runEsmFromButton(); });`;
+</script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+.haike-inline-login {
+  width: 100%;
+  min-width: 0;
+  min-height: 100dvh;
+  overflow: visible;
+  background: transparent;
+  color: #281d19;
+  container-type: inline-size;
+}
+
+.haike-inline-measure {
+  width: 100%;
+  min-width: 0;
+  min-height: 100dvh;
+}
+
+.haike-inline-card {
+  width: 100%;
+  min-width: 0;
+  min-height: 100dvh;
+  overflow: hidden;
+  padding: clamp(1.6rem, 10cqi, 2.7rem) 0 clamp(1.25rem, 8.5cqi, 2.5rem);
+  border-radius: clamp(1rem, 5.7cqi, 1.65rem);
+  background: #ffffff;
+  box-shadow: none;
+}
+
+.haike-inline-phone {
+  display: flex;
+  width: 100%;
+  min-height: clamp(0.875rem, 4.2cqi, 1.125rem);
+  align-items: center;
+  justify-content: center;
+  color: #ff633f;
+  font-size: clamp(0.75rem, 4.2cqi, 1rem);
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+}
+
+.haike-inline-phone #ydrzPhoneControl {
+  display: inline-flex !important;
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  align-items: center;
+  justify-content: center;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+
+.haike-inline-phone #ydrzPhoneControl,
+.haike-inline-phone #ydrzPhoneControl * {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #ff633f !important;
+  font-family: inherit !important;
+  font-size: clamp(0.75rem, 4.2cqi, 1rem) !important;
+  font-weight: 400 !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+
+.haike-inline-status {
+  width: 90.8cqi;
+  margin: 0 auto clamp(0.65rem, 2.8cqi, 0.9rem);
+  color: #e94b2c;
+  text-align: center;
+  font-size: clamp(0.76rem, 3.2cqi, 0.9rem);
+  line-height: 1.4;
+}
+
+.haike-inline-feedback {
+  width: 90.8cqi;
+  margin: 0 auto clamp(0.8rem, 3.5cqi, 1.1rem);
+}
+
+.haike-inline-sdk-host {
+  min-width: 0;
+}
+
+.haike-inline-sdk-host[data-ready='false'] {
+  height: 0;
+  overflow: hidden;
+}
+
+.haike-inline-folded-slots {
+  display: none !important;
+  width: 100%;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden !important;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.haike-inline-id-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(0.35rem, 2.2cqi, 0.7rem);
+  width: 76.5cqi;
+  margin: clamp(0.45rem, 2.8cqi, 0.8rem) auto 0;
+}
+
+.haike-inline-native-input {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  cursor: text;
+}
+
+.haike-inline-native-input:disabled {
+  cursor: wait;
+}
+
+.haike-inline-id-cell {
+  display: grid;
+  min-width: 0;
+  aspect-ratio: 12 / 13;
+  place-items: center;
+  border: 0.075rem solid #ff8067;
+  border-radius: clamp(0.45rem, 2.1cqi, 0.7rem);
+  background: #fff9f7;
+  color: #16120f;
+  font-size: clamp(1.4rem, 8.2cqi, 2.2rem);
+  font-weight: 500;
+  line-height: 1;
+  transition: border-color 120ms ease, box-shadow 120ms ease, background 120ms ease;
+}
+
+.haike-inline-id-cell[data-state='focus'] {
+  border-color: #ff6647;
+  background: #ffffff;
+  box-shadow: 0 0 0 0.12rem rgb(255 102 71 / 12%);
+}
+
+.haike-inline-id-cell[data-state='filled'] {
+  border-color: #ff8067;
+  background: #ffffff;
+}
+
+.haike-inline-submit {
+  position: relative;
+  isolation: isolate;
+  width: 90.8cqi;
+  min-height: 0;
+  aspect-ratio: 21 / 4;
+  margin: clamp(0.75rem, 4.6cqi, 1.4rem) auto 0;
+  overflow: visible;
+  border-radius: 999rem;
+  background: linear-gradient(180deg, #ffb13b 0%, #ff6a18 22%, #ff3524 68%, #ffa611 100%);
+  box-shadow: 0 0.35rem 0.75rem rgb(240 75 25 / 24%), inset 0 0.18rem 0.32rem rgb(255 255 255 / 62%);
+}
+
+.haike-inline-submit[data-authorizing='true'] {
+  filter: saturate(0.72);
+}
+
+.haike-inline-submit-label {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  font-size: clamp(1.12rem, 5.8cqi, 1.6rem);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-shadow: 0 0.1rem 0.2rem rgb(165 44 15 / 25%);
+  pointer-events: none;
+}
+
+.haike-inline-submit > #ydrzSubmitControl {
+  position: absolute !important;
+  z-index: 2 !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  background: transparent !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.haike-inline-submit > #ydrzSubmitControl > * {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+.haike-inline-submit #ydrzSubmitControl :is(
+  button,
+  input,
+  a,
+  [role='button'],
+  .ydrz-submitbtn-wrap
+) {
+  position: absolute !important;
+  z-index: 2 !important;
+  inset: 0 !important;
+  display: flex !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  background: transparent !important;
+  color: #ffffff !important;
+  font-size: clamp(1.12rem, 5.8cqi, 1.6rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.12em !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.haike-inline-submit #ydrzSubmitControl,
+.haike-inline-submit #ydrzSubmitControl *,
+.haike-inline-submit #ydrzSubmitControl .ydrz-submitbtn-wrap,
+.haike-inline-submit #ydrzSubmitControl .ydrz-submitbtn-text,
+.haike-inline-submit #ydrzSubmitControl :is(button, input, a, [role='button']) {
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: #ffffff !important;
+  font-family: inherit !important;
+  font-size: clamp(1.12rem, 5.8cqi, 1.6rem) !important;
+  font-weight: 800 !important;
+  font-synthesis: inherit !important;
+  letter-spacing: 0.12em !important;
+  line-height: 1 !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+.haike-inline-submit[data-disabled='true'] > #ydrzSubmitControl,
+.haike-inline-submit[data-disabled='true'] > #ydrzSubmitControl * {
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+}
+
+.haike-inline-hand {
+  position: absolute;
+  z-index: 4;
+  right: clamp(-0.2rem, -0.7cqi, 0rem);
+  bottom: clamp(-1.35rem, -4.2cqi, -0.8rem);
+  width: clamp(3.3rem, 17cqi, 4.8rem);
+  max-width: none;
+  opacity: 0;
+  transform: translateY(0.35rem) rotate(-7deg);
+  transition: opacity 120ms ease, transform 120ms ease;
+  pointer-events: none;
+  user-select: none;
+}
+
+.haike-inline-hand[data-visible='true'] {
+  opacity: 1;
+  transform: translateY(0) rotate(-7deg);
+}
+
+.haike-inline-agreements {
+  position: relative;
+  z-index: 1;
+  width: 90.8cqi;
+  margin: clamp(0.65rem, 3.5cqi, 1rem) auto 0;
+}

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>H5 转跳 - 授权结果</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <!-- 回跳落地页：用户在我方托管授权页完成验证后，浏览器带 ?authToken=... 回跳到本页 -->
+    <main class="page" aria-label="H5 转跳授权结果">
+      <!-- 页面头部 -->
+      <header class="page-header">
+        <h1 class="page-title">H5 转跳 - 授权结果</h1>
+      </header>
+
+      <!-- 状态行：展示查询状态（查询中 / 成功 / 缺少 token / 失败） -->
+      <section id="status-card" class="card status-card" aria-live="polite">
+        <p id="status-title" class="status-title"></p>
+        <p id="status-description" class="status-description"></p>
+      </section>
+
+      <!-- 结果展示区：脱敏身份信息 + 原始返回值 -->
+      <section id="result-section" class="card result-section" aria-label="授权结果" hidden>
+        <!-- 脱敏身份信息：由 /result 接口返回 -->
+        <h2 class="block-title">身份信息（脱敏）</h2>
+        <dl class="identity-list">
+          <div class="identity-row"><dt>姓名</dt><dd id="identity-name"></dd></div>
+          <div class="identity-row"><dt>手机号</dt><dd id="identity-mobile"></dd></div>
+          <div class="identity-row"><dt>身份证号</dt><dd id="identity-idcard"></dd></div>
+        </dl>
+        <!-- 原始返回值（/result payload），便于对照 README 字段表 -->
+        <h2 class="block-title">原始返回值</h2>
+        <pre id="result-payload" class="payload-pre"></pre>
+      </section>
+    </main>
+
+    <!-- 回跳页 DOM 胶水：接入逻辑都在 src/h5Redirect.js -->
+    <script type="module" src="/src/callback.js"></script>
+  </body>
+</html>

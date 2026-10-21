@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>助填认证 JSSDK 演示</title>
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <main class="page" aria-label="助填认证 JSSDK 演示">
+      <!-- 页面头部 -->
+      <header class="page-header">
+        <h1 class="page-title">助填认证 JSSDK 演示</h1>
+      </header>
+
+      <!-- 简介：一句话说明用途 + 两种方式的中性区分 -->
+      <p class="intro">两种接入方式任选其一：弹窗——无需离开当前页面即可完成；转跳——跳转到我方托管授权页，完成后自动返回。</p>
+
+      <!-- 方式一　JSSDK 弹窗方式：点击后发起完整接入流程（逻辑见 src/assistanceAuth.js） -->
+      <button id="start-button" type="button" class="primary-button">开始身份验证（JSSDK 弹窗）</button>
+
+      <!-- 方式二　H5 转跳方式：点击后整页跳转到我方托管授权页（逻辑见 src/h5Redirect.js） -->
+      <button id="redirect-button" type="button" class="primary-button">开始身份验证（H5 转跳）</button>
+
+      <!-- 状态行：展示当前流程状态（等待 / 成功 / 取消 / 失败） -->
+      <section id="status-card" class="card status-card" aria-live="polite" hidden>
+        <p id="status-title" class="status-title"></p>
+        <p id="status-description" class="status-description"></p>
+      </section>
+
+      <!-- 结果展示区：脱敏身份信息 + 原始返回值 -->
+      <section id="result-section" class="card result-section" aria-label="验证结果" hidden>
+        <!-- 脱敏身份信息：由 /result 接口返回 -->
+        <div id="identity-block" class="result-block" hidden>
+          <h2 class="block-title">身份信息（脱敏）</h2>
+          <dl class="identity-list">
+            <div class="identity-row"><dt>姓名</dt><dd id="identity-name"></dd></div>
+            <div class="identity-row"><dt>手机号</dt><dd id="identity-mobile"></dd></div>
+            <div class="identity-row"><dt>身份证号</dt><dd id="identity-idcard"></dd></div>
+          </dl>
+          <!-- 原始返回值（验证结果 payload），便于对照 README 字段表 -->
+          <h2 class="block-title">原始返回值</h2>
+          <pre id="result-payload" class="payload-pre"></pre>
+        </div>
+      </section>
+
+      <!-- 实时提示：onErrorNotice 非终态回调（窗口保持打开，可在窗口内重试） -->
+      <section id="notice-section" class="card notice-section" aria-label="实时提示" hidden>
+        <h2 class="block-title block-title--notice">实时提示</h2>
+        <ul id="notice-list" class="notice-list"></ul>
+      </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

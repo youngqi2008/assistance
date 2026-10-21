@@ -1,0 +1,4 @@
+# 本地联调：关闭中冠调用方鉴权，仍须配置银商三项密钥后才能真正调通。
+zhongguan:
+  auth-enabled: false
+  require-check-before-query: true

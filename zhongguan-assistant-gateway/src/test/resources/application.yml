@@ -1,0 +1,15 @@
+chinaums:
+  app-id: test-ums-app
+  app-key: test-ums-key
+  private-key: 11
+  platform-public-key: 0414bb7e9c3914bb65b85079b1dc6e1ca2a0ee04dd9bb55b2f8d31704a6dec0cca695739e128f9c931330e1c0f493be4d56244236434c9d344c4716ba64a4470ba
+  check-url: http://127.0.0.1/check
+  query-url: http://127.0.0.1/query
+
+zhongguan:
+  auth-enabled: true
+  require-check-before-query: true
+  clients:
+    - app-id: zg-demo
+      app-key: demo-secret
+      user-no: "08"

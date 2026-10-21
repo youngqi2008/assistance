@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>银商助理测试页 · 元保</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font:14px/1.6 system-ui,-apple-system,"PingFang SC",sans-serif;background:#f5f6f8;color:#111827}main{max-width:480px;margin:auto;padding:20px 20px 32px}header{display:flex;min-height:44px;align-items:center;justify-content:space-between}h1{font-size:18px;margin:0;font-weight:600}header button{border:0;background:none;padding:0;width:32px;color:#8a8f98;font-size:25px}.order{text-align:center;padding-top:20px}.order p{font-size:18px;font-weight:600;margin:0}.amount{display:block;margin-top:20px;font-size:44px;line-height:1;font-weight:600;letter-spacing:-1px}.card{margin-top:24px;padding:16px 20px;border-radius:16px;background:white;box-shadow:0 12px 30px #0f172a0f}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #eef1f4}.row:first-child{padding-top:0}.row:last-child{border:0;padding-bottom:0}.row span{color:#8a8f98}.row strong{font-weight:600}.actions{margin-top:20px;display:grid;gap:12px}button{cursor:pointer;font:inherit}button:disabled{cursor:wait;opacity:.65}.action{width:100%;min-height:52px;border:1px solid #f75110;border-radius:10px;background:white;color:#f75110;font-size:16px;font-weight:600;padding:10px 8px}.primary{background:#f75110;color:white;box-shadow:0 3px 0 #bd3b1733}.secondary{border-color:#059669;color:#047857}#status{margin:12px 0 0;color:#475569;overflow-wrap:anywhere}#status:empty,#result:empty{display:none}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}.note{font-size:12px;color:#8a8f98;margin:12px 0}details{margin-top:16px;padding:12px 14px;border:1px solid #e2e8f0;border-radius:10px;background:white}summary{cursor:pointer;color:#475569}label{display:block;margin:12px 0;color:#475569}input:not([type=checkbox]),textarea,select{font:inherit;padding:10px;width:100%;max-width:100%;border:1px solid #cbd5e1;border-radius:6px;background:white;color:#273449}textarea{height:128px;font-size:12px}input[type=checkbox]{accent-color:#f75110}.explanation{margin-top:24px;color:#64748b;font-size:12px}.explanation h2{font-size:13px;font-weight:600}button:focus-visible,summary:focus-visible{outline:2px solid #2563eb;outline-offset:3px}@media(max-width:340px){main{padding:12px 16px 24px}.order{padding-top:12px}.amount{margin-top:16px}.card{margin-top:20px;padding:14px 16px}.actions{margin-top:16px}}
+</style></head>
+<body><main aria-label="订单支付"><header><span aria-hidden="true" style="font-size:32px">×</span><h1>银商助理测试页</h1><button id="settings" type="button" aria-label="设置">⚙</button></header>
+<section class="order" aria-label="订单金额"><p>快捷支付签约订单</p><strong class="amount">¥0.01</strong></section>
+<section class="card" aria-label="订单详情"><div class="row"><span>商品</span><strong>快捷支付签约</strong></div><div class="row"><span>手机号（演示）</span><strong>138****8000</strong></div><div class="row"><span>支付方式</span><strong>银行卡快捷支付</strong></div></section>
+<div class="actions"><button id="open" class="action primary" data-start type="button">测试元保三要素皮肤</button><button id="native" class="action secondary" data-start type="button">测试无关闭X + 系统键盘</button></div>
+<p id="status" role="status"></p><pre id="result"></pre><p class="note">0.3.0 元保测试 · 订单和手机号为演示值</p>
+<details id="advanced"><summary>高级设置</summary>
+<label>业务 AppId <input id="appId" value="10037e6f9d903f86019ed8cfb6320365"></label>
+<label>移动认证参数（留空自动生成）<textarea id="authParams" placeholder="通常无需填写；可输入完整 authParams JSON 覆盖"></textarea></label>
+<label>模板加载方式 <select id="mode"><option value="html">HTML 内容</option><option value="url">HTML URL</option></select></label>
+<label><input id="closable" type="checkbox" checked>显示关闭入口</label><label><input id="keyboard" type="checkbox" checked>使用屏幕键盘</label>
+<label>追加协议（JSON 数组，name / link）<textarea id="agreements">[]</textarea></label>
+</details>
+<div class="explanation"><h2>测试说明</h2><p>直接点击元保按钮即可打开授权页。每次使用已有测试配置重新生成移动认证参数，实际取号和认证仍需运营商网络及有效配置。</p><p>结果由官方认证服务返回，此页不会模拟认证成功。系统键盘按钮使用原生输入且隐藏弹层关闭入口；其他选项可在高级设置中调整。</p></div></main>
+<script src="./assist/0.3.0/assistance-mobile-auth/assistance-mobile-auth.0.3.0.umd.cjs"></script>
+<script src="./assist/0.3.0/test-host-params.js"></script>
+<script>
+(() => {
+  let sdk;
+  let opening = false;
+  const status = document.querySelector('#status');
+  const openButton = document.querySelector('#open');
+  const startButtons = document.querySelectorAll('[data-start]');
+  document.querySelector('#settings').addEventListener('click', () => {
+    document.querySelector('#advanced').open = true;
+    document.querySelector('#advanced').scrollIntoView({block:'nearest'});
+  });
+  const open = async (overrides = {}) => {
+    if (opening) return;
+    opening = true;
+    startButtons.forEach(button => { button.disabled = true; });
+    openButton.setAttribute('aria-busy', 'true');
+    try {
+      if (sdk) sdk.close();
+      document.querySelector('#result').textContent = '';
+      status.textContent = '正在打开';
+      const input = document.querySelector('#authParams').value.trim();
+      const authParams = input ? JSON.parse(input) : AssistanceCustomPageTestHost.createTestHostAuthParams();
+      const agreements = JSON.parse(document.querySelector('#agreements').value);
+      const closable = overrides.closable ?? document.querySelector('#closable').checked;
+      const useCustomKeyboard = overrides.useCustomKeyboard ?? document.querySelector('#keyboard').checked;
+      const baseUrl = new URL('./assist/0.3.0/examples/yuanbao/', location.href).href;
+      const load = async name => { const response = await fetch(new URL(name, baseUrl)); if (!response.ok) throw new Error('资源加载失败：' + name); return response.text(); };
+      const [html, css, js, style] = await Promise.all(['index.html','style.css','page.js','style-option.json'].map(load));
+      const exampleJs = 'window.YuanbaoExampleConfig=' + JSON.stringify({closable,useCustomKeyboard,agreements}) + ';\n' + js;
+      sdk = AssistanceMobileAuth.createAssistanceMobileAuthSdk({ appId: document.querySelector('#appId').value,
+        authParams, closable, useCustomKeyboard, customPage: document.querySelector('#mode').value === 'url' ? { url: new URL('index.html', baseUrl).href, css, js: exampleJs, baseUrl } : { html, css, js: exampleJs, baseUrl },
+        styleOption: JSON.parse(style), agreements, onErrorNotice: notice => { status.textContent = notice.message; },
+        onBeforeLogin: () => { status.textContent = '输入完整，可以授权'; },
+        onStateChange: event => { status.textContent = event.type === 'idLast4Complete' ? '输入完整，可以授权' : '请补全身份证后四位'; },
+      });
+      status.textContent = '正在打开';
+      const result = await sdk.open({ requestId: 'custom-page-example' });
+      status.textContent = result.status === 'success' ? '验证完成' : '验证已结束';
+      const { status: outcome, idLast4, requestId, message } = result;
+      document.querySelector('#result').textContent = JSON.stringify({status:outcome,idLast4,requestId,message}, null, 2);
+    } catch (error) { status.textContent = error.message || String(error); }
+    finally {
+      opening = false;
+      startButtons.forEach(button => { button.disabled = false; });
+      openButton.removeAttribute('aria-busy');
+    }
+  };
+  openButton.addEventListener('click', () => { void open(); });
+  document.querySelector('#native').addEventListener('click', () => { void open({closable:false,useCustomKeyboard:false}); });
+})();
+</script></body></html>

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>多点健康 · 模拟官方SDK</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#28313c;font:14px/1.6 system-ui,-apple-system,"PingFang SC",sans-serif}main{max-width:480px;min-height:1200px;margin:auto;padding:24px 20px}h1{font-size:20px;margin:0 0 14px}.card{margin:24px 0;padding:20px;border-radius:16px;background:white}.row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eef0f2}.row:last-child{border:0}.row span{color:#89909a}button{width:100%;min-height:52px;border:0;border-radius:10px;background:#19be00;color:#fff;font:600 16px system-ui;cursor:pointer}#status{color:#64748b}.note{color:#89909a;font-size:12px}
+</style></head><body><main>
+<h1>多点健康接入测试</h1><p class="note">模拟官方SDK · 参数无效，仅供本地模拟交互；不代表真实手机号认证。</p>
+<section class="card"><div class="row"><span>场景</span><strong>移动认证授权</strong></div><div class="row"><span>运行方式</span><strong id="format"></strong></div><div class="row"><span>状态</span><strong>模拟测试</strong></div></section>
+<button id="open" type="button">测试多点健康</button><p id="status" role="status">正在准备测试入口</p>
+</main><script type="module">
+const query = new URLSearchParams(location.search);
+const format = query.get('format') === 'umd' ? 'umd' : 'esm';
+document.querySelector('#format').textContent = format.toUpperCase();
+const resource = './assist/0.3.0/assistance-mobile-auth/assistance-mobile-auth.duodian-health.0.3.0.';
+let module;
+if (format === 'esm') module = await import(resource + 'js');
+else {
+  await new Promise((resolve, reject) => { const script = document.createElement('script'); script.src = resource + 'umd.cjs'; script.onload = resolve; script.onerror = reject; document.head.append(script); });
+  module = window.AssistanceMobileAuth;
+}
+const status = document.querySelector('#status');
+const mockOnlyParams = { version:'3.0',appId:'MOCK_ONLY_SIGNED_APP_ID',sign:'MOCK_ONLY_INVALID_SIGN',traceId:'MOCK_ONLY_TRACE',timestamp:'MOCK_ONLY_TIMESTAMP',authType:'0',scope:'3ElementsAuthAssistFill' };
+window.__duodianFactory = module.createAssistanceMobileAuthSdk;
+window.__duodianOpen = (options = {}) => {
+  window.__duodianSdk?.destroy();
+  const state = { result:null,error:null,notices:[],events:[],beforeLogin:0 };
+  const sdk = module.createAssistanceMobileAuthSdk({ authParams:mockOnlyParams,...options,
+    onErrorNotice:notice => { state.notices.push(notice); status.textContent = '模拟控件提示，请修正或重试'; },
+    onBeforeLogin:() => { state.beforeLogin++; },onStateChange:event => { state.events.push(event); },
+  });
+  Object.assign(window,{__duodianSdk:sdk,__duodianState:state});
+  status.textContent = '模拟初始化中（宿主仍可操作）';
+  window.__duodianPromise = sdk.open({requestId:'MOCK_ONLY_BROWSER_REQUEST'}).then(result => {
+    state.result = result; status.textContent = result.status === 'success' ? '模拟结果返回' : '模拟流程结束';
+  }, error => { state.error = error; status.textContent = '模拟初始化未完成，请重新打开'; });
+};
+window.__duodianHostClicks = 0;
+document.querySelector('#open').addEventListener('click',() => { window.__duodianHostClicks++; if (!document.querySelector('iframe[data-assistance-auth-frame]')) window.__duodianOpen(); });
+status.textContent = '测试入口已准备 · 模拟官方SDK';
+</script></body></html>

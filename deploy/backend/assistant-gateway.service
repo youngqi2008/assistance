@@ -1,0 +1,16 @@
+[Unit]
+Description=Assistant gateway (Java)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=__APP_HOME__
+EnvironmentFile=-__APP_HOME__/gateway.env
+ExecStart=/usr/bin/java -jar __APP_HOME__/__JAR_NAME__
+SuccessExitStatus=143
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65535
+
+[Install]
+WantedBy=multi-user.target

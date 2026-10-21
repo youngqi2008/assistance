@@ -1,0 +1,8 @@
+**/*.env
+nginx/conf/assistant-https.conf
+nginx/ssl/*.key
+nginx/ssl/*.crt
+nginx/ssl/*.pem
+!nginx/ssl/.gitkeep
+logs/
+*.pid

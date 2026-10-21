@@ -1,0 +1,708 @@
+/* V23 is sized from the live iframe viewport, not from a fixed pixel canvas.
+ * The card owns its own responsive container while the keyboard is a separate,
+ * edge-to-edge viewport surface. */
+.chinaums-sheet-v23 {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+  color: #3e424b;
+}
+
+.chinaums-v23-stage-host {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  container-type: size;
+}
+
+.chinaums-v23-stage {
+  /* Normalized from the 558×1004 V23 Figma frame. Keeping both axes in the
+   * clamp preserves the composition on narrower visual viewports. */
+  --v23-dialog-width: min(85.125448cqw, 47.310757cqh);
+  --v23-dialog-min-height: min(103.405018cqw, 57.47012cqh);
+  --v23-dialog-bottom-space: min(4.480287cqw, 2.49004cqh);
+  --v23-keyboard-height: min(63.082437cqw, 35.059761cqh);
+  --v23-card-keyboard-gap: min(8.243728cqw, 4.581673cqh);
+  --v23-dialog-max-height: calc(100cqh - var(--v23-keyboard-height) - var(--v23-card-keyboard-gap) - 1rem - env(safe-area-inset-top, 0rem));
+  --v23-card-radius: min(3.225806cqw, 1.792829cqh);
+  --v23-shadow-y: min(1.875cqw, 0.991736cqh);
+  --v23-shadow-blur: min(5.625cqw, 2.975207cqh);
+
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.chinaums-v23-dialog-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.chinaums-v23-dialog {
+  position: absolute;
+  bottom: calc(var(--v23-keyboard-height) + var(--v23-card-keyboard-gap));
+  left: 50%;
+  box-sizing: border-box;
+  width: var(--v23-dialog-width);
+  min-height: min(var(--v23-dialog-min-height), var(--v23-dialog-max-height));
+  max-height: var(--v23-dialog-max-height);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding-bottom: var(--v23-dialog-bottom-space);
+  border-radius: var(--v23-card-radius);
+  background: #fff;
+  box-shadow: 0 var(--v23-shadow-y) var(--v23-shadow-blur) rgb(0 0 0 / 12%);
+  container-type: inline-size;
+  transform: translateX(-50%);
+}
+
+.chinaums-v23-close {
+  position: sticky;
+  z-index: 6;
+  float: right;
+  top: 0.689655cqi;
+  right: 1.37931cqi;
+  width: 11.034483cqi;
+  height: 11.034483cqi;
+  border: 0;
+  background: transparent;
+  color: #9b9b9b;
+  font-size: 7.586207cqi;
+  line-height: 11.034483cqi;
+  margin-bottom: -11.034483cqi;
+}
+
+.chinaums-v23-header {
+  display: block;
+  width: 100cqi;
+  height: 15.625cqi;
+  object-fit: contain;
+}
+
+.chinaums-v23-phone {
+  display: flex;
+  min-height: 4.137931cqi;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.517241cqi;
+  color: #3e424b;
+  font-size: 4.137931cqi;
+  font-weight: 400;
+  line-height: 4.137931cqi;
+}
+
+.chinaums-v23-phone #ydrzPhoneControl {
+  display: inline-flex !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  align-items: baseline !important;
+  background: transparent !important;
+}
+
+.chinaums-v23-phone #ydrzPhoneControl,
+.chinaums-v23-phone #ydrzPhoneControl * {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  color: #3e424b !important;
+  font-family: inherit !important;
+  font-size: 4.137931cqi !important;
+  font-weight: 400 !important;
+  line-height: 4.137931cqi !important;
+  text-align: center !important;
+}
+
+.chinaums-v23-middle {
+  display: block;
+  width: 100cqi;
+  height: auto;
+  margin: 4.482759cqi 0 0;
+}
+
+.chinaums-v23-id-grid {
+  position: relative;
+  display: grid;
+  width: 72cqi;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 2.758621cqi;
+  margin: 3cqi auto 0;
+}
+
+.chinaums-v23-id-box {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  border: 0.344828cqi solid #f0d8c4;
+  border-radius: 2.413793cqi;
+  aspect-ratio: 1;
+  background: #fef9f5;
+  color: #ff3400;
+  font-size: 10.344828cqi;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-id-box {
+  color: #333333;
+}
+
+.chinaums-v23-id-caret {
+  display: block;
+  width: 0.344828cqi;
+  height: 10.344828cqi;
+  background: #ff4a19;
+  animation: chinaums-v23-id-caret-blink 1s step-end infinite;
+}
+
+.chinaums-v23-id-box[data-active='true'] {
+  border-color: #ffbb6d;
+  box-shadow: 0 0 0 0.344828cqi #ffbb6d inset;
+}
+
+.chinaums-v23-dialog[data-error='true'] .chinaums-v23-id-box {
+  border-color: #ff6d6d;
+  background: #fff5f5;
+  box-shadow: 0 0 0 0.344828cqi #ff6d6d inset;
+}
+
+.chinaums-v23-inline-error {
+  display: flex;
+  width: 79.310345cqi;
+  min-height: 5.862069cqi;
+  align-items: center;
+  gap: 1.37931cqi;
+  margin: 1.034483cqi auto 0;
+  color: #ff3400;
+  font-size: 3.448276cqi;
+  line-height: 4.827586cqi;
+}
+
+.chinaums-v23-inline-error img {
+  width: 4.827586cqi;
+  height: 4.827586cqi;
+}
+
+.chinaums-v23-submit-wrap {
+  position: relative;
+  width: 84.482759cqi;
+  margin: 4.482759cqi auto 0;
+}
+
+.chinaums-v23-submit {
+  position: relative;
+  width: 100%;
+  height: 15.862069cqi;
+  overflow: hidden;
+  border-radius: 7.931034cqi;
+  background: linear-gradient(90deg, #ff8b0b, #ff451d);
+  color: #fff;
+  font-size: 5.517241cqi;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.chinaums-v23-submit > #ydrzSubmitControl {
+  position: absolute !important;
+  z-index: 1;
+  inset: 0 !important;
+  display: block !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  pointer-events: auto !important;
+}
+
+.chinaums-v23-submit > #ydrzSubmitControl > * {
+  position: absolute !important;
+  inset: 0 !important;
+  display: flex !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+.chinaums-v23-submit #ydrzSubmitControl :is(
+  button,
+  a,
+  input[type='button'],
+  input[type='submit'],
+  [role='button'],
+  .ydrz-submitbtn-wrap
+) {
+  position: absolute !important;
+  z-index: 2;
+  inset: 0 !important;
+  display: flex !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+.chinaums-v23-submit #ydrzSubmitControl,
+.chinaums-v23-submit #ydrzSubmitControl * {
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  font-family: inherit !important;
+  font-size: inherit !important;
+  font-weight: inherit !important;
+  font-synthesis: inherit !important;
+  line-height: inherit !important;
+  text-align: center !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+.chinaums-v23-submit #ydrzSubmitControl input {
+  line-height: 15.862069cqi !important;
+}
+
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-submit #ydrzSubmitControl,
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-submit #ydrzSubmitControl * {
+  font-weight: 700 !important;
+}
+
+.chinaums-v23-submit #ydrzSubmitControl [aria-disabled='true'] {
+  cursor: not-allowed !important;
+}
+
+.chinaums-v23-hand {
+  position: absolute;
+  z-index: 2;
+  right: -3.103448cqi;
+  bottom: -8.62069cqi;
+  width: 21.724138cqi;
+  height: 20.172414cqi;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(2.068966cqi);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+
+.chinaums-v23-hand[data-visible='true'] {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-hand[data-visible='true'] {
+  animation: chinaums-v23-hand-tap 1.2s ease-in-out infinite;
+}
+
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-hand[data-visible='false'] {
+  animation: none;
+}
+
+.chinaums-v23-agreements {
+  width: 90.344828cqi;
+  margin: 4.2cqi auto 0;
+  color: #848ab4;
+  font-size: 3.448276cqi;
+  font-weight: 400;
+  line-height: 5.263158cqi;
+  text-align: left;
+}
+
+.chinaums-v23-agreements #ydrzAgreementControl,
+.chinaums-v23-agreements #ydrzTipsControl {
+  display: inline !important;
+  width: auto !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #848ab4 !important;
+  font-family: inherit !important;
+  font-size: 3.448276cqi !important;
+  font-weight: 400 !important;
+  line-height: 5.263158cqi !important;
+  text-align: left !important;
+}
+
+.chinaums-v23-agreements #ydrzAgreementControl p,
+.chinaums-v23-agreements #ydrzTipsControl p {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.chinaums-v23-agreements #ydrzAgreementControl *,
+.chinaums-v23-agreements #ydrzTipsControl * {
+  background: transparent !important;
+  color: #848ab4 !important;
+  font-family: inherit !important;
+  font-size: 3.448276cqi !important;
+  font-weight: 400 !important;
+  line-height: 5.263158cqi !important;
+  text-align: left !important;
+}
+
+.chinaums-v23-agreements #ydrzAgreementControl a,
+.chinaums-v23-agreements #ydrzAgreementControl a *,
+.chinaums-v23-agreements #ydrzTipsControl a,
+.chinaums-v23-agreements #ydrzTipsControl a * {
+  color: #848ab4 !important;
+  font-weight: 600 !important;
+}
+
+.chinaums-v23-custom-agreement {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.37931cqi;
+  margin-top: 1.37931cqi;
+}
+
+.chinaums-v23-custom-agreement button {
+  display: inline;
+  color: #848ab4 !important;
+  font: inherit;
+  font-weight: 600;
+  line-height: inherit;
+  text-align: left;
+}
+
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-agreements,
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-agreements #ydrzAgreementControl,
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-agreements #ydrzTipsControl,
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-agreements #ydrzAgreementControl *,
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-agreements #ydrzTipsControl *,
+.chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-custom-agreement button {
+  color: #333333 !important;
+}
+
+.chinaums-v23-other {
+  display: block;
+  margin: 3.862069cqi auto 0;
+  border: 0;
+  background: transparent;
+  color: #0183ff;
+  font-size: 4.137931cqi;
+  font-weight: 400;
+  line-height: 4.827586cqi;
+}
+
+.chinaums-v23-loading-mask {
+  position: absolute;
+  z-index: 5;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(0 0 0 / 8%);
+}
+
+.chinaums-v23-loading-card {
+  display: flex;
+  width: 41.37931cqi;
+  height: 36.206897cqi;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.413793cqi;
+  border-radius: 3.448276cqi;
+  background: rgb(0 0 0 / 80%);
+  color: #fff;
+  font-size: 4.827586cqi;
+}
+
+.chinaums-v23-loading-card img {
+  width: 12.068966cqi;
+  height: 12.068966cqi;
+  animation: chinaums-v23-spin 1s linear infinite;
+}
+
+.chinaums-v23-keyboard {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: var(--v23-keyboard-height);
+  overflow: hidden;
+  container-type: size;
+}
+
+.chinaums-v23-figma-keyboard {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  padding-block-start: 6.818182cqh;
+  padding-block-end: max(
+    9.943182cqh,
+    var(--assistance-v23-safe-area-bottom, env(safe-area-inset-bottom, 0rem))
+  );
+  padding-inline: 1.433692cqw;
+  background: #e8e8e8;
+}
+
+.chinaums-v23-figma-keyboard[data-visible='false'] {
+  pointer-events: none;
+  opacity: 0;
+}
+
+.chinaums-v23-key-grid {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: repeat(4, minmax(0, 1fr));
+  column-gap: 1.25448cqw;
+  row-gap: 2.556818cqh;
+}
+
+.chinaums-v23-key {
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 2cqh;
+  background: #fff;
+  box-shadow: 0 0 0 0.25cqh rgb(0 0 0 / 4%);
+  color: #111318;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', sans-serif;
+  font-size: 10.5cqh;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.chinaums-v23-key:active {
+  background: #f5f5f5;
+}
+
+.chinaums-v23-key[data-key='delete'] {
+  background: transparent;
+  box-shadow: none;
+  color: #111318;
+}
+
+.chinaums-v23-key:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.chinaums-v23-delete-icon {
+  width: 11cqh;
+  height: 8cqh;
+}
+
+@keyframes chinaums-v23-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes chinaums-v23-id-caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes chinaums-v23-hand-tap {
+  0%,
+  28%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  12% {
+    transform: translateY(0.517241cqi) scale(0.96);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chinaums-sheet-v23[data-zidingyi-feedback='true'] .chinaums-v23-hand[data-visible='true'] {
+    animation: none;
+    transform: translateY(0) scale(1);
+  }
+
+  .chinaums-v23-id-caret {
+    animation: none;
+  }
+}
+
+/* Yuanbao feedback is scoped independently from the existing V23 profile. */
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-stage {
+  --v23-keyboard-height: min(56cqw, 31cqh);
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-dialog {
+  min-height: 0;
+  max-height: none;
+  overflow: visible;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-close {
+  position: absolute;
+  float: none;
+  margin: 0;
+}
+
+/* The provider creates .auth-tips-title and .expire-span with separate global
+ * colors. Cover the actual slots, including late provider updates. */
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-dialog #ydrzTipsControl,
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-dialog #ydrzTipsControl *,
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-dialog #ydrzStateControl,
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-dialog #ydrzStateControl * {
+  color: #848ab4 !important;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-dialog #ydrzTipsControl .auth-tips-title {
+  font-size: 3.448276cqi !important;
+  line-height: 5.263158cqi !important;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-submit-wrap {
+  margin-top: 15px;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-figma-keyboard {
+  padding-block-start: 4cqh;
+  padding-block-end: max(
+    5cqh,
+    var(--assistance-v23-safe-area-bottom, env(safe-area-inset-bottom, 0rem))
+  );
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-key-grid {
+  row-gap: 2cqh;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-id-box {
+  background: #F0F4FD;
+  border-color: #E9EEF6;
+  box-shadow: none;
+  color: #333333;
+  font-weight: 700;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-id-caret {
+  background: #0082FF;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-id-box[data-active='true'] {
+  background: #FEF9F5;
+  border-color: #FFBB6D;
+  box-shadow: 0 0 0 0.344828cqi #FFBB6D inset;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-dialog[data-error='true'] .chinaums-v23-id-box {
+  background: #FFF5F5;
+  border-color: #FF6D6D;
+  box-shadow: 0 0 0 0.344828cqi #FF6D6D inset;
+  color: #FF3400;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-inline-error {
+  width: 72cqi;
+  color: #FF3400;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-warning-icon {
+  display: inline-flex;
+  width: 4.827586cqi;
+  height: 4.827586cqi;
+  flex: 0 0 4.827586cqi;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: #FF3400;
+  color: #FFFFFF;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-submit {
+  font-weight: 700;
+  box-shadow: 0 11px 22px 0 rgba(255, 157, 149, .35);
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-dialog[data-yuanbao-pending='true'] .chinaums-v23-submit {
+  background: #999;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-dialog[data-yuanbao-pending='true'] #ydrzSubmitControl {
+  /* Official 1.0.6 validates the control and its descendants during getToken. */
+  opacity: 1;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-submit-wrap .yuanbao-inline-loading {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35em;
+  color: #fff;
+  font-size: 5.517241cqi;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-submit-wrap .yuanbao-inline-loading img {
+  width: 1em;
+  height: 1em;
+}
+
+.chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-hand[data-visible='true'] {
+  animation: yuanbao-hand-tap 1s cubic-bezier(.66, 0, .34, 1) infinite;
+}
+
+@keyframes yuanbao-hand-tap {
+  0%, 100% { transform: translate(.4rem, .4rem); }
+  50% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-hand {
+    transition: none;
+  }
+
+  .chinaums-sheet-v23[data-yuanbao-feedback='true'] .chinaums-v23-hand[data-visible='true'] {
+    animation: none;
+    transform: translate(0, 0);
+  }
+}

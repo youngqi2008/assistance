@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-CN" data-custom-template="yuanbao"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>身份验证</title></head><body>
+<main data-stage data-keyboard-open="true">
+  <section data-card aria-label="身份验证">
+    <button data-close type="button" aria-label="关闭">×</button>
+    <img data-header src="assets/header.png" alt="输入您的身份证后四位">
+    <div data-phone><span>用于验证您</span><span id="ydrzPhoneControl"></span><span>的实名信息</span></div>
+    <img data-middle src="assets/middle.png" alt="">
+    <div data-id-grid role="group" aria-label="身份证后四位" tabindex="0">
+      <div data-id-box><span data-digit></span><span data-caret hidden></span></div>
+      <div data-id-box><span data-digit></span><span data-caret hidden></span></div>
+      <div data-id-box><span data-digit></span><span data-caret hidden></span></div>
+      <div data-id-box><span data-digit></span><span data-caret hidden></span></div>
+      <input data-id-value type="text" inputmode="text" autocomplete="off" maxlength="4" aria-label="输入身份证后四位" spellcheck="false">
+    </div>
+    <p data-input-error role="alert" hidden><span data-error-icon aria-hidden="true">!</span><span>请完整输入身份证后4位数字</span></p>
+    <p data-message role="status" hidden></p>
+    <div data-submit-wrap>
+      <div data-submit><div id="ydrzSubmitControl"></div></div>
+      <div data-busy role="status" aria-label="验证中" hidden><span>同意并登录</span><img src="assets/yuanbao-loading.gif" alt=""></div>
+      <img data-hand src="assets/hand.png" alt="" hidden>
+    </div>
+    <section data-agreements aria-label="协议说明">
+      <div id="ydrzAgreementControl"></div><div id="ydrzTipsControl"></div><div id="ydrzStateControl"></div>
+      <div data-caller-agreements></div>
+    </section>
+    <div data-sms><div id="ydrzYZMControl"></div><div id="ydrzYZMBtnControl"></div></div>
+    <button data-other type="button">选择其他方式</button>
+    <div data-initializing role="status"><img src="assets/loading.png" alt="">正在准备验证</div>
+  </section>
+  <section data-keyboard aria-label="安全键盘">
+    <button data-collapse type="button" aria-label="收起键盘">收起</button>
+    <div data-key-grid>
+      <button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button>
+      <button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button>
+      <button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button>
+      <button type="button" data-key="X">X</button><button type="button" data-key="0">0</button><button type="button" data-key="delete" aria-label="删除">⌫</button>
+    </div>
+  </section>
+</main>
+</body></html>

@@ -1,0 +1,68 @@
+# 由 deploy/nginx/render-conf 生成真正配置。占位符：
+#   __SERVER_NAME__  __SSL_CERT__  __SSL_KEY__  __NGINX_HTML__  __API_UPSTREAM__
+
+upstream assistant_java {
+    server __API_UPSTREAM__;
+    keepalive 16;
+}
+
+# __BEGIN_HTTP_REDIRECT__
+server {
+    listen 80;
+    listen [::]:80;
+    server_name __SERVER_NAME__;
+    return 301 https://$host$request_uri;
+}
+# __END_HTTP_REDIRECT__
+
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name __SERVER_NAME__;
+
+    ssl_certificate     __SSL_CERT__;
+    ssl_certificate_key __SSL_KEY__;
+    ssl_session_timeout 1d;
+    ssl_session_cache shared:SSL:10m;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers off;
+
+    root __NGINX_HTML__;
+    client_max_body_size 2m;
+
+    add_header Strict-Transport-Security "max-age=31536000" always;
+    add_header X-Content-Type-Options nosniff always;
+
+    # -------- 前端静态（SDK / iframe）HTTPS --------
+    location /sign-pay-pro/ {
+        try_files $uri $uri/ =404;
+        add_header Cache-Control "public, max-age=300";
+        add_header Access-Control-Allow-Origin *;
+    }
+
+    # -------- 后端 Java：只反代，对外仍是 HTTPS --------
+    location /v1/ {
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header Connection "";
+        proxy_pass http://assistant_java;
+    }
+
+    location /actuator/health {
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_pass http://assistant_java;
+    }
+
+    location /admin/ {
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto https;
+        proxy_pass http://assistant_java;
+    }
+}

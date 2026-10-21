@@ -1,0 +1,12 @@
+.custom-agreement-reader { box-sizing: border-box; width: 100%; min-height: 100%; padding: 16px; color: #333; background: #fff; font: 14px/1.7 system-ui, sans-serif; overflow-wrap: anywhere; }
+.custom-agreement-reader header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.custom-agreement-reader button { color: inherit; cursor: pointer; padding: 8px 12px; border: 1px solid #ddd; border-radius: 6px; background: #fff; }
+.custom-agreement-reader h1 { font-size: 18px; }
+.custom-agreement-reader h2 { font-size: 16px; }
+.custom-agreement-reader h3 { font-size: 15px; }
+.custom-agreement-reader p, .custom-agreement-reader li { white-space: pre-wrap; }
+.custom-agreement-reader table { width: 100%; border-collapse: collapse; margin: 12px 0; table-layout: fixed; }
+.custom-agreement-reader td { border: 1px solid #ccc; padding: 8px; white-space: pre-wrap; vertical-align: top; }
+.custom-agreement-reader a { color: var(--agreement-link-color, #ed611a); text-decoration: underline; }
+.custom-agreement-reader nav a { display: block; padding: 12px 0; }
+.custom-agreement-reader [role="alert"] { padding: 12px; background: #fff1e8; }

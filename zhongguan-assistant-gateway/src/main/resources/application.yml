@@ -1,0 +1,40 @@
+server:
+  port: 8080
+  # Nginx 终止 HTTPS 后把协议转到应用（配合 edge Profile 只监听 127.0.0.1）
+  forward-headers-strategy: framework
+
+spring:
+  application:
+    name: zhongguan-assistant-gateway
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+# 银商环境：默认测试凭据与测试地址。生产请 --spring.profiles.active=ums-prod
+# 规范：《大数据银杏盾接口规范-银杏助理项目开放平台版本-v2.0.1》
+chinaums:
+  env: test
+  app-id: ${CHINAUMS_TEST_APP_ID:${CHINAUMS_ASSISTANT_APP_ID:10037e6f9512b0b10195401ca57901d1}}
+  app-key: ${CHINAUMS_TEST_APP_KEY:${CHINAUMS_ASSISTANT_APP_KEY:0e609fbbdbde40e5aa467b235eb4c67e}}
+  private-key: ${CHINAUMS_TEST_PRIVATE_KEY:${CHINAUMS_ASSISTANT_PRIVATE_KEY:33c196da0c7e369025c01796e5dd11528740a7abef0f025309b9b6770367131f}}
+  platform-public-key: ${CHINAUMS_TEST_PLATFORM_PUBLIC_KEY:${CHINAUMS_ASSISTANT_PLATFORM_PUBLIC_KEY:0414bb7e9c3914bb65b85079b1dc6e1ca2a0ee04dd9bb55b2f8d31704a6dec0cca695739e128f9c931330e1c0f493be4d56244236434c9d344c4716ba64a4470ba}}
+  check-url: https://test-api-open.chinaums.com/v1/datacenter/smartverification/encrypted/assistant/info/check
+  query-url: https://test-api-open.chinaums.com/v1/datacenter/smartverification/encrypted/assistant/info/query
+  default-user-no: ${CHINAUMS_TEST_USER_NO:08}
+
+zhongguan:
+  auth-enabled: true
+  require-check-before-query: true
+  verified-token-ttl: 10m
+  admin-token: ${ZHONGUAN_ADMIN_TOKEN:}
+  clients-file: ${ZHONGUAN_CLIENTS_FILE:data/clients.json}
+  clients:
+    - app-id: ${ZHONGUAN_CLIENT_APP_ID:zg-demo}
+      app-key: ${ZHONGUAN_CLIENT_APP_KEY:change-me}
+      user-no: ${ZHONGUAN_CLIENT_USER_NO:08}

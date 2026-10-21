@@ -1,0 +1,13 @@
+{
+  "name": "assistance-jssdk-rrweb-customer-demo",
+  "version": "0.2.3",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "demo": "node serve-demo.mjs",
+    "video": "node rrweb-events-to-video.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.59.1"
+  }
+}

@@ -1,0 +1,58 @@
+[data-custom-root][data-custom-template="duodian-health"] {
+  width:100%; color:#252a32; background:#fff; border-radius:16px 16px 0 0;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif; -webkit-text-size-adjust:100%;
+}
+/* This stylesheet is injected only into the customer iframe and its reader. */
+html, body { margin:0; }
+[data-custom-template="duodian-health"] *, [data-custom-template="duodian-health"] *::before, [data-custom-template="duodian-health"] *::after { box-sizing:border-box; }
+[data-custom-template="duodian-health"] [hidden] { display:none !important; }
+[data-custom-template="duodian-health"] [data-stage] { display:flex; flex-direction:column; width:100%; max-height:var(--duodian-viewport-height,100dvh); overflow:hidden; border-radius:inherit; }
+[data-custom-template="duodian-health"] [data-card] { position:relative; flex:0 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:28px 24px max(20px,env(safe-area-inset-bottom,0px)); }
+[data-custom-template="duodian-health"] [data-close] { position:absolute; right:12px; top:10px; width:30px; height:30px; padding:0; border:0; border-radius:50%; background:#f5f5f5; color:#7a7a7a; font-size:24px; }
+[data-custom-template="duodian-health"] [data-security-title] { display:block; width:48.6%; max-width:318px; height:auto; margin:0 auto 20px; }
+[data-custom-template="duodian-health"] [data-phone-prompt] { display:flex; align-items:center; justify-content:center; gap:2px; margin-bottom:14px; color:#8d8d92; font-size:clamp(12px,3.6vw,17px); line-height:1.6; text-align:center; }
+[data-custom-template="duodian-health"] #ydrzPhoneControl { display:inline-flex !important; width:auto !important; margin:0; font-size:inherit !important; }
+[data-custom-template="duodian-health"] #ydrzPhoneControl :is(.ydrz-maskphone-wrap,p) { max-width:100%; height:auto !important; margin:0 !important; padding:0 !important; font-family:inherit !important; line-height:1.6 !important; }
+[data-custom-template="duodian-health"] [data-identity-guide] { display:block; width:100%; height:auto; margin:0 auto 12px; }
+[data-custom-template="duodian-health"] [data-id-entry] { position:relative; margin:0 8px 24px; }
+[data-custom-template="duodian-health"] [data-id-grid] { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; cursor:text; outline-offset:4px; }
+[data-custom-template="duodian-health"] [data-id-box] { display:flex; align-items:center; justify-content:center; aspect-ratio:1.06; border:1px solid #dce8ff; border-radius:8px; background:#eef6ff; font-size:clamp(24px,7vw,38px); }
+[data-custom-template="duodian-health"] [data-id-box][data-active="true"] { border:2px solid #ff9b34; background:#fffaf3; }
+[data-custom-template="duodian-health"] [data-caret] { width:2px; height:66%; background:#0082ff; animation:duodian-caret 1s step-end infinite; }
+[data-custom-template="duodian-health"] [data-id-value] { position:absolute; width:1px; height:1px; padding:0; border:0; opacity:0; pointer-events:none; }
+[data-custom-template="duodian-health"][data-input-mode="native"] [data-id-value] { inset:0; width:100%; height:100%; font-size:16px; color:transparent; caret-color:transparent; pointer-events:auto; }
+[data-custom-template="duodian-health"] [data-message] { margin:-12px 0 12px; color:#ce4e25; font-size:12px; line-height:1.5; text-align:center; overflow-wrap:anywhere; }
+/* The official SDK owns these slots and all control visibility, including SMS. */
+[data-custom-template="duodian-health"] #ydrzSubmitControl { width:100%; aspect-ratio:638 / 116; margin:0; }
+[data-custom-template="duodian-health"] #ydrzSubmitControl > *, [data-custom-template="duodian-health"] #ydrzSubmitControl .submit-btn { width:100% !important; height:100% !important; margin:0 !important; border:0; border-radius:16px; font-family:inherit !important; font-weight:700; }
+[data-custom-template="duodian-health"] [data-other] { display:block; width:100%; margin:16px auto 18px; padding:0; border:0; background:transparent; color:#00bc4e; font:600 16px/1.5 "PingFang SC","Microsoft YaHei",sans-serif; cursor:pointer; }
+[data-custom-template="duodian-health"] [data-other]:disabled { opacity:.5; cursor:default; }
+[data-custom-template="duodian-health"] [data-agreements] { color:#8d8d92; font-size:12px; line-height:1.8; text-align:left; overflow-wrap:anywhere; }
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl) { max-width:100%; }
+/* Adapt provider text without changing its control visibility or checkbox layout. */
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl),
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl) :is(p,.auth-tips-title,.auth-tips,.expire-span) { color:#8d8d92 !important; text-align:left !important; white-space:normal; overflow-wrap:anywhere; }
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl) p { width:100%; min-width:0; max-width:100%; margin:0 !important; padding:0 !important; }
+/* Keep agreement and authorization copy in one flow; the state slot stays separate. */
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl),
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl) p { display:inline !important; width:auto !important; }
+/* Provider tips have an independent inline 14px default; match the 12px agreement. */
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl),
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl) :is(p,span,a,.auth-tips-title,.auth-tips) { font-size:12px !important; }
+[data-custom-template="duodian-health"] #ydrzAgreementControl a { display:inline !important; color:#77777e !important; text-decoration:none; }
+[data-custom-template="duodian-health"] [data-caller-agreements] label { display:flex; align-items:flex-start; gap:4px; margin-top:5px; }
+[data-custom-template="duodian-health"] [data-caller-agreements] input { flex:0 0 auto; margin:4px 0 0; accent-color:#19be00; }
+[data-custom-template="duodian-health"] [data-caller-agreements] a { color:#77777e; text-decoration:none; }
+[data-custom-template="duodian-health"] [data-keyboard] { flex:0 0 auto; padding:0 6px max(6px,env(safe-area-inset-bottom,0px)); background:#d1d4da; }
+[data-custom-template="duodian-health"] [data-collapse] { display:block; width:100%; height:26px; padding:0 8px; border:0; background:transparent; color:#4b5563; font-size:12px; text-align:right; }
+[data-custom-template="duodian-health"] [data-key-grid] { display:grid; height:clamp(144px,43vw,204px); grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(4,minmax(0,1fr)); gap:6px; }
+[data-custom-template="duodian-health"] [data-key] { min-height:0; border:0; border-radius:5px; background:#fff; color:#252a32; font-size:24px; touch-action:manipulation; }
+[data-custom-template="duodian-health"] [data-key]:active { background:#eff0f3; }
+[data-custom-template="duodian-health"] [data-key="delete"] { background:transparent; font-size:15px; }
+/* Agreement reading belongs to the existing SDK reader, outside the page root. */
+.ydrz-confirm-iframe { max-width:100% !important; max-height:100% !important; }
+[data-custom-template="duodian-health"].custom-agreement-reader { min-height:100%; padding:16px; color:#333; background:#fff; }
+[data-custom-template="duodian-health"].custom-agreement-reader nav a { color:#77777e; }
+@keyframes duodian-caret { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+@media(max-height:500px) { [data-custom-template="duodian-health"] [data-card] { padding-top:16px; } [data-custom-template="duodian-health"] [data-security-title] { margin-bottom:12px; } }
+@media(prefers-reduced-motion:reduce) { [data-custom-template="duodian-health"] [data-caret] { animation:none; } }

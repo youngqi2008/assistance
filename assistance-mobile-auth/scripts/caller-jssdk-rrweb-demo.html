@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>调用方 JSSDK + rrweb 跨域合并录制 Demo</title>
+<style>
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: -apple-system, "PingFang SC", "Helvetica Neue", Arial, sans-serif; background: #f5f6f8; color: #111827; }
+  main { max-width: 860px; margin: 0 auto; padding: 16px; }
+  h1 { font-size: 18px; margin: 8px 0 4px; }
+  h2 { font-size: 15px; margin: 0 0 10px; }
+  .muted { color: #8a8f98; font-size: 12px; line-height: 1.7; }
+  section { background: #fff; border-radius: 12px; padding: 14px 16px; margin-top: 12px; box-shadow: 0 10px 24px rgba(15,23,42,.05); }
+  button { min-height: 40px; padding: 0 14px; border: 0; border-radius: 8px; background: #ff2d55; color: #fff; font-size: 14px; font-weight: 600; cursor: pointer; }
+  button.secondary { background: #fff; color: #ff2d55; border: 1px solid #ff2d55; }
+  button.ghost { background: #fff; color: #374151; border: 1px solid #d1d5db; }
+  button:disabled { opacity: .55; cursor: not-allowed; }
+  .btn-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+  .kv { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 4px 0; }
+  .kv dt { color: #8a8f98; }
+  .kv dd { margin: 0; font-weight: 600; word-break: break-all; text-align: right; }
+  pre { background: #111827; color: #e5e7eb; border-radius: 8px; padding: 10px; font-size: 11px; line-height: 1.6; max-height: 260px; overflow: auto; white-space: pre-wrap; word-break: break-all; }
+  .event-item { border-bottom: 1px solid #374151; padding: 6px 0; }
+  .event-item:last-child { border-bottom: 0; }
+  .event-head { color: #7dd3fc; font-weight: 600; font-size: 11px; }
+  code { background: #eef1f4; border-radius: 4px; padding: 1px 5px; font-size: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>调用方 JSSDK + rrweb 跨域合并录制 Demo</h1>
+  <p class="muted">
+    本页模拟业务方宿主页：先启动自己的 rrweb 父录制器（与被测环境同为 <code>2.0.0-alpha.4</code> 且开启
+    <code>recordCrossOriginIframes</code>），再通过 UMD / ESM 两种方式调用银杏助理 JSSDK 拉起授权 iframe。
+    授权页内的事件会自动并入下方事件流。<br />
+    提示：所有环境固定加载移动官方 1.0.6（需运营商网络/白名单）；历史
+    <code>mobileAuthEnv</code> 参数不再切换 SDK 或授权类型。
+  </p>
+
+  <section aria-label="rrweb 父录制器状态">
+    <h2>① rrweb 父录制器（调用方自己）</h2>
+    <dl>
+      <div class="kv"><dt>状态</dt><dd id="rrwebStatus">加载中…</dd></div>
+      <div class="kv"><dt>版本</dt><dd>2.0.0-alpha.4（与授权页一致）</dd></div>
+    </dl>
+  </section>
+
+  <section aria-label="UMD 调用">
+    <h2>② UMD 方式调用 JSSDK</h2>
+    <p class="muted"><code>https://ginkgo.chinaums.com/sign-pay-pro-temp/assistance-mobile-auth/assistance-mobile-auth.umd.cjs</code></p>
+    <div class="btn-row">
+      <button id="umdInit">加载并初始化 UMD SDK</button>
+      <button id="umdOpen" disabled>打开授权 open()</button>
+      <button id="umdPrecheck" class="ghost" disabled>预检 precheck()</button>
+      <button id="umdClose" class="secondary" disabled>关闭 close()</button>
+      <button id="umdDestroy" class="ghost" disabled>销毁 destroy()</button>
+    </div>
+  </section>
+
+  <section aria-label="ESM 调用">
+    <h2>③ ESM 方式调用 JSSDK</h2>
+    <p class="muted"><code>https://ginkgo.chinaums.com/sign-pay-pro-temp/assistance-mobile-auth/assistance-mobile-auth.js</code></p>
+    <div class="btn-row">
+      <button id="esmInit">import 并初始化 ESM SDK</button>
+      <button id="esmOpen" disabled>打开授权 open()</button>
+      <button id="esmClose" class="secondary" disabled>关闭 close()</button>
+      <button id="esmDestroy" class="ghost" disabled>销毁 destroy()</button>
+    </div>
+  </section>
+
+  <!-- 调用方自己的敏感回显区域：加 data-rrweb-sensitive，示范对己方页面内容脱敏 -->
+  <section aria-label="授权结果" data-rrweb-sensitive="true">
+    <h2>④ 授权结果回显（已标记脱敏）</h2>
+    <dl>
+      <div class="kv"><dt>状态</dt><dd id="authStatus">未发起</dd></div>
+      <div class="kv"><dt>token</dt><dd id="authToken">-</dd></div>
+      <div class="kv"><dt>idLast4</dt><dd id="authIdLast4">-</dd></div>
+      <div class="kv"><dt>keyA</dt><dd id="authKeyA">-</dd></div>
+      <div class="kv"><dt>错误</dt><dd id="authError">-</dd></div>
+    </dl>
+  </section>
+
+  <!-- 事件监视区：rr-block 防止被自身录制，避免回显事件又生成新事件的反馈循环 -->
+  <section class="rr-block" aria-label="合并录制事件流">
+    <h2>⑤ 合并录制事件流（父录制器 emit）</h2>
+    <dl>
+      <div class="kv"><dt>事件总数</dt><dd id="totalEvents">0</dd></div>
+      <div class="kv"><dt>iframe attach</dt><dd id="attachEvents">0</dd></div>
+      <div class="kv"><dt>可导出事件数</dt><dd id="exportEvents">0</dd></div>
+    </dl>
+    <div class="btn-row">
+      <button id="downloadEvents" type="button" disabled>下载完整 events.json</button>
+      <button id="stopRecording" class="secondary" type="button" disabled>停止录制</button>
+      <button id="clearEvents" class="ghost" type="button">清空监视区</button>
+    </div>
+    <p class="muted">
+      “清空监视区”只清除页面上的最近事件，不影响完整导出。下载后运行
+      <code>node rrweb-events-to-video.mjs events.json replay.mp4</code> 即可生成视频。
+    </p>
+    <pre id="eventLog">暂无事件</pre>
+  </section>
+</main>
+
+<script>
+/**
+ * 调用方接入要点（与本 demo 一一对应）：
+ * 1) 父页面先加载 rrweb@2.0.0-alpha.4（固定 CDN + SRI），并以 recordCrossOriginIframes:true 启动录制；
+ *    顺序必须在 JSSDK 拉起 iframe 之前，否则错过 iframe attach 事件。
+ * 2) JSSDK 调用方式与过去完全一致，不需要为 rrweb 传任何参数。
+ * 3) 授权页事件当前为明文录制（产品决定，未做输入/文本脱敏），调用方拿到的事件流
+ *    请按敏感数据对待；调用方自己页面的敏感内容可用 maskInputOptions /
+ *    maskTextSelector 脱敏（见下方④的 data-rrweb-sensitive 示范，该标记对我方
+ *    授权页录制不再生效，但可作为你方录制器的脱敏选择器）。
+ * 4) 事件流归调用方所有：emit 里接到的就是合并后的统一事件流，存储/上报由调用方决定；
+ *    我方页面不上传、不持久化任何录制事件。
+ */
+
+const WRAPPER_UMD_URL = 'https://ginkgo.chinaums.com/sign-pay-pro-temp/assistance-mobile-auth/assistance-mobile-auth.umd.cjs'
+const WRAPPER_ESM_URL = 'https://ginkgo.chinaums.com/sign-pay-pro-temp/assistance-mobile-auth/assistance-mobile-auth.js'
+const RRWEB_CDN_URL = 'https://cdn.jsdelivr.net/npm/rrweb@2.0.0-alpha.4/dist/rrweb.min.js'
+const RRWEB_CDN_INTEGRITY = 'sha384-UpKcjeLZtEcYxELLISURK3MAcN3KQdTx8iygewcEWVl8LqgVrftgiMtuMHod7D8e'
+
+// ── ⑤ 事件监视（有界缓冲 + 节流刷新，监控自身不进入录制）──────────────────────
+const MAX_EVENTS = 50
+const FLUSH_MS = 250
+let totalEvents = 0
+let attachEvents = 0
+let recentEvents = []
+let capturedEvents = []
+let flushTimer = null
+let recorderStopped = false
+
+function flushEvents() {
+  flushTimer = null
+  document.getElementById('totalEvents').textContent = String(totalEvents)
+  document.getElementById('attachEvents').textContent = String(attachEvents)
+  document.getElementById('exportEvents').textContent = String(capturedEvents.length)
+  const log = document.getElementById('eventLog')
+  if (recentEvents.length === 0) {
+    log.textContent = '暂无事件'
+    return
+  }
+  log.innerHTML = recentEvents.map((event) => {
+    let json
+    try { json = JSON.stringify(event, null, 2) } catch { json = '[事件无法序列化]' }
+    return `<div class="event-item"><div class="event-head">type ${event.type} · ${event.timestamp}</div><pre>${json
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')}</pre></div>`
+  }).join('')
+}
+
+function onRrwebEvent(event) {
+  try {
+    totalEvents += 1
+    if (event?.data && event.data.isAttachIframe === true) attachEvents += 1
+    capturedEvents.push(event)
+    recentEvents = [...recentEvents, event].slice(-MAX_EVENTS)
+    document.getElementById('downloadEvents').disabled = false
+    if (flushTimer === null) flushTimer = setTimeout(flushEvents, FLUSH_MS)
+  } catch {
+    // 诊断展示失败不能影响录制主流程
+  }
+}
+
+document.getElementById('clearEvents').addEventListener('click', () => {
+  totalEvents = 0
+  attachEvents = 0
+  recentEvents = []
+  flushEvents()
+})
+
+document.getElementById('downloadEvents').addEventListener('click', () => {
+  if (capturedEvents.length === 0) return
+  const payload = {
+    format: 'rrweb',
+    rrwebVersion: '2.0.0-alpha.4',
+    exportedAt: new Date().toISOString(),
+    events: capturedEvents,
+  }
+  const blob = new Blob([JSON.stringify(payload)], { type: 'application/json' })
+  const url = URL.createObjectURL(blob)
+  const anchor = document.createElement('a')
+  const timestamp = new Date().toISOString().replace(/[:.]/g, '-')
+  anchor.href = url
+  anchor.download = `rrweb-events-${timestamp}.json`
+  anchor.click()
+  setTimeout(() => URL.revokeObjectURL(url), 0)
+})
+
+function stopParentRecorder() {
+  if (recorderStopped) return
+  recorderStopped = true
+  try { window.__stopRrweb?.() } catch { /* noop */ }
+  const statusEl = document.getElementById('rrwebStatus')
+  statusEl.textContent = `已停止（可导出 ${capturedEvents.length} 条事件）`
+  document.getElementById('stopRecording').disabled = true
+}
+
+document.getElementById('stopRecording').addEventListener('click', stopParentRecorder)
+
+// ── ① 加载 rrweb 并启动父录制器 ────────────────────────────────────────────
+function loadScript(src, { integrity } = {}) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script')
+    script.src = src
+    script.async = true
+    if (integrity) {
+      script.integrity = integrity
+      script.crossOrigin = 'anonymous'
+    }
+    script.addEventListener('load', resolve, { once: true })
+    script.addEventListener('error', () => reject(new Error(`加载失败: ${src}`)), { once: true })
+    document.head.appendChild(script)
+  })
+}
+
+async function startParentRecorder() {
+  const statusEl = document.getElementById('rrwebStatus')
+  try {
+    let source = '固定版本 CDN'
+    try {
+      await loadScript(RRWEB_CDN_URL, { integrity: RRWEB_CDN_INTEGRITY })
+    } catch {
+      source = 'Demo 包本地 fallback'
+      await loadScript('./vendor/rrweb.min.js')
+    }
+    if (!window.rrweb || typeof window.rrweb.record !== 'function') {
+      throw new Error('rrweb 已加载但未注册 window.rrweb.record')
+    }
+    window.__stopRrweb = window.rrweb.record({
+      emit: onRrwebEvent,
+      recordCrossOriginIframes: true,
+      // 调用方自己页面的脱敏配置（与我方授权页内部配置无关，各管各的）
+      maskInputOptions: { password: true, text: true },
+      maskTextSelector: '[data-rrweb-sensitive]',
+    })
+    statusEl.textContent = `录制中（父页面 + 跨域授权 iframe 合并；${source}）`
+    document.getElementById('stopRecording').disabled = false
+  } catch (error) {
+    // rrweb 失败不影响授权流程：JSSDK 部分照常可用
+    statusEl.textContent = `rrweb 不可用：${error.message}（不影响授权调用）`
+  }
+  window.addEventListener('beforeunload', stopParentRecorder)
+}
+
+// ── ②③ JSSDK 调用（UMD / ESM 共用同一套回调）───────────────────────────────
+function setAuthResult(status, payload = {}) {
+  document.getElementById('authStatus').textContent = status
+  document.getElementById('authToken').textContent = payload.token ?? '-'
+  document.getElementById('authIdLast4').textContent = payload.idLast4 ?? '-'
+  document.getElementById('authKeyA').textContent = payload.keyA ?? '-'
+  document.getElementById('authError').textContent = payload.error ?? '-'
+}
+
+function createCallbacks(channel) {
+  return {
+    appId: 'demo-brand-001',
+    authWindowTitle: `移动认证验证窗口（${channel} Demo）`,
+    onSuccess(payload) {
+      setAuthResult(`验证成功（${channel}）`, payload)
+    },
+    onCancel() {
+      setAuthResult(`已取消（${channel}）`)
+    },
+    onError(payload) {
+      setAuthResult(`验证失败（${channel}）`, { error: payload?.message ?? String(payload) })
+    },
+    onErrorNotice(payload) {
+      console.info(`[${channel}] error-notice`, payload)
+    },
+    onPhoneReady(payload) {
+      console.info(`[${channel}] phone-ready`, payload)
+    },
+    onClose() {
+      setAuthResult(`窗口已关闭（${channel}）`)
+    },
+  }
+}
+
+let umdSdk = null
+let esmSdk = null
+
+document.getElementById('umdInit').addEventListener('click', async (event) => {
+  const button = event.currentTarget
+  button.disabled = true
+  try {
+    await loadScript(WRAPPER_UMD_URL)
+    umdSdk = window.AssistanceMobileAuth.createAssistanceMobileAuthSdk(createCallbacks('UMD'))
+    document.getElementById('umdOpen').disabled = false
+    document.getElementById('umdPrecheck').disabled = false
+    document.getElementById('umdClose').disabled = false
+    document.getElementById('umdDestroy').disabled = false
+    button.textContent = 'UMD SDK 已就绪'
+  } catch (error) {
+    setAuthResult('UMD 初始化失败', { error: error.message })
+    button.disabled = false
+  }
+})
+
+document.getElementById('umdOpen').addEventListener('click', async () => {
+  setAuthResult('等待验证（UMD）…')
+  try {
+    const payload = await umdSdk.open({ scene: 'native-number' })
+    if (payload) setAuthResult('验证成功（UMD）', payload)
+  } catch (error) {
+    if (!/cancelled|closed/.test(String(error?.message))) {
+      setAuthResult('验证失败（UMD）', { error: error.message })
+    }
+  }
+})
+
+document.getElementById('umdPrecheck').addEventListener('click', async () => {
+  try {
+    const result = await umdSdk.precheck({ scene: 'native-number' })
+    setAuthResult(`预检：eligible=${result?.eligible} reason=${result?.reason ?? '-'}`)
+  } catch (error) {
+    setAuthResult('预检失败', { error: error.message })
+  }
+})
+
+document.getElementById('umdClose').addEventListener('click', () => umdSdk?.close())
+document.getElementById('umdDestroy').addEventListener('click', () => {
+  umdSdk?.destroy()
+  umdSdk = null
+  for (const id of ['umdOpen', 'umdPrecheck', 'umdClose', 'umdDestroy']) {
+    document.getElementById(id).disabled = true
+  }
+  const init = document.getElementById('umdInit')
+  init.disabled = false
+  init.textContent = '加载并初始化 UMD SDK'
+})
+
+document.getElementById('esmInit').addEventListener('click', async (event) => {
+  const button = event.currentTarget
+  button.disabled = true
+  try {
+    const module = await import(WRAPPER_ESM_URL)
+    esmSdk = module.createAssistanceMobileAuthSdk(createCallbacks('ESM'))
+    document.getElementById('esmOpen').disabled = false
+    document.getElementById('esmClose').disabled = false
+    document.getElementById('esmDestroy').disabled = false
+    button.textContent = 'ESM SDK 已就绪'
+  } catch (error) {
+    setAuthResult('ESM 初始化失败', { error: error.message })
+    button.disabled = false
+  }
+})
+
+document.getElementById('esmOpen').addEventListener('click', async () => {
+  setAuthResult('等待验证（ESM）…')
+  try {
+    const payload = await esmSdk.open({ scene: 'native-number' })
+    if (payload) setAuthResult('验证成功（ESM）', payload)
+  } catch (error) {
+    if (!/cancelled|closed/.test(String(error?.message))) {
+      setAuthResult('验证失败（ESM）', { error: error.message })
+    }
+  }
+})
+
+document.getElementById('esmClose').addEventListener('click', () => esmSdk?.close())
+document.getElementById('esmDestroy').addEventListener('click', () => {
+  esmSdk?.destroy()
+  esmSdk = null
+  for (const id of ['esmOpen', 'esmClose', 'esmDestroy']) {
+    document.getElementById(id).disabled = true
+  }
+  const init = document.getElementById('esmInit')
+  init.disabled = false
+  init.textContent = 'import 并初始化 ESM SDK'
+})
+
+// 顺序关键：先启动父录制器，再允许拉起 iframe。
+startParentRecorder()
+</script>
+</body>
+</html>

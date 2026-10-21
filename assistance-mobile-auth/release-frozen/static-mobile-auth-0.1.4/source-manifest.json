@@ -1,0 +1,37 @@
+{
+  "packageName": "mobile-auth-h5",
+  "version": "0.1.4",
+  "gitCommit": null,
+  "builtAt": "2026-07-22T07:56:44.805Z",
+  "basePath": "/sign-pay-pro/",
+  "publicUrls": {
+    "wrapperEsm": "/sign-pay-pro/assistance-mobile-auth/assistance-mobile-auth.js",
+    "wrapperUmd": "/sign-pay-pro/assistance-mobile-auth/assistance-mobile-auth.umd.cjs",
+    "versionedWrapperEsm": "/sign-pay-pro/assistance-mobile-auth/assistance-mobile-auth.0.1.4.js",
+    "versionedWrapperUmd": "/sign-pay-pro/assistance-mobile-auth/assistance-mobile-auth.0.1.4.umd.cjs",
+    "iframeVerification": "/sign-pay-pro/verification",
+    "probeMode": "/sign-pay-pro/verification?mode=probe",
+    "agreementReader": "/sign-pay-pro/verification?flow=agreement&doc=entry"
+  },
+  "mobileOfficialJssdk": {
+    "version": "1.0.6",
+    "jsUrl": "https://authsafe.cmpassport.com/h5/js/jssdk_sf/jssdk-1.0.6.min.js",
+    "cssLocalPath": "/sign-pay-pro/assistance-mobile-auth/vendor/new-control-style.css"
+  },
+  "rrweb": {
+    "version": "2.0.0-alpha.4",
+    "cdnUrl": "https://cdn.jsdelivr.net/npm/rrweb@2.0.0-alpha.4/dist/rrweb.min.js",
+    "integrity": "sha384-UpKcjeLZtEcYxELLISURK3MAcN3KQdTx8iygewcEWVl8LqgVrftgiMtuMHod7D8e",
+    "localFallbackPath": "/sign-pay-pro/assistance-mobile-auth/vendor/rrweb.min.js",
+    "recordCrossOriginIframes": true
+  },
+  "includes": {
+    "bff": false,
+    "api": false,
+    "testPage": false,
+    "debugPage": false,
+    "businessDemo": false,
+    "h5RedirectSession": false,
+    "mobileOfficialTestVendor107": false
+  }
+}

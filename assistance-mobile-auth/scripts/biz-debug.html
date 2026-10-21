@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>银杏助理 · 业务方接入调试台</title>
+<style>
+  /* 配色对齐基座页 AuthHostPage / tokens.css：浅色、白卡、品牌红 #ff2d55 */
+  :root{
+    --bg:#f5f6f8; --card:#ffffff; --line:#eef1f4; --text:#0f172a; --sub:#8a8f98;
+    --brand:#ff2d55; --brand-press:rgba(191,23,65,0.32);
+    --ok:#15803d; --warn:#d97706; --err:#dc2626;
+    --input:#f8fafc; --input-line:#d8e2ee; --code:#f6f7f7; --mono:#334155;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+    padding:16px;max-width:600px;margin:0 auto}
+  h1{font-size:18px;margin:4px 0 2px;color:#111827}
+  .sub{color:var(--sub);font-size:12px;margin:0 0 14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:14px;
+    box-shadow:0 12px 30px rgba(15,23,42,0.06)}
+  label{display:block;font-size:12px;color:var(--sub);margin:10px 0 4px}
+  label:first-child{margin-top:0}
+  input,select{width:100%;background:var(--input);border:1px solid var(--input-line);border-radius:10px;color:var(--text);
+    padding:10px 12px;font:13px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace}
+  input::placeholder{color:#aab2c0}
+  .req{color:var(--brand)}
+  .btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+  button.act{background:#fff;border:1px solid var(--input-line);color:var(--text);
+    padding:11px;border-radius:10px;font-size:14px;cursor:pointer}
+  button.act:active{transform:translateY(1px)}
+  button.act:disabled{opacity:.45}
+  button.primary{grid-column:1/-1;background:var(--brand);border-color:var(--brand);color:#fff;font-weight:600;font-size:15px;padding:13px;
+    box-shadow:0 3px 0 var(--brand-press)}
+  .adv summary{cursor:pointer;color:var(--sub);font-size:13px;margin-top:4px}
+  .row{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:6px 0;border-bottom:1px solid var(--line)}
+  .row:last-child{border-bottom:0}
+  .row .k{color:var(--sub);white-space:nowrap}
+  .row .v{color:var(--mono);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;word-break:break-all;text-align:right}
+  .pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;border:1px solid var(--line);color:var(--sub)}
+  .pill.ok{color:var(--ok);border-color:var(--ok)} .pill.err{color:var(--err);border-color:var(--err)} .pill.run{color:var(--warn);border-color:var(--warn)}
+  .logbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+  .logbar .tools button{background:#fff;border:1px solid var(--input-line);color:var(--sub);border-radius:8px;padding:4px 10px;font-size:12px;cursor:pointer;margin-left:6px}
+  #log{background:var(--code);border:1px solid var(--line);border-radius:12px;padding:10px;
+    font:12px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-all;
+    max-height:48vh;overflow:auto;color:#334155}
+  .log-t{color:#94a3b8}.log-ok{color:var(--ok)}.log-err{color:var(--err)}.log-warn{color:#b45309}.log-step{color:#0369a1}.log-curl{color:#7c3aed}
+  .note{font-size:11px;color:var(--sub);margin-top:10px;line-height:1.6}
+  .env{font-size:11px;color:#94a3b8;font-family:ui-monospace,monospace;margin-top:8px;word-break:break-all}
+</style>
+</head>
+<body>
+  <h1>银杏助理 · 业务方接入调试台</h1>
+  <p class="sub">手动填入贵方 appId / appKey，逐步或一键走通：创建会话 → 拉起授权 → 换取认证结果。每一步的请求/响应、curl、SDK 回调与报错都会打印，便于排查。</p>
+
+  <div class="card">
+    <label>appId <span class="req">*</span></label>
+    <input id="appId" placeholder="贵方接入 appId" autocomplete="off" />
+    <label>appKey <span class="req">*</span></label>
+    <input id="appKey" placeholder="贵方接入 appKey" autocomplete="off" />
+
+    <details class="adv">
+      <summary>高级参数（可选）</summary>
+      <label>scene 场景</label>
+      <input id="scene" value="native-number" />
+      <label>requestId（留空自动生成，可用于和后端日志对照）</label>
+      <input id="requestId" placeholder="留空自动生成" />
+    </details>
+
+    <div class="btns">
+      <button class="act primary" id="runAll">一键跑完整流程</button>
+      <button class="act" id="bCreate">① 创建会话</button>
+      <button class="act" id="bPrecheck">② 预检 precheck</button>
+      <button class="act" id="bOpen" disabled>③ 拉起授权</button>
+      <button class="act" id="bResult" disabled>④ 换取结果</button>
+    </div>
+    <div class="env" id="env"></div>
+  </div>
+
+  <div class="card">
+    <div class="row"><span class="k">状态</span><span class="v"><span id="state" class="pill">待开始</span></span></div>
+    <div class="row"><span class="k">launchToken</span><span class="v" id="r-launch">—</span></div>
+    <div class="row"><span class="k">预检</span><span class="v" id="r-precheck">—</span></div>
+    <div class="row"><span class="k">authToken</span><span class="v" id="r-authtoken">—</span></div>
+    <div class="row"><span class="k">姓名</span><span class="v" id="r-name">—</span></div>
+    <div class="row"><span class="k">手机号</span><span class="v" id="r-mobile">—</span></div>
+    <div class="row"><span class="k">身份证</span><span class="v" id="r-idcard">—</span></div>
+  </div>
+
+  <div class="card">
+    <details class="adv" open>
+      <summary>iframe 样式调试（styleOption）</summary>
+      <p class="note">桌面/Wi-Fi 弹窗能弹出但看不到样式化表单（jssdk 取号成功后才渲染）；此处在桌面可验证到 JSON 级别，视觉效果需真机（移动网络 + 中国移动号码）。需先「① 创建会话」拿到 launchToken。</p>
+      <label>styleOption（JSON）</label>
+      <textarea id="styleJson" rows="12" spellcheck="false"
+        style="width:100%;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;background:var(--input);border:1px solid var(--input-line);border-radius:10px;color:var(--text);padding:10px;resize:vertical"></textarea>
+      <div class="btns">
+        <button class="act" id="bStyleSample">填入示例</button>
+        <button class="act" id="bStyleReset">重置为默认</button>
+        <button class="act" id="bStyleValidate">校验</button>
+        <button class="act primary" id="bStyleOpen" disabled>用此样式拉起弹窗</button>
+      </div>
+      <label>校验结果</label>
+      <div id="styleIssues" style="font:12px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace"></div>
+      <label>最终生效样式（合并我方默认后下发给 initControl）</label>
+      <pre id="styleEffective"
+        style="background:var(--code);border:1px solid var(--line);border-radius:12px;padding:10px;font:12px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-all;max-height:40vh;overflow:auto;color:#334155;margin:0"></pre>
+    </details>
+  </div>
+
+  <div class="card">
+    <div class="logbar">
+      <label style="margin:0">链路日志</label>
+      <div class="tools">
+        <button id="copyLog">复制日志</button>
+        <button id="clearLog">清空</button>
+      </div>
+    </div>
+    <div id="log"></div>
+    <p class="note">本调试台 appKey 仅在前端用于联调测试；正式接入应由贵方服务端持有 appKey，前端只接收 launchToken。需在手机移动网络（中国移动号码）下测试取号。</p>
+  </div>
+
+<script type="module">
+import { createAssistanceMobileAuthSdk } from '/sign-pay-pro/assistance-mobile-auth/assistance-mobile-auth.js'
+// 样式调试区刷新钩子；调试模块加载成功后被替换为真正的校验函数。加载失败时保持 no-op，主流程不受影响。
+let refreshStyleDebug = () => {}
+
+const API = location.origin + '/sign-pay-pro/api/sdk/session'
+const WRAPPER = '/sign-pay-pro/assistance-mobile-auth/assistance-mobile-auth.js'
+const $ = (id) => document.getElementById(id)
+const logEl = $('log')
+$('env').textContent = 'wrapper: ' + WRAPPER + '\nAPI: ' + API
+
+// ───── appId/appKey 本地记忆 ─────
+const CREDENTIAL_STORAGE = {
+  appId: 'biz-debug:appId',
+  appKey: 'biz-debug:appKey',
+}
+
+function rememberInput(id, storageKey){
+  const input = $(id)
+  if(!input) return
+  try{
+    const stored = localStorage.getItem(storageKey)
+    if(stored) input.value = stored
+  }catch{}
+  input.addEventListener('input', ()=>{
+    try{
+      const value = input.value.trim()
+      if(value) localStorage.setItem(storageKey, value)
+      else localStorage.removeItem(storageKey)
+    }catch{}
+  })
+}
+
+rememberInput('appId', CREDENTIAL_STORAGE.appId)
+rememberInput('appKey', CREDENTIAL_STORAGE.appKey)
+// ───── appId/appKey 本地记忆结束 ─────
+
+let launchToken = null
+let lastResult = null
+let sdk = null
+
+function ts(){ const d=new Date(); return d.toTimeString().slice(0,8)+'.'+String(d.getMilliseconds()).padStart(3,'0') }
+function line(html, cls){ const el=document.createElement('div'); if(cls) el.className=cls
+  el.innerHTML = `<span class="log-t">${ts()}</span>  ${html}`; logEl.appendChild(el); logEl.scrollTop=logEl.scrollHeight }
+const step=(s)=>line('▶ '+s,'log-step'); const ok=(s)=>line('✓ '+s,'log-ok')
+const err=(s)=>line('✗ '+s,'log-err'); const warn=(s)=>line('! '+s,'log-warn')
+const info=(s)=>line(s)
+const esc=(s)=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+function setState(t,c){ const e=$('state'); e.textContent=t; e.className='pill '+(c||'') }
+
+function curl(path, body){
+  const c = `curl -X POST '${API}${path}' -H 'Content-Type: application/json' -d '${JSON.stringify(body)}'`
+  line('$ '+esc(c),'log-curl')
+}
+
+async function postJson(path, body){
+  curl(path, body)
+  const res = await fetch(API+path, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+  const text = await res.text(); let data; try{ data=JSON.parse(text) }catch{ data=text }
+  info('  ← http='+res.status+'  '+esc(typeof data==='string'?data:JSON.stringify(data)))
+  return {status:res.status, data}
+}
+
+function readForm(){
+  const appId=$('appId').value.trim(), appKey=$('appKey').value.trim()
+  if(!appId||!appKey){ warn('请先填写 appId 与 appKey'); return null }
+  const scene=$('scene').value.trim()||'native-number'
+  const requestId=$('requestId').value.trim()||('bizdbg-'+Date.now()+'-'+Math.random().toString(36).slice(2,7))
+  return {appId, appKey, scene, requestId}
+}
+
+function ensureSdk(){
+  if(sdk) return sdk
+  sdk = createAssistanceMobileAuthSdk({
+    appId:'demo-brand-001',
+    authWindowTitle:'银杏助理认证',
+    onReady:()=>ok('授权页就绪 onReady'),
+    onErrorNotice:(p)=>warn('非终态通知 onErrorNotice: '+JSON.stringify(p)),
+    onError:(p)=>err('授权失败 onError: '+JSON.stringify(p)),
+    onCancel:()=>warn('用户取消 onCancel'),
+    onClose:()=>warn('窗口关闭 onClose'),
+  })
+  return sdk
+}
+
+async function doCreate(){
+  const f=readForm(); if(!f) return false
+  step('① POST /create 申请 launchToken')
+  const body={appId:f.appId, appKey:f.appKey, scene:f.scene, requestId:f.requestId}
+  const r=await postJson('/create', body)
+  if(r.status!==200||r.data?.kind!=='created'){ err('createSession 失败'); setState('createSession 失败','err'); return false }
+  launchToken=r.data.launchToken; $('r-launch').textContent=launchToken
+  $('bOpen').disabled=false
+  refreshStyleDebug()
+  ok('launchToken='+launchToken); return true
+}
+
+async function doPrecheck(){
+  if(!launchToken){ warn('请先「① 创建会话」拿到 launchToken'); return }
+  step('② sdk.precheck() 预检（不弹窗、不取号成功，只判定）')
+  try{
+    const r=await ensureSdk().precheck({launchToken})
+    info('  ← precheck '+JSON.stringify(r))
+    const map={ok:'可认证',wifi:'当前 Wi-Fi/取不到号',['non-mobile']:'非中国移动号码',ambiguous:'运营商识别不明',unknown:'未知'}
+    $('r-precheck').textContent=(map[r.reason]||r.reason)+(r.eligible?' ✓':'')
+    r.eligible?ok('预检通过，可拉起授权'):warn('预检不通过：'+(map[r.reason]||r.reason))
+  }catch(e){ err('precheck 异常: '+(e?.message||e)) }
+}
+
+async function doOpen(){
+  if(!launchToken){ warn('请先「① 创建会话」'); return }
+  step('③ sdk.open() 拉起授权弹层')
+  try{
+    lastResult=await ensureSdk().open({scene:$('scene').value.trim()||'native-number', launchToken, requestId:$('requestId').value.trim()||undefined})
+    info('  ← onSuccess payload '+JSON.stringify(lastResult))
+    $('r-authtoken').textContent=lastResult.authToken||'(无 authToken，用 authResultId+authCode)'
+    $('bResult').disabled=false
+    ok('授权成功，已拿到结果凭证')
+  }catch(e){ err('open() reject: '+(e?.message||e)); setState('授权未完成','err') }
+}
+
+async function doResult(){
+  const f=readForm(); if(!f) return
+  if(!lastResult){ warn('请先「③ 拉起授权」拿到结果凭证'); return }
+  step('④ POST /result 换取认证结果')
+  const body=lastResult.authToken
+    ? {appId:f.appId, appKey:f.appKey, authToken:lastResult.authToken}
+    : {appId:f.appId, appKey:f.appKey, authResultId:lastResult.authResultId, authCode:lastResult.authCode}
+  const r=await postJson('/result', body)
+  if(r.status!==200||r.data?.kind!=='identity-ready'){ err('queryResult 失败'); setState('取结果失败','err'); return }
+  const id=r.data.identity||{}
+  $('r-name').textContent=id.displayName||'—'; $('r-mobile').textContent=id.maskedMobile||'—'; $('r-idcard').textContent=id.maskedIdCard||'—'
+  ok('认证完成 ✅'+(r.data.mock?'（mock）':'')); setState('成功','ok')
+}
+
+function lock(v){ for(const id of ['runAll','bCreate','bPrecheck','bOpen','bResult']) $(id).disabled=v
+  if(!v){ $('bOpen').disabled=!launchToken; $('bResult').disabled=!lastResult } }
+
+$('runAll').addEventListener('click', async()=>{
+  if(!readForm()) return
+  launchToken=null; lastResult=null
+  for(const k of ['r-launch','r-precheck','r-authtoken','r-name','r-mobile','r-idcard']) $(k).textContent='—'
+  line('──────── 一键完整流程 ────────'); setState('进行中','run'); lock(true)
+  try{ if(await doCreate()){ await doOpen(); if(lastResult) await doResult() } }
+  finally{ lock(false) }
+})
+$('bCreate').addEventListener('click', async()=>{ lock(true); try{ await doCreate() } finally{ lock(false) } })
+$('bPrecheck').addEventListener('click', async()=>{ lock(true); try{ await doPrecheck() } finally{ lock(false) } })
+$('bOpen').addEventListener('click', async()=>{ lock(true); try{ await doOpen() } finally{ lock(false) } })
+$('bResult').addEventListener('click', async()=>{ lock(true); try{ await doResult() } finally{ lock(false) } })
+
+$('clearLog').addEventListener('click', ()=>{ logEl.innerHTML='' })
+$('copyLog').addEventListener('click', async()=>{
+  try{ await navigator.clipboard.writeText(logEl.innerText); $('copyLog').textContent='已复制'; setTimeout(()=>$('copyLog').textContent='复制日志',1200) }
+  catch{ warn('复制失败，请手动选择日志文本') }
+})
+
+info('调试台已加载。填入 appId/appKey 后，可「一键」或逐步调试；遇错把日志「复制」发给我方协助排查。')
+info('提示：取号需手机移动网络 + 中国移动号码；Wi-Fi 环境用「② 预检」会判为不可取号。')
+
+// ───── iframe 样式调试（styleOption） ─────
+// 动态加载样式调试模块：加载失败（如 biz-debug-style.js 未随页面部署）只禁用本调试区，
+// 主流程（①创建会话 / ②预检 / ③拉起 / 结果）不受影响。
+try {
+  const { BASE_DEFAULTS, SAMPLE_STYLE_OPTION, validateStyleOption, computeEffectiveStyle } = await import('./biz-debug-style.js')
+  const styleEditor = $('styleJson')
+
+  function renderStyleValidation(){
+    const { ok, parsed, issues } = validateStyleOption(styleEditor.value)
+    $('styleIssues').innerHTML = issues.length
+      ? issues.map((i)=>{
+          const cls = i.level==='error' ? 'log-err' : 'log-warn'
+          const icon = i.level==='error' ? '🔴' : (i.level==='drop' ? '🟠' : '🟡')
+          return `<div class="${cls}">${icon} <b>${esc(i.path)}</b> ${esc(i.message)}</div>`
+        }).join('')
+      : '<div class="log-ok">✓ 结构与类型校验通过</div>'
+
+    if(ok && parsed){
+      const { effective, note } = computeEffectiveStyle(parsed)
+      $('styleEffective').textContent = JSON.stringify(effective, null, 2) + (note ? '\n\n// '+note : '')
+    } else {
+      $('styleEffective').textContent = '（修正红色错误后显示最终生效样式）'
+    }
+    // 仅按校验结果禁用：校验通过即可点击；缺 launchToken 时由 doStyleOpen 给出可操作提示，
+    // 而非留一个无解释的死按钮。
+    $('bStyleOpen').disabled = !ok
+    return ok
+  }
+
+  let styleDebounce
+  styleEditor.addEventListener('input', ()=>{ clearTimeout(styleDebounce); styleDebounce=setTimeout(renderStyleValidation,300) })
+  $('bStyleValidate').addEventListener('click', renderStyleValidation)
+  $('bStyleSample').addEventListener('click', ()=>{ styleEditor.value=JSON.stringify(SAMPLE_STYLE_OPTION,null,2); renderStyleValidation() })
+  $('bStyleReset').addEventListener('click', ()=>{ styleEditor.value=JSON.stringify(BASE_DEFAULTS,null,2); renderStyleValidation() })
+
+  if(!styleEditor.value.trim()) styleEditor.value = JSON.stringify(SAMPLE_STYLE_OPTION, null, 2)
+
+  async function doStyleOpen(){
+    if(!launchToken){ warn('请先「① 创建会话」拿到 launchToken'); return }
+    if(!renderStyleValidation()){ warn('styleOption 有红色错误，请先修正'); return }
+    const styleOption = JSON.parse(styleEditor.value)
+    step("③' 用自定义 styleOption 拉起弹窗")
+    info('  → 将经 postMessage 下发的 STYLE payload: '+esc(JSON.stringify(styleOption)))
+    const styledSdk = createAssistanceMobileAuthSdk({
+      appId:'demo-brand-001',
+      authWindowTitle:'银杏助理认证（样式调试）',
+      styleOption,
+      onReady:()=>ok('授权页就绪 onReady（样式已 postMessage 下发）'),
+      onErrorNotice:(p)=>warn('onErrorNotice: '+JSON.stringify(p)),
+      onError:(p)=>err('onError: '+JSON.stringify(p)),
+      onCancel:()=>warn('onCancel'),
+      onClose:()=>warn('onClose'),
+    })
+    try{
+      const r=await styledSdk.open({scene:$('scene').value.trim()||'native-number', launchToken, requestId:$('requestId').value.trim()||undefined})
+      ok('授权成功（样式调试）'); info('  ← onSuccess '+esc(JSON.stringify(r)))
+    }catch(e){ err("open() reject: "+(e?.message||e)) }
+    finally{ styledSdk.destroy?.() }
+  }
+  $('bStyleOpen').addEventListener('click', async()=>{ $('bStyleOpen').disabled=true; try{ await doStyleOpen() } finally{ renderStyleValidation() } })
+
+  refreshStyleDebug = renderStyleValidation
+  renderStyleValidation()
+} catch (e) {
+  warn('样式调试模块加载失败（biz-debug-style.js 未部署？），主流程不受影响：'+(e?.message||e))
+}
+</script>
+</body>
+</html>

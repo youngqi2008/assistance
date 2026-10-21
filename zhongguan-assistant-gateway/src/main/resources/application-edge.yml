@@ -1,0 +1,6 @@
+# 由 Nginx 对外提供 HTTPS 时使用。
+# 启动：--spring.profiles.active=ums-test,edge  或  ums-prod,edge
+server:
+  address: 127.0.0.1
+  port: 8080
+  forward-headers-strategy: framework

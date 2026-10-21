@@ -1,0 +1,70 @@
+[data-custom-template="yuanbao"] { box-sizing:border-box; width:100%; height:100%; font-family:-apple-system,BlinkMacSystemFont,'PingFang SC',sans-serif; color:#3e424b; }
+:root:has([data-custom-template="yuanbao"]) body { margin:0; }
+[data-custom-template="yuanbao"] *, [data-custom-template="yuanbao"] *::before, [data-custom-template="yuanbao"] *::after { box-sizing:border-box; }
+[data-custom-template="yuanbao"] [hidden] { display:none !important; }
+[data-custom-template="yuanbao"] button { font:inherit; cursor:pointer; }
+[data-custom-template="yuanbao"] [data-stage] { position:relative; width:100%; height:100vh; height:100dvh; container-type:size; overflow:auto; }
+[data-custom-template="yuanbao"] [data-card] {
+  --card-width:min(85.125448cqw,47.310757cqh); --keyboard-height:min(56cqw,31cqh); --keyboard-gap:min(8.243728cqw,4.581673cqh);
+  position:absolute; bottom:calc(var(--keyboard-height) + var(--keyboard-gap)); left:50%; transform:translateX(-50%);
+  width:var(--card-width); max-height:calc(100cqh - var(--keyboard-height) - var(--keyboard-gap) - 16px - env(safe-area-inset-top,0px));
+  overflow-x:hidden; overflow-y:auto; overscroll-behavior:contain; padding-bottom:min(4.480287cqw,2.49004cqh);
+  border-radius:min(3.225806cqw,1.792829cqh); background:#fff; box-shadow:0 6px 18px rgb(0 0 0 / 12%); container-type:inline-size;
+}
+[data-custom-template="yuanbao"] [data-stage][data-keyboard-open="false"] [data-card] { bottom:50%; transform:translate(-50%,50%); max-height:calc(100cqh - 32px - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px)); }
+[data-custom-template="yuanbao"] [data-close] { position:sticky; z-index:6; float:right; top:0; width:11.034483cqi; height:11.034483cqi; margin-bottom:-11.034483cqi; border:0; background:transparent; color:#9b9b9b; font-size:7.586207cqi; line-height:1; }
+[data-custom-template="yuanbao"] [data-header] { display:block; width:100cqi; height:15.625cqi; object-fit:contain; }
+[data-custom-template="yuanbao"] [data-phone] { display:flex; align-items:baseline; justify-content:center; gap:.517241cqi; font-size:4.137931cqi; line-height:1.4; }
+[data-custom-template="yuanbao"] #ydrzPhoneControl, [data-custom-template="yuanbao"] #ydrzPhoneControl * { display:inline !important; width:auto !important; margin:0 !important; padding:0 !important; color:#3e424b !important; background:transparent !important; font:inherit !important; }
+[data-custom-template="yuanbao"] [data-middle] { display:block; width:100cqi; margin:4.482759cqi 0 0; }
+[data-custom-template="yuanbao"] [data-id-grid] { position:relative; display:grid; width:72cqi; grid-template-columns:repeat(4,minmax(0,1fr)); gap:2.758621cqi; margin:3cqi auto 0; cursor:text; }
+[data-custom-template="yuanbao"] [data-id-box] { display:flex; width:100%; aspect-ratio:1; align-items:center; justify-content:center; border:.344828cqi solid #E9EEF6; border-radius:2.413793cqi; background:#F0F4FD; color:#333333; font-size:10.344828cqi; font-weight:700; line-height:1; }
+[data-custom-template="yuanbao"] [data-id-box][data-active="true"] { background:#FEF9F5; border-color:#FFBB6D; box-shadow:0 0 0 .344828cqi #FFBB6D inset; }
+[data-custom-template="yuanbao"] [data-card][data-error="true"] [data-id-box] { background:#FFF5F5; border-color:#FF6D6D; box-shadow:0 0 0 .344828cqi #FF6D6D inset; color:#FF3400; }
+[data-custom-template="yuanbao"] [data-caret] { display:block; width:.344828cqi; height:10.344828cqi; background:#0082FF; animation:yuanbao-caret 1s step-end infinite; }
+[data-custom-template="yuanbao"] [data-id-value] { position:absolute; width:1px; height:1px; padding:0; border:0; opacity:0; pointer-events:none; }
+[data-custom-template="yuanbao"][data-input-mode="native"] [data-id-value] { inset:0; width:100%; height:100%; color:transparent; caret-color:transparent; font-size:16px; pointer-events:auto; }
+[data-custom-template="yuanbao"] [data-input-error] { display:flex; align-items:center; gap:1.37931cqi; width:72cqi; min-height:5.862069cqi; margin:1.034483cqi auto 0; color:#FF3400; font-size:3.448276cqi; line-height:4.827586cqi; }
+[data-custom-template="yuanbao"] [data-error-icon] { display:inline-flex; flex:0 0 4.827586cqi; width:4.827586cqi; height:4.827586cqi; align-items:center; justify-content:center; border-radius:50%; background:#FF3400; color:#fff; font-weight:700; }
+[data-custom-template="yuanbao"] [data-message] { margin:8px 16px; color:#FF3400; text-align:center; font-size:12px; }
+[data-custom-template="yuanbao"] [data-submit-wrap] { position:relative; width:84.482759cqi; margin:15px auto 0; }
+[data-custom-template="yuanbao"] [data-submit] { position:relative; width:100%; height:15.862069cqi; border-radius:7.931034cqi; background:linear-gradient(90deg,#ff8b0b,#ff451d); color:#fff; font-size:5.517241cqi; font-weight:700; line-height:1; box-shadow:0 11px 22px 0 rgba(255,157,149,.35); }
+[data-custom-template="yuanbao"] #ydrzSubmitControl, [data-custom-template="yuanbao"] #ydrzSubmitControl > *, [data-custom-template="yuanbao"] #ydrzSubmitControl :is(button,a,input,[role="button"],.ydrz-submitbtn-wrap) { position:absolute !important; inset:0 !important; display:flex !important; width:100% !important; height:100% !important; min-height:0 !important; align-items:center !important; justify-content:center !important; margin:0 !important; padding:0 !important; border:0 !important; border-radius:inherit !important; cursor:pointer; }
+[data-custom-template="yuanbao"] #ydrzSubmitControl, [data-custom-template="yuanbao"] #ydrzSubmitControl * { background:transparent !important; box-shadow:none !important; color:inherit !important; font-family:inherit !important; font-size:inherit !important; font-weight:700 !important; line-height:inherit !important; text-align:center !important; text-decoration:none !important; }
+[data-custom-template="yuanbao"] [data-card][data-submitting="true"] [data-submit] { background:#999; }
+[data-custom-template="yuanbao"] [data-busy] { position:absolute; z-index:3; inset:0; display:flex; align-items:center; justify-content:center; gap:.35em; border-radius:7.931034cqi; color:#fff; font-size:5.517241cqi; font-weight:700; pointer-events:none; }
+[data-custom-template="yuanbao"] [data-busy] img { width:1em; height:1em; }
+[data-custom-template="yuanbao"] [data-hand] { position:absolute; z-index:2; right:-3.103448cqi; bottom:-8.62069cqi; width:21.724138cqi; height:20.172414cqi; pointer-events:none; animation:yuanbao-hand 1s cubic-bezier(.66,0,.34,1) infinite; }
+[data-custom-template="yuanbao"] [data-agreements] { width:90.344828cqi; margin:4.2cqi auto 0; color:#848AB4; font-size:3.448276cqi; line-height:5.263158cqi; text-align:left; }
+[data-custom-template="yuanbao"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl), [data-custom-template="yuanbao"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl) * { width:auto !important; max-width:100%; margin:0 !important; padding:0 !important; color:#848AB4 !important; background:transparent !important; font:inherit !important; line-height:inherit !important; text-align:left !important; }
+[data-custom-template="yuanbao"] #ydrzAgreementControl, [data-custom-template="yuanbao"] #ydrzAgreementControl p, [data-custom-template="yuanbao"] #ydrzTipsControl, [data-custom-template="yuanbao"] #ydrzTipsControl p { display:inline !important; }
+[data-custom-template="yuanbao"] [data-agreements] a { color:#848AB4 !important; font-weight:600; }
+[data-custom-template="yuanbao"] .yuanbao-caller-agreement { display:flex; align-items:flex-start; gap:4px; margin-top:4px; }
+[data-custom-template="yuanbao"] .yuanbao-caller-agreement input { margin:3px 0 0; accent-color:#ff6d1a; }
+[data-custom-template="yuanbao"] [data-sms]:empty { display:none; }
+[data-custom-template="yuanbao"] [data-other] { display:block; margin:3.862069cqi auto 0; padding:0; border:0; background:transparent; color:#0183ff; font-size:4.137931cqi; line-height:1.4; }
+[data-custom-template="yuanbao"] [data-initializing] { display:flex; align-items:center; justify-content:center; gap:8px; padding:16px; }
+[data-custom-template="yuanbao"] [data-initializing] img { width:24px; height:24px; animation:yuanbao-spin 1s linear infinite; }
+[data-custom-template="yuanbao"] [data-keyboard] { position:absolute; bottom:0; left:0; width:100%; height:min(56cqw,31cqh); container-type:size; padding:4cqh 1.433692cqw max(5cqh,env(safe-area-inset-bottom,0px)); background:#e8e8e8; }
+[data-custom-template="yuanbao"] [data-collapse] { position:absolute; top:0; right:8px; z-index:1; padding:0 8px; height:18px; border:0; background:transparent; font-size:11px; color:#4b5563; }
+[data-custom-template="yuanbao"] [data-key-grid] { display:grid; width:100%; height:100%; grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(4,minmax(0,1fr)); gap:2cqh 1.25448cqw; }
+[data-custom-template="yuanbao"] [data-key] { display:flex; min-width:0; min-height:0; align-items:center; justify-content:center; border:0; border-radius:2cqh; background:#fff; color:#111318; font-size:10.5cqh; font-weight:400; box-shadow:0 0 0 .25cqh rgb(0 0 0 / 4%); }
+[data-custom-template="yuanbao"] [data-key="delete"] { background:transparent; box-shadow:none; }
+/* The genuine SDK creates the reader outside the customer root. The template
+ * marker selects its geometry without tying appearance to an application ID. */
+:root:has([data-custom-template="yuanbao"]) .ydrz-confirm-bg-wrap { position:fixed !important; inset:0 !important; width:100% !important; height:100% !important; z-index:20 !important; background:transparent; }
+:root:has([data-custom-template="yuanbao"]) .ydrz-confirm-bg { width:100% !important; height:100% !important; }
+:root:has([data-custom-template="yuanbao"]) .ydrz-confirm-iframe { position:absolute !important; inset:auto 0 0 !important; width:100% !important; height:50% !important; min-height:0 !important; max-height:50% !important; display:flex !important; flex-flow:column nowrap !important; overflow:hidden !important; border-radius:16px 16px 0 0; background:#fff; }
+:root:has([data-custom-template="yuanbao"]) .ydrz-confirm-header { position:relative !important; flex:0 0 56px !important; height:56px !important; line-height:56px !important; margin:0 !important; padding:0 56px !important; text-align:center !important; }
+:root:has([data-custom-template="yuanbao"]) .ydrz-confirm-header em { position:absolute !important; width:28px !important; height:28px !important; left:16px !important; top:50% !important; bottom:auto !important; margin:0 !important; transform:translateY(-50%) !important; font-size:12px; line-height:28px; cursor:pointer; }
+:root:has([data-custom-template="yuanbao"]) .ydrz-confirm-iframe iframe { display:block; min-height:0 !important; height:auto !important; flex:1 1 auto !important; width:100%; }
+[data-custom-template="yuanbao"].custom-agreement-reader { height:auto; min-height:100%; padding:16px; color:#333; background:#fff; }
+[data-custom-template="yuanbao"].custom-agreement-reader header { min-height:56px; }
+/* The SDK owns the list title/close row; document pages retain their local navigation. */
+[data-custom-template="yuanbao"].custom-agreement-reader:has(> article > nav) > header { display:none; }
+[data-custom-template="yuanbao"].custom-agreement-reader nav { padding-bottom:calc(50px + env(safe-area-inset-bottom,0px)); }
+[data-custom-template="yuanbao"].custom-agreement-reader nav a { color:#848AB4; }
+@keyframes yuanbao-caret { 0%,49%{opacity:1}50%,100%{opacity:0} }
+@keyframes yuanbao-hand { 0%,100%{transform:translate(.4rem,.4rem)}50%{transform:translate(0,0)} }
+@keyframes yuanbao-spin { to { transform:rotate(360deg) } }
+@media(prefers-reduced-motion:reduce) { [data-custom-template="yuanbao"] [data-hand], [data-custom-template="yuanbao"] [data-caret], [data-custom-template="yuanbao"] [data-initializing] img { animation:none; transform:translate(0,0); } }

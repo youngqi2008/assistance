@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>银商助理测试页 · 多点健康 TEMP 0.3.2</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f6f8;color:#111827;font:14px/1.6 system-ui,-apple-system,"PingFang SC",sans-serif}main{max-width:480px;margin:auto;padding:20px 20px 32px}header{display:flex;align-items:center;justify-content:space-between;min-height:44px}h1{font-size:18px;margin:0;font-weight:600}.order{text-align:center;padding-top:20px}.order p{font-size:18px;font-weight:600;margin:0}.amount{display:block;margin-top:20px;font-size:44px;line-height:1;font-weight:600;letter-spacing:-1px}.card{margin-top:24px;padding:16px 20px;border-radius:16px;background:white;box-shadow:0 12px 30px #0f172a0f}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #eef1f4}.row:first-child{padding-top:0}.row:last-child{border:0;padding-bottom:0}.row span{color:#8a8f98}.row strong{font-weight:600}button{cursor:pointer;font:inherit}.action{margin-top:20px;width:100%;min-height:52px;border:1px solid #19be00;border-radius:10px;background:#19be00;color:white;font-size:16px;font-weight:600;padding:10px 8px;box-shadow:0 3px 0 #15990022}button:disabled{cursor:wait;opacity:.65}button:focus-visible,summary:focus-visible{outline:2px solid #0082ff;outline-offset:3px}#status{margin:12px 0 0;color:#475569;overflow-wrap:anywhere}.note{font-size:12px;color:#64748b;margin:12px 0}h2{margin:0;font-size:14px;font-weight:600}pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px;margin:8px 0 0}code{font-size:11px;overflow-wrap:anywhere}.diagnostics{font-size:12px;color:#64748b}.diagnostics p{margin:6px 0}details{margin-top:16px;padding:12px 14px;border:1px solid #e2e8f0;border-radius:10px;background:white}summary{cursor:pointer;color:#475569}[hidden]{display:none!important}@media(max-width:340px){main{padding:12px 16px 24px}.order{padding-top:12px}.amount{margin-top:16px}.card{margin-top:20px;padding:14px 16px}}
+</style>
+</head>
+<body>
+<main aria-label="订单支付">
+  <header><span aria-hidden="true" style="font-size:32px">×</span><h1>银商助理测试页</h1><span>多点健康</span></header>
+  <section class="order" aria-label="订单金额"><p>快捷支付签约订单</p><strong class="amount">¥0.01</strong></section>
+  <section class="card" aria-label="订单详情">
+    <div class="row"><span>商品</span><strong>快捷支付签约</strong></div>
+    <div class="row"><span>接入版本</span><strong>0.3.2 TEMP 资源</strong></div>
+    <div class="row"><span>支付方式</span><strong>银行卡快捷支付</strong></div>
+  </section>
+  <button id="open" class="action" type="button">测试多点健康三要素授权</button>
+  <p id="status" role="status">等待开始；请先完成 0.3.2 TEMP 资源部署。</p>
+  <section id="resultCard" class="card rr-block" data-rrweb-sensitive="true" aria-label="认证返回结果" hidden>
+    <h2>认证返回结果（完整）</h2><pre id="result" class="rr-block" data-rrweb-sensitive="true"></pre>
+  </section>
+  <section id="backendCard" class="card rr-block" data-rrweb-sensitive="true" hidden>
+    <h2>交给既有后端的参数</h2><p class="note">仅展示字段，不请求甲方接口；此处成功不代表后端身份核验成功。</p>
+    <pre id="backendPayload" class="rr-block" data-rrweb-sensitive="true"></pre>
+  </section>
+  <section id="precheckCard" class="card rr-block" data-rrweb-sensitive="true" hidden>
+    <h2>预检结果（完整）</h2><pre id="precheckResult" class="rr-block" data-rrweb-sensitive="true"></pre>
+  </section>
+  <details class="rr-block" data-rrweb-sensitive="true"><summary>回调记录</summary><pre id="callbacks" class="rr-block" data-rrweb-sensitive="true"></pre></details>
+  <section class="card diagnostics" aria-label="SDK 资源诊断">
+    <h2>TEMP SDK · 0.3.2</h2>
+    <p><code id="sdkUrl">https://ginkgo.chinaums.com/sign-pay-pro-temp/assist/0.3.2/assistance-mobile-auth/assistance-mobile-auth.duodian-health.0.3.2.umd.cjs?image=20261015-compact</code></p>
+    <p id="sdkStatus" role="status">尚未加载；点击测试按钮后动态引入。</p>
+  </section>
+  <section class="card" aria-label="SDK 引入和调用代码">
+    <h2>SDK 引入和调用代码</h2>
+    <p class="note">与甲方当前接入方式一致，仅 SDK URL 换为 TEMP 0.3.2。回调中已有的埋点、关闭处理和业务后端请求保持原样；此页只展示认证结果，不调用甲方业务接口。</p>
+    <pre><code id="integrationCode">const sdkUrl = 'https://ginkgo.chinaums.com/sign-pay-pro-temp/assist/0.3.2/assistance-mobile-auth/assistance-mobile-auth.duodian-health.0.3.2.umd.cjs?image=20261015-compact';
+
+function loadScript(url) {
+  return new Promise((resolve, reject) =&gt; {
+    if (document.querySelector('script[src="' + url + '"]')) {
+      resolve();
+      return;
+    }
+    const script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = url;
+    script.addEventListener('load', () =&gt; resolve(), false);
+    script.addEventListener('error', error =&gt; reject(error), false);
+    document.head.appendChild(script);
+  });
+}
+
+async function startAuth() {
+  await loadScript(sdkUrl);
+  const sdk = window.AssistanceMobileAuth.createAssistanceMobileAuthSdk({
+    closable: true,
+    authWindowHeight: '72vh',
+    authWindowMaxHeight: '82vh',
+    useCustomKeyboard: true,
+    onReady: () =&gt; {
+      // 原有埋点和输入框失焦处理保持不变。
+    },
+    onSuccess: async result =&gt; {
+      const { token, idLast4, keyA } = result;
+      // 保留原有 shuYinAuth({ token, idLast4, keyA }) 调用及结果处理。
+    },
+    onCancel: result =&gt; { /* 保留原有取消处理。 */ },
+    onError: result =&gt; { /* 保留原有错误处理。 */ },
+    onClose: () =&gt; { /* 保留原有关闭处理。 */ },
+  });
+  sdk.precheck({ scene: 'native-number' }).then(result =&gt; {
+    if (result.eligible === true) {
+      sdk.open({ scene: 'native-number' });
+    } else {
+      // 保留原有预检不通过时的降级处理。
+    }
+  }).catch(error =&gt; {
+    // 保留原有预检异常处理。
+  });
+}
+
+// 继续在原业务流程中调用 startAuth()。</code></pre>
+  </section>
+  <p class="note">沿用甲方页面的动态 URL 引入、初始化选项、五个回调及 precheck → open 顺序。不传 appId 或 authParams，不引入取参助手。签名由我方 iframe 内部处理。</p>
+  <p class="note">订单仅作演示。本页不模拟认证成功；需要真实运营商网络及有效配置。认证数据仅在当前页面展示，不写入日志或浏览器存储，请勿转发含真实结果的截图。</p>
+</main>
+<script>
+(() => {
+  const sdkUrl = document.querySelector('#sdkUrl').textContent.trim();
+  const button = document.querySelector('#open');
+  const status = document.querySelector('#status');
+  const sdkStatus = document.querySelector('#sdkStatus');
+  let sdk;
+  let opening = false;
+  const display = value => {
+    if (value === undefined) return '';
+    if (Object.prototype.toString.call(value) === '[object Error]') {
+      return JSON.stringify({ ...value, name: value.name, message: value.message }, null, 2);
+    }
+    return JSON.stringify(value, null, 2);
+  };
+  const record = (name, payload) => {
+    const node = document.querySelector('#callbacks');
+    node.textContent += (node.textContent ? '\n\n' : '') + name + (payload === undefined ? '' : '\n' + display(payload));
+  };
+  const showResult = (label, payload) => {
+    status.textContent = label;
+    document.querySelector('#result').textContent = display(payload);
+    document.querySelector('#resultCard').hidden = false;
+  };
+  // Same dynamic script-tag integration as the customer's current page.
+  function loadScript(url) {
+    return new Promise((resolve, reject) => {
+      if (document.querySelector('script[src="' + url + '"]')) { resolve(); return; }
+      const script = document.createElement('script');
+      script.type = 'text/javascript'; script.id = 'tempSdk032'; script.src = url;
+      script.addEventListener('load', () => { sdkStatus.textContent = 'SDK 资源已加载；认证结果另行显示。'; resolve(); }, false);
+      script.addEventListener('error', () => {
+        script.remove();
+        sdkStatus.textContent = 'SDK 加载失败：请确认 0.3.2 TEMP 资源已部署，以及网络和浏览器策略。';
+        reject(new Error(sdkStatus.textContent));
+      }, false);
+      (document.head || document.getElementsByTagName('head')[0]).appendChild(script);
+    });
+  }
+  async function start() {
+    if (opening) return;
+    opening = true; button.disabled = true; button.setAttribute('aria-busy', 'true');
+    for (const selector of ['#result', '#backendPayload', '#precheckResult', '#callbacks']) document.querySelector(selector).textContent = '';
+    for (const selector of ['#resultCard', '#backendCard', '#precheckCard']) document.querySelector(selector).hidden = true;
+    let terminal = false;
+    let phase = 'loading';
+    status.textContent = '正在加载TEMP SDK'; sdkStatus.textContent = '正在加载 SDK';
+    try {
+      await loadScript(sdkUrl);
+      if (typeof window.AssistanceMobileAuth?.createAssistanceMobileAuthSdk !== 'function') {
+        throw new Error('SDK 资源已返回但接口不可用，请检查TEMP 资源部署。');
+      }
+      sdk?.destroy();
+      // These four options and five callbacks match the customer's existing code.
+      sdk = window.AssistanceMobileAuth.createAssistanceMobileAuthSdk({
+        closable: true,
+        authWindowHeight: '72vh',
+        authWindowMaxHeight: '82vh',
+        useCustomKeyboard: true,
+        onReady: () => {
+          record('onReady');
+          document.activeElement?.blur();
+          if (!terminal) status.textContent = '授权页面已就绪';
+        },
+        onSuccess: async result => {
+          terminal = true; record('onSuccess', result); showResult('授权成功（后端身份核验未执行）', result);
+          const { token, idLast4, keyA } = result;
+          document.querySelector('#backendPayload').textContent = display({ token, idLast4, keyA });
+          document.querySelector('#backendCard').hidden = false;
+        },
+        onCancel: result => { terminal = true; record('onCancel', result); showResult('用户取消授权', result); },
+        onError: result => { terminal = true; record('onError', result); showResult('授权失败', result); },
+        onClose: () => { record('onClose'); if (!terminal) { terminal = true; status.textContent = '授权窗口已关闭'; } },
+      });
+      phase = 'precheck'; status.textContent = '正在预检';
+      const precheck = await sdk.precheck({ scene: 'native-number' });
+      document.querySelector('#precheckResult').textContent = display(precheck);
+      document.querySelector('#precheckCard').hidden = false;
+      if (precheck.eligible === true) {
+        phase = 'open'; status.textContent = '预检通过，正在拉起授权';
+        const result = await sdk.open({ scene: 'native-number' });
+        if (!terminal) showResult('授权流程已结束', result);
+      } else {
+        status.textContent = '预检未通过，未打开授权窗口；请查看预检结果。';
+      }
+    } catch (error) {
+      if (!terminal) showResult(phase === 'precheck' ? '预检异常' : phase === 'loading' ? 'SDK 加载失败，请确认TEMP 资源已部署' : '授权未完成', error);
+    } finally {
+      opening = false; button.disabled = false; button.removeAttribute('aria-busy');
+    }
+  }
+  button.addEventListener('click', () => { void start(); });
+  window.addEventListener('pagehide', () => { sdk?.destroy(); });
+})();
+</script>
+</body>
+</html>

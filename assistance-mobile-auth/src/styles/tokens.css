@@ -1,0 +1,18 @@
+:root {
+  --color-brand: #0369a1;
+  --color-brand-dark: #0f172a;
+  --color-brand-soft: #e0f2fe;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f8fafc;
+  --color-page: #eef2f7;
+  --color-border: #d8e2ee;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-success: #15803d;
+  --color-warning: #d97706;
+  --color-error: #dc2626;
+  --shadow-shell: 0 20px 52px rgba(15, 23, 42, 0.08);
+  --shadow-card: 0 10px 24px rgba(15, 23, 42, 0.05);
+  --radius-shell: 32px;
+  --radius-card: 24px;
+}

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>通用 JSSDK · UMD Demo</title>
+  <style>
+    body { margin:20px; font-family:system-ui,sans-serif; }
+    input { width:min(90%,360px); padding:8px; }
+    button { margin:12px 4px 12px 0; padding:8px 12px; }
+    /* 内嵌容器先于 SDK 初始化存在，SDK 在内部创建和管理 iframe。 */
+    #auth-container { width:100%; max-width:430px; min-height:420px; border:1px solid #ddd; }
+    #status { white-space:pre-wrap; }
+  </style>
+</head>
+<body>
+  <h2>UMD 接入</h2>
+  <label>appId：<input id="app-id" placeholder="填写你的 appId" autocomplete="off"></label>
+  <div>
+    <button id="open-modal">弹窗打开</button>
+    <button id="open-inline">嵌入下方容器</button>
+    <button id="close">关闭认证</button>
+  </div>
+  <p id="status" role="status">请填写 appId 后选择展示方式。</p>
+  <div id="auth-container"></div>
+  <script src="https://ginkgo.chinaums.com/sign-pay-pro-temp/assistance-mobile-auth/assistance-mobile-auth.umd.cjs"></script>
+  <script>
+    const { createAssistanceMobileAuthSdk } = window.AssistanceMobileAuth;
+
+    const status = document.querySelector('#status');
+    let sdk;
+
+    async function openAuth(display) {
+      const appId = document.querySelector('#app-id').value.trim();
+      if (!appId) { status.textContent = '请先填写 appId'; return; }
+      sdk?.destroy();
+      sdk = createAssistanceMobileAuthSdk({
+        appId,
+        display, // 'modal'：弹窗；'inline'：指定容器内嵌 iframe
+        ...(display === 'inline' ? { renderTo: '#auth-container' } : {}),
+      });
+      const current = sdk;
+      status.textContent = '正在打开认证页面…';
+      try {
+        const result = await current.open({ scene: 'native-number' });
+        // 在此将 result 交给业务后端处理；不要将 token 等敏感字段输出到页面或日志。
+        if (sdk === current) status.textContent = '认证成功';
+      } catch (error) {
+        if (sdk === current) status.textContent = error.message || '认证未完成';
+      }
+    }
+
+    document.querySelector('#open-modal').onclick = () => openAuth('modal');
+    document.querySelector('#open-inline').onclick = () => openAuth('inline');
+    document.querySelector('#close').onclick = () => sdk?.close();
+    window.addEventListener('pagehide', () => sdk?.destroy(), { once: true });
+  </script>
+</body>
+</html>

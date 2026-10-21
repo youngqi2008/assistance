@@ -1,0 +1,18 @@
+# 银商测试环境（《银杏盾开放平台 v2.0.1》）
+# 启动：mvn spring-boot:run -Dspring-boot.run.profiles=ums-test
+# 可与 local 同时使用：-Dspring-boot.run.profiles=local,ums-test
+#
+# 环境变量（测试套，与生产分开）：
+#   CHINAUMS_TEST_APP_ID / APP_KEY / PRIVATE_KEY
+#   兼容旧名：CHINAUMS_ASSISTANT_APP_ID / APP_KEY / PRIVATE_KEY
+#   CHINAUMS_TEST_PLATFORM_PUBLIC_KEY  （可选，默认规范平台公钥）
+#   CHINAUMS_TEST_USER_NO              （可选，默认 08）
+chinaums:
+  env: test
+  app-id: ${CHINAUMS_TEST_APP_ID:${CHINAUMS_ASSISTANT_APP_ID:10037e6f9512b0b10195401ca57901d1}}
+  app-key: ${CHINAUMS_TEST_APP_KEY:${CHINAUMS_ASSISTANT_APP_KEY:0e609fbbdbde40e5aa467b235eb4c67e}}
+  private-key: ${CHINAUMS_TEST_PRIVATE_KEY:${CHINAUMS_ASSISTANT_PRIVATE_KEY:33c196da0c7e369025c01796e5dd11528740a7abef0f025309b9b6770367131f}}
+  platform-public-key: ${CHINAUMS_TEST_PLATFORM_PUBLIC_KEY:${CHINAUMS_ASSISTANT_PLATFORM_PUBLIC_KEY:0414bb7e9c3914bb65b85079b1dc6e1ca2a0ee04dd9bb55b2f8d31704a6dec0cca695739e128f9c931330e1c0f493be4d56244236434c9d344c4716ba64a4470ba}}
+  check-url: https://test-api-open.chinaums.com/v1/datacenter/smartverification/encrypted/assistant/info/check
+  query-url: https://test-api-open.chinaums.com/v1/datacenter/smartverification/encrypted/assistant/info/query
+  default-user-no: ${CHINAUMS_TEST_USER_NO:08}

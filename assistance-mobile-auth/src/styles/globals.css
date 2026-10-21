@@ -1,0 +1,372 @@
+@import './tokens.css';
+@import 'tailwindcss';
+@source "../";
+
+:root {
+  font-family: 'PingFang SC', 'Noto Sans SC', 'Microsoft YaHei', 'Helvetica Neue', Arial, sans-serif;
+  color: var(--color-text-primary);
+  background: linear-gradient(180deg, #f7f9fc 0%, var(--color-page) 100%);
+  line-height: 1.5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100dvh;
+}
+
+body {
+  min-height: 100dvh;
+  padding: 0;
+}
+
+#root {
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+/* The V23 iframe is rendered in a transparent wrapper viewport. Keep this
+ * opt-in so every other verification profile retains its existing white page. */
+html[data-assistance-v23-viewport-modal='true'],
+body[data-assistance-v23-viewport-modal='true'],
+#root[data-assistance-v23-viewport-modal='true'] {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  margin: 0;
+  background: transparent;
+}
+
+/* The Haike inline profile participates in the host page's natural document
+ * flow. It must not inherit the default full-viewport white H5 canvas. */
+html[data-assistance-haike-inline='true'],
+body[data-assistance-haike-inline='true'],
+#root[data-assistance-haike-inline='true'] {
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  background: transparent;
+}
+
+/* The provider owns opening and closing this reader. Within the Haike inline
+ * iframe, only make its injected surface cover the existing fixed canvas. */
+html[data-assistance-haike-inline='true'] .ydrz-confirm-bg-wrap {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 20 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+html[data-assistance-haike-inline='true'] .ydrz-confirm-bg-wrap .ydrz-confirm-bg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+html[data-assistance-haike-inline='true'] .ydrz-confirm-bg .ydrz-confirm-iframe {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  flex-direction: column !important;
+  flex-wrap: nowrap !important;
+}
+
+html[data-assistance-haike-inline='true'] .ydrz-confirm-bg .ydrz-confirm-iframe .ydrz-confirm-header {
+  flex: 0 0 56px;
+}
+
+html[data-assistance-haike-inline='true'] .ydrz-confirm-bg .ydrz-confirm-iframe .ydrz-confirm-header em {
+  width: 28px;
+  height: 28px;
+}
+
+html[data-assistance-haike-inline='true'] .ydrz-confirm-bg .ydrz-confirm-iframe iframe {
+  display: block;
+  min-height: 0 !important;
+  height: auto !important;
+  flex: 1 1 auto !important;
+}
+
+html[data-app-flow='agreement'] #root {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: #ffffff;
+}
+
+/* Keep the SDK's reader/close behavior, adjusting only Yuanbao geometry. */
+html[data-assistance-yuanbao-feedback='true'] .ydrz-confirm-bg-wrap {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 20 !important;
+}
+
+html[data-assistance-yuanbao-feedback='true'] .ydrz-confirm-bg {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+html[data-assistance-yuanbao-feedback='true'] .ydrz-confirm-iframe {
+  position: absolute !important;
+  inset: auto 0 0 !important;
+  width: 100% !important;
+  height: 50% !important;
+  min-height: 0 !important;
+  max-height: 50% !important;
+  display: flex !important;
+  flex-flow: column nowrap !important;
+  overflow: hidden !important;
+}
+
+html[data-assistance-yuanbao-feedback='true'] .ydrz-confirm-iframe .ydrz-confirm-header {
+  flex: 0 0 56px;
+  position: relative !important;
+  height: 56px !important;
+  line-height: 56px !important;
+  padding: 0 56px !important;
+  text-align: center !important;
+}
+
+html[data-assistance-yuanbao-feedback='true'] .ydrz-confirm-iframe .ydrz-confirm-header em {
+  position: absolute !important;
+  width: 28px !important;
+  height: 28px !important;
+  top: 50% !important;
+  bottom: auto !important;
+  left: 16px !important;
+  margin: 0 !important;
+  transform: translateY(-50%) !important;
+}
+
+html[data-assistance-yuanbao-feedback='true'] .ydrz-confirm-iframe iframe {
+  display: block;
+  min-height: 0 !important;
+  height: auto !important;
+  flex: 1 1 auto !important;
+}
+
+html[data-assistance-yuanbao-feedback='true'] .yuanbao-agreement-list {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px));
+}
+
+html[data-assistance-yuanbao-feedback='true'] .yuanbao-agreement-list > ul {
+  flex-shrink: 0;
+  margin-top: auto;
+  margin-bottom: 0;
+}
+
+.ydrz-agreement-popup-show {
+  height: 100% !important;
+  width: 100% !important;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button,
+a,
+input,
+textarea,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(3, 105, 161, 0.24);
+  outline-offset: 2px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+[data-app='mobile-auth-review'] {
+  position: relative;
+  min-height: 100dvh;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* 移动 JSSDK 控件元素的视觉覆盖。SDK 通过 styleOption 暴露的 textAlign / width 在某些
+   carrier 路径下会被 SDK 自己的 inline flex 布局覆盖；用 !important 在 CSS 层强制对齐。 */
+.compact-phone-subtitle #ydrzPhoneControl {
+  display: inline-flex !important;
+  width: auto !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  vertical-align: baseline !important;
+}
+
+.compact-phone-subtitle #ydrzPhoneControl,
+.compact-phone-subtitle #ydrzPhoneControl * {
+  color: #8A8F98 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+  text-align: left !important;
+  justify-content: flex-start !important;
+}
+
+/* 移动 SDK 的 tips 槽承接官方授权说明，替换原 H5 自写灰色长文案。 */
+#ydrzTipsControl {
+  width: 100% !important;
+  margin-top: 2px !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+#ydrzTipsControl .auth-tips-title {
+  margin: 0 !important;
+  color: #8A8F98 !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  text-align: left !important;
+}
+
+.compact-agreement-copy {
+  width: 100%;
+  color: #8A8F98;
+  font-size: 12px;
+  line-height: 20px;
+  text-align: left;
+}
+
+.compact-agreement-copy #ydrzAgreementControl,
+.compact-agreement-copy #ydrzTipsControl {
+  width: auto !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  color: #8A8F98 !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  text-align: left !important;
+}
+
+.compact-agreement-copy #ydrzAgreementControl,
+.compact-agreement-copy #ydrzTipsControl {
+  display: inline !important;
+}
+
+.compact-agreement-copy #ydrzAgreementControl p,
+.compact-agreement-copy #ydrzTipsControl p {
+  display: inline !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.compact-agreement-copy #ydrzAgreementControl *,
+.compact-agreement-copy #ydrzTipsControl * {
+  color: #8A8F98 !important;
+  font-size: 12px !important;
+  line-height: 20px !important;
+  text-align: left !important;
+}
+
+.compact-agreement-copy #ydrzAgreementControl a,
+.compact-agreement-copy #ydrzAgreementControl a *,
+.compact-agreement-copy #ydrzTipsControl a,
+.compact-agreement-copy #ydrzTipsControl a * {
+  color: #1677FF !important;
+}
+
+/* state 槽当前不在正式流程展示；保留 DOM（SDK getElementById + appendChild 仍正常注入），
+   只做视觉折叠。错误态由我们自己的 SdkErrorPanel(React) 承担。 */
+#ydrzStateControl {
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  overflow: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+#ydrzStateControl .ydrz-state-wrap {
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: #ffffff !important;
+}
+
+#ydrzStateControl .auth-tips-wrap {
+  padding: 6px 12px !important;
+  background-color: #ffffff !important;
+}
+
+#ydrzStateControl .auth-tips-wrap .auth-tips {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin: 0 !important;
+  line-height: 20px !important;
+  text-align: center !important;
+  background-color: #ffffff !important;
+}
+
+#ydrzStateControl .auth-tips-wrap .auth-tips img {
+  display: inline-block !important;
+  flex: 0 0 18px !important;
+  width: 18px !important;
+  max-width: 18px !important;
+  height: 18px !important;
+  margin: 0 !important;
+  object-fit: contain !important;
+}
+
+#ydrzStateControl .auth-tips-wrap .auth-tips span {
+  min-width: 0 !important;
+  color: #334155 !important;
+  font-size: 14px !important;
+  line-height: 20px !important;
+}
+
+/* 移动 SDK 协议控件：隐藏其自带勾选框（已改为自动同意 + 同源二级页协议）。
+   仅命中勾选框本体，绝不命中协议文本/链接（合规：协议文本不隐藏）。真机以渲染为准。 */
+#ydrzAgreementControl input[type='checkbox'],
+#ydrzAgreementControl .ydrz-checkbox {
+  display: none !important;
+}

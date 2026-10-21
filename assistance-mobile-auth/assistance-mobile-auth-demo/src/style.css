@@ -1,0 +1,204 @@
+/* 助填认证 JSSDK 演示页样式 —— 手写 CSS，无任何框架依赖 */
+
+:root {
+  --color-bg: #f5f6f8;
+  --color-card: #ffffff;
+  --color-text: #111827;
+  --color-text-muted: #8a8f98;
+  --color-primary: #ff2d55;
+  --color-primary-shadow: rgba(191, 23, 65, 0.32);
+  --color-success: #15803d;
+  --color-error: #be123c;
+  --color-notice: #1d4ed8;
+  --color-notice-bg: #eff6ff;
+  --card-radius: 16px;
+  --card-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue',
+    'Microsoft YaHei', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 页面整体按移动端宽度排版，桌面浏览器下居中展示 */
+.page {
+  max-width: 480px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 20px 20px 48px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* 简介 */
+.intro {
+  margin: 16px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* 通用白卡片 */
+.card {
+  margin-top: 24px;
+  padding: 16px 20px;
+  background: var(--color-card);
+  border-radius: var(--card-radius);
+  box-shadow: var(--card-shadow);
+}
+
+/* 主操作按钮（品红主色） */
+.primary-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 52px;
+  margin-top: 24px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 10px;
+  background: var(--color-primary);
+  box-shadow: 0 3px 0 var(--color-primary-shadow);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primary-button:active {
+  transform: translateY(1px);
+}
+
+.primary-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+/* 状态行：data-tone 区分等待 / 成功 / 取消 / 失败 */
+.status-card {
+  margin-top: 20px;
+}
+
+.status-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.status-card[data-tone='success'] .status-title {
+  color: var(--color-success);
+}
+
+.status-card[data-tone='error'] .status-title {
+  color: var(--color-error);
+}
+
+.status-card[data-tone='cancelled'] .status-title {
+  color: var(--color-text-muted);
+}
+
+.status-description {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* 结果展示区 */
+.result-section {
+  margin-top: 20px;
+}
+
+.block-title {
+  margin: 16px 0 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+.block-title:first-child {
+  margin-top: 0;
+}
+
+.block-title--notice {
+  color: var(--color-notice);
+}
+
+/* 脱敏身份信息列表 */
+.identity-list {
+  margin: 12px 0 0;
+}
+
+.identity-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 14px;
+}
+
+.identity-row dt {
+  color: var(--color-text-muted);
+}
+
+.identity-row dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* 原始返回值展示区 */
+.payload-pre {
+  max-height: 180px;
+  margin: 8px 0 0;
+  padding: 12px;
+  overflow: auto;
+  border-radius: 12px;
+  background: #f6f7f7;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+  color: var(--color-text);
+}
+
+/* 实时提示列表（非终态提示，蓝色系） */
+.notice-section {
+  margin-top: 20px;
+}
+
+.notice-list {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notice-list li {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--color-notice-bg);
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--color-notice);
+  word-break: break-all;
+}

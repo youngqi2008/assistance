@@ -1,0 +1,1 @@
+# 放入 server.crt / server.key。不要把私钥提交进 Git。

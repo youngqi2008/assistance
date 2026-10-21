@@ -1,0 +1,6810 @@
+var he = typeof globalThis < "u" ? globalThis : typeof window < "u" ? window : typeof global < "u" ? global : typeof self < "u" ? self : {};
+function fn(t) {
+  return t && t.__esModule && Object.prototype.hasOwnProperty.call(t, "default") ? t.default : t;
+}
+function kn(t) {
+  if (Object.prototype.hasOwnProperty.call(t, "__esModule")) return t;
+  var i = t.default;
+  if (typeof i == "function") {
+    var e = function n() {
+      return this instanceof n ? Reflect.construct(i, arguments, this.constructor) : i.apply(this, arguments);
+    };
+    e.prototype = i.prototype;
+  } else e = {};
+  return Object.defineProperty(e, "__esModule", { value: !0 }), Object.keys(t).forEach(function(n) {
+    var x = Object.getOwnPropertyDescriptor(t, n);
+    Object.defineProperty(e, n, x.get ? x : {
+      enumerable: !0,
+      get: function() {
+        return t[n];
+      }
+    });
+  }), e;
+}
+var wt = { exports: {} };
+function mn(t) {
+  throw new Error('Could not dynamically require "' + t + '". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.');
+}
+var Ft = { exports: {} };
+const vn = {}, gn = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+  __proto__: null,
+  default: vn
+}, Symbol.toStringTag, { value: "Module" })), yn = /* @__PURE__ */ kn(gn);
+var En = Ft.exports, ze;
+function q() {
+  return ze || (ze = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n();
+    })(En, function() {
+      var e = e || (function(n, x) {
+        var f;
+        if (typeof window < "u" && window.crypto && (f = window.crypto), typeof self < "u" && self.crypto && (f = self.crypto), typeof globalThis < "u" && globalThis.crypto && (f = globalThis.crypto), !f && typeof window < "u" && window.msCrypto && (f = window.msCrypto), !f && typeof he < "u" && he.crypto && (f = he.crypto), !f && typeof mn == "function")
+          try {
+            f = yn;
+          } catch {
+          }
+        var b = function() {
+          if (f) {
+            if (typeof f.getRandomValues == "function")
+              try {
+                return f.getRandomValues(new Uint32Array(1))[0];
+              } catch {
+              }
+            if (typeof f.randomBytes == "function")
+              try {
+                return f.randomBytes(4).readInt32LE();
+              } catch {
+              }
+          }
+          throw new Error("Native crypto module could not be used to get secure random number.");
+        }, u = Object.create || /* @__PURE__ */ (function() {
+          function s() {
+          }
+          return function(c) {
+            var h;
+            return s.prototype = c, h = new s(), s.prototype = null, h;
+          };
+        })(), m = {}, r = m.lib = {}, a = r.Base = /* @__PURE__ */ (function() {
+          return {
+            /**
+             * Creates a new object that inherits from this object.
+             *
+             * @param {Object} overrides Properties to copy into the new object.
+             *
+             * @return {Object} The new object.
+             *
+             * @static
+             *
+             * @example
+             *
+             *     var MyType = CryptoJS.lib.Base.extend({
+             *         field: 'value',
+             *
+             *         method: function () {
+             *         }
+             *     });
+             */
+            extend: function(s) {
+              var c = u(this);
+              return s && c.mixIn(s), (!c.hasOwnProperty("init") || this.init === c.init) && (c.init = function() {
+                c.$super.init.apply(this, arguments);
+              }), c.init.prototype = c, c.$super = this, c;
+            },
+            /**
+             * Extends this object and runs the init method.
+             * Arguments to create() will be passed to init().
+             *
+             * @return {Object} The new object.
+             *
+             * @static
+             *
+             * @example
+             *
+             *     var instance = MyType.create();
+             */
+            create: function() {
+              var s = this.extend();
+              return s.init.apply(s, arguments), s;
+            },
+            /**
+             * Initializes a newly created object.
+             * Override this method to add some logic when your objects are created.
+             *
+             * @example
+             *
+             *     var MyType = CryptoJS.lib.Base.extend({
+             *         init: function () {
+             *             // ...
+             *         }
+             *     });
+             */
+            init: function() {
+            },
+            /**
+             * Copies properties into this object.
+             *
+             * @param {Object} properties The properties to mix in.
+             *
+             * @example
+             *
+             *     MyType.mixIn({
+             *         field: 'value'
+             *     });
+             */
+            mixIn: function(s) {
+              for (var c in s)
+                s.hasOwnProperty(c) && (this[c] = s[c]);
+              s.hasOwnProperty("toString") && (this.toString = s.toString);
+            },
+            /**
+             * Creates a copy of this object.
+             *
+             * @return {Object} The clone.
+             *
+             * @example
+             *
+             *     var clone = instance.clone();
+             */
+            clone: function() {
+              return this.init.prototype.extend(this);
+            }
+          };
+        })(), v = r.WordArray = a.extend({
+          /**
+           * Initializes a newly created word array.
+           *
+           * @param {Array} words (Optional) An array of 32-bit words.
+           * @param {number} sigBytes (Optional) The number of significant bytes in the words.
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.lib.WordArray.create();
+           *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607]);
+           *     var wordArray = CryptoJS.lib.WordArray.create([0x00010203, 0x04050607], 6);
+           */
+          init: function(s, c) {
+            s = this.words = s || [], c != x ? this.sigBytes = c : this.sigBytes = s.length * 4;
+          },
+          /**
+           * Converts this word array to a string.
+           *
+           * @param {Encoder} encoder (Optional) The encoding strategy to use. Default: CryptoJS.enc.Hex
+           *
+           * @return {string} The stringified word array.
+           *
+           * @example
+           *
+           *     var string = wordArray + '';
+           *     var string = wordArray.toString();
+           *     var string = wordArray.toString(CryptoJS.enc.Utf8);
+           */
+          toString: function(s) {
+            return (s || A).stringify(this);
+          },
+          /**
+           * Concatenates a word array to this word array.
+           *
+           * @param {WordArray} wordArray The word array to append.
+           *
+           * @return {WordArray} This word array.
+           *
+           * @example
+           *
+           *     wordArray1.concat(wordArray2);
+           */
+          concat: function(s) {
+            var c = this.words, h = s.words, d = this.sigBytes, g = s.sigBytes;
+            if (this.clamp(), d % 4)
+              for (var C = 0; C < g; C++) {
+                var B = h[C >>> 2] >>> 24 - C % 4 * 8 & 255;
+                c[d + C >>> 2] |= B << 24 - (d + C) % 4 * 8;
+              }
+            else
+              for (var H = 0; H < g; H += 4)
+                c[d + H >>> 2] = h[H >>> 2];
+            return this.sigBytes += g, this;
+          },
+          /**
+           * Removes insignificant bits.
+           *
+           * @example
+           *
+           *     wordArray.clamp();
+           */
+          clamp: function() {
+            var s = this.words, c = this.sigBytes;
+            s[c >>> 2] &= 4294967295 << 32 - c % 4 * 8, s.length = n.ceil(c / 4);
+          },
+          /**
+           * Creates a copy of this word array.
+           *
+           * @return {WordArray} The clone.
+           *
+           * @example
+           *
+           *     var clone = wordArray.clone();
+           */
+          clone: function() {
+            var s = a.clone.call(this);
+            return s.words = this.words.slice(0), s;
+          },
+          /**
+           * Creates a word array filled with random bytes.
+           *
+           * @param {number} nBytes The number of random bytes to generate.
+           *
+           * @return {WordArray} The random word array.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.lib.WordArray.random(16);
+           */
+          random: function(s) {
+            for (var c = [], h = 0; h < s; h += 4)
+              c.push(b());
+            return new v.init(c, s);
+          }
+        }), o = m.enc = {}, A = o.Hex = {
+          /**
+           * Converts a word array to a hex string.
+           *
+           * @param {WordArray} wordArray The word array.
+           *
+           * @return {string} The hex string.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var hexString = CryptoJS.enc.Hex.stringify(wordArray);
+           */
+          stringify: function(s) {
+            for (var c = s.words, h = s.sigBytes, d = [], g = 0; g < h; g++) {
+              var C = c[g >>> 2] >>> 24 - g % 4 * 8 & 255;
+              d.push((C >>> 4).toString(16)), d.push((C & 15).toString(16));
+            }
+            return d.join("");
+          },
+          /**
+           * Converts a hex string to a word array.
+           *
+           * @param {string} hexStr The hex string.
+           *
+           * @return {WordArray} The word array.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.enc.Hex.parse(hexString);
+           */
+          parse: function(s) {
+            for (var c = s.length, h = [], d = 0; d < c; d += 2)
+              h[d >>> 3] |= parseInt(s.substr(d, 2), 16) << 24 - d % 8 * 4;
+            return new v.init(h, c / 2);
+          }
+        }, p = o.Latin1 = {
+          /**
+           * Converts a word array to a Latin1 string.
+           *
+           * @param {WordArray} wordArray The word array.
+           *
+           * @return {string} The Latin1 string.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var latin1String = CryptoJS.enc.Latin1.stringify(wordArray);
+           */
+          stringify: function(s) {
+            for (var c = s.words, h = s.sigBytes, d = [], g = 0; g < h; g++) {
+              var C = c[g >>> 2] >>> 24 - g % 4 * 8 & 255;
+              d.push(String.fromCharCode(C));
+            }
+            return d.join("");
+          },
+          /**
+           * Converts a Latin1 string to a word array.
+           *
+           * @param {string} latin1Str The Latin1 string.
+           *
+           * @return {WordArray} The word array.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.enc.Latin1.parse(latin1String);
+           */
+          parse: function(s) {
+            for (var c = s.length, h = [], d = 0; d < c; d++)
+              h[d >>> 2] |= (s.charCodeAt(d) & 255) << 24 - d % 4 * 8;
+            return new v.init(h, c);
+          }
+        }, k = o.Utf8 = {
+          /**
+           * Converts a word array to a UTF-8 string.
+           *
+           * @param {WordArray} wordArray The word array.
+           *
+           * @return {string} The UTF-8 string.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var utf8String = CryptoJS.enc.Utf8.stringify(wordArray);
+           */
+          stringify: function(s) {
+            try {
+              return decodeURIComponent(escape(p.stringify(s)));
+            } catch {
+              throw new Error("Malformed UTF-8 data");
+            }
+          },
+          /**
+           * Converts a UTF-8 string to a word array.
+           *
+           * @param {string} utf8Str The UTF-8 string.
+           *
+           * @return {WordArray} The word array.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.enc.Utf8.parse(utf8String);
+           */
+          parse: function(s) {
+            return p.parse(unescape(encodeURIComponent(s)));
+          }
+        }, l = r.BufferedBlockAlgorithm = a.extend({
+          /**
+           * Resets this block algorithm's data buffer to its initial state.
+           *
+           * @example
+           *
+           *     bufferedBlockAlgorithm.reset();
+           */
+          reset: function() {
+            this._data = new v.init(), this._nDataBytes = 0;
+          },
+          /**
+           * Adds new data to this block algorithm's buffer.
+           *
+           * @param {WordArray|string} data The data to append. Strings are converted to a WordArray using UTF-8.
+           *
+           * @example
+           *
+           *     bufferedBlockAlgorithm._append('data');
+           *     bufferedBlockAlgorithm._append(wordArray);
+           */
+          _append: function(s) {
+            typeof s == "string" && (s = k.parse(s)), this._data.concat(s), this._nDataBytes += s.sigBytes;
+          },
+          /**
+           * Processes available data blocks.
+           *
+           * This method invokes _doProcessBlock(offset), which must be implemented by a concrete subtype.
+           *
+           * @param {boolean} doFlush Whether all blocks and partial blocks should be processed.
+           *
+           * @return {WordArray} The processed data.
+           *
+           * @example
+           *
+           *     var processedData = bufferedBlockAlgorithm._process();
+           *     var processedData = bufferedBlockAlgorithm._process(!!'flush');
+           */
+          _process: function(s) {
+            var c, h = this._data, d = h.words, g = h.sigBytes, C = this.blockSize, B = C * 4, H = g / B;
+            s ? H = n.ceil(H) : H = n.max((H | 0) - this._minBufferSize, 0);
+            var y = H * C, S = n.min(y * 4, g);
+            if (y) {
+              for (var w = 0; w < y; w += C)
+                this._doProcessBlock(d, w);
+              c = d.splice(0, y), h.sigBytes -= S;
+            }
+            return new v.init(c, S);
+          },
+          /**
+           * Creates a copy of this object.
+           *
+           * @return {Object} The clone.
+           *
+           * @example
+           *
+           *     var clone = bufferedBlockAlgorithm.clone();
+           */
+          clone: function() {
+            var s = a.clone.call(this);
+            return s._data = this._data.clone(), s;
+          },
+          _minBufferSize: 0
+        });
+        r.Hasher = l.extend({
+          /**
+           * Configuration options.
+           */
+          cfg: a.extend(),
+          /**
+           * Initializes a newly created hasher.
+           *
+           * @param {Object} cfg (Optional) The configuration options to use for this hash computation.
+           *
+           * @example
+           *
+           *     var hasher = CryptoJS.algo.SHA256.create();
+           */
+          init: function(s) {
+            this.cfg = this.cfg.extend(s), this.reset();
+          },
+          /**
+           * Resets this hasher to its initial state.
+           *
+           * @example
+           *
+           *     hasher.reset();
+           */
+          reset: function() {
+            l.reset.call(this), this._doReset();
+          },
+          /**
+           * Updates this hasher with a message.
+           *
+           * @param {WordArray|string} messageUpdate The message to append.
+           *
+           * @return {Hasher} This hasher.
+           *
+           * @example
+           *
+           *     hasher.update('message');
+           *     hasher.update(wordArray);
+           */
+          update: function(s) {
+            return this._append(s), this._process(), this;
+          },
+          /**
+           * Finalizes the hash computation.
+           * Note that the finalize operation is effectively a destructive, read-once operation.
+           *
+           * @param {WordArray|string} messageUpdate (Optional) A final message update.
+           *
+           * @return {WordArray} The hash.
+           *
+           * @example
+           *
+           *     var hash = hasher.finalize();
+           *     var hash = hasher.finalize('message');
+           *     var hash = hasher.finalize(wordArray);
+           */
+          finalize: function(s) {
+            s && this._append(s);
+            var c = this._doFinalize();
+            return c;
+          },
+          blockSize: 16,
+          /**
+           * Creates a shortcut function to a hasher's object interface.
+           *
+           * @param {Hasher} hasher The hasher to create a helper for.
+           *
+           * @return {Function} The shortcut function.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var SHA256 = CryptoJS.lib.Hasher._createHelper(CryptoJS.algo.SHA256);
+           */
+          _createHelper: function(s) {
+            return function(c, h) {
+              return new s.init(h).finalize(c);
+            };
+          },
+          /**
+           * Creates a shortcut function to the HMAC's object interface.
+           *
+           * @param {Hasher} hasher The hasher to use in this HMAC helper.
+           *
+           * @return {Function} The shortcut function.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var HmacSHA256 = CryptoJS.lib.Hasher._createHmacHelper(CryptoJS.algo.SHA256);
+           */
+          _createHmacHelper: function(s) {
+            return function(c, h) {
+              return new E.HMAC.init(s, h).finalize(c);
+            };
+          }
+        });
+        var E = m.algo = {};
+        return m;
+      })(Math);
+      return e;
+    });
+  })(Ft)), Ft.exports;
+}
+var It = { exports: {} }, bn = It.exports, Le;
+function Ae() {
+  return Le || (Le = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(bn, function(e) {
+      return (function(n) {
+        var x = e, f = x.lib, b = f.Base, u = f.WordArray, m = x.x64 = {};
+        m.Word = b.extend({
+          /**
+           * Initializes a newly created 64-bit word.
+           *
+           * @param {number} high The high 32 bits.
+           * @param {number} low The low 32 bits.
+           *
+           * @example
+           *
+           *     var x64Word = CryptoJS.x64.Word.create(0x00010203, 0x04050607);
+           */
+          init: function(r, a) {
+            this.high = r, this.low = a;
+          }
+          /**
+           * Bitwise NOTs this word.
+           *
+           * @return {X64Word} A new x64-Word object after negating.
+           *
+           * @example
+           *
+           *     var negated = x64Word.not();
+           */
+          // not: function () {
+          // var high = ~this.high;
+          // var low = ~this.low;
+          // return X64Word.create(high, low);
+          // },
+          /**
+           * Bitwise ANDs this word with the passed word.
+           *
+           * @param {X64Word} word The x64-Word to AND with this word.
+           *
+           * @return {X64Word} A new x64-Word object after ANDing.
+           *
+           * @example
+           *
+           *     var anded = x64Word.and(anotherX64Word);
+           */
+          // and: function (word) {
+          // var high = this.high & word.high;
+          // var low = this.low & word.low;
+          // return X64Word.create(high, low);
+          // },
+          /**
+           * Bitwise ORs this word with the passed word.
+           *
+           * @param {X64Word} word The x64-Word to OR with this word.
+           *
+           * @return {X64Word} A new x64-Word object after ORing.
+           *
+           * @example
+           *
+           *     var ored = x64Word.or(anotherX64Word);
+           */
+          // or: function (word) {
+          // var high = this.high | word.high;
+          // var low = this.low | word.low;
+          // return X64Word.create(high, low);
+          // },
+          /**
+           * Bitwise XORs this word with the passed word.
+           *
+           * @param {X64Word} word The x64-Word to XOR with this word.
+           *
+           * @return {X64Word} A new x64-Word object after XORing.
+           *
+           * @example
+           *
+           *     var xored = x64Word.xor(anotherX64Word);
+           */
+          // xor: function (word) {
+          // var high = this.high ^ word.high;
+          // var low = this.low ^ word.low;
+          // return X64Word.create(high, low);
+          // },
+          /**
+           * Shifts this word n bits to the left.
+           *
+           * @param {number} n The number of bits to shift.
+           *
+           * @return {X64Word} A new x64-Word object after shifting.
+           *
+           * @example
+           *
+           *     var shifted = x64Word.shiftL(25);
+           */
+          // shiftL: function (n) {
+          // if (n < 32) {
+          // var high = (this.high << n) | (this.low >>> (32 - n));
+          // var low = this.low << n;
+          // } else {
+          // var high = this.low << (n - 32);
+          // var low = 0;
+          // }
+          // return X64Word.create(high, low);
+          // },
+          /**
+           * Shifts this word n bits to the right.
+           *
+           * @param {number} n The number of bits to shift.
+           *
+           * @return {X64Word} A new x64-Word object after shifting.
+           *
+           * @example
+           *
+           *     var shifted = x64Word.shiftR(7);
+           */
+          // shiftR: function (n) {
+          // if (n < 32) {
+          // var low = (this.low >>> n) | (this.high << (32 - n));
+          // var high = this.high >>> n;
+          // } else {
+          // var low = this.high >>> (n - 32);
+          // var high = 0;
+          // }
+          // return X64Word.create(high, low);
+          // },
+          /**
+           * Rotates this word n bits to the left.
+           *
+           * @param {number} n The number of bits to rotate.
+           *
+           * @return {X64Word} A new x64-Word object after rotating.
+           *
+           * @example
+           *
+           *     var rotated = x64Word.rotL(25);
+           */
+          // rotL: function (n) {
+          // return this.shiftL(n).or(this.shiftR(64 - n));
+          // },
+          /**
+           * Rotates this word n bits to the right.
+           *
+           * @param {number} n The number of bits to rotate.
+           *
+           * @return {X64Word} A new x64-Word object after rotating.
+           *
+           * @example
+           *
+           *     var rotated = x64Word.rotR(7);
+           */
+          // rotR: function (n) {
+          // return this.shiftR(n).or(this.shiftL(64 - n));
+          // },
+          /**
+           * Adds this word with the passed word.
+           *
+           * @param {X64Word} word The x64-Word to add with this word.
+           *
+           * @return {X64Word} A new x64-Word object after adding.
+           *
+           * @example
+           *
+           *     var added = x64Word.add(anotherX64Word);
+           */
+          // add: function (word) {
+          // var low = (this.low + word.low) | 0;
+          // var carry = (low >>> 0) < (this.low >>> 0) ? 1 : 0;
+          // var high = (this.high + word.high + carry) | 0;
+          // return X64Word.create(high, low);
+          // }
+        }), m.WordArray = b.extend({
+          /**
+           * Initializes a newly created word array.
+           *
+           * @param {Array} words (Optional) An array of CryptoJS.x64.Word objects.
+           * @param {number} sigBytes (Optional) The number of significant bytes in the words.
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.x64.WordArray.create();
+           *
+           *     var wordArray = CryptoJS.x64.WordArray.create([
+           *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
+           *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+           *     ]);
+           *
+           *     var wordArray = CryptoJS.x64.WordArray.create([
+           *         CryptoJS.x64.Word.create(0x00010203, 0x04050607),
+           *         CryptoJS.x64.Word.create(0x18191a1b, 0x1c1d1e1f)
+           *     ], 10);
+           */
+          init: function(r, a) {
+            r = this.words = r || [], a != n ? this.sigBytes = a : this.sigBytes = r.length * 8;
+          },
+          /**
+           * Converts this 64-bit word array to a 32-bit word array.
+           *
+           * @return {CryptoJS.lib.WordArray} This word array's data as a 32-bit word array.
+           *
+           * @example
+           *
+           *     var x32WordArray = x64WordArray.toX32();
+           */
+          toX32: function() {
+            for (var r = this.words, a = r.length, v = [], o = 0; o < a; o++) {
+              var A = r[o];
+              v.push(A.high), v.push(A.low);
+            }
+            return u.create(v, this.sigBytes);
+          },
+          /**
+           * Creates a copy of this word array.
+           *
+           * @return {X64WordArray} The clone.
+           *
+           * @example
+           *
+           *     var clone = x64WordArray.clone();
+           */
+          clone: function() {
+            for (var r = b.clone.call(this), a = r.words = this.words.slice(0), v = a.length, o = 0; o < v; o++)
+              a[o] = a[o].clone();
+            return r;
+          }
+        });
+      })(), e;
+    });
+  })(It)), It.exports;
+}
+var Tt = { exports: {} }, Cn = Tt.exports, qe;
+function Bn() {
+  return qe || (qe = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(Cn, function(e) {
+      return (function() {
+        if (typeof ArrayBuffer == "function") {
+          var n = e, x = n.lib, f = x.WordArray, b = f.init, u = f.init = function(m) {
+            if (m instanceof ArrayBuffer && (m = new Uint8Array(m)), (m instanceof Int8Array || typeof Uint8ClampedArray < "u" && m instanceof Uint8ClampedArray || m instanceof Int16Array || m instanceof Uint16Array || m instanceof Int32Array || m instanceof Uint32Array || m instanceof Float32Array || m instanceof Float64Array) && (m = new Uint8Array(m.buffer, m.byteOffset, m.byteLength)), m instanceof Uint8Array) {
+              for (var r = m.byteLength, a = [], v = 0; v < r; v++)
+                a[v >>> 2] |= m[v] << 24 - v % 4 * 8;
+              b.call(this, a, r);
+            } else
+              b.apply(this, arguments);
+          };
+          u.prototype = f;
+        }
+      })(), e.lib.WordArray;
+    });
+  })(Tt)), Tt.exports;
+}
+var Rt = { exports: {} }, Sn = Rt.exports, Ke;
+function Dn() {
+  return Ke || (Ke = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(Sn, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.WordArray, b = n.enc;
+        b.Utf16 = b.Utf16BE = {
+          /**
+           * Converts a word array to a UTF-16 BE string.
+           *
+           * @param {WordArray} wordArray The word array.
+           *
+           * @return {string} The UTF-16 BE string.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var utf16String = CryptoJS.enc.Utf16.stringify(wordArray);
+           */
+          stringify: function(m) {
+            for (var r = m.words, a = m.sigBytes, v = [], o = 0; o < a; o += 2) {
+              var A = r[o >>> 2] >>> 16 - o % 4 * 8 & 65535;
+              v.push(String.fromCharCode(A));
+            }
+            return v.join("");
+          },
+          /**
+           * Converts a UTF-16 BE string to a word array.
+           *
+           * @param {string} utf16Str The UTF-16 BE string.
+           *
+           * @return {WordArray} The word array.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.enc.Utf16.parse(utf16String);
+           */
+          parse: function(m) {
+            for (var r = m.length, a = [], v = 0; v < r; v++)
+              a[v >>> 1] |= m.charCodeAt(v) << 16 - v % 2 * 16;
+            return f.create(a, r * 2);
+          }
+        }, b.Utf16LE = {
+          /**
+           * Converts a word array to a UTF-16 LE string.
+           *
+           * @param {WordArray} wordArray The word array.
+           *
+           * @return {string} The UTF-16 LE string.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var utf16Str = CryptoJS.enc.Utf16LE.stringify(wordArray);
+           */
+          stringify: function(m) {
+            for (var r = m.words, a = m.sigBytes, v = [], o = 0; o < a; o += 2) {
+              var A = u(r[o >>> 2] >>> 16 - o % 4 * 8 & 65535);
+              v.push(String.fromCharCode(A));
+            }
+            return v.join("");
+          },
+          /**
+           * Converts a UTF-16 LE string to a word array.
+           *
+           * @param {string} utf16Str The UTF-16 LE string.
+           *
+           * @return {WordArray} The word array.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.enc.Utf16LE.parse(utf16Str);
+           */
+          parse: function(m) {
+            for (var r = m.length, a = [], v = 0; v < r; v++)
+              a[v >>> 1] |= u(m.charCodeAt(v) << 16 - v % 2 * 16);
+            return f.create(a, r * 2);
+          }
+        };
+        function u(m) {
+          return m << 8 & 4278255360 | m >>> 8 & 16711935;
+        }
+      })(), e.enc.Utf16;
+    });
+  })(Rt)), Rt.exports;
+}
+var Ht = { exports: {} }, wn = Ht.exports, We;
+function At() {
+  return We || (We = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(wn, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.WordArray, b = n.enc;
+        b.Base64 = {
+          /**
+           * Converts a word array to a Base64 string.
+           *
+           * @param {WordArray} wordArray The word array.
+           *
+           * @return {string} The Base64 string.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var base64String = CryptoJS.enc.Base64.stringify(wordArray);
+           */
+          stringify: function(m) {
+            var r = m.words, a = m.sigBytes, v = this._map;
+            m.clamp();
+            for (var o = [], A = 0; A < a; A += 3)
+              for (var p = r[A >>> 2] >>> 24 - A % 4 * 8 & 255, k = r[A + 1 >>> 2] >>> 24 - (A + 1) % 4 * 8 & 255, l = r[A + 2 >>> 2] >>> 24 - (A + 2) % 4 * 8 & 255, E = p << 16 | k << 8 | l, s = 0; s < 4 && A + s * 0.75 < a; s++)
+                o.push(v.charAt(E >>> 6 * (3 - s) & 63));
+            var c = v.charAt(64);
+            if (c)
+              for (; o.length % 4; )
+                o.push(c);
+            return o.join("");
+          },
+          /**
+           * Converts a Base64 string to a word array.
+           *
+           * @param {string} base64Str The Base64 string.
+           *
+           * @return {WordArray} The word array.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.enc.Base64.parse(base64String);
+           */
+          parse: function(m) {
+            var r = m.length, a = this._map, v = this._reverseMap;
+            if (!v) {
+              v = this._reverseMap = [];
+              for (var o = 0; o < a.length; o++)
+                v[a.charCodeAt(o)] = o;
+            }
+            var A = a.charAt(64);
+            if (A) {
+              var p = m.indexOf(A);
+              p !== -1 && (r = p);
+            }
+            return u(m, r, v);
+          },
+          _map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+        };
+        function u(m, r, a) {
+          for (var v = [], o = 0, A = 0; A < r; A++)
+            if (A % 4) {
+              var p = a[m.charCodeAt(A - 1)] << A % 4 * 2, k = a[m.charCodeAt(A)] >>> 6 - A % 4 * 2, l = p | k;
+              v[o >>> 2] |= l << 24 - o % 4 * 8, o++;
+            }
+          return f.create(v, o);
+        }
+      })(), e.enc.Base64;
+    });
+  })(Ht)), Ht.exports;
+}
+var Pt = { exports: {} }, Fn = Pt.exports, je;
+function In() {
+  return je || (je = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(Fn, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.WordArray, b = n.enc;
+        b.Base64url = {
+          /**
+           * Converts a word array to a Base64url string.
+           *
+           * @param {WordArray} wordArray The word array.
+           *
+           * @param {boolean} urlSafe Whether to use url safe
+           *
+           * @return {string} The Base64url string.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var base64String = CryptoJS.enc.Base64url.stringify(wordArray);
+           */
+          stringify: function(m, r) {
+            r === void 0 && (r = !0);
+            var a = m.words, v = m.sigBytes, o = r ? this._safe_map : this._map;
+            m.clamp();
+            for (var A = [], p = 0; p < v; p += 3)
+              for (var k = a[p >>> 2] >>> 24 - p % 4 * 8 & 255, l = a[p + 1 >>> 2] >>> 24 - (p + 1) % 4 * 8 & 255, E = a[p + 2 >>> 2] >>> 24 - (p + 2) % 4 * 8 & 255, s = k << 16 | l << 8 | E, c = 0; c < 4 && p + c * 0.75 < v; c++)
+                A.push(o.charAt(s >>> 6 * (3 - c) & 63));
+            var h = o.charAt(64);
+            if (h)
+              for (; A.length % 4; )
+                A.push(h);
+            return A.join("");
+          },
+          /**
+           * Converts a Base64url string to a word array.
+           *
+           * @param {string} base64Str The Base64url string.
+           *
+           * @param {boolean} urlSafe Whether to use url safe
+           *
+           * @return {WordArray} The word array.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var wordArray = CryptoJS.enc.Base64url.parse(base64String);
+           */
+          parse: function(m, r) {
+            r === void 0 && (r = !0);
+            var a = m.length, v = r ? this._safe_map : this._map, o = this._reverseMap;
+            if (!o) {
+              o = this._reverseMap = [];
+              for (var A = 0; A < v.length; A++)
+                o[v.charCodeAt(A)] = A;
+            }
+            var p = v.charAt(64);
+            if (p) {
+              var k = m.indexOf(p);
+              k !== -1 && (a = k);
+            }
+            return u(m, a, o);
+          },
+          _map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",
+          _safe_map: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
+        };
+        function u(m, r, a) {
+          for (var v = [], o = 0, A = 0; A < r; A++)
+            if (A % 4) {
+              var p = a[m.charCodeAt(A - 1)] << A % 4 * 2, k = a[m.charCodeAt(A)] >>> 6 - A % 4 * 2, l = p | k;
+              v[o >>> 2] |= l << 24 - o % 4 * 8, o++;
+            }
+          return f.create(v, o);
+        }
+      })(), e.enc.Base64url;
+    });
+  })(Pt)), Pt.exports;
+}
+var Mt = { exports: {} }, Tn = Mt.exports, Ve;
+function ht() {
+  return Ve || (Ve = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(Tn, function(e) {
+      return (function(n) {
+        var x = e, f = x.lib, b = f.WordArray, u = f.Hasher, m = x.algo, r = [];
+        (function() {
+          for (var k = 0; k < 64; k++)
+            r[k] = n.abs(n.sin(k + 1)) * 4294967296 | 0;
+        })();
+        var a = m.MD5 = u.extend({
+          _doReset: function() {
+            this._hash = new b.init([
+              1732584193,
+              4023233417,
+              2562383102,
+              271733878
+            ]);
+          },
+          _doProcessBlock: function(k, l) {
+            for (var E = 0; E < 16; E++) {
+              var s = l + E, c = k[s];
+              k[s] = (c << 8 | c >>> 24) & 16711935 | (c << 24 | c >>> 8) & 4278255360;
+            }
+            var h = this._hash.words, d = k[l + 0], g = k[l + 1], C = k[l + 2], B = k[l + 3], H = k[l + 4], y = k[l + 5], S = k[l + 6], w = k[l + 7], F = k[l + 8], M = k[l + 9], _ = k[l + 10], N = k[l + 11], z = k[l + 12], O = k[l + 13], j = k[l + 14], K = k[l + 15], D = h[0], T = h[1], R = h[2], I = h[3];
+            D = v(D, T, R, I, d, 7, r[0]), I = v(I, D, T, R, g, 12, r[1]), R = v(R, I, D, T, C, 17, r[2]), T = v(T, R, I, D, B, 22, r[3]), D = v(D, T, R, I, H, 7, r[4]), I = v(I, D, T, R, y, 12, r[5]), R = v(R, I, D, T, S, 17, r[6]), T = v(T, R, I, D, w, 22, r[7]), D = v(D, T, R, I, F, 7, r[8]), I = v(I, D, T, R, M, 12, r[9]), R = v(R, I, D, T, _, 17, r[10]), T = v(T, R, I, D, N, 22, r[11]), D = v(D, T, R, I, z, 7, r[12]), I = v(I, D, T, R, O, 12, r[13]), R = v(R, I, D, T, j, 17, r[14]), T = v(T, R, I, D, K, 22, r[15]), D = o(D, T, R, I, g, 5, r[16]), I = o(I, D, T, R, S, 9, r[17]), R = o(R, I, D, T, N, 14, r[18]), T = o(T, R, I, D, d, 20, r[19]), D = o(D, T, R, I, y, 5, r[20]), I = o(I, D, T, R, _, 9, r[21]), R = o(R, I, D, T, K, 14, r[22]), T = o(T, R, I, D, H, 20, r[23]), D = o(D, T, R, I, M, 5, r[24]), I = o(I, D, T, R, j, 9, r[25]), R = o(R, I, D, T, B, 14, r[26]), T = o(T, R, I, D, F, 20, r[27]), D = o(D, T, R, I, O, 5, r[28]), I = o(I, D, T, R, C, 9, r[29]), R = o(R, I, D, T, w, 14, r[30]), T = o(T, R, I, D, z, 20, r[31]), D = A(D, T, R, I, y, 4, r[32]), I = A(I, D, T, R, F, 11, r[33]), R = A(R, I, D, T, N, 16, r[34]), T = A(T, R, I, D, j, 23, r[35]), D = A(D, T, R, I, g, 4, r[36]), I = A(I, D, T, R, H, 11, r[37]), R = A(R, I, D, T, w, 16, r[38]), T = A(T, R, I, D, _, 23, r[39]), D = A(D, T, R, I, O, 4, r[40]), I = A(I, D, T, R, d, 11, r[41]), R = A(R, I, D, T, B, 16, r[42]), T = A(T, R, I, D, S, 23, r[43]), D = A(D, T, R, I, M, 4, r[44]), I = A(I, D, T, R, z, 11, r[45]), R = A(R, I, D, T, K, 16, r[46]), T = A(T, R, I, D, C, 23, r[47]), D = p(D, T, R, I, d, 6, r[48]), I = p(I, D, T, R, w, 10, r[49]), R = p(R, I, D, T, j, 15, r[50]), T = p(T, R, I, D, y, 21, r[51]), D = p(D, T, R, I, z, 6, r[52]), I = p(I, D, T, R, B, 10, r[53]), R = p(R, I, D, T, _, 15, r[54]), T = p(T, R, I, D, g, 21, r[55]), D = p(D, T, R, I, F, 6, r[56]), I = p(I, D, T, R, K, 10, r[57]), R = p(R, I, D, T, S, 15, r[58]), T = p(T, R, I, D, O, 21, r[59]), D = p(D, T, R, I, H, 6, r[60]), I = p(I, D, T, R, N, 10, r[61]), R = p(R, I, D, T, C, 15, r[62]), T = p(T, R, I, D, M, 21, r[63]), h[0] = h[0] + D | 0, h[1] = h[1] + T | 0, h[2] = h[2] + R | 0, h[3] = h[3] + I | 0;
+          },
+          _doFinalize: function() {
+            var k = this._data, l = k.words, E = this._nDataBytes * 8, s = k.sigBytes * 8;
+            l[s >>> 5] |= 128 << 24 - s % 32;
+            var c = n.floor(E / 4294967296), h = E;
+            l[(s + 64 >>> 9 << 4) + 15] = (c << 8 | c >>> 24) & 16711935 | (c << 24 | c >>> 8) & 4278255360, l[(s + 64 >>> 9 << 4) + 14] = (h << 8 | h >>> 24) & 16711935 | (h << 24 | h >>> 8) & 4278255360, k.sigBytes = (l.length + 1) * 4, this._process();
+            for (var d = this._hash, g = d.words, C = 0; C < 4; C++) {
+              var B = g[C];
+              g[C] = (B << 8 | B >>> 24) & 16711935 | (B << 24 | B >>> 8) & 4278255360;
+            }
+            return d;
+          },
+          clone: function() {
+            var k = u.clone.call(this);
+            return k._hash = this._hash.clone(), k;
+          }
+        });
+        function v(k, l, E, s, c, h, d) {
+          var g = k + (l & E | ~l & s) + c + d;
+          return (g << h | g >>> 32 - h) + l;
+        }
+        function o(k, l, E, s, c, h, d) {
+          var g = k + (l & s | E & ~s) + c + d;
+          return (g << h | g >>> 32 - h) + l;
+        }
+        function A(k, l, E, s, c, h, d) {
+          var g = k + (l ^ E ^ s) + c + d;
+          return (g << h | g >>> 32 - h) + l;
+        }
+        function p(k, l, E, s, c, h, d) {
+          var g = k + (E ^ (l | ~s)) + c + d;
+          return (g << h | g >>> 32 - h) + l;
+        }
+        x.MD5 = u._createHelper(a), x.HmacMD5 = u._createHmacHelper(a);
+      })(Math), e.MD5;
+    });
+  })(Mt)), Mt.exports;
+}
+var _t = { exports: {} }, Rn = _t.exports, Ge;
+function P0() {
+  return Ge || (Ge = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(Rn, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.WordArray, b = x.Hasher, u = n.algo, m = [], r = u.SHA1 = b.extend({
+          _doReset: function() {
+            this._hash = new f.init([
+              1732584193,
+              4023233417,
+              2562383102,
+              271733878,
+              3285377520
+            ]);
+          },
+          _doProcessBlock: function(a, v) {
+            for (var o = this._hash.words, A = o[0], p = o[1], k = o[2], l = o[3], E = o[4], s = 0; s < 80; s++) {
+              if (s < 16)
+                m[s] = a[v + s] | 0;
+              else {
+                var c = m[s - 3] ^ m[s - 8] ^ m[s - 14] ^ m[s - 16];
+                m[s] = c << 1 | c >>> 31;
+              }
+              var h = (A << 5 | A >>> 27) + E + m[s];
+              s < 20 ? h += (p & k | ~p & l) + 1518500249 : s < 40 ? h += (p ^ k ^ l) + 1859775393 : s < 60 ? h += (p & k | p & l | k & l) - 1894007588 : h += (p ^ k ^ l) - 899497514, E = l, l = k, k = p << 30 | p >>> 2, p = A, A = h;
+            }
+            o[0] = o[0] + A | 0, o[1] = o[1] + p | 0, o[2] = o[2] + k | 0, o[3] = o[3] + l | 0, o[4] = o[4] + E | 0;
+          },
+          _doFinalize: function() {
+            var a = this._data, v = a.words, o = this._nDataBytes * 8, A = a.sigBytes * 8;
+            return v[A >>> 5] |= 128 << 24 - A % 32, v[(A + 64 >>> 9 << 4) + 14] = Math.floor(o / 4294967296), v[(A + 64 >>> 9 << 4) + 15] = o, a.sigBytes = v.length * 4, this._process(), this._hash;
+          },
+          clone: function() {
+            var a = b.clone.call(this);
+            return a._hash = this._hash.clone(), a;
+          }
+        });
+        n.SHA1 = b._createHelper(r), n.HmacSHA1 = b._createHmacHelper(r);
+      })(), e.SHA1;
+    });
+  })(_t)), _t.exports;
+}
+var Ot = { exports: {} }, Hn = Ot.exports, Qe;
+function ye() {
+  return Qe || (Qe = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(Hn, function(e) {
+      return (function(n) {
+        var x = e, f = x.lib, b = f.WordArray, u = f.Hasher, m = x.algo, r = [], a = [];
+        (function() {
+          function A(E) {
+            for (var s = n.sqrt(E), c = 2; c <= s; c++)
+              if (!(E % c))
+                return !1;
+            return !0;
+          }
+          function p(E) {
+            return (E - (E | 0)) * 4294967296 | 0;
+          }
+          for (var k = 2, l = 0; l < 64; )
+            A(k) && (l < 8 && (r[l] = p(n.pow(k, 1 / 2))), a[l] = p(n.pow(k, 1 / 3)), l++), k++;
+        })();
+        var v = [], o = m.SHA256 = u.extend({
+          _doReset: function() {
+            this._hash = new b.init(r.slice(0));
+          },
+          _doProcessBlock: function(A, p) {
+            for (var k = this._hash.words, l = k[0], E = k[1], s = k[2], c = k[3], h = k[4], d = k[5], g = k[6], C = k[7], B = 0; B < 64; B++) {
+              if (B < 16)
+                v[B] = A[p + B] | 0;
+              else {
+                var H = v[B - 15], y = (H << 25 | H >>> 7) ^ (H << 14 | H >>> 18) ^ H >>> 3, S = v[B - 2], w = (S << 15 | S >>> 17) ^ (S << 13 | S >>> 19) ^ S >>> 10;
+                v[B] = y + v[B - 7] + w + v[B - 16];
+              }
+              var F = h & d ^ ~h & g, M = l & E ^ l & s ^ E & s, _ = (l << 30 | l >>> 2) ^ (l << 19 | l >>> 13) ^ (l << 10 | l >>> 22), N = (h << 26 | h >>> 6) ^ (h << 21 | h >>> 11) ^ (h << 7 | h >>> 25), z = C + N + F + a[B] + v[B], O = _ + M;
+              C = g, g = d, d = h, h = c + z | 0, c = s, s = E, E = l, l = z + O | 0;
+            }
+            k[0] = k[0] + l | 0, k[1] = k[1] + E | 0, k[2] = k[2] + s | 0, k[3] = k[3] + c | 0, k[4] = k[4] + h | 0, k[5] = k[5] + d | 0, k[6] = k[6] + g | 0, k[7] = k[7] + C | 0;
+          },
+          _doFinalize: function() {
+            var A = this._data, p = A.words, k = this._nDataBytes * 8, l = A.sigBytes * 8;
+            return p[l >>> 5] |= 128 << 24 - l % 32, p[(l + 64 >>> 9 << 4) + 14] = n.floor(k / 4294967296), p[(l + 64 >>> 9 << 4) + 15] = k, A.sigBytes = p.length * 4, this._process(), this._hash;
+          },
+          clone: function() {
+            var A = u.clone.call(this);
+            return A._hash = this._hash.clone(), A;
+          }
+        });
+        x.SHA256 = u._createHelper(o), x.HmacSHA256 = u._createHmacHelper(o);
+      })(Math), e.SHA256;
+    });
+  })(Ot)), Ot.exports;
+}
+var Nt = { exports: {} }, Pn = Nt.exports, Ze;
+function Mn() {
+  return Ze || (Ze = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), ye());
+    })(Pn, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.WordArray, b = n.algo, u = b.SHA256, m = b.SHA224 = u.extend({
+          _doReset: function() {
+            this._hash = new f.init([
+              3238371032,
+              914150663,
+              812702999,
+              4144912697,
+              4290775857,
+              1750603025,
+              1694076839,
+              3204075428
+            ]);
+          },
+          _doFinalize: function() {
+            var r = u._doFinalize.call(this);
+            return r.sigBytes -= 4, r;
+          }
+        });
+        n.SHA224 = u._createHelper(m), n.HmacSHA224 = u._createHmacHelper(m);
+      })(), e.SHA224;
+    });
+  })(Nt)), Nt.exports;
+}
+var Ut = { exports: {} }, _n = Ut.exports, Ye;
+function M0() {
+  return Ye || (Ye = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Ae());
+    })(_n, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.Hasher, b = n.x64, u = b.Word, m = b.WordArray, r = n.algo;
+        function a() {
+          return u.create.apply(u, arguments);
+        }
+        var v = [
+          a(1116352408, 3609767458),
+          a(1899447441, 602891725),
+          a(3049323471, 3964484399),
+          a(3921009573, 2173295548),
+          a(961987163, 4081628472),
+          a(1508970993, 3053834265),
+          a(2453635748, 2937671579),
+          a(2870763221, 3664609560),
+          a(3624381080, 2734883394),
+          a(310598401, 1164996542),
+          a(607225278, 1323610764),
+          a(1426881987, 3590304994),
+          a(1925078388, 4068182383),
+          a(2162078206, 991336113),
+          a(2614888103, 633803317),
+          a(3248222580, 3479774868),
+          a(3835390401, 2666613458),
+          a(4022224774, 944711139),
+          a(264347078, 2341262773),
+          a(604807628, 2007800933),
+          a(770255983, 1495990901),
+          a(1249150122, 1856431235),
+          a(1555081692, 3175218132),
+          a(1996064986, 2198950837),
+          a(2554220882, 3999719339),
+          a(2821834349, 766784016),
+          a(2952996808, 2566594879),
+          a(3210313671, 3203337956),
+          a(3336571891, 1034457026),
+          a(3584528711, 2466948901),
+          a(113926993, 3758326383),
+          a(338241895, 168717936),
+          a(666307205, 1188179964),
+          a(773529912, 1546045734),
+          a(1294757372, 1522805485),
+          a(1396182291, 2643833823),
+          a(1695183700, 2343527390),
+          a(1986661051, 1014477480),
+          a(2177026350, 1206759142),
+          a(2456956037, 344077627),
+          a(2730485921, 1290863460),
+          a(2820302411, 3158454273),
+          a(3259730800, 3505952657),
+          a(3345764771, 106217008),
+          a(3516065817, 3606008344),
+          a(3600352804, 1432725776),
+          a(4094571909, 1467031594),
+          a(275423344, 851169720),
+          a(430227734, 3100823752),
+          a(506948616, 1363258195),
+          a(659060556, 3750685593),
+          a(883997877, 3785050280),
+          a(958139571, 3318307427),
+          a(1322822218, 3812723403),
+          a(1537002063, 2003034995),
+          a(1747873779, 3602036899),
+          a(1955562222, 1575990012),
+          a(2024104815, 1125592928),
+          a(2227730452, 2716904306),
+          a(2361852424, 442776044),
+          a(2428436474, 593698344),
+          a(2756734187, 3733110249),
+          a(3204031479, 2999351573),
+          a(3329325298, 3815920427),
+          a(3391569614, 3928383900),
+          a(3515267271, 566280711),
+          a(3940187606, 3454069534),
+          a(4118630271, 4000239992),
+          a(116418474, 1914138554),
+          a(174292421, 2731055270),
+          a(289380356, 3203993006),
+          a(460393269, 320620315),
+          a(685471733, 587496836),
+          a(852142971, 1086792851),
+          a(1017036298, 365543100),
+          a(1126000580, 2618297676),
+          a(1288033470, 3409855158),
+          a(1501505948, 4234509866),
+          a(1607167915, 987167468),
+          a(1816402316, 1246189591)
+        ], o = [];
+        (function() {
+          for (var p = 0; p < 80; p++)
+            o[p] = a();
+        })();
+        var A = r.SHA512 = f.extend({
+          _doReset: function() {
+            this._hash = new m.init([
+              new u.init(1779033703, 4089235720),
+              new u.init(3144134277, 2227873595),
+              new u.init(1013904242, 4271175723),
+              new u.init(2773480762, 1595750129),
+              new u.init(1359893119, 2917565137),
+              new u.init(2600822924, 725511199),
+              new u.init(528734635, 4215389547),
+              new u.init(1541459225, 327033209)
+            ]);
+          },
+          _doProcessBlock: function(p, k) {
+            for (var l = this._hash.words, E = l[0], s = l[1], c = l[2], h = l[3], d = l[4], g = l[5], C = l[6], B = l[7], H = E.high, y = E.low, S = s.high, w = s.low, F = c.high, M = c.low, _ = h.high, N = h.low, z = d.high, O = d.low, j = g.high, K = g.low, D = C.high, T = C.low, R = B.high, I = B.low, V = H, W = y, L = S, P = w, rt = F, st = M, xt = _, ct = N, nt = z, $ = O, ft = j, Q = K, G = D, Y = T, ot = R, tt = I, X = 0; X < 80; X++) {
+              var U, at, Dt = o[X];
+              if (X < 16)
+                at = Dt.high = p[k + X * 2] | 0, U = Dt.low = p[k + X * 2 + 1] | 0;
+              else {
+                var we = o[X - 15], kt = we.high, yt = we.low, nn = (kt >>> 1 | yt << 31) ^ (kt >>> 8 | yt << 24) ^ kt >>> 7, Fe = (yt >>> 1 | kt << 31) ^ (yt >>> 8 | kt << 24) ^ (yt >>> 7 | kt << 25), Ie = o[X - 2], mt = Ie.high, Et = Ie.low, rn = (mt >>> 19 | Et << 13) ^ (mt << 3 | Et >>> 29) ^ mt >>> 6, Te = (Et >>> 19 | mt << 13) ^ (Et << 3 | mt >>> 29) ^ (Et >>> 6 | mt << 26), Re = o[X - 7], on = Re.high, an = Re.low, He = o[X - 16], dn = He.high, Pe = He.low;
+                U = Fe + an, at = nn + on + (U >>> 0 < Fe >>> 0 ? 1 : 0), U = U + Te, at = at + rn + (U >>> 0 < Te >>> 0 ? 1 : 0), U = U + Pe, at = at + dn + (U >>> 0 < Pe >>> 0 ? 1 : 0), Dt.high = at, Dt.low = U;
+              }
+              var sn = nt & ft ^ ~nt & G, Me = $ & Q ^ ~$ & Y, xn = V & L ^ V & rt ^ L & rt, cn = W & P ^ W & st ^ P & st, ln = (V >>> 28 | W << 4) ^ (V << 30 | W >>> 2) ^ (V << 25 | W >>> 7), _e = (W >>> 28 | V << 4) ^ (W << 30 | V >>> 2) ^ (W << 25 | V >>> 7), pn = (nt >>> 14 | $ << 18) ^ (nt >>> 18 | $ << 14) ^ (nt << 23 | $ >>> 9), un = ($ >>> 14 | nt << 18) ^ ($ >>> 18 | nt << 14) ^ ($ << 23 | nt >>> 9), Oe = v[X], An = Oe.high, Ne = Oe.low, it = tt + un, lt = ot + pn + (it >>> 0 < tt >>> 0 ? 1 : 0), it = it + Me, lt = lt + sn + (it >>> 0 < Me >>> 0 ? 1 : 0), it = it + Ne, lt = lt + An + (it >>> 0 < Ne >>> 0 ? 1 : 0), it = it + U, lt = lt + at + (it >>> 0 < U >>> 0 ? 1 : 0), Ue = _e + cn, hn = ln + xn + (Ue >>> 0 < _e >>> 0 ? 1 : 0);
+              ot = G, tt = Y, G = ft, Y = Q, ft = nt, Q = $, $ = ct + it | 0, nt = xt + lt + ($ >>> 0 < ct >>> 0 ? 1 : 0) | 0, xt = rt, ct = st, rt = L, st = P, L = V, P = W, W = it + Ue | 0, V = lt + hn + (W >>> 0 < it >>> 0 ? 1 : 0) | 0;
+            }
+            y = E.low = y + W, E.high = H + V + (y >>> 0 < W >>> 0 ? 1 : 0), w = s.low = w + P, s.high = S + L + (w >>> 0 < P >>> 0 ? 1 : 0), M = c.low = M + st, c.high = F + rt + (M >>> 0 < st >>> 0 ? 1 : 0), N = h.low = N + ct, h.high = _ + xt + (N >>> 0 < ct >>> 0 ? 1 : 0), O = d.low = O + $, d.high = z + nt + (O >>> 0 < $ >>> 0 ? 1 : 0), K = g.low = K + Q, g.high = j + ft + (K >>> 0 < Q >>> 0 ? 1 : 0), T = C.low = T + Y, C.high = D + G + (T >>> 0 < Y >>> 0 ? 1 : 0), I = B.low = I + tt, B.high = R + ot + (I >>> 0 < tt >>> 0 ? 1 : 0);
+          },
+          _doFinalize: function() {
+            var p = this._data, k = p.words, l = this._nDataBytes * 8, E = p.sigBytes * 8;
+            k[E >>> 5] |= 128 << 24 - E % 32, k[(E + 128 >>> 10 << 5) + 30] = Math.floor(l / 4294967296), k[(E + 128 >>> 10 << 5) + 31] = l, p.sigBytes = k.length * 4, this._process();
+            var s = this._hash.toX32();
+            return s;
+          },
+          clone: function() {
+            var p = f.clone.call(this);
+            return p._hash = this._hash.clone(), p;
+          },
+          blockSize: 1024 / 32
+        });
+        n.SHA512 = f._createHelper(A), n.HmacSHA512 = f._createHmacHelper(A);
+      })(), e.SHA512;
+    });
+  })(Ut)), Ut.exports;
+}
+var zt = { exports: {} }, On = zt.exports, Xe;
+function Nn() {
+  return Xe || (Xe = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Ae(), M0());
+    })(On, function(e) {
+      return (function() {
+        var n = e, x = n.x64, f = x.Word, b = x.WordArray, u = n.algo, m = u.SHA512, r = u.SHA384 = m.extend({
+          _doReset: function() {
+            this._hash = new b.init([
+              new f.init(3418070365, 3238371032),
+              new f.init(1654270250, 914150663),
+              new f.init(2438529370, 812702999),
+              new f.init(355462360, 4144912697),
+              new f.init(1731405415, 4290775857),
+              new f.init(2394180231, 1750603025),
+              new f.init(3675008525, 1694076839),
+              new f.init(1203062813, 3204075428)
+            ]);
+          },
+          _doFinalize: function() {
+            var a = m._doFinalize.call(this);
+            return a.sigBytes -= 16, a;
+          }
+        });
+        n.SHA384 = m._createHelper(r), n.HmacSHA384 = m._createHmacHelper(r);
+      })(), e.SHA384;
+    });
+  })(zt)), zt.exports;
+}
+var Lt = { exports: {} }, Un = Lt.exports, Je;
+function zn() {
+  return Je || (Je = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Ae());
+    })(Un, function(e) {
+      return (function(n) {
+        var x = e, f = x.lib, b = f.WordArray, u = f.Hasher, m = x.x64, r = m.Word, a = x.algo, v = [], o = [], A = [];
+        (function() {
+          for (var l = 1, E = 0, s = 0; s < 24; s++) {
+            v[l + 5 * E] = (s + 1) * (s + 2) / 2 % 64;
+            var c = E % 5, h = (2 * l + 3 * E) % 5;
+            l = c, E = h;
+          }
+          for (var l = 0; l < 5; l++)
+            for (var E = 0; E < 5; E++)
+              o[l + 5 * E] = E + (2 * l + 3 * E) % 5 * 5;
+          for (var d = 1, g = 0; g < 24; g++) {
+            for (var C = 0, B = 0, H = 0; H < 7; H++) {
+              if (d & 1) {
+                var y = (1 << H) - 1;
+                y < 32 ? B ^= 1 << y : C ^= 1 << y - 32;
+              }
+              d & 128 ? d = d << 1 ^ 113 : d <<= 1;
+            }
+            A[g] = r.create(C, B);
+          }
+        })();
+        var p = [];
+        (function() {
+          for (var l = 0; l < 25; l++)
+            p[l] = r.create();
+        })();
+        var k = a.SHA3 = u.extend({
+          /**
+           * Configuration options.
+           *
+           * @property {number} outputLength
+           *   The desired number of bits in the output hash.
+           *   Only values permitted are: 224, 256, 384, 512.
+           *   Default: 512
+           */
+          cfg: u.cfg.extend({
+            outputLength: 512
+          }),
+          _doReset: function() {
+            for (var l = this._state = [], E = 0; E < 25; E++)
+              l[E] = new r.init();
+            this.blockSize = (1600 - 2 * this.cfg.outputLength) / 32;
+          },
+          _doProcessBlock: function(l, E) {
+            for (var s = this._state, c = this.blockSize / 2, h = 0; h < c; h++) {
+              var d = l[E + 2 * h], g = l[E + 2 * h + 1];
+              d = (d << 8 | d >>> 24) & 16711935 | (d << 24 | d >>> 8) & 4278255360, g = (g << 8 | g >>> 24) & 16711935 | (g << 24 | g >>> 8) & 4278255360;
+              var C = s[h];
+              C.high ^= g, C.low ^= d;
+            }
+            for (var B = 0; B < 24; B++) {
+              for (var H = 0; H < 5; H++) {
+                for (var y = 0, S = 0, w = 0; w < 5; w++) {
+                  var C = s[H + 5 * w];
+                  y ^= C.high, S ^= C.low;
+                }
+                var F = p[H];
+                F.high = y, F.low = S;
+              }
+              for (var H = 0; H < 5; H++)
+                for (var M = p[(H + 4) % 5], _ = p[(H + 1) % 5], N = _.high, z = _.low, y = M.high ^ (N << 1 | z >>> 31), S = M.low ^ (z << 1 | N >>> 31), w = 0; w < 5; w++) {
+                  var C = s[H + 5 * w];
+                  C.high ^= y, C.low ^= S;
+                }
+              for (var O = 1; O < 25; O++) {
+                var y, S, C = s[O], j = C.high, K = C.low, D = v[O];
+                D < 32 ? (y = j << D | K >>> 32 - D, S = K << D | j >>> 32 - D) : (y = K << D - 32 | j >>> 64 - D, S = j << D - 32 | K >>> 64 - D);
+                var T = p[o[O]];
+                T.high = y, T.low = S;
+              }
+              var R = p[0], I = s[0];
+              R.high = I.high, R.low = I.low;
+              for (var H = 0; H < 5; H++)
+                for (var w = 0; w < 5; w++) {
+                  var O = H + 5 * w, C = s[O], V = p[O], W = p[(H + 1) % 5 + 5 * w], L = p[(H + 2) % 5 + 5 * w];
+                  C.high = V.high ^ ~W.high & L.high, C.low = V.low ^ ~W.low & L.low;
+                }
+              var C = s[0], P = A[B];
+              C.high ^= P.high, C.low ^= P.low;
+            }
+          },
+          _doFinalize: function() {
+            var l = this._data, E = l.words;
+            this._nDataBytes * 8;
+            var s = l.sigBytes * 8, c = this.blockSize * 32;
+            E[s >>> 5] |= 1 << 24 - s % 32, E[(n.ceil((s + 1) / c) * c >>> 5) - 1] |= 128, l.sigBytes = E.length * 4, this._process();
+            for (var h = this._state, d = this.cfg.outputLength / 8, g = d / 8, C = [], B = 0; B < g; B++) {
+              var H = h[B], y = H.high, S = H.low;
+              y = (y << 8 | y >>> 24) & 16711935 | (y << 24 | y >>> 8) & 4278255360, S = (S << 8 | S >>> 24) & 16711935 | (S << 24 | S >>> 8) & 4278255360, C.push(S), C.push(y);
+            }
+            return new b.init(C, d);
+          },
+          clone: function() {
+            for (var l = u.clone.call(this), E = l._state = this._state.slice(0), s = 0; s < 25; s++)
+              E[s] = E[s].clone();
+            return l;
+          }
+        });
+        x.SHA3 = u._createHelper(k), x.HmacSHA3 = u._createHmacHelper(k);
+      })(Math), e.SHA3;
+    });
+  })(Lt)), Lt.exports;
+}
+var qt = { exports: {} }, Ln = qt.exports, $e;
+function qn() {
+  return $e || ($e = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(Ln, function(e) {
+      /** @preserve
+      			(c) 2012 by Cédric Mesnil. All rights reserved.
+      
+      			Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+      
+      			    - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+      			    - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+      
+      			THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+      			*/
+      return (function(n) {
+        var x = e, f = x.lib, b = f.WordArray, u = f.Hasher, m = x.algo, r = b.create([
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          7,
+          4,
+          13,
+          1,
+          10,
+          6,
+          15,
+          3,
+          12,
+          0,
+          9,
+          5,
+          2,
+          14,
+          11,
+          8,
+          3,
+          10,
+          14,
+          4,
+          9,
+          15,
+          8,
+          1,
+          2,
+          7,
+          0,
+          6,
+          13,
+          11,
+          5,
+          12,
+          1,
+          9,
+          11,
+          10,
+          0,
+          8,
+          12,
+          4,
+          13,
+          3,
+          7,
+          15,
+          14,
+          5,
+          6,
+          2,
+          4,
+          0,
+          5,
+          9,
+          7,
+          12,
+          2,
+          10,
+          14,
+          1,
+          3,
+          8,
+          11,
+          6,
+          15,
+          13
+        ]), a = b.create([
+          5,
+          14,
+          7,
+          0,
+          9,
+          2,
+          11,
+          4,
+          13,
+          6,
+          15,
+          8,
+          1,
+          10,
+          3,
+          12,
+          6,
+          11,
+          3,
+          7,
+          0,
+          13,
+          5,
+          10,
+          14,
+          15,
+          8,
+          12,
+          4,
+          9,
+          1,
+          2,
+          15,
+          5,
+          1,
+          3,
+          7,
+          14,
+          6,
+          9,
+          11,
+          8,
+          12,
+          2,
+          10,
+          0,
+          4,
+          13,
+          8,
+          6,
+          4,
+          1,
+          3,
+          11,
+          15,
+          0,
+          5,
+          12,
+          2,
+          13,
+          9,
+          7,
+          10,
+          14,
+          12,
+          15,
+          10,
+          4,
+          1,
+          5,
+          8,
+          7,
+          6,
+          2,
+          13,
+          14,
+          0,
+          3,
+          9,
+          11
+        ]), v = b.create([
+          11,
+          14,
+          15,
+          12,
+          5,
+          8,
+          7,
+          9,
+          11,
+          13,
+          14,
+          15,
+          6,
+          7,
+          9,
+          8,
+          7,
+          6,
+          8,
+          13,
+          11,
+          9,
+          7,
+          15,
+          7,
+          12,
+          15,
+          9,
+          11,
+          7,
+          13,
+          12,
+          11,
+          13,
+          6,
+          7,
+          14,
+          9,
+          13,
+          15,
+          14,
+          8,
+          13,
+          6,
+          5,
+          12,
+          7,
+          5,
+          11,
+          12,
+          14,
+          15,
+          14,
+          15,
+          9,
+          8,
+          9,
+          14,
+          5,
+          6,
+          8,
+          6,
+          5,
+          12,
+          9,
+          15,
+          5,
+          11,
+          6,
+          8,
+          13,
+          12,
+          5,
+          12,
+          13,
+          14,
+          11,
+          8,
+          5,
+          6
+        ]), o = b.create([
+          8,
+          9,
+          9,
+          11,
+          13,
+          15,
+          15,
+          5,
+          7,
+          7,
+          8,
+          11,
+          14,
+          14,
+          12,
+          6,
+          9,
+          13,
+          15,
+          7,
+          12,
+          8,
+          9,
+          11,
+          7,
+          7,
+          12,
+          7,
+          6,
+          15,
+          13,
+          11,
+          9,
+          7,
+          15,
+          11,
+          8,
+          6,
+          6,
+          14,
+          12,
+          13,
+          5,
+          14,
+          13,
+          13,
+          7,
+          5,
+          15,
+          5,
+          8,
+          11,
+          14,
+          14,
+          6,
+          14,
+          6,
+          9,
+          12,
+          9,
+          12,
+          5,
+          15,
+          8,
+          8,
+          5,
+          12,
+          9,
+          12,
+          5,
+          14,
+          6,
+          8,
+          13,
+          6,
+          5,
+          15,
+          13,
+          11,
+          11
+        ]), A = b.create([0, 1518500249, 1859775393, 2400959708, 2840853838]), p = b.create([1352829926, 1548603684, 1836072691, 2053994217, 0]), k = m.RIPEMD160 = u.extend({
+          _doReset: function() {
+            this._hash = b.create([1732584193, 4023233417, 2562383102, 271733878, 3285377520]);
+          },
+          _doProcessBlock: function(g, C) {
+            for (var B = 0; B < 16; B++) {
+              var H = C + B, y = g[H];
+              g[H] = (y << 8 | y >>> 24) & 16711935 | (y << 24 | y >>> 8) & 4278255360;
+            }
+            var S = this._hash.words, w = A.words, F = p.words, M = r.words, _ = a.words, N = v.words, z = o.words, O, j, K, D, T, R, I, V, W, L;
+            R = O = S[0], I = j = S[1], V = K = S[2], W = D = S[3], L = T = S[4];
+            for (var P, B = 0; B < 80; B += 1)
+              P = O + g[C + M[B]] | 0, B < 16 ? P += l(j, K, D) + w[0] : B < 32 ? P += E(j, K, D) + w[1] : B < 48 ? P += s(j, K, D) + w[2] : B < 64 ? P += c(j, K, D) + w[3] : P += h(j, K, D) + w[4], P = P | 0, P = d(P, N[B]), P = P + T | 0, O = T, T = D, D = d(K, 10), K = j, j = P, P = R + g[C + _[B]] | 0, B < 16 ? P += h(I, V, W) + F[0] : B < 32 ? P += c(I, V, W) + F[1] : B < 48 ? P += s(I, V, W) + F[2] : B < 64 ? P += E(I, V, W) + F[3] : P += l(I, V, W) + F[4], P = P | 0, P = d(P, z[B]), P = P + L | 0, R = L, L = W, W = d(V, 10), V = I, I = P;
+            P = S[1] + K + W | 0, S[1] = S[2] + D + L | 0, S[2] = S[3] + T + R | 0, S[3] = S[4] + O + I | 0, S[4] = S[0] + j + V | 0, S[0] = P;
+          },
+          _doFinalize: function() {
+            var g = this._data, C = g.words, B = this._nDataBytes * 8, H = g.sigBytes * 8;
+            C[H >>> 5] |= 128 << 24 - H % 32, C[(H + 64 >>> 9 << 4) + 14] = (B << 8 | B >>> 24) & 16711935 | (B << 24 | B >>> 8) & 4278255360, g.sigBytes = (C.length + 1) * 4, this._process();
+            for (var y = this._hash, S = y.words, w = 0; w < 5; w++) {
+              var F = S[w];
+              S[w] = (F << 8 | F >>> 24) & 16711935 | (F << 24 | F >>> 8) & 4278255360;
+            }
+            return y;
+          },
+          clone: function() {
+            var g = u.clone.call(this);
+            return g._hash = this._hash.clone(), g;
+          }
+        });
+        function l(g, C, B) {
+          return g ^ C ^ B;
+        }
+        function E(g, C, B) {
+          return g & C | ~g & B;
+        }
+        function s(g, C, B) {
+          return (g | ~C) ^ B;
+        }
+        function c(g, C, B) {
+          return g & B | C & ~B;
+        }
+        function h(g, C, B) {
+          return g ^ (C | ~B);
+        }
+        function d(g, C) {
+          return g << C | g >>> 32 - C;
+        }
+        x.RIPEMD160 = u._createHelper(k), x.HmacRIPEMD160 = u._createHmacHelper(k);
+      })(), e.RIPEMD160;
+    });
+  })(qt)), qt.exports;
+}
+var Kt = { exports: {} }, Kn = Kt.exports, t0;
+function Ee() {
+  return t0 || (t0 = 1, (function(t, i) {
+    (function(e, n) {
+      t.exports = n(q());
+    })(Kn, function(e) {
+      (function() {
+        var n = e, x = n.lib, f = x.Base, b = n.enc, u = b.Utf8, m = n.algo;
+        m.HMAC = f.extend({
+          /**
+           * Initializes a newly created HMAC.
+           *
+           * @param {Hasher} hasher The hash algorithm to use.
+           * @param {WordArray|string} key The secret key.
+           *
+           * @example
+           *
+           *     var hmacHasher = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, key);
+           */
+          init: function(r, a) {
+            r = this._hasher = new r.init(), typeof a == "string" && (a = u.parse(a));
+            var v = r.blockSize, o = v * 4;
+            a.sigBytes > o && (a = r.finalize(a)), a.clamp();
+            for (var A = this._oKey = a.clone(), p = this._iKey = a.clone(), k = A.words, l = p.words, E = 0; E < v; E++)
+              k[E] ^= 1549556828, l[E] ^= 909522486;
+            A.sigBytes = p.sigBytes = o, this.reset();
+          },
+          /**
+           * Resets this HMAC to its initial state.
+           *
+           * @example
+           *
+           *     hmacHasher.reset();
+           */
+          reset: function() {
+            var r = this._hasher;
+            r.reset(), r.update(this._iKey);
+          },
+          /**
+           * Updates this HMAC with a message.
+           *
+           * @param {WordArray|string} messageUpdate The message to append.
+           *
+           * @return {HMAC} This HMAC instance.
+           *
+           * @example
+           *
+           *     hmacHasher.update('message');
+           *     hmacHasher.update(wordArray);
+           */
+          update: function(r) {
+            return this._hasher.update(r), this;
+          },
+          /**
+           * Finalizes the HMAC computation.
+           * Note that the finalize operation is effectively a destructive, read-once operation.
+           *
+           * @param {WordArray|string} messageUpdate (Optional) A final message update.
+           *
+           * @return {WordArray} The HMAC.
+           *
+           * @example
+           *
+           *     var hmac = hmacHasher.finalize();
+           *     var hmac = hmacHasher.finalize('message');
+           *     var hmac = hmacHasher.finalize(wordArray);
+           */
+          finalize: function(r) {
+            var a = this._hasher, v = a.finalize(r);
+            a.reset();
+            var o = a.finalize(this._oKey.clone().concat(v));
+            return o;
+          }
+        });
+      })();
+    });
+  })(Kt)), Kt.exports;
+}
+var Wt = { exports: {} }, Wn = Wt.exports, e0;
+function jn() {
+  return e0 || (e0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), ye(), Ee());
+    })(Wn, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.Base, b = x.WordArray, u = n.algo, m = u.SHA256, r = u.HMAC, a = u.PBKDF2 = f.extend({
+          /**
+           * Configuration options.
+           *
+           * @property {number} keySize The key size in words to generate. Default: 4 (128 bits)
+           * @property {Hasher} hasher The hasher to use. Default: SHA256
+           * @property {number} iterations The number of iterations to perform. Default: 250000
+           */
+          cfg: f.extend({
+            keySize: 128 / 32,
+            hasher: m,
+            iterations: 25e4
+          }),
+          /**
+           * Initializes a newly created key derivation function.
+           *
+           * @param {Object} cfg (Optional) The configuration options to use for the derivation.
+           *
+           * @example
+           *
+           *     var kdf = CryptoJS.algo.PBKDF2.create();
+           *     var kdf = CryptoJS.algo.PBKDF2.create({ keySize: 8 });
+           *     var kdf = CryptoJS.algo.PBKDF2.create({ keySize: 8, iterations: 1000 });
+           */
+          init: function(v) {
+            this.cfg = this.cfg.extend(v);
+          },
+          /**
+           * Computes the Password-Based Key Derivation Function 2.
+           *
+           * @param {WordArray|string} password The password.
+           * @param {WordArray|string} salt A salt.
+           *
+           * @return {WordArray} The derived key.
+           *
+           * @example
+           *
+           *     var key = kdf.compute(password, salt);
+           */
+          compute: function(v, o) {
+            for (var A = this.cfg, p = r.create(A.hasher, v), k = b.create(), l = b.create([1]), E = k.words, s = l.words, c = A.keySize, h = A.iterations; E.length < c; ) {
+              var d = p.update(o).finalize(l);
+              p.reset();
+              for (var g = d.words, C = g.length, B = d, H = 1; H < h; H++) {
+                B = p.finalize(B), p.reset();
+                for (var y = B.words, S = 0; S < C; S++)
+                  g[S] ^= y[S];
+              }
+              k.concat(d), s[0]++;
+            }
+            return k.sigBytes = c * 4, k;
+          }
+        });
+        n.PBKDF2 = function(v, o, A) {
+          return a.create(A).compute(v, o);
+        };
+      })(), e.PBKDF2;
+    });
+  })(Wt)), Wt.exports;
+}
+var jt = { exports: {} }, Vn = jt.exports, n0;
+function ut() {
+  return n0 || (n0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), P0(), Ee());
+    })(Vn, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.Base, b = x.WordArray, u = n.algo, m = u.MD5, r = u.EvpKDF = f.extend({
+          /**
+           * Configuration options.
+           *
+           * @property {number} keySize The key size in words to generate. Default: 4 (128 bits)
+           * @property {Hasher} hasher The hash algorithm to use. Default: MD5
+           * @property {number} iterations The number of iterations to perform. Default: 1
+           */
+          cfg: f.extend({
+            keySize: 128 / 32,
+            hasher: m,
+            iterations: 1
+          }),
+          /**
+           * Initializes a newly created key derivation function.
+           *
+           * @param {Object} cfg (Optional) The configuration options to use for the derivation.
+           *
+           * @example
+           *
+           *     var kdf = CryptoJS.algo.EvpKDF.create();
+           *     var kdf = CryptoJS.algo.EvpKDF.create({ keySize: 8 });
+           *     var kdf = CryptoJS.algo.EvpKDF.create({ keySize: 8, iterations: 1000 });
+           */
+          init: function(a) {
+            this.cfg = this.cfg.extend(a);
+          },
+          /**
+           * Derives a key from a password.
+           *
+           * @param {WordArray|string} password The password.
+           * @param {WordArray|string} salt A salt.
+           *
+           * @return {WordArray} The derived key.
+           *
+           * @example
+           *
+           *     var key = kdf.compute(password, salt);
+           */
+          compute: function(a, v) {
+            for (var o, A = this.cfg, p = A.hasher.create(), k = b.create(), l = k.words, E = A.keySize, s = A.iterations; l.length < E; ) {
+              o && p.update(o), o = p.update(a).finalize(v), p.reset();
+              for (var c = 1; c < s; c++)
+                o = p.finalize(o), p.reset();
+              k.concat(o);
+            }
+            return k.sigBytes = E * 4, k;
+          }
+        });
+        n.EvpKDF = function(a, v, o) {
+          return r.create(o).compute(a, v);
+        };
+      })(), e.EvpKDF;
+    });
+  })(jt)), jt.exports;
+}
+var Vt = { exports: {} }, Gn = Vt.exports, i0;
+function Z() {
+  return i0 || (i0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), ut());
+    })(Gn, function(e) {
+      e.lib.Cipher || (function(n) {
+        var x = e, f = x.lib, b = f.Base, u = f.WordArray, m = f.BufferedBlockAlgorithm, r = x.enc;
+        r.Utf8;
+        var a = r.Base64, v = x.algo, o = v.EvpKDF, A = f.Cipher = m.extend({
+          /**
+           * Configuration options.
+           *
+           * @property {WordArray} iv The IV to use for this operation.
+           */
+          cfg: b.extend(),
+          /**
+           * Creates this cipher in encryption mode.
+           *
+           * @param {WordArray} key The key.
+           * @param {Object} cfg (Optional) The configuration options to use for this operation.
+           *
+           * @return {Cipher} A cipher instance.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var cipher = CryptoJS.algo.AES.createEncryptor(keyWordArray, { iv: ivWordArray });
+           */
+          createEncryptor: function(y, S) {
+            return this.create(this._ENC_XFORM_MODE, y, S);
+          },
+          /**
+           * Creates this cipher in decryption mode.
+           *
+           * @param {WordArray} key The key.
+           * @param {Object} cfg (Optional) The configuration options to use for this operation.
+           *
+           * @return {Cipher} A cipher instance.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var cipher = CryptoJS.algo.AES.createDecryptor(keyWordArray, { iv: ivWordArray });
+           */
+          createDecryptor: function(y, S) {
+            return this.create(this._DEC_XFORM_MODE, y, S);
+          },
+          /**
+           * Initializes a newly created cipher.
+           *
+           * @param {number} xformMode Either the encryption or decryption transormation mode constant.
+           * @param {WordArray} key The key.
+           * @param {Object} cfg (Optional) The configuration options to use for this operation.
+           *
+           * @example
+           *
+           *     var cipher = CryptoJS.algo.AES.create(CryptoJS.algo.AES._ENC_XFORM_MODE, keyWordArray, { iv: ivWordArray });
+           */
+          init: function(y, S, w) {
+            this.cfg = this.cfg.extend(w), this._xformMode = y, this._key = S, this.reset();
+          },
+          /**
+           * Resets this cipher to its initial state.
+           *
+           * @example
+           *
+           *     cipher.reset();
+           */
+          reset: function() {
+            m.reset.call(this), this._doReset();
+          },
+          /**
+           * Adds data to be encrypted or decrypted.
+           *
+           * @param {WordArray|string} dataUpdate The data to encrypt or decrypt.
+           *
+           * @return {WordArray} The data after processing.
+           *
+           * @example
+           *
+           *     var encrypted = cipher.process('data');
+           *     var encrypted = cipher.process(wordArray);
+           */
+          process: function(y) {
+            return this._append(y), this._process();
+          },
+          /**
+           * Finalizes the encryption or decryption process.
+           * Note that the finalize operation is effectively a destructive, read-once operation.
+           *
+           * @param {WordArray|string} dataUpdate The final data to encrypt or decrypt.
+           *
+           * @return {WordArray} The data after final processing.
+           *
+           * @example
+           *
+           *     var encrypted = cipher.finalize();
+           *     var encrypted = cipher.finalize('data');
+           *     var encrypted = cipher.finalize(wordArray);
+           */
+          finalize: function(y) {
+            y && this._append(y);
+            var S = this._doFinalize();
+            return S;
+          },
+          keySize: 128 / 32,
+          ivSize: 128 / 32,
+          _ENC_XFORM_MODE: 1,
+          _DEC_XFORM_MODE: 2,
+          /**
+           * Creates shortcut functions to a cipher's object interface.
+           *
+           * @param {Cipher} cipher The cipher to create a helper for.
+           *
+           * @return {Object} An object with encrypt and decrypt shortcut functions.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var AES = CryptoJS.lib.Cipher._createHelper(CryptoJS.algo.AES);
+           */
+          _createHelper: /* @__PURE__ */ (function() {
+            function y(S) {
+              return typeof S == "string" ? H : g;
+            }
+            return function(S) {
+              return {
+                encrypt: function(w, F, M) {
+                  return y(F).encrypt(S, w, F, M);
+                },
+                decrypt: function(w, F, M) {
+                  return y(F).decrypt(S, w, F, M);
+                }
+              };
+            };
+          })()
+        });
+        f.StreamCipher = A.extend({
+          _doFinalize: function() {
+            var y = this._process(!0);
+            return y;
+          },
+          blockSize: 1
+        });
+        var p = x.mode = {}, k = f.BlockCipherMode = b.extend({
+          /**
+           * Creates this mode for encryption.
+           *
+           * @param {Cipher} cipher A block cipher instance.
+           * @param {Array} iv The IV words.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var mode = CryptoJS.mode.CBC.createEncryptor(cipher, iv.words);
+           */
+          createEncryptor: function(y, S) {
+            return this.Encryptor.create(y, S);
+          },
+          /**
+           * Creates this mode for decryption.
+           *
+           * @param {Cipher} cipher A block cipher instance.
+           * @param {Array} iv The IV words.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var mode = CryptoJS.mode.CBC.createDecryptor(cipher, iv.words);
+           */
+          createDecryptor: function(y, S) {
+            return this.Decryptor.create(y, S);
+          },
+          /**
+           * Initializes a newly created mode.
+           *
+           * @param {Cipher} cipher A block cipher instance.
+           * @param {Array} iv The IV words.
+           *
+           * @example
+           *
+           *     var mode = CryptoJS.mode.CBC.Encryptor.create(cipher, iv.words);
+           */
+          init: function(y, S) {
+            this._cipher = y, this._iv = S;
+          }
+        }), l = p.CBC = (function() {
+          var y = k.extend();
+          y.Encryptor = y.extend({
+            /**
+             * Processes the data block at offset.
+             *
+             * @param {Array} words The data words to operate on.
+             * @param {number} offset The offset where the block starts.
+             *
+             * @example
+             *
+             *     mode.processBlock(data.words, offset);
+             */
+            processBlock: function(w, F) {
+              var M = this._cipher, _ = M.blockSize;
+              S.call(this, w, F, _), M.encryptBlock(w, F), this._prevBlock = w.slice(F, F + _);
+            }
+          }), y.Decryptor = y.extend({
+            /**
+             * Processes the data block at offset.
+             *
+             * @param {Array} words The data words to operate on.
+             * @param {number} offset The offset where the block starts.
+             *
+             * @example
+             *
+             *     mode.processBlock(data.words, offset);
+             */
+            processBlock: function(w, F) {
+              var M = this._cipher, _ = M.blockSize, N = w.slice(F, F + _);
+              M.decryptBlock(w, F), S.call(this, w, F, _), this._prevBlock = N;
+            }
+          });
+          function S(w, F, M) {
+            var _, N = this._iv;
+            N ? (_ = N, this._iv = n) : _ = this._prevBlock;
+            for (var z = 0; z < M; z++)
+              w[F + z] ^= _[z];
+          }
+          return y;
+        })(), E = x.pad = {}, s = E.Pkcs7 = {
+          /**
+           * Pads data using the algorithm defined in PKCS #5/7.
+           *
+           * @param {WordArray} data The data to pad.
+           * @param {number} blockSize The multiple that the data should be padded to.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     CryptoJS.pad.Pkcs7.pad(wordArray, 4);
+           */
+          pad: function(y, S) {
+            for (var w = S * 4, F = w - y.sigBytes % w, M = F << 24 | F << 16 | F << 8 | F, _ = [], N = 0; N < F; N += 4)
+              _.push(M);
+            var z = u.create(_, F);
+            y.concat(z);
+          },
+          /**
+           * Unpads data that had been padded using the algorithm defined in PKCS #5/7.
+           *
+           * @param {WordArray} data The data to unpad.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     CryptoJS.pad.Pkcs7.unpad(wordArray);
+           */
+          unpad: function(y) {
+            var S = y.words[y.sigBytes - 1 >>> 2] & 255;
+            y.sigBytes -= S;
+          }
+        };
+        f.BlockCipher = A.extend({
+          /**
+           * Configuration options.
+           *
+           * @property {Mode} mode The block mode to use. Default: CBC
+           * @property {Padding} padding The padding strategy to use. Default: Pkcs7
+           */
+          cfg: A.cfg.extend({
+            mode: l,
+            padding: s
+          }),
+          reset: function() {
+            var y;
+            A.reset.call(this);
+            var S = this.cfg, w = S.iv, F = S.mode;
+            this._xformMode == this._ENC_XFORM_MODE ? y = F.createEncryptor : (y = F.createDecryptor, this._minBufferSize = 1), this._mode && this._mode.__creator == y ? this._mode.init(this, w && w.words) : (this._mode = y.call(F, this, w && w.words), this._mode.__creator = y);
+          },
+          _doProcessBlock: function(y, S) {
+            this._mode.processBlock(y, S);
+          },
+          _doFinalize: function() {
+            var y, S = this.cfg.padding;
+            return this._xformMode == this._ENC_XFORM_MODE ? (S.pad(this._data, this.blockSize), y = this._process(!0)) : (y = this._process(!0), S.unpad(y)), y;
+          },
+          blockSize: 128 / 32
+        });
+        var c = f.CipherParams = b.extend({
+          /**
+           * Initializes a newly created cipher params object.
+           *
+           * @param {Object} cipherParams An object with any of the possible cipher parameters.
+           *
+           * @example
+           *
+           *     var cipherParams = CryptoJS.lib.CipherParams.create({
+           *         ciphertext: ciphertextWordArray,
+           *         key: keyWordArray,
+           *         iv: ivWordArray,
+           *         salt: saltWordArray,
+           *         algorithm: CryptoJS.algo.AES,
+           *         mode: CryptoJS.mode.CBC,
+           *         padding: CryptoJS.pad.PKCS7,
+           *         blockSize: 4,
+           *         formatter: CryptoJS.format.OpenSSL
+           *     });
+           */
+          init: function(y) {
+            this.mixIn(y);
+          },
+          /**
+           * Converts this cipher params object to a string.
+           *
+           * @param {Format} formatter (Optional) The formatting strategy to use.
+           *
+           * @return {string} The stringified cipher params.
+           *
+           * @throws Error If neither the formatter nor the default formatter is set.
+           *
+           * @example
+           *
+           *     var string = cipherParams + '';
+           *     var string = cipherParams.toString();
+           *     var string = cipherParams.toString(CryptoJS.format.OpenSSL);
+           */
+          toString: function(y) {
+            return (y || this.formatter).stringify(this);
+          }
+        }), h = x.format = {}, d = h.OpenSSL = {
+          /**
+           * Converts a cipher params object to an OpenSSL-compatible string.
+           *
+           * @param {CipherParams} cipherParams The cipher params object.
+           *
+           * @return {string} The OpenSSL-compatible string.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var openSSLString = CryptoJS.format.OpenSSL.stringify(cipherParams);
+           */
+          stringify: function(y) {
+            var S, w = y.ciphertext, F = y.salt;
+            return F ? S = u.create([1398893684, 1701076831]).concat(F).concat(w) : S = w, S.toString(a);
+          },
+          /**
+           * Converts an OpenSSL-compatible string to a cipher params object.
+           *
+           * @param {string} openSSLStr The OpenSSL-compatible string.
+           *
+           * @return {CipherParams} The cipher params object.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var cipherParams = CryptoJS.format.OpenSSL.parse(openSSLString);
+           */
+          parse: function(y) {
+            var S, w = a.parse(y), F = w.words;
+            return F[0] == 1398893684 && F[1] == 1701076831 && (S = u.create(F.slice(2, 4)), F.splice(0, 4), w.sigBytes -= 16), c.create({ ciphertext: w, salt: S });
+          }
+        }, g = f.SerializableCipher = b.extend({
+          /**
+           * Configuration options.
+           *
+           * @property {Formatter} format The formatting strategy to convert cipher param objects to and from a string. Default: OpenSSL
+           */
+          cfg: b.extend({
+            format: d
+          }),
+          /**
+           * Encrypts a message.
+           *
+           * @param {Cipher} cipher The cipher algorithm to use.
+           * @param {WordArray|string} message The message to encrypt.
+           * @param {WordArray} key The key.
+           * @param {Object} cfg (Optional) The configuration options to use for this operation.
+           *
+           * @return {CipherParams} A cipher params object.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key);
+           *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, { iv: iv });
+           *     var ciphertextParams = CryptoJS.lib.SerializableCipher.encrypt(CryptoJS.algo.AES, message, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+           */
+          encrypt: function(y, S, w, F) {
+            F = this.cfg.extend(F);
+            var M = y.createEncryptor(w, F), _ = M.finalize(S), N = M.cfg;
+            return c.create({
+              ciphertext: _,
+              key: w,
+              iv: N.iv,
+              algorithm: y,
+              mode: N.mode,
+              padding: N.padding,
+              blockSize: y.blockSize,
+              formatter: F.format
+            });
+          },
+          /**
+           * Decrypts serialized ciphertext.
+           *
+           * @param {Cipher} cipher The cipher algorithm to use.
+           * @param {CipherParams|string} ciphertext The ciphertext to decrypt.
+           * @param {WordArray} key The key.
+           * @param {Object} cfg (Optional) The configuration options to use for this operation.
+           *
+           * @return {WordArray} The plaintext.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var plaintext = CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+           *     var plaintext = CryptoJS.lib.SerializableCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, key, { iv: iv, format: CryptoJS.format.OpenSSL });
+           */
+          decrypt: function(y, S, w, F) {
+            F = this.cfg.extend(F), S = this._parse(S, F.format);
+            var M = y.createDecryptor(w, F).finalize(S.ciphertext);
+            return M;
+          },
+          /**
+           * Converts serialized ciphertext to CipherParams,
+           * else assumed CipherParams already and returns ciphertext unchanged.
+           *
+           * @param {CipherParams|string} ciphertext The ciphertext.
+           * @param {Formatter} format The formatting strategy to use to parse serialized ciphertext.
+           *
+           * @return {CipherParams} The unserialized ciphertext.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var ciphertextParams = CryptoJS.lib.SerializableCipher._parse(ciphertextStringOrParams, format);
+           */
+          _parse: function(y, S) {
+            return typeof y == "string" ? S.parse(y, this) : y;
+          }
+        }), C = x.kdf = {}, B = C.OpenSSL = {
+          /**
+           * Derives a key and IV from a password.
+           *
+           * @param {string} password The password to derive from.
+           * @param {number} keySize The size in words of the key to generate.
+           * @param {number} ivSize The size in words of the IV to generate.
+           * @param {WordArray|string} salt (Optional) A 64-bit salt to use. If omitted, a salt will be generated randomly.
+           *
+           * @return {CipherParams} A cipher params object with the key, IV, and salt.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32);
+           *     var derivedParams = CryptoJS.kdf.OpenSSL.execute('Password', 256/32, 128/32, 'saltsalt');
+           */
+          execute: function(y, S, w, F, M) {
+            if (F || (F = u.random(64 / 8)), M)
+              var _ = o.create({ keySize: S + w, hasher: M }).compute(y, F);
+            else
+              var _ = o.create({ keySize: S + w }).compute(y, F);
+            var N = u.create(_.words.slice(S), w * 4);
+            return _.sigBytes = S * 4, c.create({ key: _, iv: N, salt: F });
+          }
+        }, H = f.PasswordBasedCipher = g.extend({
+          /**
+           * Configuration options.
+           *
+           * @property {KDF} kdf The key derivation function to use to generate a key and IV from a password. Default: OpenSSL
+           */
+          cfg: g.cfg.extend({
+            kdf: B
+          }),
+          /**
+           * Encrypts a message using a password.
+           *
+           * @param {Cipher} cipher The cipher algorithm to use.
+           * @param {WordArray|string} message The message to encrypt.
+           * @param {string} password The password.
+           * @param {Object} cfg (Optional) The configuration options to use for this operation.
+           *
+           * @return {CipherParams} A cipher params object.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message, 'password');
+           *     var ciphertextParams = CryptoJS.lib.PasswordBasedCipher.encrypt(CryptoJS.algo.AES, message, 'password', { format: CryptoJS.format.OpenSSL });
+           */
+          encrypt: function(y, S, w, F) {
+            F = this.cfg.extend(F);
+            var M = F.kdf.execute(w, y.keySize, y.ivSize, F.salt, F.hasher);
+            F.iv = M.iv;
+            var _ = g.encrypt.call(this, y, S, M.key, F);
+            return _.mixIn(M), _;
+          },
+          /**
+           * Decrypts serialized ciphertext using a password.
+           *
+           * @param {Cipher} cipher The cipher algorithm to use.
+           * @param {CipherParams|string} ciphertext The ciphertext to decrypt.
+           * @param {string} password The password.
+           * @param {Object} cfg (Optional) The configuration options to use for this operation.
+           *
+           * @return {WordArray} The plaintext.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var plaintext = CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, formattedCiphertext, 'password', { format: CryptoJS.format.OpenSSL });
+           *     var plaintext = CryptoJS.lib.PasswordBasedCipher.decrypt(CryptoJS.algo.AES, ciphertextParams, 'password', { format: CryptoJS.format.OpenSSL });
+           */
+          decrypt: function(y, S, w, F) {
+            F = this.cfg.extend(F), S = this._parse(S, F.format);
+            var M = F.kdf.execute(w, y.keySize, y.ivSize, S.salt, F.hasher);
+            F.iv = M.iv;
+            var _ = g.decrypt.call(this, y, S, M.key, F);
+            return _;
+          }
+        });
+      })();
+    });
+  })(Vt)), Vt.exports;
+}
+var Gt = { exports: {} }, Qn = Gt.exports, r0;
+function Zn() {
+  return r0 || (r0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(Qn, function(e) {
+      return e.mode.CFB = (function() {
+        var n = e.lib.BlockCipherMode.extend();
+        n.Encryptor = n.extend({
+          processBlock: function(f, b) {
+            var u = this._cipher, m = u.blockSize;
+            x.call(this, f, b, m, u), this._prevBlock = f.slice(b, b + m);
+          }
+        }), n.Decryptor = n.extend({
+          processBlock: function(f, b) {
+            var u = this._cipher, m = u.blockSize, r = f.slice(b, b + m);
+            x.call(this, f, b, m, u), this._prevBlock = r;
+          }
+        });
+        function x(f, b, u, m) {
+          var r, a = this._iv;
+          a ? (r = a.slice(0), this._iv = void 0) : r = this._prevBlock, m.encryptBlock(r, 0);
+          for (var v = 0; v < u; v++)
+            f[b + v] ^= r[v];
+        }
+        return n;
+      })(), e.mode.CFB;
+    });
+  })(Gt)), Gt.exports;
+}
+var Qt = { exports: {} }, Yn = Qt.exports, o0;
+function Xn() {
+  return o0 || (o0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(Yn, function(e) {
+      return e.mode.CTR = (function() {
+        var n = e.lib.BlockCipherMode.extend(), x = n.Encryptor = n.extend({
+          processBlock: function(f, b) {
+            var u = this._cipher, m = u.blockSize, r = this._iv, a = this._counter;
+            r && (a = this._counter = r.slice(0), this._iv = void 0);
+            var v = a.slice(0);
+            u.encryptBlock(v, 0), a[m - 1] = a[m - 1] + 1 | 0;
+            for (var o = 0; o < m; o++)
+              f[b + o] ^= v[o];
+          }
+        });
+        return n.Decryptor = x, n;
+      })(), e.mode.CTR;
+    });
+  })(Qt)), Qt.exports;
+}
+var Zt = { exports: {} }, Jn = Zt.exports, a0;
+function $n() {
+  return a0 || (a0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(Jn, function(e) {
+      /** @preserve
+       * Counter block mode compatible with  Dr Brian Gladman fileenc.c
+       * derived from CryptoJS.mode.CTR
+       * Jan Hruby jhruby.web@gmail.com
+       */
+      return e.mode.CTRGladman = (function() {
+        var n = e.lib.BlockCipherMode.extend();
+        function x(u) {
+          if ((u >> 24 & 255) === 255) {
+            var m = u >> 16 & 255, r = u >> 8 & 255, a = u & 255;
+            m === 255 ? (m = 0, r === 255 ? (r = 0, a === 255 ? a = 0 : ++a) : ++r) : ++m, u = 0, u += m << 16, u += r << 8, u += a;
+          } else
+            u += 1 << 24;
+          return u;
+        }
+        function f(u) {
+          return (u[0] = x(u[0])) === 0 && (u[1] = x(u[1])), u;
+        }
+        var b = n.Encryptor = n.extend({
+          processBlock: function(u, m) {
+            var r = this._cipher, a = r.blockSize, v = this._iv, o = this._counter;
+            v && (o = this._counter = v.slice(0), this._iv = void 0), f(o);
+            var A = o.slice(0);
+            r.encryptBlock(A, 0);
+            for (var p = 0; p < a; p++)
+              u[m + p] ^= A[p];
+          }
+        });
+        return n.Decryptor = b, n;
+      })(), e.mode.CTRGladman;
+    });
+  })(Zt)), Zt.exports;
+}
+var Yt = { exports: {} }, ti = Yt.exports, d0;
+function ei() {
+  return d0 || (d0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(ti, function(e) {
+      return e.mode.OFB = (function() {
+        var n = e.lib.BlockCipherMode.extend(), x = n.Encryptor = n.extend({
+          processBlock: function(f, b) {
+            var u = this._cipher, m = u.blockSize, r = this._iv, a = this._keystream;
+            r && (a = this._keystream = r.slice(0), this._iv = void 0), u.encryptBlock(a, 0);
+            for (var v = 0; v < m; v++)
+              f[b + v] ^= a[v];
+          }
+        });
+        return n.Decryptor = x, n;
+      })(), e.mode.OFB;
+    });
+  })(Yt)), Yt.exports;
+}
+var Xt = { exports: {} }, ni = Xt.exports, s0;
+function ii() {
+  return s0 || (s0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(ni, function(e) {
+      return e.mode.ECB = (function() {
+        var n = e.lib.BlockCipherMode.extend();
+        return n.Encryptor = n.extend({
+          processBlock: function(x, f) {
+            this._cipher.encryptBlock(x, f);
+          }
+        }), n.Decryptor = n.extend({
+          processBlock: function(x, f) {
+            this._cipher.decryptBlock(x, f);
+          }
+        }), n;
+      })(), e.mode.ECB;
+    });
+  })(Xt)), Xt.exports;
+}
+var Jt = { exports: {} }, ri = Jt.exports, x0;
+function oi() {
+  return x0 || (x0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(ri, function(e) {
+      return e.pad.AnsiX923 = {
+        pad: function(n, x) {
+          var f = n.sigBytes, b = x * 4, u = b - f % b, m = f + u - 1;
+          n.clamp(), n.words[m >>> 2] |= u << 24 - m % 4 * 8, n.sigBytes += u;
+        },
+        unpad: function(n) {
+          var x = n.words[n.sigBytes - 1 >>> 2] & 255;
+          n.sigBytes -= x;
+        }
+      }, e.pad.Ansix923;
+    });
+  })(Jt)), Jt.exports;
+}
+var $t = { exports: {} }, ai = $t.exports, c0;
+function di() {
+  return c0 || (c0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(ai, function(e) {
+      return e.pad.Iso10126 = {
+        pad: function(n, x) {
+          var f = x * 4, b = f - n.sigBytes % f;
+          n.concat(e.lib.WordArray.random(b - 1)).concat(e.lib.WordArray.create([b << 24], 1));
+        },
+        unpad: function(n) {
+          var x = n.words[n.sigBytes - 1 >>> 2] & 255;
+          n.sigBytes -= x;
+        }
+      }, e.pad.Iso10126;
+    });
+  })($t)), $t.exports;
+}
+var te = { exports: {} }, si = te.exports, l0;
+function xi() {
+  return l0 || (l0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(si, function(e) {
+      return e.pad.Iso97971 = {
+        pad: function(n, x) {
+          n.concat(e.lib.WordArray.create([2147483648], 1)), e.pad.ZeroPadding.pad(n, x);
+        },
+        unpad: function(n) {
+          e.pad.ZeroPadding.unpad(n), n.sigBytes--;
+        }
+      }, e.pad.Iso97971;
+    });
+  })(te)), te.exports;
+}
+var ee = { exports: {} }, ci = ee.exports, p0;
+function li() {
+  return p0 || (p0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(ci, function(e) {
+      return e.pad.ZeroPadding = {
+        pad: function(n, x) {
+          var f = x * 4;
+          n.clamp(), n.sigBytes += f - (n.sigBytes % f || f);
+        },
+        unpad: function(n) {
+          for (var x = n.words, f = n.sigBytes - 1, f = n.sigBytes - 1; f >= 0; f--)
+            if (x[f >>> 2] >>> 24 - f % 4 * 8 & 255) {
+              n.sigBytes = f + 1;
+              break;
+            }
+        }
+      }, e.pad.ZeroPadding;
+    });
+  })(ee)), ee.exports;
+}
+var ne = { exports: {} }, pi = ne.exports, u0;
+function ui() {
+  return u0 || (u0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(pi, function(e) {
+      return e.pad.NoPadding = {
+        pad: function() {
+        },
+        unpad: function() {
+        }
+      }, e.pad.NoPadding;
+    });
+  })(ne)), ne.exports;
+}
+var ie = { exports: {} }, Ai = ie.exports, A0;
+function hi() {
+  return A0 || (A0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Z());
+    })(Ai, function(e) {
+      return (function(n) {
+        var x = e, f = x.lib, b = f.CipherParams, u = x.enc, m = u.Hex, r = x.format;
+        r.Hex = {
+          /**
+           * Converts the ciphertext of a cipher params object to a hexadecimally encoded string.
+           *
+           * @param {CipherParams} cipherParams The cipher params object.
+           *
+           * @return {string} The hexadecimally encoded string.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var hexString = CryptoJS.format.Hex.stringify(cipherParams);
+           */
+          stringify: function(a) {
+            return a.ciphertext.toString(m);
+          },
+          /**
+           * Converts a hexadecimally encoded ciphertext string to a cipher params object.
+           *
+           * @param {string} input The hexadecimally encoded string.
+           *
+           * @return {CipherParams} The cipher params object.
+           *
+           * @static
+           *
+           * @example
+           *
+           *     var cipherParams = CryptoJS.format.Hex.parse(hexString);
+           */
+          parse: function(a) {
+            var v = m.parse(a);
+            return b.create({ ciphertext: v });
+          }
+        };
+      })(), e.format.Hex;
+    });
+  })(ie)), ie.exports;
+}
+var re = { exports: {} }, fi = re.exports, h0;
+function ki() {
+  return h0 || (h0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), At(), ht(), ut(), Z());
+    })(fi, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.BlockCipher, b = n.algo, u = [], m = [], r = [], a = [], v = [], o = [], A = [], p = [], k = [], l = [];
+        (function() {
+          for (var c = [], h = 0; h < 256; h++)
+            h < 128 ? c[h] = h << 1 : c[h] = h << 1 ^ 283;
+          for (var d = 0, g = 0, h = 0; h < 256; h++) {
+            var C = g ^ g << 1 ^ g << 2 ^ g << 3 ^ g << 4;
+            C = C >>> 8 ^ C & 255 ^ 99, u[d] = C, m[C] = d;
+            var B = c[d], H = c[B], y = c[H], S = c[C] * 257 ^ C * 16843008;
+            r[d] = S << 24 | S >>> 8, a[d] = S << 16 | S >>> 16, v[d] = S << 8 | S >>> 24, o[d] = S;
+            var S = y * 16843009 ^ H * 65537 ^ B * 257 ^ d * 16843008;
+            A[C] = S << 24 | S >>> 8, p[C] = S << 16 | S >>> 16, k[C] = S << 8 | S >>> 24, l[C] = S, d ? (d = B ^ c[c[c[y ^ B]]], g ^= c[c[g]]) : d = g = 1;
+          }
+        })();
+        var E = [0, 1, 2, 4, 8, 16, 32, 64, 128, 27, 54], s = b.AES = f.extend({
+          _doReset: function() {
+            var c;
+            if (!(this._nRounds && this._keyPriorReset === this._key)) {
+              for (var h = this._keyPriorReset = this._key, d = h.words, g = h.sigBytes / 4, C = this._nRounds = g + 6, B = (C + 1) * 4, H = this._keySchedule = [], y = 0; y < B; y++)
+                y < g ? H[y] = d[y] : (c = H[y - 1], y % g ? g > 6 && y % g == 4 && (c = u[c >>> 24] << 24 | u[c >>> 16 & 255] << 16 | u[c >>> 8 & 255] << 8 | u[c & 255]) : (c = c << 8 | c >>> 24, c = u[c >>> 24] << 24 | u[c >>> 16 & 255] << 16 | u[c >>> 8 & 255] << 8 | u[c & 255], c ^= E[y / g | 0] << 24), H[y] = H[y - g] ^ c);
+              for (var S = this._invKeySchedule = [], w = 0; w < B; w++) {
+                var y = B - w;
+                if (w % 4)
+                  var c = H[y];
+                else
+                  var c = H[y - 4];
+                w < 4 || y <= 4 ? S[w] = c : S[w] = A[u[c >>> 24]] ^ p[u[c >>> 16 & 255]] ^ k[u[c >>> 8 & 255]] ^ l[u[c & 255]];
+              }
+            }
+          },
+          encryptBlock: function(c, h) {
+            this._doCryptBlock(c, h, this._keySchedule, r, a, v, o, u);
+          },
+          decryptBlock: function(c, h) {
+            var d = c[h + 1];
+            c[h + 1] = c[h + 3], c[h + 3] = d, this._doCryptBlock(c, h, this._invKeySchedule, A, p, k, l, m);
+            var d = c[h + 1];
+            c[h + 1] = c[h + 3], c[h + 3] = d;
+          },
+          _doCryptBlock: function(c, h, d, g, C, B, H, y) {
+            for (var S = this._nRounds, w = c[h] ^ d[0], F = c[h + 1] ^ d[1], M = c[h + 2] ^ d[2], _ = c[h + 3] ^ d[3], N = 4, z = 1; z < S; z++) {
+              var O = g[w >>> 24] ^ C[F >>> 16 & 255] ^ B[M >>> 8 & 255] ^ H[_ & 255] ^ d[N++], j = g[F >>> 24] ^ C[M >>> 16 & 255] ^ B[_ >>> 8 & 255] ^ H[w & 255] ^ d[N++], K = g[M >>> 24] ^ C[_ >>> 16 & 255] ^ B[w >>> 8 & 255] ^ H[F & 255] ^ d[N++], D = g[_ >>> 24] ^ C[w >>> 16 & 255] ^ B[F >>> 8 & 255] ^ H[M & 255] ^ d[N++];
+              w = O, F = j, M = K, _ = D;
+            }
+            var O = (y[w >>> 24] << 24 | y[F >>> 16 & 255] << 16 | y[M >>> 8 & 255] << 8 | y[_ & 255]) ^ d[N++], j = (y[F >>> 24] << 24 | y[M >>> 16 & 255] << 16 | y[_ >>> 8 & 255] << 8 | y[w & 255]) ^ d[N++], K = (y[M >>> 24] << 24 | y[_ >>> 16 & 255] << 16 | y[w >>> 8 & 255] << 8 | y[F & 255]) ^ d[N++], D = (y[_ >>> 24] << 24 | y[w >>> 16 & 255] << 16 | y[F >>> 8 & 255] << 8 | y[M & 255]) ^ d[N++];
+            c[h] = O, c[h + 1] = j, c[h + 2] = K, c[h + 3] = D;
+          },
+          keySize: 256 / 32
+        });
+        n.AES = f._createHelper(s);
+      })(), e.AES;
+    });
+  })(re)), re.exports;
+}
+var oe = { exports: {} }, mi = oe.exports, f0;
+function vi() {
+  return f0 || (f0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), At(), ht(), ut(), Z());
+    })(mi, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.WordArray, b = x.BlockCipher, u = n.algo, m = [
+          57,
+          49,
+          41,
+          33,
+          25,
+          17,
+          9,
+          1,
+          58,
+          50,
+          42,
+          34,
+          26,
+          18,
+          10,
+          2,
+          59,
+          51,
+          43,
+          35,
+          27,
+          19,
+          11,
+          3,
+          60,
+          52,
+          44,
+          36,
+          63,
+          55,
+          47,
+          39,
+          31,
+          23,
+          15,
+          7,
+          62,
+          54,
+          46,
+          38,
+          30,
+          22,
+          14,
+          6,
+          61,
+          53,
+          45,
+          37,
+          29,
+          21,
+          13,
+          5,
+          28,
+          20,
+          12,
+          4
+        ], r = [
+          14,
+          17,
+          11,
+          24,
+          1,
+          5,
+          3,
+          28,
+          15,
+          6,
+          21,
+          10,
+          23,
+          19,
+          12,
+          4,
+          26,
+          8,
+          16,
+          7,
+          27,
+          20,
+          13,
+          2,
+          41,
+          52,
+          31,
+          37,
+          47,
+          55,
+          30,
+          40,
+          51,
+          45,
+          33,
+          48,
+          44,
+          49,
+          39,
+          56,
+          34,
+          53,
+          46,
+          42,
+          50,
+          36,
+          29,
+          32
+        ], a = [1, 2, 4, 6, 8, 10, 12, 14, 15, 17, 19, 21, 23, 25, 27, 28], v = [
+          {
+            0: 8421888,
+            268435456: 32768,
+            536870912: 8421378,
+            805306368: 2,
+            1073741824: 512,
+            1342177280: 8421890,
+            1610612736: 8389122,
+            1879048192: 8388608,
+            2147483648: 514,
+            2415919104: 8389120,
+            2684354560: 33280,
+            2952790016: 8421376,
+            3221225472: 32770,
+            3489660928: 8388610,
+            3758096384: 0,
+            4026531840: 33282,
+            134217728: 0,
+            402653184: 8421890,
+            671088640: 33282,
+            939524096: 32768,
+            1207959552: 8421888,
+            1476395008: 512,
+            1744830464: 8421378,
+            2013265920: 2,
+            2281701376: 8389120,
+            2550136832: 33280,
+            2818572288: 8421376,
+            3087007744: 8389122,
+            3355443200: 8388610,
+            3623878656: 32770,
+            3892314112: 514,
+            4160749568: 8388608,
+            1: 32768,
+            268435457: 2,
+            536870913: 8421888,
+            805306369: 8388608,
+            1073741825: 8421378,
+            1342177281: 33280,
+            1610612737: 512,
+            1879048193: 8389122,
+            2147483649: 8421890,
+            2415919105: 8421376,
+            2684354561: 8388610,
+            2952790017: 33282,
+            3221225473: 514,
+            3489660929: 8389120,
+            3758096385: 32770,
+            4026531841: 0,
+            134217729: 8421890,
+            402653185: 8421376,
+            671088641: 8388608,
+            939524097: 512,
+            1207959553: 32768,
+            1476395009: 8388610,
+            1744830465: 2,
+            2013265921: 33282,
+            2281701377: 32770,
+            2550136833: 8389122,
+            2818572289: 514,
+            3087007745: 8421888,
+            3355443201: 8389120,
+            3623878657: 0,
+            3892314113: 33280,
+            4160749569: 8421378
+          },
+          {
+            0: 1074282512,
+            16777216: 16384,
+            33554432: 524288,
+            50331648: 1074266128,
+            67108864: 1073741840,
+            83886080: 1074282496,
+            100663296: 1073758208,
+            117440512: 16,
+            134217728: 540672,
+            150994944: 1073758224,
+            167772160: 1073741824,
+            184549376: 540688,
+            201326592: 524304,
+            218103808: 0,
+            234881024: 16400,
+            251658240: 1074266112,
+            8388608: 1073758208,
+            25165824: 540688,
+            41943040: 16,
+            58720256: 1073758224,
+            75497472: 1074282512,
+            92274688: 1073741824,
+            109051904: 524288,
+            125829120: 1074266128,
+            142606336: 524304,
+            159383552: 0,
+            176160768: 16384,
+            192937984: 1074266112,
+            209715200: 1073741840,
+            226492416: 540672,
+            243269632: 1074282496,
+            260046848: 16400,
+            268435456: 0,
+            285212672: 1074266128,
+            301989888: 1073758224,
+            318767104: 1074282496,
+            335544320: 1074266112,
+            352321536: 16,
+            369098752: 540688,
+            385875968: 16384,
+            402653184: 16400,
+            419430400: 524288,
+            436207616: 524304,
+            452984832: 1073741840,
+            469762048: 540672,
+            486539264: 1073758208,
+            503316480: 1073741824,
+            520093696: 1074282512,
+            276824064: 540688,
+            293601280: 524288,
+            310378496: 1074266112,
+            327155712: 16384,
+            343932928: 1073758208,
+            360710144: 1074282512,
+            377487360: 16,
+            394264576: 1073741824,
+            411041792: 1074282496,
+            427819008: 1073741840,
+            444596224: 1073758224,
+            461373440: 524304,
+            478150656: 0,
+            494927872: 16400,
+            511705088: 1074266128,
+            528482304: 540672
+          },
+          {
+            0: 260,
+            1048576: 0,
+            2097152: 67109120,
+            3145728: 65796,
+            4194304: 65540,
+            5242880: 67108868,
+            6291456: 67174660,
+            7340032: 67174400,
+            8388608: 67108864,
+            9437184: 67174656,
+            10485760: 65792,
+            11534336: 67174404,
+            12582912: 67109124,
+            13631488: 65536,
+            14680064: 4,
+            15728640: 256,
+            524288: 67174656,
+            1572864: 67174404,
+            2621440: 0,
+            3670016: 67109120,
+            4718592: 67108868,
+            5767168: 65536,
+            6815744: 65540,
+            7864320: 260,
+            8912896: 4,
+            9961472: 256,
+            11010048: 67174400,
+            12058624: 65796,
+            13107200: 65792,
+            14155776: 67109124,
+            15204352: 67174660,
+            16252928: 67108864,
+            16777216: 67174656,
+            17825792: 65540,
+            18874368: 65536,
+            19922944: 67109120,
+            20971520: 256,
+            22020096: 67174660,
+            23068672: 67108868,
+            24117248: 0,
+            25165824: 67109124,
+            26214400: 67108864,
+            27262976: 4,
+            28311552: 65792,
+            29360128: 67174400,
+            30408704: 260,
+            31457280: 65796,
+            32505856: 67174404,
+            17301504: 67108864,
+            18350080: 260,
+            19398656: 67174656,
+            20447232: 0,
+            21495808: 65540,
+            22544384: 67109120,
+            23592960: 256,
+            24641536: 67174404,
+            25690112: 65536,
+            26738688: 67174660,
+            27787264: 65796,
+            28835840: 67108868,
+            29884416: 67109124,
+            30932992: 67174400,
+            31981568: 4,
+            33030144: 65792
+          },
+          {
+            0: 2151682048,
+            65536: 2147487808,
+            131072: 4198464,
+            196608: 2151677952,
+            262144: 0,
+            327680: 4198400,
+            393216: 2147483712,
+            458752: 4194368,
+            524288: 2147483648,
+            589824: 4194304,
+            655360: 64,
+            720896: 2147487744,
+            786432: 2151678016,
+            851968: 4160,
+            917504: 4096,
+            983040: 2151682112,
+            32768: 2147487808,
+            98304: 64,
+            163840: 2151678016,
+            229376: 2147487744,
+            294912: 4198400,
+            360448: 2151682112,
+            425984: 0,
+            491520: 2151677952,
+            557056: 4096,
+            622592: 2151682048,
+            688128: 4194304,
+            753664: 4160,
+            819200: 2147483648,
+            884736: 4194368,
+            950272: 4198464,
+            1015808: 2147483712,
+            1048576: 4194368,
+            1114112: 4198400,
+            1179648: 2147483712,
+            1245184: 0,
+            1310720: 4160,
+            1376256: 2151678016,
+            1441792: 2151682048,
+            1507328: 2147487808,
+            1572864: 2151682112,
+            1638400: 2147483648,
+            1703936: 2151677952,
+            1769472: 4198464,
+            1835008: 2147487744,
+            1900544: 4194304,
+            1966080: 64,
+            2031616: 4096,
+            1081344: 2151677952,
+            1146880: 2151682112,
+            1212416: 0,
+            1277952: 4198400,
+            1343488: 4194368,
+            1409024: 2147483648,
+            1474560: 2147487808,
+            1540096: 64,
+            1605632: 2147483712,
+            1671168: 4096,
+            1736704: 2147487744,
+            1802240: 2151678016,
+            1867776: 4160,
+            1933312: 2151682048,
+            1998848: 4194304,
+            2064384: 4198464
+          },
+          {
+            0: 128,
+            4096: 17039360,
+            8192: 262144,
+            12288: 536870912,
+            16384: 537133184,
+            20480: 16777344,
+            24576: 553648256,
+            28672: 262272,
+            32768: 16777216,
+            36864: 537133056,
+            40960: 536871040,
+            45056: 553910400,
+            49152: 553910272,
+            53248: 0,
+            57344: 17039488,
+            61440: 553648128,
+            2048: 17039488,
+            6144: 553648256,
+            10240: 128,
+            14336: 17039360,
+            18432: 262144,
+            22528: 537133184,
+            26624: 553910272,
+            30720: 536870912,
+            34816: 537133056,
+            38912: 0,
+            43008: 553910400,
+            47104: 16777344,
+            51200: 536871040,
+            55296: 553648128,
+            59392: 16777216,
+            63488: 262272,
+            65536: 262144,
+            69632: 128,
+            73728: 536870912,
+            77824: 553648256,
+            81920: 16777344,
+            86016: 553910272,
+            90112: 537133184,
+            94208: 16777216,
+            98304: 553910400,
+            102400: 553648128,
+            106496: 17039360,
+            110592: 537133056,
+            114688: 262272,
+            118784: 536871040,
+            122880: 0,
+            126976: 17039488,
+            67584: 553648256,
+            71680: 16777216,
+            75776: 17039360,
+            79872: 537133184,
+            83968: 536870912,
+            88064: 17039488,
+            92160: 128,
+            96256: 553910272,
+            100352: 262272,
+            104448: 553910400,
+            108544: 0,
+            112640: 553648128,
+            116736: 16777344,
+            120832: 262144,
+            124928: 537133056,
+            129024: 536871040
+          },
+          {
+            0: 268435464,
+            256: 8192,
+            512: 270532608,
+            768: 270540808,
+            1024: 268443648,
+            1280: 2097152,
+            1536: 2097160,
+            1792: 268435456,
+            2048: 0,
+            2304: 268443656,
+            2560: 2105344,
+            2816: 8,
+            3072: 270532616,
+            3328: 2105352,
+            3584: 8200,
+            3840: 270540800,
+            128: 270532608,
+            384: 270540808,
+            640: 8,
+            896: 2097152,
+            1152: 2105352,
+            1408: 268435464,
+            1664: 268443648,
+            1920: 8200,
+            2176: 2097160,
+            2432: 8192,
+            2688: 268443656,
+            2944: 270532616,
+            3200: 0,
+            3456: 270540800,
+            3712: 2105344,
+            3968: 268435456,
+            4096: 268443648,
+            4352: 270532616,
+            4608: 270540808,
+            4864: 8200,
+            5120: 2097152,
+            5376: 268435456,
+            5632: 268435464,
+            5888: 2105344,
+            6144: 2105352,
+            6400: 0,
+            6656: 8,
+            6912: 270532608,
+            7168: 8192,
+            7424: 268443656,
+            7680: 270540800,
+            7936: 2097160,
+            4224: 8,
+            4480: 2105344,
+            4736: 2097152,
+            4992: 268435464,
+            5248: 268443648,
+            5504: 8200,
+            5760: 270540808,
+            6016: 270532608,
+            6272: 270540800,
+            6528: 270532616,
+            6784: 8192,
+            7040: 2105352,
+            7296: 2097160,
+            7552: 0,
+            7808: 268435456,
+            8064: 268443656
+          },
+          {
+            0: 1048576,
+            16: 33555457,
+            32: 1024,
+            48: 1049601,
+            64: 34604033,
+            80: 0,
+            96: 1,
+            112: 34603009,
+            128: 33555456,
+            144: 1048577,
+            160: 33554433,
+            176: 34604032,
+            192: 34603008,
+            208: 1025,
+            224: 1049600,
+            240: 33554432,
+            8: 34603009,
+            24: 0,
+            40: 33555457,
+            56: 34604032,
+            72: 1048576,
+            88: 33554433,
+            104: 33554432,
+            120: 1025,
+            136: 1049601,
+            152: 33555456,
+            168: 34603008,
+            184: 1048577,
+            200: 1024,
+            216: 34604033,
+            232: 1,
+            248: 1049600,
+            256: 33554432,
+            272: 1048576,
+            288: 33555457,
+            304: 34603009,
+            320: 1048577,
+            336: 33555456,
+            352: 34604032,
+            368: 1049601,
+            384: 1025,
+            400: 34604033,
+            416: 1049600,
+            432: 1,
+            448: 0,
+            464: 34603008,
+            480: 33554433,
+            496: 1024,
+            264: 1049600,
+            280: 33555457,
+            296: 34603009,
+            312: 1,
+            328: 33554432,
+            344: 1048576,
+            360: 1025,
+            376: 34604032,
+            392: 33554433,
+            408: 34603008,
+            424: 0,
+            440: 34604033,
+            456: 1049601,
+            472: 1024,
+            488: 33555456,
+            504: 1048577
+          },
+          {
+            0: 134219808,
+            1: 131072,
+            2: 134217728,
+            3: 32,
+            4: 131104,
+            5: 134350880,
+            6: 134350848,
+            7: 2048,
+            8: 134348800,
+            9: 134219776,
+            10: 133120,
+            11: 134348832,
+            12: 2080,
+            13: 0,
+            14: 134217760,
+            15: 133152,
+            2147483648: 2048,
+            2147483649: 134350880,
+            2147483650: 134219808,
+            2147483651: 134217728,
+            2147483652: 134348800,
+            2147483653: 133120,
+            2147483654: 133152,
+            2147483655: 32,
+            2147483656: 134217760,
+            2147483657: 2080,
+            2147483658: 131104,
+            2147483659: 134350848,
+            2147483660: 0,
+            2147483661: 134348832,
+            2147483662: 134219776,
+            2147483663: 131072,
+            16: 133152,
+            17: 134350848,
+            18: 32,
+            19: 2048,
+            20: 134219776,
+            21: 134217760,
+            22: 134348832,
+            23: 131072,
+            24: 0,
+            25: 131104,
+            26: 134348800,
+            27: 134219808,
+            28: 134350880,
+            29: 133120,
+            30: 2080,
+            31: 134217728,
+            2147483664: 131072,
+            2147483665: 2048,
+            2147483666: 134348832,
+            2147483667: 133152,
+            2147483668: 32,
+            2147483669: 134348800,
+            2147483670: 134217728,
+            2147483671: 134219808,
+            2147483672: 134350880,
+            2147483673: 134217760,
+            2147483674: 134219776,
+            2147483675: 0,
+            2147483676: 133120,
+            2147483677: 2080,
+            2147483678: 131104,
+            2147483679: 134350848
+          }
+        ], o = [
+          4160749569,
+          528482304,
+          33030144,
+          2064384,
+          129024,
+          8064,
+          504,
+          2147483679
+        ], A = u.DES = b.extend({
+          _doReset: function() {
+            for (var E = this._key, s = E.words, c = [], h = 0; h < 56; h++) {
+              var d = m[h] - 1;
+              c[h] = s[d >>> 5] >>> 31 - d % 32 & 1;
+            }
+            for (var g = this._subKeys = [], C = 0; C < 16; C++) {
+              for (var B = g[C] = [], H = a[C], h = 0; h < 24; h++)
+                B[h / 6 | 0] |= c[(r[h] - 1 + H) % 28] << 31 - h % 6, B[4 + (h / 6 | 0)] |= c[28 + (r[h + 24] - 1 + H) % 28] << 31 - h % 6;
+              B[0] = B[0] << 1 | B[0] >>> 31;
+              for (var h = 1; h < 7; h++)
+                B[h] = B[h] >>> (h - 1) * 4 + 3;
+              B[7] = B[7] << 5 | B[7] >>> 27;
+            }
+            for (var y = this._invSubKeys = [], h = 0; h < 16; h++)
+              y[h] = g[15 - h];
+          },
+          encryptBlock: function(E, s) {
+            this._doCryptBlock(E, s, this._subKeys);
+          },
+          decryptBlock: function(E, s) {
+            this._doCryptBlock(E, s, this._invSubKeys);
+          },
+          _doCryptBlock: function(E, s, c) {
+            this._lBlock = E[s], this._rBlock = E[s + 1], p.call(this, 4, 252645135), p.call(this, 16, 65535), k.call(this, 2, 858993459), k.call(this, 8, 16711935), p.call(this, 1, 1431655765);
+            for (var h = 0; h < 16; h++) {
+              for (var d = c[h], g = this._lBlock, C = this._rBlock, B = 0, H = 0; H < 8; H++)
+                B |= v[H][((C ^ d[H]) & o[H]) >>> 0];
+              this._lBlock = C, this._rBlock = g ^ B;
+            }
+            var y = this._lBlock;
+            this._lBlock = this._rBlock, this._rBlock = y, p.call(this, 1, 1431655765), k.call(this, 8, 16711935), k.call(this, 2, 858993459), p.call(this, 16, 65535), p.call(this, 4, 252645135), E[s] = this._lBlock, E[s + 1] = this._rBlock;
+          },
+          keySize: 64 / 32,
+          ivSize: 64 / 32,
+          blockSize: 64 / 32
+        });
+        function p(E, s) {
+          var c = (this._lBlock >>> E ^ this._rBlock) & s;
+          this._rBlock ^= c, this._lBlock ^= c << E;
+        }
+        function k(E, s) {
+          var c = (this._rBlock >>> E ^ this._lBlock) & s;
+          this._lBlock ^= c, this._rBlock ^= c << E;
+        }
+        n.DES = b._createHelper(A);
+        var l = u.TripleDES = b.extend({
+          _doReset: function() {
+            var E = this._key, s = E.words;
+            if (s.length !== 2 && s.length !== 4 && s.length < 6)
+              throw new Error("Invalid key length - 3DES requires the key length to be 64, 128, 192 or >192.");
+            var c = s.slice(0, 2), h = s.length < 4 ? s.slice(0, 2) : s.slice(2, 4), d = s.length < 6 ? s.slice(0, 2) : s.slice(4, 6);
+            this._des1 = A.createEncryptor(f.create(c)), this._des2 = A.createEncryptor(f.create(h)), this._des3 = A.createEncryptor(f.create(d));
+          },
+          encryptBlock: function(E, s) {
+            this._des1.encryptBlock(E, s), this._des2.decryptBlock(E, s), this._des3.encryptBlock(E, s);
+          },
+          decryptBlock: function(E, s) {
+            this._des3.decryptBlock(E, s), this._des2.encryptBlock(E, s), this._des1.decryptBlock(E, s);
+          },
+          keySize: 192 / 32,
+          ivSize: 64 / 32,
+          blockSize: 64 / 32
+        });
+        n.TripleDES = b._createHelper(l);
+      })(), e.TripleDES;
+    });
+  })(oe)), oe.exports;
+}
+var ae = { exports: {} }, gi = ae.exports, k0;
+function yi() {
+  return k0 || (k0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), At(), ht(), ut(), Z());
+    })(gi, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.StreamCipher, b = n.algo, u = b.RC4 = f.extend({
+          _doReset: function() {
+            for (var a = this._key, v = a.words, o = a.sigBytes, A = this._S = [], p = 0; p < 256; p++)
+              A[p] = p;
+            for (var p = 0, k = 0; p < 256; p++) {
+              var l = p % o, E = v[l >>> 2] >>> 24 - l % 4 * 8 & 255;
+              k = (k + A[p] + E) % 256;
+              var s = A[p];
+              A[p] = A[k], A[k] = s;
+            }
+            this._i = this._j = 0;
+          },
+          _doProcessBlock: function(a, v) {
+            a[v] ^= m.call(this);
+          },
+          keySize: 256 / 32,
+          ivSize: 0
+        });
+        function m() {
+          for (var a = this._S, v = this._i, o = this._j, A = 0, p = 0; p < 4; p++) {
+            v = (v + 1) % 256, o = (o + a[v]) % 256;
+            var k = a[v];
+            a[v] = a[o], a[o] = k, A |= a[(a[v] + a[o]) % 256] << 24 - p * 8;
+          }
+          return this._i = v, this._j = o, A;
+        }
+        n.RC4 = f._createHelper(u);
+        var r = b.RC4Drop = u.extend({
+          /**
+           * Configuration options.
+           *
+           * @property {number} drop The number of keystream words to drop. Default 192
+           */
+          cfg: u.cfg.extend({
+            drop: 192
+          }),
+          _doReset: function() {
+            u._doReset.call(this);
+            for (var a = this.cfg.drop; a > 0; a--)
+              m.call(this);
+          }
+        });
+        n.RC4Drop = f._createHelper(r);
+      })(), e.RC4;
+    });
+  })(ae)), ae.exports;
+}
+var de = { exports: {} }, Ei = de.exports, m0;
+function bi() {
+  return m0 || (m0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), At(), ht(), ut(), Z());
+    })(Ei, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.StreamCipher, b = n.algo, u = [], m = [], r = [], a = b.Rabbit = f.extend({
+          _doReset: function() {
+            for (var o = this._key.words, A = this.cfg.iv, p = 0; p < 4; p++)
+              o[p] = (o[p] << 8 | o[p] >>> 24) & 16711935 | (o[p] << 24 | o[p] >>> 8) & 4278255360;
+            var k = this._X = [
+              o[0],
+              o[3] << 16 | o[2] >>> 16,
+              o[1],
+              o[0] << 16 | o[3] >>> 16,
+              o[2],
+              o[1] << 16 | o[0] >>> 16,
+              o[3],
+              o[2] << 16 | o[1] >>> 16
+            ], l = this._C = [
+              o[2] << 16 | o[2] >>> 16,
+              o[0] & 4294901760 | o[1] & 65535,
+              o[3] << 16 | o[3] >>> 16,
+              o[1] & 4294901760 | o[2] & 65535,
+              o[0] << 16 | o[0] >>> 16,
+              o[2] & 4294901760 | o[3] & 65535,
+              o[1] << 16 | o[1] >>> 16,
+              o[3] & 4294901760 | o[0] & 65535
+            ];
+            this._b = 0;
+            for (var p = 0; p < 4; p++)
+              v.call(this);
+            for (var p = 0; p < 8; p++)
+              l[p] ^= k[p + 4 & 7];
+            if (A) {
+              var E = A.words, s = E[0], c = E[1], h = (s << 8 | s >>> 24) & 16711935 | (s << 24 | s >>> 8) & 4278255360, d = (c << 8 | c >>> 24) & 16711935 | (c << 24 | c >>> 8) & 4278255360, g = h >>> 16 | d & 4294901760, C = d << 16 | h & 65535;
+              l[0] ^= h, l[1] ^= g, l[2] ^= d, l[3] ^= C, l[4] ^= h, l[5] ^= g, l[6] ^= d, l[7] ^= C;
+              for (var p = 0; p < 4; p++)
+                v.call(this);
+            }
+          },
+          _doProcessBlock: function(o, A) {
+            var p = this._X;
+            v.call(this), u[0] = p[0] ^ p[5] >>> 16 ^ p[3] << 16, u[1] = p[2] ^ p[7] >>> 16 ^ p[5] << 16, u[2] = p[4] ^ p[1] >>> 16 ^ p[7] << 16, u[3] = p[6] ^ p[3] >>> 16 ^ p[1] << 16;
+            for (var k = 0; k < 4; k++)
+              u[k] = (u[k] << 8 | u[k] >>> 24) & 16711935 | (u[k] << 24 | u[k] >>> 8) & 4278255360, o[A + k] ^= u[k];
+          },
+          blockSize: 128 / 32,
+          ivSize: 64 / 32
+        });
+        function v() {
+          for (var o = this._X, A = this._C, p = 0; p < 8; p++)
+            m[p] = A[p];
+          A[0] = A[0] + 1295307597 + this._b | 0, A[1] = A[1] + 3545052371 + (A[0] >>> 0 < m[0] >>> 0 ? 1 : 0) | 0, A[2] = A[2] + 886263092 + (A[1] >>> 0 < m[1] >>> 0 ? 1 : 0) | 0, A[3] = A[3] + 1295307597 + (A[2] >>> 0 < m[2] >>> 0 ? 1 : 0) | 0, A[4] = A[4] + 3545052371 + (A[3] >>> 0 < m[3] >>> 0 ? 1 : 0) | 0, A[5] = A[5] + 886263092 + (A[4] >>> 0 < m[4] >>> 0 ? 1 : 0) | 0, A[6] = A[6] + 1295307597 + (A[5] >>> 0 < m[5] >>> 0 ? 1 : 0) | 0, A[7] = A[7] + 3545052371 + (A[6] >>> 0 < m[6] >>> 0 ? 1 : 0) | 0, this._b = A[7] >>> 0 < m[7] >>> 0 ? 1 : 0;
+          for (var p = 0; p < 8; p++) {
+            var k = o[p] + A[p], l = k & 65535, E = k >>> 16, s = ((l * l >>> 17) + l * E >>> 15) + E * E, c = ((k & 4294901760) * k | 0) + ((k & 65535) * k | 0);
+            r[p] = s ^ c;
+          }
+          o[0] = r[0] + (r[7] << 16 | r[7] >>> 16) + (r[6] << 16 | r[6] >>> 16) | 0, o[1] = r[1] + (r[0] << 8 | r[0] >>> 24) + r[7] | 0, o[2] = r[2] + (r[1] << 16 | r[1] >>> 16) + (r[0] << 16 | r[0] >>> 16) | 0, o[3] = r[3] + (r[2] << 8 | r[2] >>> 24) + r[1] | 0, o[4] = r[4] + (r[3] << 16 | r[3] >>> 16) + (r[2] << 16 | r[2] >>> 16) | 0, o[5] = r[5] + (r[4] << 8 | r[4] >>> 24) + r[3] | 0, o[6] = r[6] + (r[5] << 16 | r[5] >>> 16) + (r[4] << 16 | r[4] >>> 16) | 0, o[7] = r[7] + (r[6] << 8 | r[6] >>> 24) + r[5] | 0;
+        }
+        n.Rabbit = f._createHelper(a);
+      })(), e.Rabbit;
+    });
+  })(de)), de.exports;
+}
+var se = { exports: {} }, Ci = se.exports, v0;
+function Bi() {
+  return v0 || (v0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), At(), ht(), ut(), Z());
+    })(Ci, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.StreamCipher, b = n.algo, u = [], m = [], r = [], a = b.RabbitLegacy = f.extend({
+          _doReset: function() {
+            var o = this._key.words, A = this.cfg.iv, p = this._X = [
+              o[0],
+              o[3] << 16 | o[2] >>> 16,
+              o[1],
+              o[0] << 16 | o[3] >>> 16,
+              o[2],
+              o[1] << 16 | o[0] >>> 16,
+              o[3],
+              o[2] << 16 | o[1] >>> 16
+            ], k = this._C = [
+              o[2] << 16 | o[2] >>> 16,
+              o[0] & 4294901760 | o[1] & 65535,
+              o[3] << 16 | o[3] >>> 16,
+              o[1] & 4294901760 | o[2] & 65535,
+              o[0] << 16 | o[0] >>> 16,
+              o[2] & 4294901760 | o[3] & 65535,
+              o[1] << 16 | o[1] >>> 16,
+              o[3] & 4294901760 | o[0] & 65535
+            ];
+            this._b = 0;
+            for (var l = 0; l < 4; l++)
+              v.call(this);
+            for (var l = 0; l < 8; l++)
+              k[l] ^= p[l + 4 & 7];
+            if (A) {
+              var E = A.words, s = E[0], c = E[1], h = (s << 8 | s >>> 24) & 16711935 | (s << 24 | s >>> 8) & 4278255360, d = (c << 8 | c >>> 24) & 16711935 | (c << 24 | c >>> 8) & 4278255360, g = h >>> 16 | d & 4294901760, C = d << 16 | h & 65535;
+              k[0] ^= h, k[1] ^= g, k[2] ^= d, k[3] ^= C, k[4] ^= h, k[5] ^= g, k[6] ^= d, k[7] ^= C;
+              for (var l = 0; l < 4; l++)
+                v.call(this);
+            }
+          },
+          _doProcessBlock: function(o, A) {
+            var p = this._X;
+            v.call(this), u[0] = p[0] ^ p[5] >>> 16 ^ p[3] << 16, u[1] = p[2] ^ p[7] >>> 16 ^ p[5] << 16, u[2] = p[4] ^ p[1] >>> 16 ^ p[7] << 16, u[3] = p[6] ^ p[3] >>> 16 ^ p[1] << 16;
+            for (var k = 0; k < 4; k++)
+              u[k] = (u[k] << 8 | u[k] >>> 24) & 16711935 | (u[k] << 24 | u[k] >>> 8) & 4278255360, o[A + k] ^= u[k];
+          },
+          blockSize: 128 / 32,
+          ivSize: 64 / 32
+        });
+        function v() {
+          for (var o = this._X, A = this._C, p = 0; p < 8; p++)
+            m[p] = A[p];
+          A[0] = A[0] + 1295307597 + this._b | 0, A[1] = A[1] + 3545052371 + (A[0] >>> 0 < m[0] >>> 0 ? 1 : 0) | 0, A[2] = A[2] + 886263092 + (A[1] >>> 0 < m[1] >>> 0 ? 1 : 0) | 0, A[3] = A[3] + 1295307597 + (A[2] >>> 0 < m[2] >>> 0 ? 1 : 0) | 0, A[4] = A[4] + 3545052371 + (A[3] >>> 0 < m[3] >>> 0 ? 1 : 0) | 0, A[5] = A[5] + 886263092 + (A[4] >>> 0 < m[4] >>> 0 ? 1 : 0) | 0, A[6] = A[6] + 1295307597 + (A[5] >>> 0 < m[5] >>> 0 ? 1 : 0) | 0, A[7] = A[7] + 3545052371 + (A[6] >>> 0 < m[6] >>> 0 ? 1 : 0) | 0, this._b = A[7] >>> 0 < m[7] >>> 0 ? 1 : 0;
+          for (var p = 0; p < 8; p++) {
+            var k = o[p] + A[p], l = k & 65535, E = k >>> 16, s = ((l * l >>> 17) + l * E >>> 15) + E * E, c = ((k & 4294901760) * k | 0) + ((k & 65535) * k | 0);
+            r[p] = s ^ c;
+          }
+          o[0] = r[0] + (r[7] << 16 | r[7] >>> 16) + (r[6] << 16 | r[6] >>> 16) | 0, o[1] = r[1] + (r[0] << 8 | r[0] >>> 24) + r[7] | 0, o[2] = r[2] + (r[1] << 16 | r[1] >>> 16) + (r[0] << 16 | r[0] >>> 16) | 0, o[3] = r[3] + (r[2] << 8 | r[2] >>> 24) + r[1] | 0, o[4] = r[4] + (r[3] << 16 | r[3] >>> 16) + (r[2] << 16 | r[2] >>> 16) | 0, o[5] = r[5] + (r[4] << 8 | r[4] >>> 24) + r[3] | 0, o[6] = r[6] + (r[5] << 16 | r[5] >>> 16) + (r[4] << 16 | r[4] >>> 16) | 0, o[7] = r[7] + (r[6] << 8 | r[6] >>> 24) + r[5] | 0;
+        }
+        n.RabbitLegacy = f._createHelper(a);
+      })(), e.RabbitLegacy;
+    });
+  })(se)), se.exports;
+}
+var xe = { exports: {} }, Si = xe.exports, g0;
+function Di() {
+  return g0 || (g0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), At(), ht(), ut(), Z());
+    })(Si, function(e) {
+      return (function() {
+        var n = e, x = n.lib, f = x.BlockCipher, b = n.algo;
+        const u = 16, m = [
+          608135816,
+          2242054355,
+          320440878,
+          57701188,
+          2752067618,
+          698298832,
+          137296536,
+          3964562569,
+          1160258022,
+          953160567,
+          3193202383,
+          887688300,
+          3232508343,
+          3380367581,
+          1065670069,
+          3041331479,
+          2450970073,
+          2306472731
+        ], r = [
+          [
+            3509652390,
+            2564797868,
+            805139163,
+            3491422135,
+            3101798381,
+            1780907670,
+            3128725573,
+            4046225305,
+            614570311,
+            3012652279,
+            134345442,
+            2240740374,
+            1667834072,
+            1901547113,
+            2757295779,
+            4103290238,
+            227898511,
+            1921955416,
+            1904987480,
+            2182433518,
+            2069144605,
+            3260701109,
+            2620446009,
+            720527379,
+            3318853667,
+            677414384,
+            3393288472,
+            3101374703,
+            2390351024,
+            1614419982,
+            1822297739,
+            2954791486,
+            3608508353,
+            3174124327,
+            2024746970,
+            1432378464,
+            3864339955,
+            2857741204,
+            1464375394,
+            1676153920,
+            1439316330,
+            715854006,
+            3033291828,
+            289532110,
+            2706671279,
+            2087905683,
+            3018724369,
+            1668267050,
+            732546397,
+            1947742710,
+            3462151702,
+            2609353502,
+            2950085171,
+            1814351708,
+            2050118529,
+            680887927,
+            999245976,
+            1800124847,
+            3300911131,
+            1713906067,
+            1641548236,
+            4213287313,
+            1216130144,
+            1575780402,
+            4018429277,
+            3917837745,
+            3693486850,
+            3949271944,
+            596196993,
+            3549867205,
+            258830323,
+            2213823033,
+            772490370,
+            2760122372,
+            1774776394,
+            2652871518,
+            566650946,
+            4142492826,
+            1728879713,
+            2882767088,
+            1783734482,
+            3629395816,
+            2517608232,
+            2874225571,
+            1861159788,
+            326777828,
+            3124490320,
+            2130389656,
+            2716951837,
+            967770486,
+            1724537150,
+            2185432712,
+            2364442137,
+            1164943284,
+            2105845187,
+            998989502,
+            3765401048,
+            2244026483,
+            1075463327,
+            1455516326,
+            1322494562,
+            910128902,
+            469688178,
+            1117454909,
+            936433444,
+            3490320968,
+            3675253459,
+            1240580251,
+            122909385,
+            2157517691,
+            634681816,
+            4142456567,
+            3825094682,
+            3061402683,
+            2540495037,
+            79693498,
+            3249098678,
+            1084186820,
+            1583128258,
+            426386531,
+            1761308591,
+            1047286709,
+            322548459,
+            995290223,
+            1845252383,
+            2603652396,
+            3431023940,
+            2942221577,
+            3202600964,
+            3727903485,
+            1712269319,
+            422464435,
+            3234572375,
+            1170764815,
+            3523960633,
+            3117677531,
+            1434042557,
+            442511882,
+            3600875718,
+            1076654713,
+            1738483198,
+            4213154764,
+            2393238008,
+            3677496056,
+            1014306527,
+            4251020053,
+            793779912,
+            2902807211,
+            842905082,
+            4246964064,
+            1395751752,
+            1040244610,
+            2656851899,
+            3396308128,
+            445077038,
+            3742853595,
+            3577915638,
+            679411651,
+            2892444358,
+            2354009459,
+            1767581616,
+            3150600392,
+            3791627101,
+            3102740896,
+            284835224,
+            4246832056,
+            1258075500,
+            768725851,
+            2589189241,
+            3069724005,
+            3532540348,
+            1274779536,
+            3789419226,
+            2764799539,
+            1660621633,
+            3471099624,
+            4011903706,
+            913787905,
+            3497959166,
+            737222580,
+            2514213453,
+            2928710040,
+            3937242737,
+            1804850592,
+            3499020752,
+            2949064160,
+            2386320175,
+            2390070455,
+            2415321851,
+            4061277028,
+            2290661394,
+            2416832540,
+            1336762016,
+            1754252060,
+            3520065937,
+            3014181293,
+            791618072,
+            3188594551,
+            3933548030,
+            2332172193,
+            3852520463,
+            3043980520,
+            413987798,
+            3465142937,
+            3030929376,
+            4245938359,
+            2093235073,
+            3534596313,
+            375366246,
+            2157278981,
+            2479649556,
+            555357303,
+            3870105701,
+            2008414854,
+            3344188149,
+            4221384143,
+            3956125452,
+            2067696032,
+            3594591187,
+            2921233993,
+            2428461,
+            544322398,
+            577241275,
+            1471733935,
+            610547355,
+            4027169054,
+            1432588573,
+            1507829418,
+            2025931657,
+            3646575487,
+            545086370,
+            48609733,
+            2200306550,
+            1653985193,
+            298326376,
+            1316178497,
+            3007786442,
+            2064951626,
+            458293330,
+            2589141269,
+            3591329599,
+            3164325604,
+            727753846,
+            2179363840,
+            146436021,
+            1461446943,
+            4069977195,
+            705550613,
+            3059967265,
+            3887724982,
+            4281599278,
+            3313849956,
+            1404054877,
+            2845806497,
+            146425753,
+            1854211946
+          ],
+          [
+            1266315497,
+            3048417604,
+            3681880366,
+            3289982499,
+            290971e4,
+            1235738493,
+            2632868024,
+            2414719590,
+            3970600049,
+            1771706367,
+            1449415276,
+            3266420449,
+            422970021,
+            1963543593,
+            2690192192,
+            3826793022,
+            1062508698,
+            1531092325,
+            1804592342,
+            2583117782,
+            2714934279,
+            4024971509,
+            1294809318,
+            4028980673,
+            1289560198,
+            2221992742,
+            1669523910,
+            35572830,
+            157838143,
+            1052438473,
+            1016535060,
+            1802137761,
+            1753167236,
+            1386275462,
+            3080475397,
+            2857371447,
+            1040679964,
+            2145300060,
+            2390574316,
+            1461121720,
+            2956646967,
+            4031777805,
+            4028374788,
+            33600511,
+            2920084762,
+            1018524850,
+            629373528,
+            3691585981,
+            3515945977,
+            2091462646,
+            2486323059,
+            586499841,
+            988145025,
+            935516892,
+            3367335476,
+            2599673255,
+            2839830854,
+            265290510,
+            3972581182,
+            2759138881,
+            3795373465,
+            1005194799,
+            847297441,
+            406762289,
+            1314163512,
+            1332590856,
+            1866599683,
+            4127851711,
+            750260880,
+            613907577,
+            1450815602,
+            3165620655,
+            3734664991,
+            3650291728,
+            3012275730,
+            3704569646,
+            1427272223,
+            778793252,
+            1343938022,
+            2676280711,
+            2052605720,
+            1946737175,
+            3164576444,
+            3914038668,
+            3967478842,
+            3682934266,
+            1661551462,
+            3294938066,
+            4011595847,
+            840292616,
+            3712170807,
+            616741398,
+            312560963,
+            711312465,
+            1351876610,
+            322626781,
+            1910503582,
+            271666773,
+            2175563734,
+            1594956187,
+            70604529,
+            3617834859,
+            1007753275,
+            1495573769,
+            4069517037,
+            2549218298,
+            2663038764,
+            504708206,
+            2263041392,
+            3941167025,
+            2249088522,
+            1514023603,
+            1998579484,
+            1312622330,
+            694541497,
+            2582060303,
+            2151582166,
+            1382467621,
+            776784248,
+            2618340202,
+            3323268794,
+            2497899128,
+            2784771155,
+            503983604,
+            4076293799,
+            907881277,
+            423175695,
+            432175456,
+            1378068232,
+            4145222326,
+            3954048622,
+            3938656102,
+            3820766613,
+            2793130115,
+            2977904593,
+            26017576,
+            3274890735,
+            3194772133,
+            1700274565,
+            1756076034,
+            4006520079,
+            3677328699,
+            720338349,
+            1533947780,
+            354530856,
+            688349552,
+            3973924725,
+            1637815568,
+            332179504,
+            3949051286,
+            53804574,
+            2852348879,
+            3044236432,
+            1282449977,
+            3583942155,
+            3416972820,
+            4006381244,
+            1617046695,
+            2628476075,
+            3002303598,
+            1686838959,
+            431878346,
+            2686675385,
+            1700445008,
+            1080580658,
+            1009431731,
+            832498133,
+            3223435511,
+            2605976345,
+            2271191193,
+            2516031870,
+            1648197032,
+            4164389018,
+            2548247927,
+            300782431,
+            375919233,
+            238389289,
+            3353747414,
+            2531188641,
+            2019080857,
+            1475708069,
+            455242339,
+            2609103871,
+            448939670,
+            3451063019,
+            1395535956,
+            2413381860,
+            1841049896,
+            1491858159,
+            885456874,
+            4264095073,
+            4001119347,
+            1565136089,
+            3898914787,
+            1108368660,
+            540939232,
+            1173283510,
+            2745871338,
+            3681308437,
+            4207628240,
+            3343053890,
+            4016749493,
+            1699691293,
+            1103962373,
+            3625875870,
+            2256883143,
+            3830138730,
+            1031889488,
+            3479347698,
+            1535977030,
+            4236805024,
+            3251091107,
+            2132092099,
+            1774941330,
+            1199868427,
+            1452454533,
+            157007616,
+            2904115357,
+            342012276,
+            595725824,
+            1480756522,
+            206960106,
+            497939518,
+            591360097,
+            863170706,
+            2375253569,
+            3596610801,
+            1814182875,
+            2094937945,
+            3421402208,
+            1082520231,
+            3463918190,
+            2785509508,
+            435703966,
+            3908032597,
+            1641649973,
+            2842273706,
+            3305899714,
+            1510255612,
+            2148256476,
+            2655287854,
+            3276092548,
+            4258621189,
+            236887753,
+            3681803219,
+            274041037,
+            1734335097,
+            3815195456,
+            3317970021,
+            1899903192,
+            1026095262,
+            4050517792,
+            356393447,
+            2410691914,
+            3873677099,
+            3682840055
+          ],
+          [
+            3913112168,
+            2491498743,
+            4132185628,
+            2489919796,
+            1091903735,
+            1979897079,
+            3170134830,
+            3567386728,
+            3557303409,
+            857797738,
+            1136121015,
+            1342202287,
+            507115054,
+            2535736646,
+            337727348,
+            3213592640,
+            1301675037,
+            2528481711,
+            1895095763,
+            1721773893,
+            3216771564,
+            62756741,
+            2142006736,
+            835421444,
+            2531993523,
+            1442658625,
+            3659876326,
+            2882144922,
+            676362277,
+            1392781812,
+            170690266,
+            3921047035,
+            1759253602,
+            3611846912,
+            1745797284,
+            664899054,
+            1329594018,
+            3901205900,
+            3045908486,
+            2062866102,
+            2865634940,
+            3543621612,
+            3464012697,
+            1080764994,
+            553557557,
+            3656615353,
+            3996768171,
+            991055499,
+            499776247,
+            1265440854,
+            648242737,
+            3940784050,
+            980351604,
+            3713745714,
+            1749149687,
+            3396870395,
+            4211799374,
+            3640570775,
+            1161844396,
+            3125318951,
+            1431517754,
+            545492359,
+            4268468663,
+            3499529547,
+            1437099964,
+            2702547544,
+            3433638243,
+            2581715763,
+            2787789398,
+            1060185593,
+            1593081372,
+            2418618748,
+            4260947970,
+            69676912,
+            2159744348,
+            86519011,
+            2512459080,
+            3838209314,
+            1220612927,
+            3339683548,
+            133810670,
+            1090789135,
+            1078426020,
+            1569222167,
+            845107691,
+            3583754449,
+            4072456591,
+            1091646820,
+            628848692,
+            1613405280,
+            3757631651,
+            526609435,
+            236106946,
+            48312990,
+            2942717905,
+            3402727701,
+            1797494240,
+            859738849,
+            992217954,
+            4005476642,
+            2243076622,
+            3870952857,
+            3732016268,
+            765654824,
+            3490871365,
+            2511836413,
+            1685915746,
+            3888969200,
+            1414112111,
+            2273134842,
+            3281911079,
+            4080962846,
+            172450625,
+            2569994100,
+            980381355,
+            4109958455,
+            2819808352,
+            2716589560,
+            2568741196,
+            3681446669,
+            3329971472,
+            1835478071,
+            660984891,
+            3704678404,
+            4045999559,
+            3422617507,
+            3040415634,
+            1762651403,
+            1719377915,
+            3470491036,
+            2693910283,
+            3642056355,
+            3138596744,
+            1364962596,
+            2073328063,
+            1983633131,
+            926494387,
+            3423689081,
+            2150032023,
+            4096667949,
+            1749200295,
+            3328846651,
+            309677260,
+            2016342300,
+            1779581495,
+            3079819751,
+            111262694,
+            1274766160,
+            443224088,
+            298511866,
+            1025883608,
+            3806446537,
+            1145181785,
+            168956806,
+            3641502830,
+            3584813610,
+            1689216846,
+            3666258015,
+            3200248200,
+            1692713982,
+            2646376535,
+            4042768518,
+            1618508792,
+            1610833997,
+            3523052358,
+            4130873264,
+            2001055236,
+            3610705100,
+            2202168115,
+            4028541809,
+            2961195399,
+            1006657119,
+            2006996926,
+            3186142756,
+            1430667929,
+            3210227297,
+            1314452623,
+            4074634658,
+            4101304120,
+            2273951170,
+            1399257539,
+            3367210612,
+            3027628629,
+            1190975929,
+            2062231137,
+            2333990788,
+            2221543033,
+            2438960610,
+            1181637006,
+            548689776,
+            2362791313,
+            3372408396,
+            3104550113,
+            3145860560,
+            296247880,
+            1970579870,
+            3078560182,
+            3769228297,
+            1714227617,
+            3291629107,
+            3898220290,
+            166772364,
+            1251581989,
+            493813264,
+            448347421,
+            195405023,
+            2709975567,
+            677966185,
+            3703036547,
+            1463355134,
+            2715995803,
+            1338867538,
+            1343315457,
+            2802222074,
+            2684532164,
+            233230375,
+            2599980071,
+            2000651841,
+            3277868038,
+            1638401717,
+            4028070440,
+            3237316320,
+            6314154,
+            819756386,
+            300326615,
+            590932579,
+            1405279636,
+            3267499572,
+            3150704214,
+            2428286686,
+            3959192993,
+            3461946742,
+            1862657033,
+            1266418056,
+            963775037,
+            2089974820,
+            2263052895,
+            1917689273,
+            448879540,
+            3550394620,
+            3981727096,
+            150775221,
+            3627908307,
+            1303187396,
+            508620638,
+            2975983352,
+            2726630617,
+            1817252668,
+            1876281319,
+            1457606340,
+            908771278,
+            3720792119,
+            3617206836,
+            2455994898,
+            1729034894,
+            1080033504
+          ],
+          [
+            976866871,
+            3556439503,
+            2881648439,
+            1522871579,
+            1555064734,
+            1336096578,
+            3548522304,
+            2579274686,
+            3574697629,
+            3205460757,
+            3593280638,
+            3338716283,
+            3079412587,
+            564236357,
+            2993598910,
+            1781952180,
+            1464380207,
+            3163844217,
+            3332601554,
+            1699332808,
+            1393555694,
+            1183702653,
+            3581086237,
+            1288719814,
+            691649499,
+            2847557200,
+            2895455976,
+            3193889540,
+            2717570544,
+            1781354906,
+            1676643554,
+            2592534050,
+            3230253752,
+            1126444790,
+            2770207658,
+            2633158820,
+            2210423226,
+            2615765581,
+            2414155088,
+            3127139286,
+            673620729,
+            2805611233,
+            1269405062,
+            4015350505,
+            3341807571,
+            4149409754,
+            1057255273,
+            2012875353,
+            2162469141,
+            2276492801,
+            2601117357,
+            993977747,
+            3918593370,
+            2654263191,
+            753973209,
+            36408145,
+            2530585658,
+            25011837,
+            3520020182,
+            2088578344,
+            530523599,
+            2918365339,
+            1524020338,
+            1518925132,
+            3760827505,
+            3759777254,
+            1202760957,
+            3985898139,
+            3906192525,
+            674977740,
+            4174734889,
+            2031300136,
+            2019492241,
+            3983892565,
+            4153806404,
+            3822280332,
+            352677332,
+            2297720250,
+            60907813,
+            90501309,
+            3286998549,
+            1016092578,
+            2535922412,
+            2839152426,
+            457141659,
+            509813237,
+            4120667899,
+            652014361,
+            1966332200,
+            2975202805,
+            55981186,
+            2327461051,
+            676427537,
+            3255491064,
+            2882294119,
+            3433927263,
+            1307055953,
+            942726286,
+            933058658,
+            2468411793,
+            3933900994,
+            4215176142,
+            1361170020,
+            2001714738,
+            2830558078,
+            3274259782,
+            1222529897,
+            1679025792,
+            2729314320,
+            3714953764,
+            1770335741,
+            151462246,
+            3013232138,
+            1682292957,
+            1483529935,
+            471910574,
+            1539241949,
+            458788160,
+            3436315007,
+            1807016891,
+            3718408830,
+            978976581,
+            1043663428,
+            3165965781,
+            1927990952,
+            4200891579,
+            2372276910,
+            3208408903,
+            3533431907,
+            1412390302,
+            2931980059,
+            4132332400,
+            1947078029,
+            3881505623,
+            4168226417,
+            2941484381,
+            1077988104,
+            1320477388,
+            886195818,
+            18198404,
+            3786409e3,
+            2509781533,
+            112762804,
+            3463356488,
+            1866414978,
+            891333506,
+            18488651,
+            661792760,
+            1628790961,
+            3885187036,
+            3141171499,
+            876946877,
+            2693282273,
+            1372485963,
+            791857591,
+            2686433993,
+            3759982718,
+            3167212022,
+            3472953795,
+            2716379847,
+            445679433,
+            3561995674,
+            3504004811,
+            3574258232,
+            54117162,
+            3331405415,
+            2381918588,
+            3769707343,
+            4154350007,
+            1140177722,
+            4074052095,
+            668550556,
+            3214352940,
+            367459370,
+            261225585,
+            2610173221,
+            4209349473,
+            3468074219,
+            3265815641,
+            314222801,
+            3066103646,
+            3808782860,
+            282218597,
+            3406013506,
+            3773591054,
+            379116347,
+            1285071038,
+            846784868,
+            2669647154,
+            3771962079,
+            3550491691,
+            2305946142,
+            453669953,
+            1268987020,
+            3317592352,
+            3279303384,
+            3744833421,
+            2610507566,
+            3859509063,
+            266596637,
+            3847019092,
+            517658769,
+            3462560207,
+            3443424879,
+            370717030,
+            4247526661,
+            2224018117,
+            4143653529,
+            4112773975,
+            2788324899,
+            2477274417,
+            1456262402,
+            2901442914,
+            1517677493,
+            1846949527,
+            2295493580,
+            3734397586,
+            2176403920,
+            1280348187,
+            1908823572,
+            3871786941,
+            846861322,
+            1172426758,
+            3287448474,
+            3383383037,
+            1655181056,
+            3139813346,
+            901632758,
+            1897031941,
+            2986607138,
+            3066810236,
+            3447102507,
+            1393639104,
+            373351379,
+            950779232,
+            625454576,
+            3124240540,
+            4148612726,
+            2007998917,
+            544563296,
+            2244738638,
+            2330496472,
+            2058025392,
+            1291430526,
+            424198748,
+            50039436,
+            29584100,
+            3605783033,
+            2429876329,
+            2791104160,
+            1057563949,
+            3255363231,
+            3075367218,
+            3463963227,
+            1469046755,
+            985887462
+          ]
+        ];
+        var a = {
+          pbox: [],
+          sbox: []
+        };
+        function v(l, E) {
+          let s = E >> 24 & 255, c = E >> 16 & 255, h = E >> 8 & 255, d = E & 255, g = l.sbox[0][s] + l.sbox[1][c];
+          return g = g ^ l.sbox[2][h], g = g + l.sbox[3][d], g;
+        }
+        function o(l, E, s) {
+          let c = E, h = s, d;
+          for (let g = 0; g < u; ++g)
+            c = c ^ l.pbox[g], h = v(l, c) ^ h, d = c, c = h, h = d;
+          return d = c, c = h, h = d, h = h ^ l.pbox[u], c = c ^ l.pbox[u + 1], { left: c, right: h };
+        }
+        function A(l, E, s) {
+          let c = E, h = s, d;
+          for (let g = u + 1; g > 1; --g)
+            c = c ^ l.pbox[g], h = v(l, c) ^ h, d = c, c = h, h = d;
+          return d = c, c = h, h = d, h = h ^ l.pbox[1], c = c ^ l.pbox[0], { left: c, right: h };
+        }
+        function p(l, E, s) {
+          for (let C = 0; C < 4; C++) {
+            l.sbox[C] = [];
+            for (let B = 0; B < 256; B++)
+              l.sbox[C][B] = r[C][B];
+          }
+          let c = 0;
+          for (let C = 0; C < u + 2; C++)
+            l.pbox[C] = m[C] ^ E[c], c++, c >= s && (c = 0);
+          let h = 0, d = 0, g = 0;
+          for (let C = 0; C < u + 2; C += 2)
+            g = o(l, h, d), h = g.left, d = g.right, l.pbox[C] = h, l.pbox[C + 1] = d;
+          for (let C = 0; C < 4; C++)
+            for (let B = 0; B < 256; B += 2)
+              g = o(l, h, d), h = g.left, d = g.right, l.sbox[C][B] = h, l.sbox[C][B + 1] = d;
+          return !0;
+        }
+        var k = b.Blowfish = f.extend({
+          _doReset: function() {
+            if (this._keyPriorReset !== this._key) {
+              var l = this._keyPriorReset = this._key, E = l.words, s = l.sigBytes / 4;
+              p(a, E, s);
+            }
+          },
+          encryptBlock: function(l, E) {
+            var s = o(a, l[E], l[E + 1]);
+            l[E] = s.left, l[E + 1] = s.right;
+          },
+          decryptBlock: function(l, E) {
+            var s = A(a, l[E], l[E + 1]);
+            l[E] = s.left, l[E + 1] = s.right;
+          },
+          blockSize: 64 / 32,
+          keySize: 128 / 32,
+          ivSize: 64 / 32
+        });
+        n.Blowfish = f._createHelper(k);
+      })(), e.Blowfish;
+    });
+  })(xe)), xe.exports;
+}
+var wi = wt.exports, y0;
+function Fi() {
+  return y0 || (y0 = 1, (function(t, i) {
+    (function(e, n, x) {
+      t.exports = n(q(), Ae(), Bn(), Dn(), At(), In(), ht(), P0(), ye(), Mn(), M0(), Nn(), zn(), qn(), Ee(), jn(), ut(), Z(), Zn(), Xn(), $n(), ei(), ii(), oi(), di(), xi(), li(), ui(), hi(), ki(), vi(), yi(), bi(), Bi(), Di());
+    })(wi, function(e) {
+      return e;
+    });
+  })(wt)), wt.exports;
+}
+var Ii = Fi();
+const Ti = /* @__PURE__ */ fn(Ii);
+function Ri() {
+  typeof window > "u" || window.CryptoJS || (window.CryptoJS = Ti);
+}
+class _0 extends Error {
+  constructor(i, e) {
+    super(i), this.methodName = e, this.name = "MobileAuthSdkUnavailableError";
+  }
+}
+function Hi() {
+  const t = window.YDRZAuthSF;
+  if (!t)
+    throw new _0("Mobile auth SDK global unavailable: window.YDRZAuthSF");
+  return t;
+}
+function bt(t) {
+  const e = Hi()[t];
+  if (typeof e != "function")
+    throw new _0(
+      `Mobile auth SDK method unavailable: ${String(t)}`,
+      t
+    );
+  return e;
+}
+function E0(t) {
+  try {
+    return JSON.stringify(
+      t,
+      (i, e) => typeof e == "function" ? "[Function]" : e,
+      2
+    );
+  } catch (i) {
+    return `[unserializable: ${i instanceof Error ? i.message : String(i)}]`;
+  }
+}
+function Pi() {
+  return {
+    showAuthPage(t) {
+      E0(t), bt("showAuthPage")(t);
+    },
+    initControl(t) {
+      E0(t), bt("initControl")(t);
+    },
+    clearControl(t) {
+      bt("clearControl")(t);
+    },
+    getAuthResult(t) {
+      bt("getAuthResult")(t);
+    },
+    updateSubmitBtnStatus(t) {
+      bt("updateSubmitBtnStatus")(t);
+    }
+  };
+}
+const Mi = "0", _i = /* @__PURE__ */ new Set(["0", "1", "3", "4"]);
+function Oi(t) {
+  const i = t?.trim() ?? "";
+  return _i.has(i) ? i : Mi;
+}
+const dt = {
+  submitBtnStyle: {
+    width: "100%",
+    height: "48px",
+    bgColor: "#ff2d55",
+    borderRadius: "10px",
+    fontSize: "16px",
+    fontColor: "#FFFFFF",
+    name: "确认",
+    textAlign: "center"
+  },
+  submitBtnDisabledStyle: {
+    bgColor: "#F5F6F8",
+    fontColor: "#8A8F98"
+  },
+  submitBtnLoadingStyle: {
+    height: "48px"
+  },
+  phoneStyle: {
+    bgColor: "#FFFFFF",
+    fontColor: "#8A8F98",
+    fontSize: "14px",
+    borderRadius: "0",
+    textAlign: "left",
+    width: "auto"
+  },
+  localTipStyle: {
+    fontColor: "#8A8F98",
+    fontSize: "12px",
+    textAlign: "left"
+  },
+  unlocalTipStyle: {
+    fontColor: "#8A8F98",
+    fontSize: "12px",
+    textAlign: "left"
+  },
+  stateStyle: {
+    width: "100%",
+    bgColor: "#FFFFFF",
+    fontColor: "#334155",
+    fontSize: "14px",
+    borderRadius: "12px",
+    textAlign: "center"
+  },
+  authTextStyle: {
+    fontColor: "#334155",
+    bgColor: "#FFFFFF",
+    borderRadius: "12px",
+    textAlign: "center"
+  },
+  authExpireStyle: {
+    fontColor: "#8A8F98",
+    fontSize: "14px"
+  },
+  checkboxStyle: {
+    width: "18px",
+    height: "18px",
+    checkedColor: "#ff2d55",
+    borderColor: "#c8ccd1"
+  }
+};
+function Ni(t = {}) {
+  return {
+    submitBtnStyle: {
+      ...dt.submitBtnStyle,
+      ...t.submitBtnStyle
+    },
+    submitBtnDisabledStyle: {
+      ...dt.submitBtnDisabledStyle,
+      ...t.submitBtnDisabledStyle
+    },
+    submitBtnLoadingStyle: {
+      ...dt.submitBtnLoadingStyle,
+      ...t.submitBtnLoadingStyle
+    },
+    phoneStyle: {
+      ...dt.phoneStyle,
+      ...t.phoneStyle
+    },
+    localTipStyle: {
+      ...dt.localTipStyle,
+      ...t.localTipStyle
+    },
+    unlocalTipStyle: {
+      ...dt.unlocalTipStyle,
+      ...t.unlocalTipStyle
+    },
+    stateStyle: {
+      ...dt.stateStyle,
+      ...t.stateStyle
+    },
+    authTextStyle: {
+      ...dt.authTextStyle,
+      ...t.authTextStyle
+    },
+    authExpireStyle: {
+      ...dt.authExpireStyle,
+      ...t.authExpireStyle
+    },
+    checkboxStyle: {
+      ...dt.checkboxStyle,
+      ...t.checkboxStyle
+    },
+    // 仅在调用方显式传入时输出 agreeStyle，避免影响 SDK 默认运营商协议渲染。
+    ...t.agreeStyle ? { agreeStyle: t.agreeStyle } : {}
+  };
+}
+function ke(t) {
+  if (typeof t != "function") {
+    if (t === null)
+      return null;
+    if (Array.isArray(t))
+      return t.map(ke).filter((i) => i !== void 0);
+    if (typeof t == "object") {
+      const i = {};
+      for (const [e, n] of Object.entries(t)) {
+        const x = ke(n);
+        x !== void 0 && (i[e] = x);
+      }
+      return i;
+    }
+    return t;
+  }
+}
+function Ui(t) {
+  if (!(!t || typeof t != "object"))
+    return ke(t);
+}
+const zi = "https://ginkgo.chinaums.com", Li = "/sign-pay-pro/";
+function qi(t) {
+  const i = t?.trim();
+  if (!i || i === "/")
+    return Li;
+  const e = /^https?:\/\//i.test(i) ? new URL(i).pathname : i;
+  return `${(e.startsWith("/") ? e : `/${e}`).replace(/\/+$/, "")}/`;
+}
+function Ki(t, i) {
+  const e = t?.trim();
+  return e ? `${new URL(e).toString().replace(/\/+$/, "")}/` : new URL(i.replace(/^\/+/, ""), `${zi}/`).toString();
+}
+const Wi = "/sign-pay-pro/".trim() || "", ji = qi(Wi), be = Ki("https://ginkgo.chinaums.com/sign-pay-pro/", ji);
+function Vi(t) {
+  return new URL(t.replace(/^\/+/, ""), be).toString();
+}
+const Gi = 'var AssistanceInjectedRuntime=(function(k0){"use strict";const _0={0:["customerValueScore","insuranceFraudScore","renewalRenewalForecastData","theCountrySpreadData","BAA05","BBA02","BAB01","BAA07","BAA06","BBA01","BBA04","BBB01","BBA03","BBB02","BBB03","BCA05","BCA02","BCA03","BCA04","BCA10","BCA01","BCA09","BDD07","BDB08","BDB01","BDB02","BDB04","BDD09","BDD03","BDD04","BEB01","BFA01","BDD12","BDD02","BDD08","BCA07","3ElementsAuthAssistFill"],1:["applyQos","updateQos","releaseQos","typeQueryQos"],3:["creditTreasure"],4:["integralPayment"]},S0={jsUrl:"https://authsafe.cmpassport.com/h5/js/jssdk_sf/jssdk-1.0.6.min.js",cssUrl:"https://authsafe.cmpassport.com/h5/js/jssdk_sf/css/new-control-style.css"};function b0(){return{enabled:!0,mode:"live",debugEntry:!1,jsUrl:S0.jsUrl,cssUrl:S0.cssUrl,authParams:{version:"",appId:"",sign:"",traceId:"",timestamp:"",authType:"",scope:""}}}function Xe(t={}){return{resolve(x={}){const n=x.overrides;return!n||["appId","sign","traceId","timestamp","authType","scope"].some(o=>typeof n[o]!="string"||!n[o].trim())?{status:"not-ready",source:"manual",reason:"missing-required-field"}:(Object.hasOwn(_0,n.authType)?_0[n.authType]:void 0)?.includes(n.scope)?{status:"ready",source:"manual",data:{...n}}:{status:"invalid",source:"manual",reason:"invalid-auth-scope"}}}}const je=["取消","cancel"],Ze=new Set(["102507","103119","103120"]),Qe=new Set(["103000","200"]);function Je(t){const x=t.code==null?"":String(t.code),n=typeof t.message=="string"?t.message.toLowerCase():"";return Qe.has(x)?"success":Ze.has(x)||je.some(i=>n.includes(i))?"cancel":"failure"}var l0=typeof globalThis<"u"?globalThis:typeof window<"u"?window:typeof global<"u"?global:typeof self<"u"?self:{};function tn(t){return t&&t.__esModule&&Object.prototype.hasOwnProperty.call(t,"default")?t.default:t}function en(t){if(Object.prototype.hasOwnProperty.call(t,"__esModule"))return t;var x=t.default;if(typeof x=="function"){var n=function i(){return this instanceof i?Reflect.construct(x,arguments,this.constructor):x.apply(this,arguments)};n.prototype=x.prototype}else n={};return Object.defineProperty(n,"__esModule",{value:!0}),Object.keys(t).forEach(function(i){var c=Object.getOwnPropertyDescriptor(t,i);Object.defineProperty(n,i,c.get?c:{enumerable:!0,get:function(){return t[i]}})}),n}var bt={exports:{}};function nn(t){throw new Error(\'Could not dynamically require "\'+t+\'". Please configure the dynamicRequireTargets or/and ignoreDynamicRequires option of @rollup/plugin-commonjs appropriately for this require call to work.\')}var yt={exports:{}};const rn=en(Object.freeze(Object.defineProperty({__proto__:null,default:{}},Symbol.toStringTag,{value:"Module"})));var xn=yt.exports,y0;function z(){return y0||(y0=1,(function(t,x){(function(n,i){t.exports=i()})(xn,function(){var n=n||(function(i,c){var o;if(typeof window<"u"&&window.crypto&&(o=window.crypto),typeof self<"u"&&self.crypto&&(o=self.crypto),typeof globalThis<"u"&&globalThis.crypto&&(o=globalThis.crypto),!o&&typeof window<"u"&&window.msCrypto&&(o=window.msCrypto),!o&&typeof l0<"u"&&l0.crypto&&(o=l0.crypto),!o&&typeof nn=="function")try{o=rn}catch{}var m=function(){if(o){if(typeof o.getRandomValues=="function")try{return o.getRandomValues(new Uint32Array(1))[0]}catch{}if(typeof o.randomBytes=="function")try{return o.randomBytes(4).readInt32LE()}catch{}}throw new Error("Native crypto module could not be used to get secure random number.")},f=Object.create||(function(){function a(){}return function(s){var h;return a.prototype=s,h=new a,a.prototype=null,h}})(),E={},e=E.lib={},r=e.Base=(function(){return{extend:function(a){var s=f(this);return a&&s.mixIn(a),(!s.hasOwnProperty("init")||this.init===s.init)&&(s.init=function(){s.$super.init.apply(this,arguments)}),s.init.prototype=s,s.$super=this,s},create:function(){var a=this.extend();return a.init.apply(a,arguments),a},init:function(){},mixIn:function(a){for(var s in a)a.hasOwnProperty(s)&&(this[s]=a[s]);a.hasOwnProperty("toString")&&(this.toString=a.toString)},clone:function(){return this.init.prototype.extend(this)}}})(),D=e.WordArray=r.extend({init:function(a,s){a=this.words=a||[],s!=c?this.sigBytes=s:this.sigBytes=a.length*4},toString:function(a){return(a||p).stringify(this)},concat:function(a){var s=this.words,h=a.words,S=this.sigBytes,C=a.sigBytes;if(this.clamp(),S%4)for(var B=0;B<C;B++){var b=h[B>>>2]>>>24-B%4*8&255;s[S+B>>>2]|=b<<24-(S+B)%4*8}else for(var y=0;y<C;y+=4)s[S+y>>>2]=h[y>>>2];return this.sigBytes+=C,this},clamp:function(){var a=this.words,s=this.sigBytes;a[s>>>2]&=4294967295<<32-s%4*8,a.length=i.ceil(s/4)},clone:function(){var a=r.clone.call(this);return a.words=this.words.slice(0),a},random:function(a){for(var s=[],h=0;h<a;h+=4)s.push(m());return new D.init(s,a)}}),d=E.enc={},p=d.Hex={stringify:function(a){for(var s=a.words,h=a.sigBytes,S=[],C=0;C<h;C++){var B=s[C>>>2]>>>24-C%4*8&255;S.push((B>>>4).toString(16)),S.push((B&15).toString(16))}return S.join("")},parse:function(a){for(var s=a.length,h=[],S=0;S<s;S+=2)h[S>>>3]|=parseInt(a.substr(S,2),16)<<24-S%8*4;return new D.init(h,s/2)}},l=d.Latin1={stringify:function(a){for(var s=a.words,h=a.sigBytes,S=[],C=0;C<h;C++){var B=s[C>>>2]>>>24-C%4*8&255;S.push(String.fromCharCode(B))}return S.join("")},parse:function(a){for(var s=a.length,h=[],S=0;S<s;S++)h[S>>>2]|=(a.charCodeAt(S)&255)<<24-S%4*8;return new D.init(h,s)}},A=d.Utf8={stringify:function(a){try{return decodeURIComponent(escape(l.stringify(a)))}catch{throw new Error("Malformed UTF-8 data")}},parse:function(a){return l.parse(unescape(encodeURIComponent(a)))}},k=e.BufferedBlockAlgorithm=r.extend({reset:function(){this._data=new D.init,this._nDataBytes=0},_append:function(a){typeof a=="string"&&(a=A.parse(a)),this._data.concat(a),this._nDataBytes+=a.sigBytes},_process:function(a){var s,h=this._data,S=h.words,C=h.sigBytes,B=this.blockSize,b=B*4,y=C/b;a?y=i.ceil(y):y=i.max((y|0)-this._minBufferSize,0);var u=y*B,_=i.min(u*4,C);if(u){for(var I=0;I<u;I+=B)this._doProcessBlock(S,I);s=S.splice(0,u),h.sigBytes-=_}return new D.init(s,_)},clone:function(){var a=r.clone.call(this);return a._data=this._data.clone(),a},_minBufferSize:0});e.Hasher=k.extend({cfg:r.extend(),init:function(a){this.cfg=this.cfg.extend(a),this.reset()},reset:function(){k.reset.call(this),this._doReset()},update:function(a){return this._append(a),this._process(),this},finalize:function(a){a&&this._append(a);var s=this._doFinalize();return s},blockSize:16,_createHelper:function(a){return function(s,h){return new a.init(h).finalize(s)}},_createHmacHelper:function(a){return function(s,h){return new v.HMAC.init(a,h).finalize(s)}}});var v=E.algo={};return E})(Math);return n})})(yt)),yt.exports}var Ft={exports:{}},dn=Ft.exports,F0;function gt(){return F0||(F0=1,(function(t,x){(function(n,i){t.exports=i(z())})(dn,function(n){return(function(i){var c=n,o=c.lib,m=o.Base,f=o.WordArray,E=c.x64={};E.Word=m.extend({init:function(e,r){this.high=e,this.low=r}}),E.WordArray=m.extend({init:function(e,r){e=this.words=e||[],r!=i?this.sigBytes=r:this.sigBytes=e.length*8},toX32:function(){for(var e=this.words,r=e.length,D=[],d=0;d<r;d++){var p=e[d];D.push(p.high),D.push(p.low)}return f.create(D,this.sigBytes)},clone:function(){for(var e=m.clone.call(this),r=e.words=this.words.slice(0),D=r.length,d=0;d<D;d++)r[d]=r[d].clone();return e}})})(),n})})(Ft)),Ft.exports}var It={exports:{}},on=It.exports,g0;function an(){return g0||(g0=1,(function(t,x){(function(n,i){t.exports=i(z())})(on,function(n){return(function(){if(typeof ArrayBuffer=="function"){var i=n,c=i.lib,o=c.WordArray,m=o.init,f=o.init=function(E){if(E instanceof ArrayBuffer&&(E=new Uint8Array(E)),(E instanceof Int8Array||typeof Uint8ClampedArray<"u"&&E instanceof Uint8ClampedArray||E instanceof Int16Array||E instanceof Uint16Array||E instanceof Int32Array||E instanceof Uint32Array||E instanceof Float32Array||E instanceof Float64Array)&&(E=new Uint8Array(E.buffer,E.byteOffset,E.byteLength)),E instanceof Uint8Array){for(var e=E.byteLength,r=[],D=0;D<e;D++)r[D>>>2]|=E[D]<<24-D%4*8;m.call(this,r,e)}else m.apply(this,arguments)};f.prototype=o}})(),n.lib.WordArray})})(It)),It.exports}var wt={exports:{}},sn=wt.exports,I0;function cn(){return I0||(I0=1,(function(t,x){(function(n,i){t.exports=i(z())})(sn,function(n){return(function(){var i=n,c=i.lib,o=c.WordArray,m=i.enc;m.Utf16=m.Utf16BE={stringify:function(E){for(var e=E.words,r=E.sigBytes,D=[],d=0;d<r;d+=2){var p=e[d>>>2]>>>16-d%4*8&65535;D.push(String.fromCharCode(p))}return D.join("")},parse:function(E){for(var e=E.length,r=[],D=0;D<e;D++)r[D>>>1]|=E.charCodeAt(D)<<16-D%2*16;return o.create(r,e*2)}},m.Utf16LE={stringify:function(E){for(var e=E.words,r=E.sigBytes,D=[],d=0;d<r;d+=2){var p=f(e[d>>>2]>>>16-d%4*8&65535);D.push(String.fromCharCode(p))}return D.join("")},parse:function(E){for(var e=E.length,r=[],D=0;D<e;D++)r[D>>>1]|=f(E.charCodeAt(D)<<16-D%2*16);return o.create(r,e*2)}};function f(E){return E<<8&4278255360|E>>>8&16711935}})(),n.enc.Utf16})})(wt)),wt.exports}var Tt={exports:{}},pn=Tt.exports,w0;function kt(){return w0||(w0=1,(function(t,x){(function(n,i){t.exports=i(z())})(pn,function(n){return(function(){var i=n,c=i.lib,o=c.WordArray,m=i.enc;m.Base64={stringify:function(E){var e=E.words,r=E.sigBytes,D=this._map;E.clamp();for(var d=[],p=0;p<r;p+=3)for(var l=e[p>>>2]>>>24-p%4*8&255,A=e[p+1>>>2]>>>24-(p+1)%4*8&255,k=e[p+2>>>2]>>>24-(p+2)%4*8&255,v=l<<16|A<<8|k,a=0;a<4&&p+a*.75<r;a++)d.push(D.charAt(v>>>6*(3-a)&63));var s=D.charAt(64);if(s)for(;d.length%4;)d.push(s);return d.join("")},parse:function(E){var e=E.length,r=this._map,D=this._reverseMap;if(!D){D=this._reverseMap=[];for(var d=0;d<r.length;d++)D[r.charCodeAt(d)]=d}var p=r.charAt(64);if(p){var l=E.indexOf(p);l!==-1&&(e=l)}return f(E,e,D)},_map:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="};function f(E,e,r){for(var D=[],d=0,p=0;p<e;p++)if(p%4){var l=r[E.charCodeAt(p-1)]<<p%4*2,A=r[E.charCodeAt(p)]>>>6-p%4*2,k=l|A;D[d>>>2]|=k<<24-d%4*8,d++}return o.create(D,d)}})(),n.enc.Base64})})(Tt)),Tt.exports}var Rt={exports:{}},kn=Rt.exports,T0;function ln(){return T0||(T0=1,(function(t,x){(function(n,i){t.exports=i(z())})(kn,function(n){return(function(){var i=n,c=i.lib,o=c.WordArray,m=i.enc;m.Base64url={stringify:function(E,e){e===void 0&&(e=!0);var r=E.words,D=E.sigBytes,d=e?this._safe_map:this._map;E.clamp();for(var p=[],l=0;l<D;l+=3)for(var A=r[l>>>2]>>>24-l%4*8&255,k=r[l+1>>>2]>>>24-(l+1)%4*8&255,v=r[l+2>>>2]>>>24-(l+2)%4*8&255,a=A<<16|k<<8|v,s=0;s<4&&l+s*.75<D;s++)p.push(d.charAt(a>>>6*(3-s)&63));var h=d.charAt(64);if(h)for(;p.length%4;)p.push(h);return p.join("")},parse:function(E,e){e===void 0&&(e=!0);var r=E.length,D=e?this._safe_map:this._map,d=this._reverseMap;if(!d){d=this._reverseMap=[];for(var p=0;p<D.length;p++)d[D.charCodeAt(p)]=p}var l=D.charAt(64);if(l){var A=E.indexOf(l);A!==-1&&(r=A)}return f(E,r,d)},_map:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",_safe_map:"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"};function f(E,e,r){for(var D=[],d=0,p=0;p<e;p++)if(p%4){var l=r[E.charCodeAt(p-1)]<<p%4*2,A=r[E.charCodeAt(p)]>>>6-p%4*2,k=l|A;D[d>>>2]|=k<<24-d%4*8,d++}return o.create(D,d)}})(),n.enc.Base64url})})(Rt)),Rt.exports}var Pt={exports:{}},fn=Pt.exports,R0;function lt(){return R0||(R0=1,(function(t,x){(function(n,i){t.exports=i(z())})(fn,function(n){return(function(i){var c=n,o=c.lib,m=o.WordArray,f=o.Hasher,E=c.algo,e=[];(function(){for(var A=0;A<64;A++)e[A]=i.abs(i.sin(A+1))*4294967296|0})();var r=E.MD5=f.extend({_doReset:function(){this._hash=new m.init([1732584193,4023233417,2562383102,271733878])},_doProcessBlock:function(A,k){for(var v=0;v<16;v++){var a=k+v,s=A[a];A[a]=(s<<8|s>>>24)&16711935|(s<<24|s>>>8)&4278255360}var h=this._hash.words,S=A[k+0],C=A[k+1],B=A[k+2],b=A[k+3],y=A[k+4],u=A[k+5],_=A[k+6],I=A[k+7],F=A[k+8],P=A[k+9],H=A[k+10],L=A[k+11],Y=A[k+12],W=A[k+13],$=A[k+14],G=A[k+15],g=h[0],T=h[1],R=h[2],w=h[3];g=D(g,T,R,w,S,7,e[0]),w=D(w,g,T,R,C,12,e[1]),R=D(R,w,g,T,B,17,e[2]),T=D(T,R,w,g,b,22,e[3]),g=D(g,T,R,w,y,7,e[4]),w=D(w,g,T,R,u,12,e[5]),R=D(R,w,g,T,_,17,e[6]),T=D(T,R,w,g,I,22,e[7]),g=D(g,T,R,w,F,7,e[8]),w=D(w,g,T,R,P,12,e[9]),R=D(R,w,g,T,H,17,e[10]),T=D(T,R,w,g,L,22,e[11]),g=D(g,T,R,w,Y,7,e[12]),w=D(w,g,T,R,W,12,e[13]),R=D(R,w,g,T,$,17,e[14]),T=D(T,R,w,g,G,22,e[15]),g=d(g,T,R,w,C,5,e[16]),w=d(w,g,T,R,_,9,e[17]),R=d(R,w,g,T,L,14,e[18]),T=d(T,R,w,g,S,20,e[19]),g=d(g,T,R,w,u,5,e[20]),w=d(w,g,T,R,H,9,e[21]),R=d(R,w,g,T,G,14,e[22]),T=d(T,R,w,g,y,20,e[23]),g=d(g,T,R,w,P,5,e[24]),w=d(w,g,T,R,$,9,e[25]),R=d(R,w,g,T,b,14,e[26]),T=d(T,R,w,g,F,20,e[27]),g=d(g,T,R,w,W,5,e[28]),w=d(w,g,T,R,B,9,e[29]),R=d(R,w,g,T,I,14,e[30]),T=d(T,R,w,g,Y,20,e[31]),g=p(g,T,R,w,u,4,e[32]),w=p(w,g,T,R,F,11,e[33]),R=p(R,w,g,T,L,16,e[34]),T=p(T,R,w,g,$,23,e[35]),g=p(g,T,R,w,C,4,e[36]),w=p(w,g,T,R,y,11,e[37]),R=p(R,w,g,T,I,16,e[38]),T=p(T,R,w,g,H,23,e[39]),g=p(g,T,R,w,W,4,e[40]),w=p(w,g,T,R,S,11,e[41]),R=p(R,w,g,T,b,16,e[42]),T=p(T,R,w,g,_,23,e[43]),g=p(g,T,R,w,P,4,e[44]),w=p(w,g,T,R,Y,11,e[45]),R=p(R,w,g,T,G,16,e[46]),T=p(T,R,w,g,B,23,e[47]),g=l(g,T,R,w,S,6,e[48]),w=l(w,g,T,R,I,10,e[49]),R=l(R,w,g,T,$,15,e[50]),T=l(T,R,w,g,u,21,e[51]),g=l(g,T,R,w,Y,6,e[52]),w=l(w,g,T,R,b,10,e[53]),R=l(R,w,g,T,H,15,e[54]),T=l(T,R,w,g,C,21,e[55]),g=l(g,T,R,w,F,6,e[56]),w=l(w,g,T,R,G,10,e[57]),R=l(R,w,g,T,_,15,e[58]),T=l(T,R,w,g,W,21,e[59]),g=l(g,T,R,w,y,6,e[60]),w=l(w,g,T,R,L,10,e[61]),R=l(R,w,g,T,B,15,e[62]),T=l(T,R,w,g,P,21,e[63]),h[0]=h[0]+g|0,h[1]=h[1]+T|0,h[2]=h[2]+R|0,h[3]=h[3]+w|0},_doFinalize:function(){var A=this._data,k=A.words,v=this._nDataBytes*8,a=A.sigBytes*8;k[a>>>5]|=128<<24-a%32;var s=i.floor(v/4294967296),h=v;k[(a+64>>>9<<4)+15]=(s<<8|s>>>24)&16711935|(s<<24|s>>>8)&4278255360,k[(a+64>>>9<<4)+14]=(h<<8|h>>>24)&16711935|(h<<24|h>>>8)&4278255360,A.sigBytes=(k.length+1)*4,this._process();for(var S=this._hash,C=S.words,B=0;B<4;B++){var b=C[B];C[B]=(b<<8|b>>>24)&16711935|(b<<24|b>>>8)&4278255360}return S},clone:function(){var A=f.clone.call(this);return A._hash=this._hash.clone(),A}});function D(A,k,v,a,s,h,S){var C=A+(k&v|~k&a)+s+S;return(C<<h|C>>>32-h)+k}function d(A,k,v,a,s,h,S){var C=A+(k&a|v&~a)+s+S;return(C<<h|C>>>32-h)+k}function p(A,k,v,a,s,h,S){var C=A+(k^v^a)+s+S;return(C<<h|C>>>32-h)+k}function l(A,k,v,a,s,h,S){var C=A+(v^(k|~a))+s+S;return(C<<h|C>>>32-h)+k}c.MD5=f._createHelper(r),c.HmacMD5=f._createHmacHelper(r)})(Math),n.MD5})})(Pt)),Pt.exports}var Ht={exports:{}},hn=Ht.exports,P0;function H0(){return P0||(P0=1,(function(t,x){(function(n,i){t.exports=i(z())})(hn,function(n){return(function(){var i=n,c=i.lib,o=c.WordArray,m=c.Hasher,f=i.algo,E=[],e=f.SHA1=m.extend({_doReset:function(){this._hash=new o.init([1732584193,4023233417,2562383102,271733878,3285377520])},_doProcessBlock:function(r,D){for(var d=this._hash.words,p=d[0],l=d[1],A=d[2],k=d[3],v=d[4],a=0;a<80;a++){if(a<16)E[a]=r[D+a]|0;else{var s=E[a-3]^E[a-8]^E[a-14]^E[a-16];E[a]=s<<1|s>>>31}var h=(p<<5|p>>>27)+v+E[a];a<20?h+=(l&A|~l&k)+1518500249:a<40?h+=(l^A^k)+1859775393:a<60?h+=(l&A|l&k|A&k)-1894007588:h+=(l^A^k)-899497514,v=k,k=A,A=l<<30|l>>>2,l=p,p=h}d[0]=d[0]+p|0,d[1]=d[1]+l|0,d[2]=d[2]+A|0,d[3]=d[3]+k|0,d[4]=d[4]+v|0},_doFinalize:function(){var r=this._data,D=r.words,d=this._nDataBytes*8,p=r.sigBytes*8;return D[p>>>5]|=128<<24-p%32,D[(p+64>>>9<<4)+14]=Math.floor(d/4294967296),D[(p+64>>>9<<4)+15]=d,r.sigBytes=D.length*4,this._process(),this._hash},clone:function(){var r=m.clone.call(this);return r._hash=this._hash.clone(),r}});i.SHA1=m._createHelper(e),i.HmacSHA1=m._createHmacHelper(e)})(),n.SHA1})})(Ht)),Ht.exports}var Nt={exports:{}},un=Nt.exports,N0;function f0(){return N0||(N0=1,(function(t,x){(function(n,i){t.exports=i(z())})(un,function(n){return(function(i){var c=n,o=c.lib,m=o.WordArray,f=o.Hasher,E=c.algo,e=[],r=[];(function(){function p(v){for(var a=i.sqrt(v),s=2;s<=a;s++)if(!(v%s))return!1;return!0}function l(v){return(v-(v|0))*4294967296|0}for(var A=2,k=0;k<64;)p(A)&&(k<8&&(e[k]=l(i.pow(A,.5))),r[k]=l(i.pow(A,.3333333333333333)),k++),A++})();var D=[],d=E.SHA256=f.extend({_doReset:function(){this._hash=new m.init(e.slice(0))},_doProcessBlock:function(p,l){for(var A=this._hash.words,k=A[0],v=A[1],a=A[2],s=A[3],h=A[4],S=A[5],C=A[6],B=A[7],b=0;b<64;b++){if(b<16)D[b]=p[l+b]|0;else{var y=D[b-15],u=(y<<25|y>>>7)^(y<<14|y>>>18)^y>>>3,_=D[b-2],I=(_<<15|_>>>17)^(_<<13|_>>>19)^_>>>10;D[b]=u+D[b-7]+I+D[b-16]}var F=h&S^~h&C,P=k&v^k&a^v&a,H=(k<<30|k>>>2)^(k<<19|k>>>13)^(k<<10|k>>>22),L=(h<<26|h>>>6)^(h<<21|h>>>11)^(h<<7|h>>>25),Y=B+L+F+r[b]+D[b],W=H+P;B=C,C=S,S=h,h=s+Y|0,s=a,a=v,v=k,k=Y+W|0}A[0]=A[0]+k|0,A[1]=A[1]+v|0,A[2]=A[2]+a|0,A[3]=A[3]+s|0,A[4]=A[4]+h|0,A[5]=A[5]+S|0,A[6]=A[6]+C|0,A[7]=A[7]+B|0},_doFinalize:function(){var p=this._data,l=p.words,A=this._nDataBytes*8,k=p.sigBytes*8;return l[k>>>5]|=128<<24-k%32,l[(k+64>>>9<<4)+14]=i.floor(A/4294967296),l[(k+64>>>9<<4)+15]=A,p.sigBytes=l.length*4,this._process(),this._hash},clone:function(){var p=f.clone.call(this);return p._hash=this._hash.clone(),p}});c.SHA256=f._createHelper(d),c.HmacSHA256=f._createHmacHelper(d)})(Math),n.SHA256})})(Nt)),Nt.exports}var Ot={exports:{}},An=Ot.exports,O0;function En(){return O0||(O0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),f0())})(An,function(n){return(function(){var i=n,c=i.lib,o=c.WordArray,m=i.algo,f=m.SHA256,E=m.SHA224=f.extend({_doReset:function(){this._hash=new o.init([3238371032,914150663,812702999,4144912697,4290775857,1750603025,1694076839,3204075428])},_doFinalize:function(){var e=f._doFinalize.call(this);return e.sigBytes-=4,e}});i.SHA224=f._createHelper(E),i.HmacSHA224=f._createHmacHelper(E)})(),n.SHA224})})(Ot)),Ot.exports}var Lt={exports:{}},vn=Lt.exports,L0;function K0(){return L0||(L0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),gt())})(vn,function(n){return(function(){var i=n,c=i.lib,o=c.Hasher,m=i.x64,f=m.Word,E=m.WordArray,e=i.algo;function r(){return f.create.apply(f,arguments)}var D=[r(1116352408,3609767458),r(1899447441,602891725),r(3049323471,3964484399),r(3921009573,2173295548),r(961987163,4081628472),r(1508970993,3053834265),r(2453635748,2937671579),r(2870763221,3664609560),r(3624381080,2734883394),r(310598401,1164996542),r(607225278,1323610764),r(1426881987,3590304994),r(1925078388,4068182383),r(2162078206,991336113),r(2614888103,633803317),r(3248222580,3479774868),r(3835390401,2666613458),r(4022224774,944711139),r(264347078,2341262773),r(604807628,2007800933),r(770255983,1495990901),r(1249150122,1856431235),r(1555081692,3175218132),r(1996064986,2198950837),r(2554220882,3999719339),r(2821834349,766784016),r(2952996808,2566594879),r(3210313671,3203337956),r(3336571891,1034457026),r(3584528711,2466948901),r(113926993,3758326383),r(338241895,168717936),r(666307205,1188179964),r(773529912,1546045734),r(1294757372,1522805485),r(1396182291,2643833823),r(1695183700,2343527390),r(1986661051,1014477480),r(2177026350,1206759142),r(2456956037,344077627),r(2730485921,1290863460),r(2820302411,3158454273),r(3259730800,3505952657),r(3345764771,106217008),r(3516065817,3606008344),r(3600352804,1432725776),r(4094571909,1467031594),r(275423344,851169720),r(430227734,3100823752),r(506948616,1363258195),r(659060556,3750685593),r(883997877,3785050280),r(958139571,3318307427),r(1322822218,3812723403),r(1537002063,2003034995),r(1747873779,3602036899),r(1955562222,1575990012),r(2024104815,1125592928),r(2227730452,2716904306),r(2361852424,442776044),r(2428436474,593698344),r(2756734187,3733110249),r(3204031479,2999351573),r(3329325298,3815920427),r(3391569614,3928383900),r(3515267271,566280711),r(3940187606,3454069534),r(4118630271,4000239992),r(116418474,1914138554),r(174292421,2731055270),r(289380356,3203993006),r(460393269,320620315),r(685471733,587496836),r(852142971,1086792851),r(1017036298,365543100),r(1126000580,2618297676),r(1288033470,3409855158),r(1501505948,4234509866),r(1607167915,987167468),r(1816402316,1246189591)],d=[];(function(){for(var l=0;l<80;l++)d[l]=r()})();var p=e.SHA512=o.extend({_doReset:function(){this._hash=new E.init([new f.init(1779033703,4089235720),new f.init(3144134277,2227873595),new f.init(1013904242,4271175723),new f.init(2773480762,1595750129),new f.init(1359893119,2917565137),new f.init(2600822924,725511199),new f.init(528734635,4215389547),new f.init(1541459225,327033209)])},_doProcessBlock:function(l,A){for(var k=this._hash.words,v=k[0],a=k[1],s=k[2],h=k[3],S=k[4],C=k[5],B=k[6],b=k[7],y=v.high,u=v.low,_=a.high,I=a.low,F=s.high,P=s.low,H=h.high,L=h.low,Y=S.high,W=S.low,$=C.high,G=C.low,g=B.high,T=B.low,R=b.high,w=b.low,q=y,V=u,Q=_,M=I,ot=F,at=P,N=H,K=L,O=Y,X=W,j=$,U=G,nt=g,st=T,m0=R,mt=w,it=0;it<80;it++){var et,ct,p0=d[it];if(it<16)ct=p0.high=l[A+it*2]|0,et=p0.low=l[A+it*2+1]|0;else{var Oe=d[it-15],At=Oe.high,_t=Oe.low,Mr=(At>>>1|_t<<31)^(At>>>8|_t<<24)^At>>>7,Le=(_t>>>1|At<<31)^(_t>>>8|At<<24)^(_t>>>7|At<<25),Ke=d[it-2],Et=Ke.high,St=Ke.low,Ur=(Et>>>19|St<<13)^(Et<<3|St>>>29)^Et>>>6,Me=(St>>>19|Et<<13)^(St<<3|Et>>>29)^(St>>>6|Et<<26),Ue=d[it-7],zr=Ue.high,Wr=Ue.low,ze=d[it-16],Gr=ze.high,We=ze.low;et=Le+Wr,ct=Mr+zr+(et>>>0<Le>>>0?1:0),et=et+Me,ct=ct+Ur+(et>>>0<Me>>>0?1:0),et=et+We,ct=ct+Gr+(et>>>0<We>>>0?1:0),p0.high=ct,p0.low=et}var $r=O&j^~O&nt,Ge=X&U^~X&st,qr=q&Q^q&ot^Q&ot,Yr=V&M^V&at^M&at,Vr=(q>>>28|V<<4)^(q<<30|V>>>2)^(q<<25|V>>>7),$e=(V>>>28|q<<4)^(V<<30|q>>>2)^(V<<25|q>>>7),Xr=(O>>>14|X<<18)^(O>>>18|X<<14)^(O<<23|X>>>9),jr=(X>>>14|O<<18)^(X>>>18|O<<14)^(X<<23|O>>>9),qe=D[it],Zr=qe.high,Ye=qe.low,J=mt+jr,pt=m0+Xr+(J>>>0<mt>>>0?1:0),J=J+Ge,pt=pt+$r+(J>>>0<Ge>>>0?1:0),J=J+Ye,pt=pt+Zr+(J>>>0<Ye>>>0?1:0),J=J+et,pt=pt+ct+(J>>>0<et>>>0?1:0),Ve=$e+Yr,Qr=Vr+qr+(Ve>>>0<$e>>>0?1:0);m0=nt,mt=st,nt=j,st=U,j=O,U=X,X=K+J|0,O=N+pt+(X>>>0<K>>>0?1:0)|0,N=ot,K=at,ot=Q,at=M,Q=q,M=V,V=J+Ve|0,q=pt+Qr+(V>>>0<J>>>0?1:0)|0}u=v.low=u+V,v.high=y+q+(u>>>0<V>>>0?1:0),I=a.low=I+M,a.high=_+Q+(I>>>0<M>>>0?1:0),P=s.low=P+at,s.high=F+ot+(P>>>0<at>>>0?1:0),L=h.low=L+K,h.high=H+N+(L>>>0<K>>>0?1:0),W=S.low=W+X,S.high=Y+O+(W>>>0<X>>>0?1:0),G=C.low=G+U,C.high=$+j+(G>>>0<U>>>0?1:0),T=B.low=T+st,B.high=g+nt+(T>>>0<st>>>0?1:0),w=b.low=w+mt,b.high=R+m0+(w>>>0<mt>>>0?1:0)},_doFinalize:function(){var l=this._data,A=l.words,k=this._nDataBytes*8,v=l.sigBytes*8;A[v>>>5]|=128<<24-v%32,A[(v+128>>>10<<5)+30]=Math.floor(k/4294967296),A[(v+128>>>10<<5)+31]=k,l.sigBytes=A.length*4,this._process();var a=this._hash.toX32();return a},clone:function(){var l=o.clone.call(this);return l._hash=this._hash.clone(),l},blockSize:1024/32});i.SHA512=o._createHelper(p),i.HmacSHA512=o._createHmacHelper(p)})(),n.SHA512})})(Lt)),Lt.exports}var Kt={exports:{}},Cn=Kt.exports,M0;function Dn(){return M0||(M0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),gt(),K0())})(Cn,function(n){return(function(){var i=n,c=i.x64,o=c.Word,m=c.WordArray,f=i.algo,E=f.SHA512,e=f.SHA384=E.extend({_doReset:function(){this._hash=new m.init([new o.init(3418070365,3238371032),new o.init(1654270250,914150663),new o.init(2438529370,812702999),new o.init(355462360,4144912697),new o.init(1731405415,4290775857),new o.init(2394180231,1750603025),new o.init(3675008525,1694076839),new o.init(1203062813,3204075428)])},_doFinalize:function(){var r=E._doFinalize.call(this);return r.sigBytes-=16,r}});i.SHA384=E._createHelper(e),i.HmacSHA384=E._createHmacHelper(e)})(),n.SHA384})})(Kt)),Kt.exports}var Mt={exports:{}},Bn=Mt.exports,U0;function mn(){return U0||(U0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),gt())})(Bn,function(n){return(function(i){var c=n,o=c.lib,m=o.WordArray,f=o.Hasher,E=c.x64,e=E.Word,r=c.algo,D=[],d=[],p=[];(function(){for(var k=1,v=0,a=0;a<24;a++){D[k+5*v]=(a+1)*(a+2)/2%64;var s=v%5,h=(2*k+3*v)%5;k=s,v=h}for(var k=0;k<5;k++)for(var v=0;v<5;v++)d[k+5*v]=v+(2*k+3*v)%5*5;for(var S=1,C=0;C<24;C++){for(var B=0,b=0,y=0;y<7;y++){if(S&1){var u=(1<<y)-1;u<32?b^=1<<u:B^=1<<u-32}S&128?S=S<<1^113:S<<=1}p[C]=e.create(B,b)}})();var l=[];(function(){for(var k=0;k<25;k++)l[k]=e.create()})();var A=r.SHA3=f.extend({cfg:f.cfg.extend({outputLength:512}),_doReset:function(){for(var k=this._state=[],v=0;v<25;v++)k[v]=new e.init;this.blockSize=(1600-2*this.cfg.outputLength)/32},_doProcessBlock:function(k,v){for(var a=this._state,s=this.blockSize/2,h=0;h<s;h++){var S=k[v+2*h],C=k[v+2*h+1];S=(S<<8|S>>>24)&16711935|(S<<24|S>>>8)&4278255360,C=(C<<8|C>>>24)&16711935|(C<<24|C>>>8)&4278255360;var B=a[h];B.high^=C,B.low^=S}for(var b=0;b<24;b++){for(var y=0;y<5;y++){for(var u=0,_=0,I=0;I<5;I++){var B=a[y+5*I];u^=B.high,_^=B.low}var F=l[y];F.high=u,F.low=_}for(var y=0;y<5;y++)for(var P=l[(y+4)%5],H=l[(y+1)%5],L=H.high,Y=H.low,u=P.high^(L<<1|Y>>>31),_=P.low^(Y<<1|L>>>31),I=0;I<5;I++){var B=a[y+5*I];B.high^=u,B.low^=_}for(var W=1;W<25;W++){var u,_,B=a[W],$=B.high,G=B.low,g=D[W];g<32?(u=$<<g|G>>>32-g,_=G<<g|$>>>32-g):(u=G<<g-32|$>>>64-g,_=$<<g-32|G>>>64-g);var T=l[d[W]];T.high=u,T.low=_}var R=l[0],w=a[0];R.high=w.high,R.low=w.low;for(var y=0;y<5;y++)for(var I=0;I<5;I++){var W=y+5*I,B=a[W],q=l[W],V=l[(y+1)%5+5*I],Q=l[(y+2)%5+5*I];B.high=q.high^~V.high&Q.high,B.low=q.low^~V.low&Q.low}var B=a[0],M=p[b];B.high^=M.high,B.low^=M.low}},_doFinalize:function(){var k=this._data,v=k.words;this._nDataBytes*8;var a=k.sigBytes*8,s=this.blockSize*32;v[a>>>5]|=1<<24-a%32,v[(i.ceil((a+1)/s)*s>>>5)-1]|=128,k.sigBytes=v.length*4,this._process();for(var h=this._state,S=this.cfg.outputLength/8,C=S/8,B=[],b=0;b<C;b++){var y=h[b],u=y.high,_=y.low;u=(u<<8|u>>>24)&16711935|(u<<24|u>>>8)&4278255360,_=(_<<8|_>>>24)&16711935|(_<<24|_>>>8)&4278255360,B.push(_),B.push(u)}return new m.init(B,S)},clone:function(){for(var k=f.clone.call(this),v=k._state=this._state.slice(0),a=0;a<25;a++)v[a]=v[a].clone();return k}});c.SHA3=f._createHelper(A),c.HmacSHA3=f._createHmacHelper(A)})(Math),n.SHA3})})(Mt)),Mt.exports}var Ut={exports:{}},_n=Ut.exports,z0;function Sn(){return z0||(z0=1,(function(t,x){(function(n,i){t.exports=i(z())})(_n,function(n){/** @preserve\n  			(c) 2012 by Cédric Mesnil. All rights reserved.\n\n  			Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:\n\n  			    - Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.\n  			    - Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.\n\n  			THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.\n  			*/return(function(i){var c=n,o=c.lib,m=o.WordArray,f=o.Hasher,E=c.algo,e=m.create([0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,7,4,13,1,10,6,15,3,12,0,9,5,2,14,11,8,3,10,14,4,9,15,8,1,2,7,0,6,13,11,5,12,1,9,11,10,0,8,12,4,13,3,7,15,14,5,6,2,4,0,5,9,7,12,2,10,14,1,3,8,11,6,15,13]),r=m.create([5,14,7,0,9,2,11,4,13,6,15,8,1,10,3,12,6,11,3,7,0,13,5,10,14,15,8,12,4,9,1,2,15,5,1,3,7,14,6,9,11,8,12,2,10,0,4,13,8,6,4,1,3,11,15,0,5,12,2,13,9,7,10,14,12,15,10,4,1,5,8,7,6,2,13,14,0,3,9,11]),D=m.create([11,14,15,12,5,8,7,9,11,13,14,15,6,7,9,8,7,6,8,13,11,9,7,15,7,12,15,9,11,7,13,12,11,13,6,7,14,9,13,15,14,8,13,6,5,12,7,5,11,12,14,15,14,15,9,8,9,14,5,6,8,6,5,12,9,15,5,11,6,8,13,12,5,12,13,14,11,8,5,6]),d=m.create([8,9,9,11,13,15,15,5,7,7,8,11,14,14,12,6,9,13,15,7,12,8,9,11,7,7,12,7,6,15,13,11,9,7,15,11,8,6,6,14,12,13,5,14,13,13,7,5,15,5,8,11,14,14,6,14,6,9,12,9,12,5,15,8,8,5,12,9,12,5,14,6,8,13,6,5,15,13,11,11]),p=m.create([0,1518500249,1859775393,2400959708,2840853838]),l=m.create([1352829926,1548603684,1836072691,2053994217,0]),A=E.RIPEMD160=f.extend({_doReset:function(){this._hash=m.create([1732584193,4023233417,2562383102,271733878,3285377520])},_doProcessBlock:function(C,B){for(var b=0;b<16;b++){var y=B+b,u=C[y];C[y]=(u<<8|u>>>24)&16711935|(u<<24|u>>>8)&4278255360}var _=this._hash.words,I=p.words,F=l.words,P=e.words,H=r.words,L=D.words,Y=d.words,W,$,G,g,T,R,w,q,V,Q;R=W=_[0],w=$=_[1],q=G=_[2],V=g=_[3],Q=T=_[4];for(var M,b=0;b<80;b+=1)M=W+C[B+P[b]]|0,b<16?M+=k($,G,g)+I[0]:b<32?M+=v($,G,g)+I[1]:b<48?M+=a($,G,g)+I[2]:b<64?M+=s($,G,g)+I[3]:M+=h($,G,g)+I[4],M=M|0,M=S(M,L[b]),M=M+T|0,W=T,T=g,g=S(G,10),G=$,$=M,M=R+C[B+H[b]]|0,b<16?M+=h(w,q,V)+F[0]:b<32?M+=s(w,q,V)+F[1]:b<48?M+=a(w,q,V)+F[2]:b<64?M+=v(w,q,V)+F[3]:M+=k(w,q,V)+F[4],M=M|0,M=S(M,Y[b]),M=M+Q|0,R=Q,Q=V,V=S(q,10),q=w,w=M;M=_[1]+G+V|0,_[1]=_[2]+g+Q|0,_[2]=_[3]+T+R|0,_[3]=_[4]+W+w|0,_[4]=_[0]+$+q|0,_[0]=M},_doFinalize:function(){var C=this._data,B=C.words,b=this._nDataBytes*8,y=C.sigBytes*8;B[y>>>5]|=128<<24-y%32,B[(y+64>>>9<<4)+14]=(b<<8|b>>>24)&16711935|(b<<24|b>>>8)&4278255360,C.sigBytes=(B.length+1)*4,this._process();for(var u=this._hash,_=u.words,I=0;I<5;I++){var F=_[I];_[I]=(F<<8|F>>>24)&16711935|(F<<24|F>>>8)&4278255360}return u},clone:function(){var C=f.clone.call(this);return C._hash=this._hash.clone(),C}});function k(C,B,b){return C^B^b}function v(C,B,b){return C&B|~C&b}function a(C,B,b){return(C|~B)^b}function s(C,B,b){return C&b|B&~b}function h(C,B,b){return C^(B|~b)}function S(C,B){return C<<B|C>>>32-B}c.RIPEMD160=f._createHelper(A),c.HmacRIPEMD160=f._createHmacHelper(A)})(),n.RIPEMD160})})(Ut)),Ut.exports}var zt={exports:{}},bn=zt.exports,W0;function h0(){return W0||(W0=1,(function(t,x){(function(n,i){t.exports=i(z())})(bn,function(n){(function(){var i=n,c=i.lib,o=c.Base,m=i.enc,f=m.Utf8,E=i.algo;E.HMAC=o.extend({init:function(e,r){e=this._hasher=new e.init,typeof r=="string"&&(r=f.parse(r));var D=e.blockSize,d=D*4;r.sigBytes>d&&(r=e.finalize(r)),r.clamp();for(var p=this._oKey=r.clone(),l=this._iKey=r.clone(),A=p.words,k=l.words,v=0;v<D;v++)A[v]^=1549556828,k[v]^=909522486;p.sigBytes=l.sigBytes=d,this.reset()},reset:function(){var e=this._hasher;e.reset(),e.update(this._iKey)},update:function(e){return this._hasher.update(e),this},finalize:function(e){var r=this._hasher,D=r.finalize(e);r.reset();var d=r.finalize(this._oKey.clone().concat(D));return d}})})()})})(zt)),zt.exports}var Wt={exports:{}},yn=Wt.exports,G0;function Fn(){return G0||(G0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),f0(),h0())})(yn,function(n){return(function(){var i=n,c=i.lib,o=c.Base,m=c.WordArray,f=i.algo,E=f.SHA256,e=f.HMAC,r=f.PBKDF2=o.extend({cfg:o.extend({keySize:128/32,hasher:E,iterations:25e4}),init:function(D){this.cfg=this.cfg.extend(D)},compute:function(D,d){for(var p=this.cfg,l=e.create(p.hasher,D),A=m.create(),k=m.create([1]),v=A.words,a=k.words,s=p.keySize,h=p.iterations;v.length<s;){var S=l.update(d).finalize(k);l.reset();for(var C=S.words,B=C.length,b=S,y=1;y<h;y++){b=l.finalize(b),l.reset();for(var u=b.words,_=0;_<B;_++)C[_]^=u[_]}A.concat(S),a[0]++}return A.sigBytes=s*4,A}});i.PBKDF2=function(D,d,p){return r.create(p).compute(D,d)}})(),n.PBKDF2})})(Wt)),Wt.exports}var Gt={exports:{}},gn=Gt.exports,$0;function dt(){return $0||($0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),H0(),h0())})(gn,function(n){return(function(){var i=n,c=i.lib,o=c.Base,m=c.WordArray,f=i.algo,E=f.MD5,e=f.EvpKDF=o.extend({cfg:o.extend({keySize:128/32,hasher:E,iterations:1}),init:function(r){this.cfg=this.cfg.extend(r)},compute:function(r,D){for(var d,p=this.cfg,l=p.hasher.create(),A=m.create(),k=A.words,v=p.keySize,a=p.iterations;k.length<v;){d&&l.update(d),d=l.update(r).finalize(D),l.reset();for(var s=1;s<a;s++)d=l.finalize(d),l.reset();A.concat(d)}return A.sigBytes=v*4,A}});i.EvpKDF=function(r,D,d){return e.create(d).compute(r,D)}})(),n.EvpKDF})})(Gt)),Gt.exports}var $t={exports:{}},In=$t.exports,q0;function Z(){return q0||(q0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),dt())})(In,function(n){n.lib.Cipher||(function(i){var c=n,o=c.lib,m=o.Base,f=o.WordArray,E=o.BufferedBlockAlgorithm,e=c.enc;e.Utf8;var r=e.Base64,D=c.algo,d=D.EvpKDF,p=o.Cipher=E.extend({cfg:m.extend(),createEncryptor:function(u,_){return this.create(this._ENC_XFORM_MODE,u,_)},createDecryptor:function(u,_){return this.create(this._DEC_XFORM_MODE,u,_)},init:function(u,_,I){this.cfg=this.cfg.extend(I),this._xformMode=u,this._key=_,this.reset()},reset:function(){E.reset.call(this),this._doReset()},process:function(u){return this._append(u),this._process()},finalize:function(u){u&&this._append(u);var _=this._doFinalize();return _},keySize:128/32,ivSize:128/32,_ENC_XFORM_MODE:1,_DEC_XFORM_MODE:2,_createHelper:(function(){function u(_){return typeof _=="string"?y:C}return function(_){return{encrypt:function(I,F,P){return u(F).encrypt(_,I,F,P)},decrypt:function(I,F,P){return u(F).decrypt(_,I,F,P)}}}})()});o.StreamCipher=p.extend({_doFinalize:function(){var u=this._process(!0);return u},blockSize:1});var l=c.mode={},A=o.BlockCipherMode=m.extend({createEncryptor:function(u,_){return this.Encryptor.create(u,_)},createDecryptor:function(u,_){return this.Decryptor.create(u,_)},init:function(u,_){this._cipher=u,this._iv=_}}),k=l.CBC=(function(){var u=A.extend();u.Encryptor=u.extend({processBlock:function(I,F){var P=this._cipher,H=P.blockSize;_.call(this,I,F,H),P.encryptBlock(I,F),this._prevBlock=I.slice(F,F+H)}}),u.Decryptor=u.extend({processBlock:function(I,F){var P=this._cipher,H=P.blockSize,L=I.slice(F,F+H);P.decryptBlock(I,F),_.call(this,I,F,H),this._prevBlock=L}});function _(I,F,P){var H,L=this._iv;L?(H=L,this._iv=i):H=this._prevBlock;for(var Y=0;Y<P;Y++)I[F+Y]^=H[Y]}return u})(),v=c.pad={},a=v.Pkcs7={pad:function(u,_){for(var I=_*4,F=I-u.sigBytes%I,P=F<<24|F<<16|F<<8|F,H=[],L=0;L<F;L+=4)H.push(P);var Y=f.create(H,F);u.concat(Y)},unpad:function(u){var _=u.words[u.sigBytes-1>>>2]&255;u.sigBytes-=_}};o.BlockCipher=p.extend({cfg:p.cfg.extend({mode:k,padding:a}),reset:function(){var u;p.reset.call(this);var _=this.cfg,I=_.iv,F=_.mode;this._xformMode==this._ENC_XFORM_MODE?u=F.createEncryptor:(u=F.createDecryptor,this._minBufferSize=1),this._mode&&this._mode.__creator==u?this._mode.init(this,I&&I.words):(this._mode=u.call(F,this,I&&I.words),this._mode.__creator=u)},_doProcessBlock:function(u,_){this._mode.processBlock(u,_)},_doFinalize:function(){var u,_=this.cfg.padding;return this._xformMode==this._ENC_XFORM_MODE?(_.pad(this._data,this.blockSize),u=this._process(!0)):(u=this._process(!0),_.unpad(u)),u},blockSize:4});var s=o.CipherParams=m.extend({init:function(u){this.mixIn(u)},toString:function(u){return(u||this.formatter).stringify(this)}}),h=c.format={},S=h.OpenSSL={stringify:function(u){var _,I=u.ciphertext,F=u.salt;return F?_=f.create([1398893684,1701076831]).concat(F).concat(I):_=I,_.toString(r)},parse:function(u){var _,I=r.parse(u),F=I.words;return F[0]==1398893684&&F[1]==1701076831&&(_=f.create(F.slice(2,4)),F.splice(0,4),I.sigBytes-=16),s.create({ciphertext:I,salt:_})}},C=o.SerializableCipher=m.extend({cfg:m.extend({format:S}),encrypt:function(u,_,I,F){F=this.cfg.extend(F);var P=u.createEncryptor(I,F),H=P.finalize(_),L=P.cfg;return s.create({ciphertext:H,key:I,iv:L.iv,algorithm:u,mode:L.mode,padding:L.padding,blockSize:u.blockSize,formatter:F.format})},decrypt:function(u,_,I,F){F=this.cfg.extend(F),_=this._parse(_,F.format);var P=u.createDecryptor(I,F).finalize(_.ciphertext);return P},_parse:function(u,_){return typeof u=="string"?_.parse(u,this):u}}),B=c.kdf={},b=B.OpenSSL={execute:function(u,_,I,F,P){if(F||(F=f.random(64/8)),P)var H=d.create({keySize:_+I,hasher:P}).compute(u,F);else var H=d.create({keySize:_+I}).compute(u,F);var L=f.create(H.words.slice(_),I*4);return H.sigBytes=_*4,s.create({key:H,iv:L,salt:F})}},y=o.PasswordBasedCipher=C.extend({cfg:C.cfg.extend({kdf:b}),encrypt:function(u,_,I,F){F=this.cfg.extend(F);var P=F.kdf.execute(I,u.keySize,u.ivSize,F.salt,F.hasher);F.iv=P.iv;var H=C.encrypt.call(this,u,_,P.key,F);return H.mixIn(P),H},decrypt:function(u,_,I,F){F=this.cfg.extend(F),_=this._parse(_,F.format);var P=F.kdf.execute(I,u.keySize,u.ivSize,_.salt,F.hasher);F.iv=P.iv;var H=C.decrypt.call(this,u,_,P.key,F);return H}})})()})})($t)),$t.exports}var qt={exports:{}},wn=qt.exports,Y0;function Tn(){return Y0||(Y0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(wn,function(n){return n.mode.CFB=(function(){var i=n.lib.BlockCipherMode.extend();i.Encryptor=i.extend({processBlock:function(o,m){var f=this._cipher,E=f.blockSize;c.call(this,o,m,E,f),this._prevBlock=o.slice(m,m+E)}}),i.Decryptor=i.extend({processBlock:function(o,m){var f=this._cipher,E=f.blockSize,e=o.slice(m,m+E);c.call(this,o,m,E,f),this._prevBlock=e}});function c(o,m,f,E){var e,r=this._iv;r?(e=r.slice(0),this._iv=void 0):e=this._prevBlock,E.encryptBlock(e,0);for(var D=0;D<f;D++)o[m+D]^=e[D]}return i})(),n.mode.CFB})})(qt)),qt.exports}var Yt={exports:{}},Rn=Yt.exports,V0;function Pn(){return V0||(V0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(Rn,function(n){return n.mode.CTR=(function(){var i=n.lib.BlockCipherMode.extend(),c=i.Encryptor=i.extend({processBlock:function(o,m){var f=this._cipher,E=f.blockSize,e=this._iv,r=this._counter;e&&(r=this._counter=e.slice(0),this._iv=void 0);var D=r.slice(0);f.encryptBlock(D,0),r[E-1]=r[E-1]+1|0;for(var d=0;d<E;d++)o[m+d]^=D[d]}});return i.Decryptor=c,i})(),n.mode.CTR})})(Yt)),Yt.exports}var Vt={exports:{}},Hn=Vt.exports,X0;function Nn(){return X0||(X0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(Hn,function(n){/** @preserve\n * Counter block mode compatible with  Dr Brian Gladman fileenc.c\n * derived from CryptoJS.mode.CTR\n * Jan Hruby jhruby.web@gmail.com\n */return n.mode.CTRGladman=(function(){var i=n.lib.BlockCipherMode.extend();function c(f){if((f>>24&255)===255){var E=f>>16&255,e=f>>8&255,r=f&255;E===255?(E=0,e===255?(e=0,r===255?r=0:++r):++e):++E,f=0,f+=E<<16,f+=e<<8,f+=r}else f+=16777216;return f}function o(f){return(f[0]=c(f[0]))===0&&(f[1]=c(f[1])),f}var m=i.Encryptor=i.extend({processBlock:function(f,E){var e=this._cipher,r=e.blockSize,D=this._iv,d=this._counter;D&&(d=this._counter=D.slice(0),this._iv=void 0),o(d);var p=d.slice(0);e.encryptBlock(p,0);for(var l=0;l<r;l++)f[E+l]^=p[l]}});return i.Decryptor=m,i})(),n.mode.CTRGladman})})(Vt)),Vt.exports}var Xt={exports:{}},On=Xt.exports,j0;function Ln(){return j0||(j0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(On,function(n){return n.mode.OFB=(function(){var i=n.lib.BlockCipherMode.extend(),c=i.Encryptor=i.extend({processBlock:function(o,m){var f=this._cipher,E=f.blockSize,e=this._iv,r=this._keystream;e&&(r=this._keystream=e.slice(0),this._iv=void 0),f.encryptBlock(r,0);for(var D=0;D<E;D++)o[m+D]^=r[D]}});return i.Decryptor=c,i})(),n.mode.OFB})})(Xt)),Xt.exports}var jt={exports:{}},Kn=jt.exports,Z0;function Mn(){return Z0||(Z0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(Kn,function(n){return n.mode.ECB=(function(){var i=n.lib.BlockCipherMode.extend();return i.Encryptor=i.extend({processBlock:function(c,o){this._cipher.encryptBlock(c,o)}}),i.Decryptor=i.extend({processBlock:function(c,o){this._cipher.decryptBlock(c,o)}}),i})(),n.mode.ECB})})(jt)),jt.exports}var Zt={exports:{}},Un=Zt.exports,Q0;function zn(){return Q0||(Q0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(Un,function(n){return n.pad.AnsiX923={pad:function(i,c){var o=i.sigBytes,m=c*4,f=m-o%m,E=o+f-1;i.clamp(),i.words[E>>>2]|=f<<24-E%4*8,i.sigBytes+=f},unpad:function(i){var c=i.words[i.sigBytes-1>>>2]&255;i.sigBytes-=c}},n.pad.Ansix923})})(Zt)),Zt.exports}var Qt={exports:{}},Wn=Qt.exports,J0;function Gn(){return J0||(J0=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(Wn,function(n){return n.pad.Iso10126={pad:function(i,c){var o=c*4,m=o-i.sigBytes%o;i.concat(n.lib.WordArray.random(m-1)).concat(n.lib.WordArray.create([m<<24],1))},unpad:function(i){var c=i.words[i.sigBytes-1>>>2]&255;i.sigBytes-=c}},n.pad.Iso10126})})(Qt)),Qt.exports}var Jt={exports:{}},$n=Jt.exports,te;function qn(){return te||(te=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})($n,function(n){return n.pad.Iso97971={pad:function(i,c){i.concat(n.lib.WordArray.create([2147483648],1)),n.pad.ZeroPadding.pad(i,c)},unpad:function(i){n.pad.ZeroPadding.unpad(i),i.sigBytes--}},n.pad.Iso97971})})(Jt)),Jt.exports}var t0={exports:{}},Yn=t0.exports,ee;function Vn(){return ee||(ee=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(Yn,function(n){return n.pad.ZeroPadding={pad:function(i,c){var o=c*4;i.clamp(),i.sigBytes+=o-(i.sigBytes%o||o)},unpad:function(i){for(var c=i.words,o=i.sigBytes-1,o=i.sigBytes-1;o>=0;o--)if(c[o>>>2]>>>24-o%4*8&255){i.sigBytes=o+1;break}}},n.pad.ZeroPadding})})(t0)),t0.exports}var e0={exports:{}},Xn=e0.exports,ne;function jn(){return ne||(ne=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(Xn,function(n){return n.pad.NoPadding={pad:function(){},unpad:function(){}},n.pad.NoPadding})})(e0)),e0.exports}var n0={exports:{}},Zn=n0.exports,ie;function Qn(){return ie||(ie=1,(function(t,x){(function(n,i,c){t.exports=i(z(),Z())})(Zn,function(n){return(function(i){var c=n,o=c.lib,m=o.CipherParams,f=c.enc,E=f.Hex,e=c.format;e.Hex={stringify:function(r){return r.ciphertext.toString(E)},parse:function(r){var D=E.parse(r);return m.create({ciphertext:D})}}})(),n.format.Hex})})(n0)),n0.exports}var i0={exports:{}},Jn=i0.exports,re;function ti(){return re||(re=1,(function(t,x){(function(n,i,c){t.exports=i(z(),kt(),lt(),dt(),Z())})(Jn,function(n){return(function(){var i=n,c=i.lib,o=c.BlockCipher,m=i.algo,f=[],E=[],e=[],r=[],D=[],d=[],p=[],l=[],A=[],k=[];(function(){for(var s=[],h=0;h<256;h++)h<128?s[h]=h<<1:s[h]=h<<1^283;for(var S=0,C=0,h=0;h<256;h++){var B=C^C<<1^C<<2^C<<3^C<<4;B=B>>>8^B&255^99,f[S]=B,E[B]=S;var b=s[S],y=s[b],u=s[y],_=s[B]*257^B*16843008;e[S]=_<<24|_>>>8,r[S]=_<<16|_>>>16,D[S]=_<<8|_>>>24,d[S]=_;var _=u*16843009^y*65537^b*257^S*16843008;p[B]=_<<24|_>>>8,l[B]=_<<16|_>>>16,A[B]=_<<8|_>>>24,k[B]=_,S?(S=b^s[s[s[u^b]]],C^=s[s[C]]):S=C=1}})();var v=[0,1,2,4,8,16,32,64,128,27,54],a=m.AES=o.extend({_doReset:function(){var s;if(!(this._nRounds&&this._keyPriorReset===this._key)){for(var h=this._keyPriorReset=this._key,S=h.words,C=h.sigBytes/4,B=this._nRounds=C+6,b=(B+1)*4,y=this._keySchedule=[],u=0;u<b;u++)u<C?y[u]=S[u]:(s=y[u-1],u%C?C>6&&u%C==4&&(s=f[s>>>24]<<24|f[s>>>16&255]<<16|f[s>>>8&255]<<8|f[s&255]):(s=s<<8|s>>>24,s=f[s>>>24]<<24|f[s>>>16&255]<<16|f[s>>>8&255]<<8|f[s&255],s^=v[u/C|0]<<24),y[u]=y[u-C]^s);for(var _=this._invKeySchedule=[],I=0;I<b;I++){var u=b-I;if(I%4)var s=y[u];else var s=y[u-4];I<4||u<=4?_[I]=s:_[I]=p[f[s>>>24]]^l[f[s>>>16&255]]^A[f[s>>>8&255]]^k[f[s&255]]}}},encryptBlock:function(s,h){this._doCryptBlock(s,h,this._keySchedule,e,r,D,d,f)},decryptBlock:function(s,h){var S=s[h+1];s[h+1]=s[h+3],s[h+3]=S,this._doCryptBlock(s,h,this._invKeySchedule,p,l,A,k,E);var S=s[h+1];s[h+1]=s[h+3],s[h+3]=S},_doCryptBlock:function(s,h,S,C,B,b,y,u){for(var _=this._nRounds,I=s[h]^S[0],F=s[h+1]^S[1],P=s[h+2]^S[2],H=s[h+3]^S[3],L=4,Y=1;Y<_;Y++){var W=C[I>>>24]^B[F>>>16&255]^b[P>>>8&255]^y[H&255]^S[L++],$=C[F>>>24]^B[P>>>16&255]^b[H>>>8&255]^y[I&255]^S[L++],G=C[P>>>24]^B[H>>>16&255]^b[I>>>8&255]^y[F&255]^S[L++],g=C[H>>>24]^B[I>>>16&255]^b[F>>>8&255]^y[P&255]^S[L++];I=W,F=$,P=G,H=g}var W=(u[I>>>24]<<24|u[F>>>16&255]<<16|u[P>>>8&255]<<8|u[H&255])^S[L++],$=(u[F>>>24]<<24|u[P>>>16&255]<<16|u[H>>>8&255]<<8|u[I&255])^S[L++],G=(u[P>>>24]<<24|u[H>>>16&255]<<16|u[I>>>8&255]<<8|u[F&255])^S[L++],g=(u[H>>>24]<<24|u[I>>>16&255]<<16|u[F>>>8&255]<<8|u[P&255])^S[L++];s[h]=W,s[h+1]=$,s[h+2]=G,s[h+3]=g},keySize:256/32});i.AES=o._createHelper(a)})(),n.AES})})(i0)),i0.exports}var r0={exports:{}},ei=r0.exports,xe;function ni(){return xe||(xe=1,(function(t,x){(function(n,i,c){t.exports=i(z(),kt(),lt(),dt(),Z())})(ei,function(n){return(function(){var i=n,c=i.lib,o=c.WordArray,m=c.BlockCipher,f=i.algo,E=[57,49,41,33,25,17,9,1,58,50,42,34,26,18,10,2,59,51,43,35,27,19,11,3,60,52,44,36,63,55,47,39,31,23,15,7,62,54,46,38,30,22,14,6,61,53,45,37,29,21,13,5,28,20,12,4],e=[14,17,11,24,1,5,3,28,15,6,21,10,23,19,12,4,26,8,16,7,27,20,13,2,41,52,31,37,47,55,30,40,51,45,33,48,44,49,39,56,34,53,46,42,50,36,29,32],r=[1,2,4,6,8,10,12,14,15,17,19,21,23,25,27,28],D=[{0:8421888,268435456:32768,536870912:8421378,805306368:2,1073741824:512,1342177280:8421890,1610612736:8389122,1879048192:8388608,2147483648:514,2415919104:8389120,2684354560:33280,2952790016:8421376,3221225472:32770,3489660928:8388610,3758096384:0,4026531840:33282,134217728:0,402653184:8421890,671088640:33282,939524096:32768,1207959552:8421888,1476395008:512,1744830464:8421378,2013265920:2,2281701376:8389120,2550136832:33280,2818572288:8421376,3087007744:8389122,3355443200:8388610,3623878656:32770,3892314112:514,4160749568:8388608,1:32768,268435457:2,536870913:8421888,805306369:8388608,1073741825:8421378,1342177281:33280,1610612737:512,1879048193:8389122,2147483649:8421890,2415919105:8421376,2684354561:8388610,2952790017:33282,3221225473:514,3489660929:8389120,3758096385:32770,4026531841:0,134217729:8421890,402653185:8421376,671088641:8388608,939524097:512,1207959553:32768,1476395009:8388610,1744830465:2,2013265921:33282,2281701377:32770,2550136833:8389122,2818572289:514,3087007745:8421888,3355443201:8389120,3623878657:0,3892314113:33280,4160749569:8421378},{0:1074282512,16777216:16384,33554432:524288,50331648:1074266128,67108864:1073741840,83886080:1074282496,100663296:1073758208,117440512:16,134217728:540672,150994944:1073758224,167772160:1073741824,184549376:540688,201326592:524304,218103808:0,234881024:16400,251658240:1074266112,8388608:1073758208,25165824:540688,41943040:16,58720256:1073758224,75497472:1074282512,92274688:1073741824,109051904:524288,125829120:1074266128,142606336:524304,159383552:0,176160768:16384,192937984:1074266112,209715200:1073741840,226492416:540672,243269632:1074282496,260046848:16400,268435456:0,285212672:1074266128,301989888:1073758224,318767104:1074282496,335544320:1074266112,352321536:16,369098752:540688,385875968:16384,402653184:16400,419430400:524288,436207616:524304,452984832:1073741840,469762048:540672,486539264:1073758208,503316480:1073741824,520093696:1074282512,276824064:540688,293601280:524288,310378496:1074266112,327155712:16384,343932928:1073758208,360710144:1074282512,377487360:16,394264576:1073741824,411041792:1074282496,427819008:1073741840,444596224:1073758224,461373440:524304,478150656:0,494927872:16400,511705088:1074266128,528482304:540672},{0:260,1048576:0,2097152:67109120,3145728:65796,4194304:65540,5242880:67108868,6291456:67174660,7340032:67174400,8388608:67108864,9437184:67174656,10485760:65792,11534336:67174404,12582912:67109124,13631488:65536,14680064:4,15728640:256,524288:67174656,1572864:67174404,2621440:0,3670016:67109120,4718592:67108868,5767168:65536,6815744:65540,7864320:260,8912896:4,9961472:256,11010048:67174400,12058624:65796,13107200:65792,14155776:67109124,15204352:67174660,16252928:67108864,16777216:67174656,17825792:65540,18874368:65536,19922944:67109120,20971520:256,22020096:67174660,23068672:67108868,24117248:0,25165824:67109124,26214400:67108864,27262976:4,28311552:65792,29360128:67174400,30408704:260,31457280:65796,32505856:67174404,17301504:67108864,18350080:260,19398656:67174656,20447232:0,21495808:65540,22544384:67109120,23592960:256,24641536:67174404,25690112:65536,26738688:67174660,27787264:65796,28835840:67108868,29884416:67109124,30932992:67174400,31981568:4,33030144:65792},{0:2151682048,65536:2147487808,131072:4198464,196608:2151677952,262144:0,327680:4198400,393216:2147483712,458752:4194368,524288:2147483648,589824:4194304,655360:64,720896:2147487744,786432:2151678016,851968:4160,917504:4096,983040:2151682112,32768:2147487808,98304:64,163840:2151678016,229376:2147487744,294912:4198400,360448:2151682112,425984:0,491520:2151677952,557056:4096,622592:2151682048,688128:4194304,753664:4160,819200:2147483648,884736:4194368,950272:4198464,1015808:2147483712,1048576:4194368,1114112:4198400,1179648:2147483712,1245184:0,1310720:4160,1376256:2151678016,1441792:2151682048,1507328:2147487808,1572864:2151682112,1638400:2147483648,1703936:2151677952,1769472:4198464,1835008:2147487744,1900544:4194304,1966080:64,2031616:4096,1081344:2151677952,1146880:2151682112,1212416:0,1277952:4198400,1343488:4194368,1409024:2147483648,1474560:2147487808,1540096:64,1605632:2147483712,1671168:4096,1736704:2147487744,1802240:2151678016,1867776:4160,1933312:2151682048,1998848:4194304,2064384:4198464},{0:128,4096:17039360,8192:262144,12288:536870912,16384:537133184,20480:16777344,24576:553648256,28672:262272,32768:16777216,36864:537133056,40960:536871040,45056:553910400,49152:553910272,53248:0,57344:17039488,61440:553648128,2048:17039488,6144:553648256,10240:128,14336:17039360,18432:262144,22528:537133184,26624:553910272,30720:536870912,34816:537133056,38912:0,43008:553910400,47104:16777344,51200:536871040,55296:553648128,59392:16777216,63488:262272,65536:262144,69632:128,73728:536870912,77824:553648256,81920:16777344,86016:553910272,90112:537133184,94208:16777216,98304:553910400,102400:553648128,106496:17039360,110592:537133056,114688:262272,118784:536871040,122880:0,126976:17039488,67584:553648256,71680:16777216,75776:17039360,79872:537133184,83968:536870912,88064:17039488,92160:128,96256:553910272,100352:262272,104448:553910400,108544:0,112640:553648128,116736:16777344,120832:262144,124928:537133056,129024:536871040},{0:268435464,256:8192,512:270532608,768:270540808,1024:268443648,1280:2097152,1536:2097160,1792:268435456,2048:0,2304:268443656,2560:2105344,2816:8,3072:270532616,3328:2105352,3584:8200,3840:270540800,128:270532608,384:270540808,640:8,896:2097152,1152:2105352,1408:268435464,1664:268443648,1920:8200,2176:2097160,2432:8192,2688:268443656,2944:270532616,3200:0,3456:270540800,3712:2105344,3968:268435456,4096:268443648,4352:270532616,4608:270540808,4864:8200,5120:2097152,5376:268435456,5632:268435464,5888:2105344,6144:2105352,6400:0,6656:8,6912:270532608,7168:8192,7424:268443656,7680:270540800,7936:2097160,4224:8,4480:2105344,4736:2097152,4992:268435464,5248:268443648,5504:8200,5760:270540808,6016:270532608,6272:270540800,6528:270532616,6784:8192,7040:2105352,7296:2097160,7552:0,7808:268435456,8064:268443656},{0:1048576,16:33555457,32:1024,48:1049601,64:34604033,80:0,96:1,112:34603009,128:33555456,144:1048577,160:33554433,176:34604032,192:34603008,208:1025,224:1049600,240:33554432,8:34603009,24:0,40:33555457,56:34604032,72:1048576,88:33554433,104:33554432,120:1025,136:1049601,152:33555456,168:34603008,184:1048577,200:1024,216:34604033,232:1,248:1049600,256:33554432,272:1048576,288:33555457,304:34603009,320:1048577,336:33555456,352:34604032,368:1049601,384:1025,400:34604033,416:1049600,432:1,448:0,464:34603008,480:33554433,496:1024,264:1049600,280:33555457,296:34603009,312:1,328:33554432,344:1048576,360:1025,376:34604032,392:33554433,408:34603008,424:0,440:34604033,456:1049601,472:1024,488:33555456,504:1048577},{0:134219808,1:131072,2:134217728,3:32,4:131104,5:134350880,6:134350848,7:2048,8:134348800,9:134219776,10:133120,11:134348832,12:2080,13:0,14:134217760,15:133152,2147483648:2048,2147483649:134350880,2147483650:134219808,2147483651:134217728,2147483652:134348800,2147483653:133120,2147483654:133152,2147483655:32,2147483656:134217760,2147483657:2080,2147483658:131104,2147483659:134350848,2147483660:0,2147483661:134348832,2147483662:134219776,2147483663:131072,16:133152,17:134350848,18:32,19:2048,20:134219776,21:134217760,22:134348832,23:131072,24:0,25:131104,26:134348800,27:134219808,28:134350880,29:133120,30:2080,31:134217728,2147483664:131072,2147483665:2048,2147483666:134348832,2147483667:133152,2147483668:32,2147483669:134348800,2147483670:134217728,2147483671:134219808,2147483672:134350880,2147483673:134217760,2147483674:134219776,2147483675:0,2147483676:133120,2147483677:2080,2147483678:131104,2147483679:134350848}],d=[4160749569,528482304,33030144,2064384,129024,8064,504,2147483679],p=f.DES=m.extend({_doReset:function(){for(var v=this._key,a=v.words,s=[],h=0;h<56;h++){var S=E[h]-1;s[h]=a[S>>>5]>>>31-S%32&1}for(var C=this._subKeys=[],B=0;B<16;B++){for(var b=C[B]=[],y=r[B],h=0;h<24;h++)b[h/6|0]|=s[(e[h]-1+y)%28]<<31-h%6,b[4+(h/6|0)]|=s[28+(e[h+24]-1+y)%28]<<31-h%6;b[0]=b[0]<<1|b[0]>>>31;for(var h=1;h<7;h++)b[h]=b[h]>>>(h-1)*4+3;b[7]=b[7]<<5|b[7]>>>27}for(var u=this._invSubKeys=[],h=0;h<16;h++)u[h]=C[15-h]},encryptBlock:function(v,a){this._doCryptBlock(v,a,this._subKeys)},decryptBlock:function(v,a){this._doCryptBlock(v,a,this._invSubKeys)},_doCryptBlock:function(v,a,s){this._lBlock=v[a],this._rBlock=v[a+1],l.call(this,4,252645135),l.call(this,16,65535),A.call(this,2,858993459),A.call(this,8,16711935),l.call(this,1,1431655765);for(var h=0;h<16;h++){for(var S=s[h],C=this._lBlock,B=this._rBlock,b=0,y=0;y<8;y++)b|=D[y][((B^S[y])&d[y])>>>0];this._lBlock=B,this._rBlock=C^b}var u=this._lBlock;this._lBlock=this._rBlock,this._rBlock=u,l.call(this,1,1431655765),A.call(this,8,16711935),A.call(this,2,858993459),l.call(this,16,65535),l.call(this,4,252645135),v[a]=this._lBlock,v[a+1]=this._rBlock},keySize:64/32,ivSize:64/32,blockSize:64/32});function l(v,a){var s=(this._lBlock>>>v^this._rBlock)&a;this._rBlock^=s,this._lBlock^=s<<v}function A(v,a){var s=(this._rBlock>>>v^this._lBlock)&a;this._lBlock^=s,this._rBlock^=s<<v}i.DES=m._createHelper(p);var k=f.TripleDES=m.extend({_doReset:function(){var v=this._key,a=v.words;if(a.length!==2&&a.length!==4&&a.length<6)throw new Error("Invalid key length - 3DES requires the key length to be 64, 128, 192 or >192.");var s=a.slice(0,2),h=a.length<4?a.slice(0,2):a.slice(2,4),S=a.length<6?a.slice(0,2):a.slice(4,6);this._des1=p.createEncryptor(o.create(s)),this._des2=p.createEncryptor(o.create(h)),this._des3=p.createEncryptor(o.create(S))},encryptBlock:function(v,a){this._des1.encryptBlock(v,a),this._des2.decryptBlock(v,a),this._des3.encryptBlock(v,a)},decryptBlock:function(v,a){this._des3.decryptBlock(v,a),this._des2.encryptBlock(v,a),this._des1.decryptBlock(v,a)},keySize:192/32,ivSize:64/32,blockSize:64/32});i.TripleDES=m._createHelper(k)})(),n.TripleDES})})(r0)),r0.exports}var x0={exports:{}},ii=x0.exports,de;function ri(){return de||(de=1,(function(t,x){(function(n,i,c){t.exports=i(z(),kt(),lt(),dt(),Z())})(ii,function(n){return(function(){var i=n,c=i.lib,o=c.StreamCipher,m=i.algo,f=m.RC4=o.extend({_doReset:function(){for(var r=this._key,D=r.words,d=r.sigBytes,p=this._S=[],l=0;l<256;l++)p[l]=l;for(var l=0,A=0;l<256;l++){var k=l%d,v=D[k>>>2]>>>24-k%4*8&255;A=(A+p[l]+v)%256;var a=p[l];p[l]=p[A],p[A]=a}this._i=this._j=0},_doProcessBlock:function(r,D){r[D]^=E.call(this)},keySize:256/32,ivSize:0});function E(){for(var r=this._S,D=this._i,d=this._j,p=0,l=0;l<4;l++){D=(D+1)%256,d=(d+r[D])%256;var A=r[D];r[D]=r[d],r[d]=A,p|=r[(r[D]+r[d])%256]<<24-l*8}return this._i=D,this._j=d,p}i.RC4=o._createHelper(f);var e=m.RC4Drop=f.extend({cfg:f.cfg.extend({drop:192}),_doReset:function(){f._doReset.call(this);for(var r=this.cfg.drop;r>0;r--)E.call(this)}});i.RC4Drop=o._createHelper(e)})(),n.RC4})})(x0)),x0.exports}var d0={exports:{}},xi=d0.exports,oe;function di(){return oe||(oe=1,(function(t,x){(function(n,i,c){t.exports=i(z(),kt(),lt(),dt(),Z())})(xi,function(n){return(function(){var i=n,c=i.lib,o=c.StreamCipher,m=i.algo,f=[],E=[],e=[],r=m.Rabbit=o.extend({_doReset:function(){for(var d=this._key.words,p=this.cfg.iv,l=0;l<4;l++)d[l]=(d[l]<<8|d[l]>>>24)&16711935|(d[l]<<24|d[l]>>>8)&4278255360;var A=this._X=[d[0],d[3]<<16|d[2]>>>16,d[1],d[0]<<16|d[3]>>>16,d[2],d[1]<<16|d[0]>>>16,d[3],d[2]<<16|d[1]>>>16],k=this._C=[d[2]<<16|d[2]>>>16,d[0]&4294901760|d[1]&65535,d[3]<<16|d[3]>>>16,d[1]&4294901760|d[2]&65535,d[0]<<16|d[0]>>>16,d[2]&4294901760|d[3]&65535,d[1]<<16|d[1]>>>16,d[3]&4294901760|d[0]&65535];this._b=0;for(var l=0;l<4;l++)D.call(this);for(var l=0;l<8;l++)k[l]^=A[l+4&7];if(p){var v=p.words,a=v[0],s=v[1],h=(a<<8|a>>>24)&16711935|(a<<24|a>>>8)&4278255360,S=(s<<8|s>>>24)&16711935|(s<<24|s>>>8)&4278255360,C=h>>>16|S&4294901760,B=S<<16|h&65535;k[0]^=h,k[1]^=C,k[2]^=S,k[3]^=B,k[4]^=h,k[5]^=C,k[6]^=S,k[7]^=B;for(var l=0;l<4;l++)D.call(this)}},_doProcessBlock:function(d,p){var l=this._X;D.call(this),f[0]=l[0]^l[5]>>>16^l[3]<<16,f[1]=l[2]^l[7]>>>16^l[5]<<16,f[2]=l[4]^l[1]>>>16^l[7]<<16,f[3]=l[6]^l[3]>>>16^l[1]<<16;for(var A=0;A<4;A++)f[A]=(f[A]<<8|f[A]>>>24)&16711935|(f[A]<<24|f[A]>>>8)&4278255360,d[p+A]^=f[A]},blockSize:128/32,ivSize:64/32});function D(){for(var d=this._X,p=this._C,l=0;l<8;l++)E[l]=p[l];p[0]=p[0]+1295307597+this._b|0,p[1]=p[1]+3545052371+(p[0]>>>0<E[0]>>>0?1:0)|0,p[2]=p[2]+886263092+(p[1]>>>0<E[1]>>>0?1:0)|0,p[3]=p[3]+1295307597+(p[2]>>>0<E[2]>>>0?1:0)|0,p[4]=p[4]+3545052371+(p[3]>>>0<E[3]>>>0?1:0)|0,p[5]=p[5]+886263092+(p[4]>>>0<E[4]>>>0?1:0)|0,p[6]=p[6]+1295307597+(p[5]>>>0<E[5]>>>0?1:0)|0,p[7]=p[7]+3545052371+(p[6]>>>0<E[6]>>>0?1:0)|0,this._b=p[7]>>>0<E[7]>>>0?1:0;for(var l=0;l<8;l++){var A=d[l]+p[l],k=A&65535,v=A>>>16,a=((k*k>>>17)+k*v>>>15)+v*v,s=((A&4294901760)*A|0)+((A&65535)*A|0);e[l]=a^s}d[0]=e[0]+(e[7]<<16|e[7]>>>16)+(e[6]<<16|e[6]>>>16)|0,d[1]=e[1]+(e[0]<<8|e[0]>>>24)+e[7]|0,d[2]=e[2]+(e[1]<<16|e[1]>>>16)+(e[0]<<16|e[0]>>>16)|0,d[3]=e[3]+(e[2]<<8|e[2]>>>24)+e[1]|0,d[4]=e[4]+(e[3]<<16|e[3]>>>16)+(e[2]<<16|e[2]>>>16)|0,d[5]=e[5]+(e[4]<<8|e[4]>>>24)+e[3]|0,d[6]=e[6]+(e[5]<<16|e[5]>>>16)+(e[4]<<16|e[4]>>>16)|0,d[7]=e[7]+(e[6]<<8|e[6]>>>24)+e[5]|0}i.Rabbit=o._createHelper(r)})(),n.Rabbit})})(d0)),d0.exports}var o0={exports:{}},oi=o0.exports,ae;function ai(){return ae||(ae=1,(function(t,x){(function(n,i,c){t.exports=i(z(),kt(),lt(),dt(),Z())})(oi,function(n){return(function(){var i=n,c=i.lib,o=c.StreamCipher,m=i.algo,f=[],E=[],e=[],r=m.RabbitLegacy=o.extend({_doReset:function(){var d=this._key.words,p=this.cfg.iv,l=this._X=[d[0],d[3]<<16|d[2]>>>16,d[1],d[0]<<16|d[3]>>>16,d[2],d[1]<<16|d[0]>>>16,d[3],d[2]<<16|d[1]>>>16],A=this._C=[d[2]<<16|d[2]>>>16,d[0]&4294901760|d[1]&65535,d[3]<<16|d[3]>>>16,d[1]&4294901760|d[2]&65535,d[0]<<16|d[0]>>>16,d[2]&4294901760|d[3]&65535,d[1]<<16|d[1]>>>16,d[3]&4294901760|d[0]&65535];this._b=0;for(var k=0;k<4;k++)D.call(this);for(var k=0;k<8;k++)A[k]^=l[k+4&7];if(p){var v=p.words,a=v[0],s=v[1],h=(a<<8|a>>>24)&16711935|(a<<24|a>>>8)&4278255360,S=(s<<8|s>>>24)&16711935|(s<<24|s>>>8)&4278255360,C=h>>>16|S&4294901760,B=S<<16|h&65535;A[0]^=h,A[1]^=C,A[2]^=S,A[3]^=B,A[4]^=h,A[5]^=C,A[6]^=S,A[7]^=B;for(var k=0;k<4;k++)D.call(this)}},_doProcessBlock:function(d,p){var l=this._X;D.call(this),f[0]=l[0]^l[5]>>>16^l[3]<<16,f[1]=l[2]^l[7]>>>16^l[5]<<16,f[2]=l[4]^l[1]>>>16^l[7]<<16,f[3]=l[6]^l[3]>>>16^l[1]<<16;for(var A=0;A<4;A++)f[A]=(f[A]<<8|f[A]>>>24)&16711935|(f[A]<<24|f[A]>>>8)&4278255360,d[p+A]^=f[A]},blockSize:128/32,ivSize:64/32});function D(){for(var d=this._X,p=this._C,l=0;l<8;l++)E[l]=p[l];p[0]=p[0]+1295307597+this._b|0,p[1]=p[1]+3545052371+(p[0]>>>0<E[0]>>>0?1:0)|0,p[2]=p[2]+886263092+(p[1]>>>0<E[1]>>>0?1:0)|0,p[3]=p[3]+1295307597+(p[2]>>>0<E[2]>>>0?1:0)|0,p[4]=p[4]+3545052371+(p[3]>>>0<E[3]>>>0?1:0)|0,p[5]=p[5]+886263092+(p[4]>>>0<E[4]>>>0?1:0)|0,p[6]=p[6]+1295307597+(p[5]>>>0<E[5]>>>0?1:0)|0,p[7]=p[7]+3545052371+(p[6]>>>0<E[6]>>>0?1:0)|0,this._b=p[7]>>>0<E[7]>>>0?1:0;for(var l=0;l<8;l++){var A=d[l]+p[l],k=A&65535,v=A>>>16,a=((k*k>>>17)+k*v>>>15)+v*v,s=((A&4294901760)*A|0)+((A&65535)*A|0);e[l]=a^s}d[0]=e[0]+(e[7]<<16|e[7]>>>16)+(e[6]<<16|e[6]>>>16)|0,d[1]=e[1]+(e[0]<<8|e[0]>>>24)+e[7]|0,d[2]=e[2]+(e[1]<<16|e[1]>>>16)+(e[0]<<16|e[0]>>>16)|0,d[3]=e[3]+(e[2]<<8|e[2]>>>24)+e[1]|0,d[4]=e[4]+(e[3]<<16|e[3]>>>16)+(e[2]<<16|e[2]>>>16)|0,d[5]=e[5]+(e[4]<<8|e[4]>>>24)+e[3]|0,d[6]=e[6]+(e[5]<<16|e[5]>>>16)+(e[4]<<16|e[4]>>>16)|0,d[7]=e[7]+(e[6]<<8|e[6]>>>24)+e[5]|0}i.RabbitLegacy=o._createHelper(r)})(),n.RabbitLegacy})})(o0)),o0.exports}var a0={exports:{}},si=a0.exports,se;function ci(){return se||(se=1,(function(t,x){(function(n,i,c){t.exports=i(z(),kt(),lt(),dt(),Z())})(si,function(n){return(function(){var i=n,c=i.lib,o=c.BlockCipher,m=i.algo;const f=16,E=[608135816,2242054355,320440878,57701188,2752067618,698298832,137296536,3964562569,1160258022,953160567,3193202383,887688300,3232508343,3380367581,1065670069,3041331479,2450970073,2306472731],e=[[3509652390,2564797868,805139163,3491422135,3101798381,1780907670,3128725573,4046225305,614570311,3012652279,134345442,2240740374,1667834072,1901547113,2757295779,4103290238,227898511,1921955416,1904987480,2182433518,2069144605,3260701109,2620446009,720527379,3318853667,677414384,3393288472,3101374703,2390351024,1614419982,1822297739,2954791486,3608508353,3174124327,2024746970,1432378464,3864339955,2857741204,1464375394,1676153920,1439316330,715854006,3033291828,289532110,2706671279,2087905683,3018724369,1668267050,732546397,1947742710,3462151702,2609353502,2950085171,1814351708,2050118529,680887927,999245976,1800124847,3300911131,1713906067,1641548236,4213287313,1216130144,1575780402,4018429277,3917837745,3693486850,3949271944,596196993,3549867205,258830323,2213823033,772490370,2760122372,1774776394,2652871518,566650946,4142492826,1728879713,2882767088,1783734482,3629395816,2517608232,2874225571,1861159788,326777828,3124490320,2130389656,2716951837,967770486,1724537150,2185432712,2364442137,1164943284,2105845187,998989502,3765401048,2244026483,1075463327,1455516326,1322494562,910128902,469688178,1117454909,936433444,3490320968,3675253459,1240580251,122909385,2157517691,634681816,4142456567,3825094682,3061402683,2540495037,79693498,3249098678,1084186820,1583128258,426386531,1761308591,1047286709,322548459,995290223,1845252383,2603652396,3431023940,2942221577,3202600964,3727903485,1712269319,422464435,3234572375,1170764815,3523960633,3117677531,1434042557,442511882,3600875718,1076654713,1738483198,4213154764,2393238008,3677496056,1014306527,4251020053,793779912,2902807211,842905082,4246964064,1395751752,1040244610,2656851899,3396308128,445077038,3742853595,3577915638,679411651,2892444358,2354009459,1767581616,3150600392,3791627101,3102740896,284835224,4246832056,1258075500,768725851,2589189241,3069724005,3532540348,1274779536,3789419226,2764799539,1660621633,3471099624,4011903706,913787905,3497959166,737222580,2514213453,2928710040,3937242737,1804850592,3499020752,2949064160,2386320175,2390070455,2415321851,4061277028,2290661394,2416832540,1336762016,1754252060,3520065937,3014181293,791618072,3188594551,3933548030,2332172193,3852520463,3043980520,413987798,3465142937,3030929376,4245938359,2093235073,3534596313,375366246,2157278981,2479649556,555357303,3870105701,2008414854,3344188149,4221384143,3956125452,2067696032,3594591187,2921233993,2428461,544322398,577241275,1471733935,610547355,4027169054,1432588573,1507829418,2025931657,3646575487,545086370,48609733,2200306550,1653985193,298326376,1316178497,3007786442,2064951626,458293330,2589141269,3591329599,3164325604,727753846,2179363840,146436021,1461446943,4069977195,705550613,3059967265,3887724982,4281599278,3313849956,1404054877,2845806497,146425753,1854211946],[1266315497,3048417604,3681880366,3289982499,290971e4,1235738493,2632868024,2414719590,3970600049,1771706367,1449415276,3266420449,422970021,1963543593,2690192192,3826793022,1062508698,1531092325,1804592342,2583117782,2714934279,4024971509,1294809318,4028980673,1289560198,2221992742,1669523910,35572830,157838143,1052438473,1016535060,1802137761,1753167236,1386275462,3080475397,2857371447,1040679964,2145300060,2390574316,1461121720,2956646967,4031777805,4028374788,33600511,2920084762,1018524850,629373528,3691585981,3515945977,2091462646,2486323059,586499841,988145025,935516892,3367335476,2599673255,2839830854,265290510,3972581182,2759138881,3795373465,1005194799,847297441,406762289,1314163512,1332590856,1866599683,4127851711,750260880,613907577,1450815602,3165620655,3734664991,3650291728,3012275730,3704569646,1427272223,778793252,1343938022,2676280711,2052605720,1946737175,3164576444,3914038668,3967478842,3682934266,1661551462,3294938066,4011595847,840292616,3712170807,616741398,312560963,711312465,1351876610,322626781,1910503582,271666773,2175563734,1594956187,70604529,3617834859,1007753275,1495573769,4069517037,2549218298,2663038764,504708206,2263041392,3941167025,2249088522,1514023603,1998579484,1312622330,694541497,2582060303,2151582166,1382467621,776784248,2618340202,3323268794,2497899128,2784771155,503983604,4076293799,907881277,423175695,432175456,1378068232,4145222326,3954048622,3938656102,3820766613,2793130115,2977904593,26017576,3274890735,3194772133,1700274565,1756076034,4006520079,3677328699,720338349,1533947780,354530856,688349552,3973924725,1637815568,332179504,3949051286,53804574,2852348879,3044236432,1282449977,3583942155,3416972820,4006381244,1617046695,2628476075,3002303598,1686838959,431878346,2686675385,1700445008,1080580658,1009431731,832498133,3223435511,2605976345,2271191193,2516031870,1648197032,4164389018,2548247927,300782431,375919233,238389289,3353747414,2531188641,2019080857,1475708069,455242339,2609103871,448939670,3451063019,1395535956,2413381860,1841049896,1491858159,885456874,4264095073,4001119347,1565136089,3898914787,1108368660,540939232,1173283510,2745871338,3681308437,4207628240,3343053890,4016749493,1699691293,1103962373,3625875870,2256883143,3830138730,1031889488,3479347698,1535977030,4236805024,3251091107,2132092099,1774941330,1199868427,1452454533,157007616,2904115357,342012276,595725824,1480756522,206960106,497939518,591360097,863170706,2375253569,3596610801,1814182875,2094937945,3421402208,1082520231,3463918190,2785509508,435703966,3908032597,1641649973,2842273706,3305899714,1510255612,2148256476,2655287854,3276092548,4258621189,236887753,3681803219,274041037,1734335097,3815195456,3317970021,1899903192,1026095262,4050517792,356393447,2410691914,3873677099,3682840055],[3913112168,2491498743,4132185628,2489919796,1091903735,1979897079,3170134830,3567386728,3557303409,857797738,1136121015,1342202287,507115054,2535736646,337727348,3213592640,1301675037,2528481711,1895095763,1721773893,3216771564,62756741,2142006736,835421444,2531993523,1442658625,3659876326,2882144922,676362277,1392781812,170690266,3921047035,1759253602,3611846912,1745797284,664899054,1329594018,3901205900,3045908486,2062866102,2865634940,3543621612,3464012697,1080764994,553557557,3656615353,3996768171,991055499,499776247,1265440854,648242737,3940784050,980351604,3713745714,1749149687,3396870395,4211799374,3640570775,1161844396,3125318951,1431517754,545492359,4268468663,3499529547,1437099964,2702547544,3433638243,2581715763,2787789398,1060185593,1593081372,2418618748,4260947970,69676912,2159744348,86519011,2512459080,3838209314,1220612927,3339683548,133810670,1090789135,1078426020,1569222167,845107691,3583754449,4072456591,1091646820,628848692,1613405280,3757631651,526609435,236106946,48312990,2942717905,3402727701,1797494240,859738849,992217954,4005476642,2243076622,3870952857,3732016268,765654824,3490871365,2511836413,1685915746,3888969200,1414112111,2273134842,3281911079,4080962846,172450625,2569994100,980381355,4109958455,2819808352,2716589560,2568741196,3681446669,3329971472,1835478071,660984891,3704678404,4045999559,3422617507,3040415634,1762651403,1719377915,3470491036,2693910283,3642056355,3138596744,1364962596,2073328063,1983633131,926494387,3423689081,2150032023,4096667949,1749200295,3328846651,309677260,2016342300,1779581495,3079819751,111262694,1274766160,443224088,298511866,1025883608,3806446537,1145181785,168956806,3641502830,3584813610,1689216846,3666258015,3200248200,1692713982,2646376535,4042768518,1618508792,1610833997,3523052358,4130873264,2001055236,3610705100,2202168115,4028541809,2961195399,1006657119,2006996926,3186142756,1430667929,3210227297,1314452623,4074634658,4101304120,2273951170,1399257539,3367210612,3027628629,1190975929,2062231137,2333990788,2221543033,2438960610,1181637006,548689776,2362791313,3372408396,3104550113,3145860560,296247880,1970579870,3078560182,3769228297,1714227617,3291629107,3898220290,166772364,1251581989,493813264,448347421,195405023,2709975567,677966185,3703036547,1463355134,2715995803,1338867538,1343315457,2802222074,2684532164,233230375,2599980071,2000651841,3277868038,1638401717,4028070440,3237316320,6314154,819756386,300326615,590932579,1405279636,3267499572,3150704214,2428286686,3959192993,3461946742,1862657033,1266418056,963775037,2089974820,2263052895,1917689273,448879540,3550394620,3981727096,150775221,3627908307,1303187396,508620638,2975983352,2726630617,1817252668,1876281319,1457606340,908771278,3720792119,3617206836,2455994898,1729034894,1080033504],[976866871,3556439503,2881648439,1522871579,1555064734,1336096578,3548522304,2579274686,3574697629,3205460757,3593280638,3338716283,3079412587,564236357,2993598910,1781952180,1464380207,3163844217,3332601554,1699332808,1393555694,1183702653,3581086237,1288719814,691649499,2847557200,2895455976,3193889540,2717570544,1781354906,1676643554,2592534050,3230253752,1126444790,2770207658,2633158820,2210423226,2615765581,2414155088,3127139286,673620729,2805611233,1269405062,4015350505,3341807571,4149409754,1057255273,2012875353,2162469141,2276492801,2601117357,993977747,3918593370,2654263191,753973209,36408145,2530585658,25011837,3520020182,2088578344,530523599,2918365339,1524020338,1518925132,3760827505,3759777254,1202760957,3985898139,3906192525,674977740,4174734889,2031300136,2019492241,3983892565,4153806404,3822280332,352677332,2297720250,60907813,90501309,3286998549,1016092578,2535922412,2839152426,457141659,509813237,4120667899,652014361,1966332200,2975202805,55981186,2327461051,676427537,3255491064,2882294119,3433927263,1307055953,942726286,933058658,2468411793,3933900994,4215176142,1361170020,2001714738,2830558078,3274259782,1222529897,1679025792,2729314320,3714953764,1770335741,151462246,3013232138,1682292957,1483529935,471910574,1539241949,458788160,3436315007,1807016891,3718408830,978976581,1043663428,3165965781,1927990952,4200891579,2372276910,3208408903,3533431907,1412390302,2931980059,4132332400,1947078029,3881505623,4168226417,2941484381,1077988104,1320477388,886195818,18198404,3786409e3,2509781533,112762804,3463356488,1866414978,891333506,18488651,661792760,1628790961,3885187036,3141171499,876946877,2693282273,1372485963,791857591,2686433993,3759982718,3167212022,3472953795,2716379847,445679433,3561995674,3504004811,3574258232,54117162,3331405415,2381918588,3769707343,4154350007,1140177722,4074052095,668550556,3214352940,367459370,261225585,2610173221,4209349473,3468074219,3265815641,314222801,3066103646,3808782860,282218597,3406013506,3773591054,379116347,1285071038,846784868,2669647154,3771962079,3550491691,2305946142,453669953,1268987020,3317592352,3279303384,3744833421,2610507566,3859509063,266596637,3847019092,517658769,3462560207,3443424879,370717030,4247526661,2224018117,4143653529,4112773975,2788324899,2477274417,1456262402,2901442914,1517677493,1846949527,2295493580,3734397586,2176403920,1280348187,1908823572,3871786941,846861322,1172426758,3287448474,3383383037,1655181056,3139813346,901632758,1897031941,2986607138,3066810236,3447102507,1393639104,373351379,950779232,625454576,3124240540,4148612726,2007998917,544563296,2244738638,2330496472,2058025392,1291430526,424198748,50039436,29584100,3605783033,2429876329,2791104160,1057563949,3255363231,3075367218,3463963227,1469046755,985887462]];var r={pbox:[],sbox:[]};function D(k,v){let a=v>>24&255,s=v>>16&255,h=v>>8&255,S=v&255,C=k.sbox[0][a]+k.sbox[1][s];return C=C^k.sbox[2][h],C=C+k.sbox[3][S],C}function d(k,v,a){let s=v,h=a,S;for(let C=0;C<f;++C)s=s^k.pbox[C],h=D(k,s)^h,S=s,s=h,h=S;return S=s,s=h,h=S,h=h^k.pbox[f],s=s^k.pbox[f+1],{left:s,right:h}}function p(k,v,a){let s=v,h=a,S;for(let C=f+1;C>1;--C)s=s^k.pbox[C],h=D(k,s)^h,S=s,s=h,h=S;return S=s,s=h,h=S,h=h^k.pbox[1],s=s^k.pbox[0],{left:s,right:h}}function l(k,v,a){for(let B=0;B<4;B++){k.sbox[B]=[];for(let b=0;b<256;b++)k.sbox[B][b]=e[B][b]}let s=0;for(let B=0;B<f+2;B++)k.pbox[B]=E[B]^v[s],s++,s>=a&&(s=0);let h=0,S=0,C=0;for(let B=0;B<f+2;B+=2)C=d(k,h,S),h=C.left,S=C.right,k.pbox[B]=h,k.pbox[B+1]=S;for(let B=0;B<4;B++)for(let b=0;b<256;b+=2)C=d(k,h,S),h=C.left,S=C.right,k.sbox[B][b]=h,k.sbox[B][b+1]=S;return!0}var A=m.Blowfish=o.extend({_doReset:function(){if(this._keyPriorReset!==this._key){var k=this._keyPriorReset=this._key,v=k.words,a=k.sigBytes/4;l(r,v,a)}},encryptBlock:function(k,v){var a=d(r,k[v],k[v+1]);k[v]=a.left,k[v+1]=a.right},decryptBlock:function(k,v){var a=p(r,k[v],k[v+1]);k[v]=a.left,k[v+1]=a.right},blockSize:64/32,keySize:128/32,ivSize:64/32});i.Blowfish=o._createHelper(A)})(),n.Blowfish})})(a0)),a0.exports}var pi=bt.exports,ce;function ki(){return ce||(ce=1,(function(t,x){(function(n,i,c){t.exports=i(z(),gt(),an(),cn(),kt(),ln(),lt(),H0(),f0(),En(),K0(),Dn(),mn(),Sn(),h0(),Fn(),dt(),Z(),Tn(),Pn(),Nn(),Ln(),Mn(),zn(),Gn(),qn(),Vn(),jn(),Qn(),ti(),ni(),ri(),di(),ai(),ci())})(pi,function(n){return n})})(bt)),bt.exports}var li=ki();const fi=tn(li);function pe(){typeof window>"u"||window.CryptoJS||(window.CryptoJS=fi)}class ke extends Error{constructor(x,n){super(x),this.methodName=n,this.name="MobileAuthSdkUnavailableError"}}function hi(){const t=window.YDRZAuthSF;if(!t)throw new ke("Mobile auth SDK global unavailable: window.YDRZAuthSF");return t}function vt(t){const n=hi()[t];if(typeof n!="function")throw new ke(`Mobile auth SDK method unavailable: ${String(t)}`,t);return n}function le(t){try{return JSON.stringify(t,(x,n)=>typeof n=="function"?"[Function]":n,2)}catch(x){return`[unserializable: ${x instanceof Error?x.message:String(x)}]`}}function ui(){return{showAuthPage(t){le(t),vt("showAuthPage")(t)},initControl(t){le(t),vt("initControl")(t)},clearControl(t){vt("clearControl")(t)},getAuthResult(t){vt("getAuthResult")(t)},updateSubmitBtnStatus(t){vt("updateSubmitBtnStatus")(t)}}}const u0="mobile-auth-sdk-script",A0="mobile-auth-sdk-style",fe=12e3;let Ct=null,ft=null;function Dt(t,x={}){return{state:t,scriptId:u0,styleId:A0,...x}}function Ai(){Ct=null}function he(t,x){return new Error(`Failed to load mobile auth SDK ${t} resource: ${x}`)}function Ei(t){const x=document.getElementById(u0);if(x instanceof HTMLScriptElement)return x.src=t,x;const n=document.createElement("script");return n.id=u0,n.async=!0,n.src=t,document.head.appendChild(n),n}function vi(t){const x=document.getElementById(A0);if(x instanceof HTMLLinkElement)return x.href=t,x;const n=document.createElement("link");return n.id=A0,n.rel="stylesheet",n.href=t,document.head.appendChild(n),n}function Ci(t){const x=Ei(t);return new Promise((n,i)=>{let c=!1;const o=()=>{c=!0,clearTimeout(m)},m=setTimeout(()=>{if(c)return;o();const e=new Error(`Mobile auth SDK script load timed out after ${fe}ms: ${t}`);e.reason="timeout",i(e)},fe),f=()=>{c||(o(),x.dataset.mobileAuthSdkLoaded="true",n())},E=()=>{if(c)return;o();const e=he("script",t);e.reason="error",i(e)};if(x.dataset.mobileAuthSdkLoaded==="true"){o(),n();return}x.addEventListener("load",f,{once:!0}),x.addEventListener("error",E,{once:!0})})}function Di(t){const x=vi(t);return new Promise((n,i)=>{const c=()=>{x.dataset.mobileAuthSdkLoaded="true",n()},o=()=>{i(he("style",t))};if(x.dataset.mobileAuthSdkLoaded==="true"){n();return}x.addEventListener("load",c,{once:!0}),x.addEventListener("error",o,{once:!0})})}function ue(t=b0()){if(!t.enabled){const n=Dt("disabled",{reason:"sdk-disabled"});return ft=n,Promise.resolve(n)}if(!t.jsUrl.trim()){const n=Dt("disabled",{reason:"missing-js-url"});return ft=n,Promise.resolve(n)}pe();const x=[Ci(t.jsUrl.trim())];return t.cssUrl.trim()&&x.push(Di(t.cssUrl.trim())),Promise.all(x).then(()=>{if(typeof window.YDRZAuthSF!="object"||window.YDRZAuthSF==null){const i=new Error("Mobile auth SDK script loaded but window.YDRZAuthSF is not registered"),c=Dt("error",{error:i,reason:"spa-html-fallback"});return ft=c,c}const n=Dt("ready");return ft=n,n}).catch(n=>{const i=n instanceof Error?n:new Error(String(n)),o=i.reason==="timeout"?"network-timeout":"error",m=Dt("error",{error:i,reason:o});return ft=m,m}).finally(()=>{Ai()})}function Bi(t){return t?ue(t):ft?.state==="ready"?Promise.resolve(ft):Ct||(Ct=ue(),Ct)}const xt=["确认当前手机号是中国移动号码","关闭 Wi-Fi 与 VPN/代理","打开手机的移动数据（4G/5G 蜂窝网络）","回到本页面，刷新或重新发起验证"],mi={103111:{uiText:"当前网络无法识别本机号码（WAP 网关 IP 错误），通常是因为没有使用中国移动的数据网络。",errorKind:"carrier-mismatch",source:"doc",steps:xt},103119:{uiText:"AppID 配置异常，请联系管理员。",errorKind:"sdk-init-failed",source:"doc"},103120:{uiText:"运管配置异常，请稍后再试。",errorKind:"sdk-init-failed",source:"doc"},103124:{uiText:"该号码暂不支持电信网络验证。",errorKind:"carrier-mismatch",source:"doc",steps:xt},103125:{uiText:"该号码暂不支持联通网络验证。",errorKind:"carrier-mismatch",source:"doc",steps:xt},103126:{uiText:"认证权益已失效，请联系管理员。",errorKind:"sdk-init-failed",source:"doc"},103127:{uiText:"应用没有认证权益，请联系管理员。",errorKind:"sdk-init-failed",source:"doc"},103130:{uiText:"本机号码校验失败。",errorKind:"carrier-mismatch",source:"doc",steps:xt},103131:{uiText:"当前网络号码与请求号码不一致。",errorKind:"carrier-mismatch",source:"doc",steps:xt},103135:{uiText:"请勾选阅读并同意隐私协议后重试。",errorKind:"sdk-init-failed",source:"doc"},105110:{uiText:"该号码暂不支持本次验证。",errorKind:"carrier-mismatch",source:"doc",steps:xt},105302:{uiText:"应用未在白名单，请联系管理员。",errorKind:"sdk-init-failed",source:"doc"},105312:{uiText:"认证能力余量不足，请稍后再试。",errorKind:"sdk-init-failed",source:"doc"},105016:{uiText:"已达到使用次数限制，请稍后再试。",errorKind:"sdk-init-failed",source:"doc"},105999:{uiText:"系统繁忙，请稍后再试。",errorKind:"sdk-init-failed",source:"doc"},110031:{uiText:"该号码不在中国移动网络环境。",errorKind:"carrier-mismatch",source:"business",steps:xt},110032:{uiText:"当前网络环境暂不支持验证。",errorKind:"carrier-mismatch",source:"business",steps:xt},ALL_CARRIERS_FAILED:{uiText:"本机号码识别需要使用中国移动手机号 + 中国移动数据网络（4G/5G 流量）。当前检测到三个运营商网络都无法识别，通常是因为正在使用 Wi-Fi 或非中国移动蜂窝网络。",errorKind:"carrier-mismatch",source:"sentinel",steps:xt},NETWORK_TIMEOUT:{uiText:"网络较慢加载超时，建议切换到中国移动数据网络后重试。",errorKind:"network-timeout",source:"sentinel"},SPA_HTML_FALLBACK:{uiText:"SDK 资源未正确加载，请刷新页面或联系技术支持。",errorKind:"sdk-init-failed",source:"sentinel"},SDK_DISABLED:{uiText:"SDK 已禁用，无法继续验证。",errorKind:"sdk-disabled",source:"sentinel"},CDN_BLOCKED:{uiText:"无法加载 SDK 资源，请检查网络或防火墙设置。",errorKind:"sdk-init-failed",source:"sentinel"}};function ht(t){const x=t==null?"":String(t).trim(),n=mi[x];return n||{uiText:`验证失败（错误码 ${x||"未知"}），请稍后再试。`,errorKind:"unknown",source:"sentinel"}}const E0=["YDData","CTData","CUData"],_i="103000";function Ae(t){const x={};for(const n of t)(n.carrier==="YD"||n.carrier==="CT"||n.carrier==="CU")&&(x[n.carrier]=n.code);return Object.keys(x).length>0?x:void 0}function Si(t){if(t==null||typeof t!="object")return{code:"",desc:"",carrier:"unknown"};const x=t,n=[],i=[];for(const o of E0){const m=x[o];if(!m||typeof m!="object")continue;n.push(o.slice(0,2));const f=m,E=f.resultCode??f.code;if(E==null||E===""||String(E).trim()===_i)continue;const e=typeof f.desc=="string"&&f.desc||typeof f.message=="string"&&f.message||"";i.push({code:String(E).trim(),desc:e,carrier:o.slice(0,2)})}if(n.length===E0.length&&i.length===E0.length)return{code:"ALL_CARRIERS_FAILED",desc:i.map(o=>`${o.carrier}:${o.code}/${o.desc}`).join(" | "),carrier:"unknown",carriers:Ae(i)};if(i.length>0)return{...i[0],carriers:Ae(i)};const c=x.code??x.resultCode;return c!=null&&c!==""?{code:String(c).trim(),desc:typeof x.desc=="string"&&x.desc||typeof x.message=="string"&&x.message||"",carrier:"unknown"}:{code:"",desc:"",carrier:"unknown"}}const Ee={phone:"ydrzPhoneControl",tips:"ydrzTipsControl",state:"ydrzStateControl","sms-input":"ydrzYZMControl","sms-button":"ydrzYZMBtnControl",submit:"ydrzSubmitControl",agreement:"ydrzAgreementControl"},bi=Object.freeze(Object.values(Ee)),yi="https://ginkgo.chinaums.com",Fi="/sign-pay-pro/";function gi(t){const x=t?.trim();if(!x||x==="/")return Fi;const n=/^https?:\\/\\//i.test(x)?new URL(x).pathname:x;return`${(n.startsWith("/")?n:`/${n}`).replace(/\\/+$/,"")}/`}function Ii(t,x){const n=t?.trim();return n?`${new URL(n).toString().replace(/\\/+$/,"")}/`:new URL(x.replace(/^\\/+/,""),`${yi}/`).toString()}const wi="/sign-pay-pro/".trim()||"",Ti=gi(wi);Ii("https://ginkgo.chinaums.com/sign-pay-pro/",Ti);const ve="assistance-mobile-auth",Ri="ASSISTANCE_AUTH_READY",Pi="ASSISTANCE_AUTH_PRESENTATION_READY",Hi="ASSISTANCE_AUTH_SUCCESS",Ni="ASSISTANCE_AUTH_CANCEL",Oi="ASSISTANCE_AUTH_ERROR",Li="ASSISTANCE_AUTH_ERROR_NOTICE",Ki="ASSISTANCE_AUTH_CONFIG",Mi="ASSISTANCE_AUTH_PHONE_READY",Ui="ASSISTANCE_AUTH_RESIZE",zi="ASSISTANCE_AUTH_CLOSE",Wi="ASSISTANCE_AUTH_PROBE_RESULT",Gi="ASSISTANCE_AUTH_STATE_CHANGE",$i="ASSISTANCE_AUTH_STYLE",qi="ASSISTANCE_AUTH_CUSTOM_BOOT";function Yi(t){return typeof t=="object"&&t!==null}function Vi(t){return t===Ri||t===Pi||t===Hi||t===Ni||t===Oi||t===Li||t===Ki||t===Mi||t===Ui||t===zi||t===Wi||t===Gi||t===$i||t===qi}function Xi(t){if(typeof t!="string"||!t.trim())return null;try{const x=new URL(t.trim());return x.protocol!=="http:"&&x.protocol!=="https:"||x.username||x.password||x.pathname!=="/"||x.search||x.hash||x.origin==="null"?null:x.origin}catch{return null}}function ut(t,x,n){return{source:ve,type:t,sessionId:x,payload:n}}function ji(t,x){return Yi(t)&&t.source===ve&&Vi(t.type)&&typeof t.sessionId=="string"&&(!x||t.sessionId===x)}function Zi(t){let x,n=!1,i=!1,c=!1,o;const m=(e,r)=>t.onError(e instanceof Error?e:new Error(String(e)),r);function f(){const e=new TypeError("Caller agreement index or checked value is invalid");if(!i)throw e;m(e,"input")}return{api:{register(e){if(!c){if(n||x)throw new Error("Customer hooks must register synchronously, once");if(!e||typeof e!="object"||e.onStateChange!==void 0&&typeof e.onStateChange!="function"||e.dispose!==void 0&&typeof e.dispose!="function"||e.ready!==void 0&&typeof e.ready.then!="function")throw new TypeError("Customer hooks are invalid");x={...e},o=Promise.resolve(e.ready),o.catch(()=>{})}},setIdLast4(e){if(!c){if(typeof e!="string"||!/^[0-9xX]{0,4}$/.test(e)){m(new TypeError("Identity input accepts at most four digits or X"),"input");return}t.onIdLast4(e.toUpperCase())}},setCallerAgreementChecked(e,r){if(!c){if(!Number.isInteger(e)||e<0||e>=t.callerAgreementCount||typeof r!="boolean"){f();return}t.onCallerAgreement(e,r)}},close(){c||t.onClose()}},sealRegistration(){return n=!0,o??=Promise.resolve(),o.then(()=>{c||(i=!0)})},publish(e){if(!c)try{x?.onStateChange?.({...e})}catch(r){m(r,"hook")}},dispose(){if(!c){c=!0;try{x?.dispose?.()}catch(e){m(e,"hook")}finally{x=void 0}}}}}function s0(t,x){const n=t.trim();if(!n||n.startsWith("#"))return n;if(!x&&!/^[a-z][a-z\\d+.-]*:/i.test(n))throw new TypeError("Relative customer resources require baseUrl");return new URL(n,x).toString()}function tt(t){if(t.signal.aborted)throw new DOMException("Customer page aborted","AbortError");if(Date.now()>=t.deadline)throw new Error("Customer page startup deadline exceeded")}function Bt(t,x){return new Promise((n,i)=>{try{tt(x)}catch(f){i(f);return}const c=f=>{clearTimeout(m),x.signal.removeEventListener("abort",o),f()},o=()=>c(()=>i(new DOMException("Customer page aborted","AbortError"))),m=setTimeout(()=>c(()=>i(new Error("Customer page startup deadline exceeded"))),Math.max(0,x.deadline-Date.now()));x.signal.addEventListener("abort",o,{once:!0}),Promise.resolve(t).then(f=>c(()=>{try{tt(x),n(f)}catch(E){i(E)}}),f=>c(()=>i(f)))})}const v0=new WeakMap,C0=new WeakSet;function Ce(t){return t.tagName==="STYLE"?t.textContent??"":["href","rel","src","srcset"].map(x=>t.getAttribute(x)??"").join(`\n`)}function D0(t,x){v0.set(t,{source:Ce(t),loaded:x})}function Qi(t){const x=n=>{const i=n.target;i?.matches?.(\'style, link[rel~="stylesheet"]\')&&D0(i,n.type==="load")};return C0.add(t),t.addEventListener("load",x,!0),t.addEventListener("error",x,!0),()=>{C0.delete(t),t.removeEventListener("load",x,!0),t.removeEventListener("error",x,!0)}}function c0(t,x){const n=v0.get(t);return n?.source===Ce(t)?Promise.resolve(n.loaded):new Promise((i,c)=>{try{tt(x)}catch(r){c(r);return}const o=()=>{clearTimeout(e),t.removeEventListener("load",m),t.removeEventListener("error",f),x.signal.removeEventListener("abort",E)},m=()=>{o(),D0(t,!0),i(!0)},f=()=>{o(),D0(t,!1),i(!1)},E=()=>{o(),c(new DOMException("Customer page aborted","AbortError"))},e=setTimeout(()=>{o(),c(new Error("Customer page startup deadline exceeded"))},Math.max(0,x.deadline-Date.now()));t.addEventListener("load",m,{once:!0}),t.addEventListener("error",f,{once:!0}),x.signal.addEventListener("abort",E,{once:!0})})}async function De(t,x){const n=[...t.querySelectorAll(\'link[rel~="stylesheet"]\')],i=[...t.querySelectorAll("style")].filter(o=>/@import\\b/i.test(o.textContent??"")),c=[...n.map(o=>v0.has(o)||C0.has(t)?c0(o,x):o.sheet?Promise.resolve(!0):c0(o,x)),...i.map(o=>c0(o,x))];await Promise.all(c.map(async o=>{if(!await o)throw new Error("Customer stylesheet CSS failed to load")})),tt(x)}async function Ji(t,x){tt(x),await De(t,x);let n=!1;const i=t.ownerDocument.defaultView,c=i?.innerHeight??t.ownerDocument.documentElement.clientHeight,o=i?.innerWidth??t.ownerDocument.documentElement.clientWidth,f=[...t.querySelectorAll("img")].filter(r=>{if(!r.getAttribute("src")&&!r.getAttribute("srcset"))return!1;const D=r.getBoundingClientRect();return D.bottom>=0&&D.top<c&&D.right>=0&&D.left<o}).map(async r=>{(r.complete?r.naturalWidth>0:await c0(r,x))||(n=!0)}),E=t.ownerDocument.fonts,e=E?Bt(Promise.resolve(E.ready).catch(()=>{n=!0}),x):Promise.resolve();await Promise.all([...f,e]),tt(x),E?.forEach?.(r=>{r.status==="error"&&(n=!0)}),n&&x.onNotice("Some customer images or fonts could not load")}function B0(t,x){return t.replace(/url\\(\\s*(?:"([^"]*)"|\'([^\']*)\'|([^)]*?))\\s*\\)/gi,(n,i,c,o)=>`url("${s0(i??c??o??"",x).replace(/"/g,"%22")}")`).replace(/(@import\\s+)(["\'])([^"\']+)\\2/gi,(n,i,c,o)=>`${i}"${s0(o,x)}"`)}function tr(t,x){const n=[];let i=t.trim();for(;i;){const c=/^(\\S+)(?:\\s+([^,]+))?\\s*,?\\s*/.exec(i);if(!c)break;let o=c[1],m=c[2]?.trim()??"",f=c[0].length;if(!o.startsWith("data:")&&o.includes(",")){const E=o.indexOf(",");f=E+1,o=o.slice(0,E),m=""}else o=o.replace(/,+$/,"");n.push(`${s0(o,x)}${m?` ${m}`:""}`),i=i.slice(f).trim()}return n.join(", ")}function Be(t,x){for(const n of[t,...t.querySelectorAll("*")]){for(const c of["src","poster","href","action","formaction","xlink:href"]){const o=n.getAttribute(c);if(o!==null){const m=s0(o,x);m!==o&&n.setAttribute(c,m)}}for(const c of["srcset","imagesrcset"]){const o=n.getAttribute(c);if(o!==null){const m=tr(o,x);m!==o&&n.setAttribute(c,m)}}const i=n.getAttribute("style");if(i!==null){const c=B0(i,x);c!==i&&n.setAttribute("style",c)}if(n.tagName==="STYLE"){const c=n.textContent??"",o=B0(c,x);o!==c&&(n.textContent=o)}}}function er(t){if(t.hasAttribute("src"))throw new Error("Customer external script src is unsupported");const x=t.type.trim().toLowerCase();if(x==="module")throw new Error("Customer module scripts are unsupported");x&&!["text/javascript","application/javascript","text/ecmascript","application/ecmascript"].includes(x)||me(t.textContent??"")}function me(t){let x=0;const n=c=>{for(x++;x<t.length;){const o=t[x++];if(o==="\\\\")x++;else if(o===c)break}},i=(c=!1)=>{let o="",m=0;for(;x<t.length;){const f=t[x];if(f===\'"\'||f==="\'"){n(f),o+=\'""\';continue}if(t.startsWith("//",x)){for(;x<t.length&&!/[\\r\\n]/.test(t[x]);)x++;o+=" ";continue}if(t.startsWith("/*",x)){const E=t.indexOf("*/",x+2);x=E<0?t.length:E+2,o+=" ";continue}if(f==="`"){for(x++,o+=\'""\';x<t.length;){if(t[x]==="\\\\"){x+=2;continue}if(t[x]==="`"){x++;break}t.startsWith("${",x)?(x+=2,o+=` (${i(!0)}) `):x++}continue}if(f==="}"&&c&&m===0){x++;break}f==="{"&&m++,f==="}"&&m--,o+=f,x++}return o};if(/(?<![\\w$.])\\bimport\\s*(?:\\(|["\'{*]|[\\w$]+\\s*(?:,|from\\b))/.test(i()))throw new Error("Customer external module import is unsupported")}async function nr(t,x){const n=x.document.defaultView;if(!n)throw new Error("Customer page needs a live document window");tt(x);let i,c=t.baseUrl;if(t.kind==="url"){const v=await Bt(fetch(t.url,{signal:x.signal}),x);if(!v.ok)throw new Error("Customer HTML fetch failed");i=await Bt(v.text(),x),c??=v.url||t.url}else i=t.html;tt(x);const o=new n.DOMParser().parseFromString(i,"text/html");o.querySelectorAll("base").forEach(v=>v.remove());const m=x.document.createElement("div");m.setAttribute("data-custom-root","");const f={};for(const v of[o.documentElement,o.body])for(const a of v.attributes)(a.name==="class"||a.name.startsWith("data-"))&&(f[a.name]=a.value,m.setAttribute(a.name,a.value));m.append(...[...o.head.childNodes,...o.body.childNodes].map(v=>x.document.importNode(v,!0)));const E=[...m.querySelectorAll("script")];E.forEach(er),t.js&&me(t.js),E.forEach(v=>v.remove()),Be(m,c);const e=t.css?B0(t.css,c):void 0,r=Object.getOwnPropertyDescriptor(n,"AssistanceCustomPage");let D=!1,d=!1;const p=new AbortController,l={...x,signal:p.signal},A=Qi(m),k=()=>{d||(d=!0,p.abort(),A(),x.signal.removeEventListener("abort",k),m.remove(),D&&(r?Object.defineProperty(n,"AssistanceCustomPage",r):Reflect.deleteProperty(n,"AssistanceCustomPage")))};x.signal.addEventListener("abort",k,{once:!0});try{Object.defineProperty(n,"AssistanceCustomPage",{configurable:!0,writable:!0,value:x.api}),D=!0,m.inert=!0;const v=m.style.opacity;m.style.opacity="0";const a=De(m,l);x.document.body.append(m),await a;const s=C=>{tt(x);let B;const b=F=>{B=F.error instanceof Error?F.error:new Error(F.message),F.preventDefault()},y=x.document.createElement("script"),u="__assistanceCustomerScriptComplete",_=Object.getOwnPropertyDescriptor(n,u);let I=!1;n.addEventListener("error",b);try{if(Object.defineProperty(n,u,{configurable:!0,value:()=>{I=!0}}),y.textContent=`${C}\n;this[${JSON.stringify(u)}]();`,m.append(y),B)throw B;if(!I)throw new Error("Customer script did not execute; check Content Security Policy")}finally{n.removeEventListener("error",b),_?Object.defineProperty(n,u,_):Reflect.deleteProperty(n,u)}tt(x)};for(const C of E)!C.type||/^(?:text|application)\\/(?:javascript|ecmascript)$/i.test(C.type.trim())?s(C.textContent??""):m.append(C);if(t.js&&s(t.js),await Bt(x.sealRegistration(),l),tt(x),e){const C=x.document.createElement("style");C.textContent=e,m.append(C)}const h=new Set;for(const C of m.querySelectorAll("[id]")){if(h.has(C.id))throw new Error(`Duplicate customer ID: ${C.id}`);h.add(C.id)}for(const C of bi)if(!h.has(C))throw new Error(`Required customer slot missing: ${C}`);Be(m,c),await Ji(m,l),tt(x),m.inert=!1,m.style.opacity=v;const S={css:[...m.querySelectorAll("style")].map(C=>C.textContent??"").join(`\n`),urls:[...m.querySelectorAll(\'link[rel~="stylesheet"]\')].map(C=>C.href),rootAttributes:f};return{root:m,styles:S,dispose:k}}catch(v){throw k(),v}}const rt={submitBtnStyle:{width:"100%",height:"48px",bgColor:"#ff2d55",borderRadius:"10px",fontSize:"16px",fontColor:"#FFFFFF",name:"确认",textAlign:"center"},submitBtnDisabledStyle:{bgColor:"#F5F6F8",fontColor:"#8A8F98"},submitBtnLoadingStyle:{height:"48px"},phoneStyle:{bgColor:"#FFFFFF",fontColor:"#8A8F98",fontSize:"14px",borderRadius:"0",textAlign:"left",width:"auto"},localTipStyle:{fontColor:"#8A8F98",fontSize:"12px",textAlign:"left"},unlocalTipStyle:{fontColor:"#8A8F98",fontSize:"12px",textAlign:"left"},stateStyle:{width:"100%",bgColor:"#FFFFFF",fontColor:"#334155",fontSize:"14px",borderRadius:"12px",textAlign:"center"},authTextStyle:{fontColor:"#334155",bgColor:"#FFFFFF",borderRadius:"12px",textAlign:"center"},authExpireStyle:{fontColor:"#8A8F98",fontSize:"14px"},checkboxStyle:{width:"18px",height:"18px",checkedColor:"#ff2d55",borderColor:"#c8ccd1"}};function ir(t={}){return{submitBtnStyle:{...rt.submitBtnStyle,...t.submitBtnStyle},submitBtnDisabledStyle:{...rt.submitBtnDisabledStyle,...t.submitBtnDisabledStyle},submitBtnLoadingStyle:{...rt.submitBtnLoadingStyle,...t.submitBtnLoadingStyle},phoneStyle:{...rt.phoneStyle,...t.phoneStyle},localTipStyle:{...rt.localTipStyle,...t.localTipStyle},unlocalTipStyle:{...rt.unlocalTipStyle,...t.unlocalTipStyle},stateStyle:{...rt.stateStyle,...t.stateStyle},authTextStyle:{...rt.authTextStyle,...t.authTextStyle},authExpireStyle:{...rt.authExpireStyle,...t.authExpireStyle},checkboxStyle:{...rt.checkboxStyle,...t.checkboxStyle},...t.agreeStyle?{agreeStyle:t.agreeStyle}:{}}}function rr(t){const{agreeStyle:x,topImageStyle:n,bottomImageStyle:i,...c}=t.customer??{},o={};for(const m of["width","fontFamily","fontSize","textAlign","fontColor","hrefColor"])x?.[m]!==void 0&&(o[m]=x[m]);if(x?.checkboxStyle){const m={};for(const f of["width","height","checkedColor","borderColor","checkBgImg","checkedBgImg"])x.checkboxStyle[f]!==void 0&&(m[f]=x.checkboxStyle[f]);o.checkboxStyle=m}return o.agreeArr=t.agreeArr,o.childArr=t.childArr,ir({...c,submitBtnStyle:{...c.submitBtnStyle,name:c.submitBtnStyle?.name??"同意并授权"},agreeStyle:o})}const xr={title:"《第三方共享个人信息清单》",blocks:[{kind:"h1",text:"第三方对外提供个人信息清单"},{kind:"table",rows:[[{kind:"text",text:"合作方",colSpan:7}],["合作方名称","共享目的","共享场景","个人信息","提供方式","隐私政策或官网","联系方式"],["安行天下保险经纪（上海）有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token、姓名、身份证号前十四位、手机号","API接口",{kind:"doc-link",text:"《安行天下个人信息保护政策》",docKey:"anxingtianxia-v2-privacy-policy"},"4006-199-588"],["中移互联网有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token","API接口",{kind:"doc-link",text:"《中国移动认证梧桐数盾隐私政策》",docKey:"anxingtianxia-v2-cmcc-privacy-policy"},"10086"]]}]},dr={title:"《安行天下个人信息保护政策》",blocks:[{kind:"h1",text:"安行天下个人信息保护政策"},{kind:"p",text:"本版发布日期∶2026年5月21日"},{kind:"p",text:"本版生效日期∶2026年5月28日"},{kind:"p",text:\'安行天下保险经纪（上海）有限公司（以下简称"安行天下"或者"我们"）一直致力于用户的隐私和个人信息保护，并且承诺将按照业界成熟的安全标准，根据国家相关法律法规的要求，尽全力保护您的个人信息安全。我们希望通过本《个人信息保护政策》向您说明当您使用我们的产品或服务时，我们如何处理您的个人信息，以及我们为您提供的访问、更新、删除和保护这些信息的方式。\'},{kind:"b",text:"请您在使用我们所提供的产品或服务前，务必仔细阅读本《个人信息保护政策》，做出您认为适当的选择。我们努力用通俗易懂、简明扼要的文字表达，并对本政策中的涉及的敏感个人信息以及与您的利益存在重大关系的条款、个人信息采用粗体字进行标注以提示您注意。您需在充分理解并同意本政策的情况下使用我们的产品或服务，一旦您开始使用我们提供的产品或服务，即表示您已充分理解并同意本政策。如您对本政策内容有任何疑问、意见或建议，您可通过本政策“如何联系我们”章节所列的反馈渠道联系我们，我们会尽快为您作出解答。"},{kind:"p",text:"本政策将帮助您了解以下内容∶"},{kind:"h1",text:"一、协议适用主体范围"},{kind:"h1",text:"二、我们如何收集您的个人信息"},{kind:"h1",text:"三、我们如何存储您的个人信息"},{kind:"h1",text:"四、我们如何使用您的个人信息"},{kind:"h1",text:"五、我们如何提供、委托处理、转让、公开披露您的个人信息"},{kind:"h1",text:"六、征得授权同意的例外"},{kind:"h1",text:"七、您如何行使您的个人信息权利"},{kind:"h1",text:"八、我们如何保护未成年人的个人信息权益"},{kind:"h1",text:"九、本政策如何更新"},{kind:"h1",text:"十、如何联系我们"},{kind:"h1",text:"十一、本政策中关键词说明"},{kind:"h1",text:"一、协议适用主体范围"},{kind:"h2",text:"（一）本政策适用于我们通过安行天下官网（www.axinsur.com）、自营微信公众号（名称：星火保，ID：xinghuobaoxian）、APP、安行天下所拥有的H5页面、小程序、在第三方平台嵌入的链接及功能模块等自营互联网平台（以下合称“安行天下平台”）以及通过线下方式为您提供的所有产品或服务，如保险产品的购买、保险咨询预约服务、保险方案的拟定与讲解、保单查询与退保申请、保险与理赔咨询、理赔服务申请、持续的客户服务与回访、个人权益查看、会员权益及福利活动的开展等。"},{kind:"h2",text:"（二）您也可能通过其他网站或平台的链接访问安行天下平台，由于本政策不适用于这些第三方网站或平台，我们建议您查看该等网站的隐私政策、个人信息保护政策或涉及您个人信息的相应条款与约定，了解他们如何处理您的个人信息，该等网站对您的个人信息的收集、使用、存储、提供、转移、公开披露等行为独立承担责任。"},{kind:"h2",text:"（三）本政策不适用于您通过我们提供的服务/产品而接入的其他第三方服务/产品，亦不适用于您通过其他第三方在我们平台中嵌入的独立入口而接触的第三方提供的服务/产品（统称“第三方服务/产品”）。这些第三方服务/产品有关于您个人信息的具体规定请参照提供该服务/产品的第三方的个人信息保护政策或类似声明。我们会在与这些第三方开展合作过程中尽最大努力督促其保护您的个人信息，但您理解这些产品/服务由第三方独立向您提供，第三方将依照其个人信息保护政策或用户协议单独对您的个人信息处理承担责任。您在选择接受第三方服务/产品前应充分了解第三方服务/产品的详细信息、个人信息保护政策或隐私政策或类似声明，再选择是否使用。"},{kind:"h1",text:"二、我们如何收集您的个人信息"},{kind:"p",text:"在您使用安行天下产品、服务过程中，我们会基于不同情形并按照如下方式收集您在使用产品、服务时产生或为了使用产品、服务所必要的个人信息，以便向您提供产品/服务以及保障您的账户安全："},{kind:"h2",text:"基于安行天下平台账户注册及会员服务"},{kind:"h2",text:"1.在您注册安行天下平台账户时，您需要向我们提供手机号码，我们将通过发送短信验证码的方式来验证您的手机号是否有效，验证无误后我们会为您创建会员账号。您也可使用第三方平台（如微信、中国移动、苏周到APP等）账号信息注册并登录安行天下平台，您将授权我们获取您在上述第三方平台合法留存的手机号码用于完成安行天下平台的注册登录。如您拒绝提供相关注册信息，您可能无法注册成为安行天下平台会员及享有相关会员权益或服务，但不影响您使用安行天下平台的其他服务。"},{kind:"h2",text:"2.当您通过安行天下平台参与安行天下提供的特色会员活动、提升会员等级特权、享受会员专属权益时，我们可能需要向您收集并使用您在参与此类特色会员活动、提升会员等级特权、享受会员权益时所必要的个人信息（如您之前已提交过相应个人信息，则我们可能会利用已收集的您的个人信息进行相应同步），如姓名、有效身份证件及其号码、手机号、地址，以保证您能正常享有该会员服务的使用权益。如您拒绝提供相关活动所需的个人信息，您可能无法享有、参与此类特色会员活动的相关权益或服务，但不影响您使用我们的其他服务。"},{kind:"h2",text:"3.当您关注我们的微信公众号、小程序或通过微信环境访问我们的页面时，我们可能需要收集您的微信openID、unionID、昵称、头像、手机号用于我们向您提供注册、关注、推送消息、支付服务。"},{kind:"h2",text:"实名认证管理要求"},{kind:"p",text:"1.在您使用安行天下平台的投保服务时，基于投保人实名制管理要求，您需要向我们提供手机号码、验证码用于实名认证。您也可以授权我们获取您在第三方平台（如微信、中国移动、苏周到APP等）注册的姓名、手机号码用于实名认证，以满足法律法规关于投保人信息实名及保证投保行为是您本人自主操作的要求。我们会经您明确同意后收集该信息，如您不同意提供该等信息，可能无法使用与监管要求相关的部分服务，但不影响您使用其他服务。"},{kind:"p",text:"2.在您申请退保时，基于实名制管理要求及为了验证您的身份，我们会向您收集您的姓名、手机号、验证码、出生年月日、有效身份证件的类型及其号码、身份证正反面照片信息，从而进行实名认证。前述加粗信息属于您的敏感个人信息，我们基于履行法定义务收集上述信息，如您不同意提供该等敏感个人信息，可能无法进行实名认证，可能进一步无法使用与监管相关的部分服务，但不影响您使用我们提供的其他服务。"},{kind:"h2",text:"基于保险咨询、保险产品投保、理赔、合同变更、客服及争议处理服务"},{kind:"p",text:"1.当您通过访问安行天下平台使用保险咨询服务时，我们可能会向您收集姓名、性别、年龄、地域、手机号、感兴趣的产品、是否买过保险、家庭收入、保险预算、身份证号码、邮箱、婚姻状态、社保参保状态、家庭成员关系，以向您推荐合适的保险机构为您提供详细的保险保障计划制定等保险咨询服务或推荐合适的保险产品，如您拒绝提供上述信息，我们可能无法为您提供保险咨询服务，但不影响您使用我们提供的其他服务。"},{kind:"p",text:"2.当您通过微信公众号、官方网站、投放链路（公域媒体或短信链接入口）、小程序或其他方式访问安行天下平台或通过线下方式在安行天下进行保险产品投保时，我们可能会根据您所投保的保险产品类型在如下范围内收集您相应的投保信息，以便协助您与保险公司订立保险合同。这些信息主要包括：投保人的姓名、有效身份证件类型及号码（如身份证及身份证号码）、手机号码、性别、生日、地址、邮编、职业、职级、银行卡号、银行开户行、行驶证;被保险人的姓名、有效身份证件类型及号码（如身份证及身份证号码）、手机号码及联系方式、职业、投被保人关系、被保人社保参保状态；受益人的姓名、有效身份证件类型及号码（如身份证及身份证号码）、银行账户信息（银行账号、网点、开户行）、与被保险人关系、联系方式。如涉及公司信息按所投保产品的要求提供，如您为他人提供个人信息的，您需保证已取得他人合法同意。如果您拒绝提供这些信息，我们将无法为您提供相关服务以完成投保手续，但不影响您使用我们提供的其他服务。"},{kind:"p",text:"3.当您通过我们申请理赔时、我们可能协助承保的保险公司收集您申请理赔时所需的相关个人信息，包括被保险人或者受益人的姓名、保单号、有效身份证件类型及号码、出险描述、所在医院类型、职业、银行卡信息（可能包括银行账户）、诊断证明、病历信息、就诊费用（包括因病医治产生的相关记录信息）信息;在报案人并非被保险人的情况下，我们还可能收集报案人姓名、电话、与被保险人或受益人的关系、微信号信息。如果您拒绝提供这些信息，我们将无法为您提供保险理赔相关服务，但不影响您使用我们提供的其他服务。"},{kind:"p",text:"4.在向您提供投保、理赔等保险服务过程中，为核验您是否具备投保或理赔资格，我们可能会向与我们合作的保险公司、服务平台、政府机关授权单位及其他合法留存您个人信息的第三方主体（如健康服务机构、信息技术服务机构）处收集与我们为您所提供的产品/服务相关且必须的、您合法留存的个人信息（如有效身份证件类型及其号码和有效期、保险标的信息、产品/服务订单信息及必要的风险信息）。例如，针对意外险，我们可能需要收集职业类别及风险信息；针对健康险，我们可能需要收集健康状况信息；针对财产险，我们可能需要收集标的信息、订单信息；针对车险，我们可能需要收集车辆相关的必要信息，后续报案理赔过程中可能还需要收集事故情况、车辆损毁情况等；我们承诺所收集的信息均是与您投保的产品/服务所相关且必须的。"},{kind:"p",text:"5.当您投保成功后通过安行天下平台查看保险单时，由于保险单实际是由为您承保的保险公司提供，因此我们需从为您承保的保险公司或我们合作的保险中介机构处（如您通过我们在我们合作的保险中介机构处完成投保的）获取您的保险单信息，以方便为您提供查询、下载等服务。当您访问安行天下公众号查看保险单时，我们需要收集您微信账号的昵称、头像、OpenID、UnionID，以便为您提供查询、下载服务。"},{kind:"p",text:"6.当您通过我们进行保险合同变更或退保时，我们可能收集您申请变更或退保时主动提供的保险单号、联系方式、投保人及被保险人姓名、投保人及被保险人有效身份证件类型及号码和有效期、投保人身份证正反面影像、变更/退保事由、微信号、邮箱、保险订单信息（保费金额及可能包括消费交易记录）、银行卡号及开户行、其他需配合提供的协议文件等，当您通过线上进行变更操作时，为方便您的操作，我们可能视情况在流程中对此前您投保时提供的部分信息进行同步。如果您拒绝提供这些信息，我们将无法为您提供保险合同变更相关服务，但不影响您使用我们提供的其他服务。"},{kind:"p",text:"7.当您与我们联系或提出售前、售中、售后、争议纠纷处理申请时，为了保障您的账户及系统安全，我们需要您提供必要的个人信息如您的姓名、手机号、验证码、出生年月日、有效身份证件的类型及其号码以核验您的用户身份。"},{kind:"p",text:"为便于与您联系、尽快帮助您解决问题或记录相关问题的处理方案及结果或为了履行法律法规对于我们提供保险业务客户服务的要求，我们可能会收集您的微信号以及保存您与我们的沟通、通信/通话记录及相关内容（包括您的健康状况、年龄、职业、既往病史、有无社保情况、性别、平台账户信息、订单信息（可能包括交易消费记录）、投保过程的页面操作轨迹、身份证号码及有效期、身份证正反面照片、银行卡号及账户信息、手机号码及验证码、本人手持身份证件照片、支付宝账号、邮箱、咨询或投诉的事由详情、您为了证明相关事实提供的其他信息（包括但不限于短信、录音、网址链接、视频或图片等）、联系地址或您留下的联系方式信息、其他需配合提供的协议文件等）。如果您针对具体订单进行咨询、投诉或提供建议的，我们会使用您的账户信息、订单或保单信息。如您委托他人进行咨询、投诉或提供建议的，我们还可能会收集委托人与受托人关系信息、委托证明、受托人手机号码、受托人姓名及身份证号码。"},{kind:"h2",text:"基于您访问星辰APP需要收集的信息"},{kind:"h2",text:"1.当您访问星辰APP使用注册功能时，我们会收集您的手机号、密码、验证码用于为您创建账号并完成注册流程。"},{kind:"h2",text:"2.当您登录星辰APP时，我们会收集您的手机号及密码用于完成登录程序。"},{kind:"h2",text:"3.当您作为保险代理人注册星辰APP时，为向您提供注册服务，我们将从您所属的保险机构获得您的用户名（工号/姓名）、账户、密码、出单代码、手机号用于完成注册流程。"},{kind:"h2",text:"4.当您作为保险代理人登录星辰APP时，我们会收集您的账户、密码用于完成登录程序。"},{kind:"h2",text:"为了您的账户安全需要收集的信息"},{kind:"p",text:"1.为了识别风险以及线上欺诈行为，从而保障您的账户或信息安全，保障您正常参与安行天下各项活动权利，我们会向您收集您的操作日志、位置信息、安行天下平台版本信息、设备型号、IP地址、设备操作系统信息以及其他与安行天下服务相关的日志信息等。其中，我们需要您开启设备中的位置信息权限、网络访问权限以收集您的地理位置，若您选择不开启网络访问权限，安行天下平台的所有功能均无法使用，若您选择不开启位置信息权限，可能无法正常使用地理位置的特定功能，但不影响您使用我们提供的其他服务。除此以外的前述其他设备信息，我们通过您的计算机、手机及其他访问设备服务端或客户端发给我们的信息进行收集。前述加粗信息属于您的敏感个人信息，我们基于履行法定义务收集该信息，如您不同意提供或不同意我们记录前述信息，可能无法实现我们对您的账户或信息安全管理。"},{kind:"p",text:"2.为排查系统崩溃原因、减少崩溃情况的发生，以不断改进我们的产品或服务。当您使用我们的产品或服务时，我们可能会收集您的您使用设备的相关信息，如点击或浏览我们的产品或服务功能、页面的URL地址及其使用情况。"},{kind:"p",text:"3.基于安全管理的原因，我们可能会从行政机关、司法机关、征信机构、医疗机构及合作机构、关联方（如星火智云（上海）科技发展有限公司）以及其他合法了解掌握相关信息的自然人和法人处收集或查询您的身份、财产、健康状况等相关信息以及经去标识化处理后的安全类、风控类信息，用于风控、保险反欺诈、反黑灰产等，以保障您的信息安全及满足法律法规要求。"},{kind:"p",text:"4.基于行业监管规定，为落实保险销售行为可回溯管理要求，我们通过在用户页面操作日志埋点上报的方式，收集您在保险投保页面上的操作轨迹、客户端信息、手机号、客户端设备信息。"},{kind:"h2",text:"提供拓展服务"},{kind:"p",text:"1.为提升安行天下平台服务体验，了解您如何接入和使用安行天下的产品或服务，为您提供产品推荐、个性化展示、投保交易及智能核保等服务。因此，我们可能收集您合法留存在安行天下合作方、行政、司法机关以及安行天下的关联公司（例如星火智云（上海）科技发展有限公司）的经去标识化处理后的风险水平类信息，这类信息对于我们来说无法识别、还原到个人。"},{kind:"p",text:"2.当您参与平台活动时，我们可能收集您参与活动的必要信息，如产品或服务领取的收件地址、联系人姓名、联系电话、订单信息、邮箱地址。如该产品或服务由第三方服务商负责提供，我们需将您的上述信息提供至第三方服务商为您提供产品或服务。如您拒绝提供这些信息，我们将无法为您提供活动相关服务，但不影响您使用我们提供的其他服务。"},{kind:"p",text:"3.在双保险中介合作的业务中，当您通过我们在我们的合作保险机构参加活动或享受保险咨询或投保服务后，为方便我们为您提供后续的保险经纪服务以及出于我们与合作机构结算费用的需要，我们可能会从合作机构处获取您的服务项目名称、所属分公司、保单号、投保人姓名、主险名称、保单期缴保费、缴费频率、交费年期、保障年期、首期保费、交至日、累计缴费期数、年化首年保费（AFYP）、承保日期、保单状态。"},{kind:"h2",text:"（七）使用 Cookie 和同类技术收集的信息"},{kind:"p",text:\'1.为确保我们的网站正常运转、为您获得更轻松的访问体验、向您推荐您可能感兴趣的内容、当您使用安行天下的产品或服务时，我们可能会保存您的登录状态并且为您分配一个或多个"Cookie"（一种很小的文本文件）。\'},{kind:"p",text:"2.Cookie 文件将保存在您的计算机硬盘或设备终端的闪存上，它只能被设置它们的服务器阅读。您可以随时使用自带清除 Cookie 功能的浏览器或操作系统软件将其删除。"},{kind:"p",text:"3.为了向您提供更为方便、快捷、顺畅、个性化的服务，我们通过 Cookie 等技术为您提供以下服务："},{kind:"p",text:"（1）记住您的账户。例如，Cookie可能帮助您省去为使用安行天下服务而重复输入账户信息的步骤。"},{kind:"p",text:"（2）分析您使用安行天下产品或服务的情况。例如，我们可通过 Cookie 等技术来了解您使用安行天下产品或服务的具体用途，或哪些网页或服务最受您的欢迎。"},{kind:"p",text:"（3）广告优化。我们可能会根据您访问相关网站的统计信息为您显示您可能感兴趣的产品或广告信息。这些统计信息并不包括您的任何个人信息，cookie等技术有助于我们根据您的信息，您提供与您相关的广告而非进行普遍的广告投放。"},{kind:"p",text:"（4）我们也可能通过cookie技术来统计匿名访问的数据，同样，这些统计信息并不包括您的个人信息。"},{kind:"p",text:\'（5）您也可以通过浏览器选择"不使用Cookie"，但是您如选择这样做可能会影响您对安行天下产品或服务的使用，或是您无法享受到更加安全、快捷、顺畅、个性化的服务，但不影响您正常使用我们提供的其他服务。\'},{kind:"h2",text:"（八）第三方服务商与第三方插件"},{kind:"h2",text:"您知晓，我们在提供产品或服务过程中可能会部署第三方插件，例如软件开发工具包SDK、部署统计分析工具等，该类插件可能会收集您的个人信息。同时，我们可能会在平台上为您提供其他第三方产品或服务，该产品或服务可能会收集您与产品服务相关的必要个人信息。"},{kind:"b",text:"为便于您了解上述第三方服务商和第三方插件服务的提供主体、信息收集方式、信息收集范围等关于您的个人信息收集使用的相关信息，您可以通过本政策附录2《第三方SDK服务列表》进行查阅。"},{kind:"h2",text:"（九）特别提示与说明"},{kind:"p",text:"请您理解，我们向您所提供的产品/服务是不断更新的，基于提供产品/服务的目的我们可能需要收集您的其他信息，并通过页面提示、各类交互、协议约定等方式向您说明收集的范围与目的。我们将严格遵照本政策的约定处理您的信息；如您选择不提供相应信息，可能将无法使用某项或者部分产品/服务，但不影响您使用无须提供该对应信息的产品/服务。"},{kind:"p",text:"此外，与我们合作的第三方可能将产品/服务接入我们的产品/服务或者在我们的平台上提供其产品/服务的独立入口，请您务必注意：这些产品/服务相关的页面以及实际的产品/服务将由该等第三方机构独立所有、运营、提供，涉及到第三方向您收集个人信息时，我们强烈建议您在提供个人信息前仔细查看该等第三方的个人信息保护政策或类似协议约定，并做出符合您个人需要的选择。"},{kind:"h1",text:"三、我们如何存储您的个人信息"},{kind:"p",text:"1.我们在中华人民共和国境内收集和产生的个人信息将存储在中华人民共和国境内。"},{kind:"p",text:"2.我们将会基于您使用安行天下产品或服务的必要以及在法律法规或监管规定的期限内保存您的个人信息。"},{kind:"p",text:"3.如我们停止运营安行天下的产品或服务，我们将及时停止继续收集您个人信息的活动。同时，对我们存储的个人信息我们将根据法律法规或者监管规定要求进行继续储存、删除或匿名化处理。"},{kind:"p",text:"4.为了保障您的信息安全，我们会在现有技术水平下采取合理必要的措施来保护您的信息，采取物理防护、安全技术、管理制度等措施来降低丢失、误用、非授权访问、披露和更改的风险，包括但不限于数据加密传输、防火墙和加密存储、物理访问控制以及信息访问授权控制。同时，我们也会采用各类必要的去标识化、匿名化处理等手段来保护信息处理过程中的信息安全。若发生个人信息相关的安全事件，我们将启动应急预案及补救措施以最快地阻止事件扩大并最大化减小潜在损失，并依法履行相关报告及通知义务。目前，我们的核心系统已经通过国家网络安全等级保护（三级）测评，符合互联网保险业务开展的相应要求。"},{kind:"h1",text:"四、我们如何使用您的个人信息"},{kind:"p",text:"1.基于收集目的（详见“我们如何收集信息”），向您提供保险产品或服务时。同时，为了向您提供更匹配您个人情况和需求的产品/服务，我们可能会结合您向我们提供并授权处理的个人信息，例如性别、出生日期、所在地、身体健康情况、既往保障情况、风险评估的问题回答和其他相关内容，综合评估您的保障是否充分、有无重复投保等，从而在风险评估基础上，对比、评估不同保险公司的不同保险产品，向您提出保险建议，为您量身拟定投保方案。请您注意，前述字体加粗的信息为您的敏感个人信息，我们会经您明确单独同意后收集该信息，如果您不提供上述信息，我们将不能向您提供相关的功能及服务。"},{kind:"p",text:"2.根据国家相关主管部门的要求向相关部门进行报告。"},{kind:"p",text:"3.在使用我们的产品或服务时，将基于收集目的所收集的信息用于身份验证、保险实名查验、客户服务、安全防范、诈骗监测、存档和备份用途，以确保我们向您提供的产品和服务的安全性。"},{kind:"p",text:"4.基于提升安行天下平台服务体验"},{kind:"p",text:"当您首次进入安行天下平台成功提交信息后，我们可能基于您在投保或预约保险咨询服务过程中已收集验证的手机号码、有效身份证件类型及其号码等实名信息，在您再次访问安行天下平台时以非明文形式同步显示到页面中，方便您后续使用安行天下提供的相关服务。如您不同意使用该快捷显示服务，您可以拨打安行天下客服热线4006-199-588联系我们为您取消。"},{kind:"p",text:"5.采取脱敏、匿名化方式对您的个人信息等进行综合统计、分析或加工等处理，以改善我们现有的产品或服务，帮助我们设计新产品及服务，以为您提供更加个性化、更便捷的服务。"},{kind:"p",text:"6.为了解您如何接入和使用安行天下的产品或服务，从而满足您的个性化需求，我们可能对从安行天下合作方、行政、司法机关处合法收集的经去标识化处理后的您的风险水平类信息，进行数据抽象分析，以为您提供产品推荐、个性化展示、投保交易及智能核保等服务。这类信息对于我们来说无法识别、还原到个人。若您不同意我们向您提供产品推荐、个性化展示、投保交易及智能核保等服务，您可联系我们的客服4006-199-588要求我们停止进行该类个性化服务。取消该等个性化服务会导致您无法看到基于对您信息分析所提供的个性化推荐产品和/或服务，从而影响您的用户体验，但不会影响您使用安行天下平台的基本功能。"},{kind:"p",text:"7.为保证服务得以完成或向您提供您可能需要的服务，我们可能会通过短信或电话等方式向您发送信息，包括但不限于验证码、保单生效通知、续期缴费/续保通知、扣款成功/失败通知、保险合同终止/中止等。"},{kind:"p",text:"8.为了改进我们的产品和服务，我们可能将收集到的您的信息进行数据分析以形成用户画像，用于向您发送营销活动通知、会员客户权益消息、商业性电子信息以及提供与您相关的营销信息。如您不希望继续接收上述信息，可以根据信息中提供的退订方式予以退订或者联系我们的客服4006-199-588要求退订。"},{kind:"p",text:"9.基于我们与相关合作保险公司或保险中介机构联合进行的一些营销宣传活动的需要，我们会将所收集到的您的联系方式进行去标识化处理后，允许我们的合作方通过我们的系统与公司线路以拨打您的电话号码的形式，向您直接宣传营销活动。若您不同意，您可联系我们的客服4006-199-588要求我们停止向您开展该类活动。"},{kind:"p",text:"10.经您授权的其他用途。"},{kind:"h1",text:"五、我们如何提供、委托处理、转让、公开披露您的个人信息"},{kind:"h2",text:"（一）提供"},{kind:"p",text:"我们对您的个人信息严格保密，在特定条件下经您单独同意我们会将您的个人信息提供给第三方主体（以下简称“第三方”），第三方包括我们的合作方、行政司法机关、关联公司以及其他合作伙伴（具体详见本政策附录1《合作机构信息共享清单》）。在将信息提供给第三方前，我们将会充分评估该第三方收集您的个人信息的合法性、正当性和必要性，并按照法律法规及相关要求以包括但不限于点击确认授权文本、具体场景下的点击确认动作等形式征求您的单独同意。我们可能将您的个人信息进行提供的情形如下∶"},{kind:"p",text:"1.向您提供产品或服务：我们为您提供某些服务和（或）产品功能时，可能实质上由我们的合作伙伴提供或由我们与合作伙伴共同提供，只有将您的个人信息提供给第三方时，才能向您提供上述服务。此种情形下，安行天下需要将提供产品/服务所必须的信息提供至第三方。"},{kind:"p",text:"例如，为了协助您完成投保、订立保险合同并持续享受后续服务，我们会将您提供的必要的投保信息（具体详见附录1《合作机构信息共享清单》中所列示的个人信息），根据实际承保的保险公司提供保险合同服务（包括但不限于承保、理赔、提供后续客户服务等）的需要，全部或部分提供给实际承保的保险公司，您可以在产品页面或实际的保单了解实际承保的保险公司的名称，并通过国家金融监督管理总局公开信息查询其资质。实际承保公司将可能会依据其内部客户信息管理原则，在提供保险合同服务或提供持续服务（具体包括：向您提供保险服务，签订或履行相关保险合同、提供保险售后服务与增值服务、进行直接营销、市场调研、数据分析。）所必须的前提下，对您的个人信息进行收集、存储、使用、传输等处理，其中具体处理方式、目的详见附录1《合作机构信息共享清单》。"},{kind:"p",text:"例如，当我们与其他保险中介机构联合为您提供产品/服务时，为协助您完成投保、订立保险合同并持续享受后续服务，我们可能需要将该等产品/服务所必须的信息（具体详见附录1《合作机构信息共享清单》中所列示的个人信息）提供至合作的保险中介机构以及实际承保的保险公司，以确保您能够顺利完成产品/服务的购买并持续性的享受相应的服务。联合提供该等产品/服务的保险中介机构，将可能根据其内部客户信息管理原则，在提供保险合同服务或提供持续服务（具体包括：向您提供保险服务，签订或履行相关保险合同、提供售后服务与增值服务、进行直接营销、市场调研、数据分析。）所必须的前提下，对您的信息进行收集、存储、使用、传输等处理，其中具体处理方式、目的详见附录1《合作机构信息共享清单》。"},{kind:"p",text:"例如，当您享受保险产品中的健康增值服务时，此类增值服务可能由具有国家相关许可资质的第三方机构所提供，在此情形下，我们可能需要将提供健康增值服务所必要的个人信息提供至实际提供服务的机构，具体个人信息提供情况详见附录1《合作机构信息共享清单》。"},{kind:"p",text:"例如，在为您提供保险产品/服务的过程中，我们可能会与合作的保险中介机构协同作业。为保障服务效率与专业性，安行天下可能会将部分保险经纪服务（如保险产品的营销宣传、销售、回访、咨询、协助理赔等）转委托给具备相应资质的保险经纪人、保险代理人等第三方服务机构。我们高度重视您的个人信息安全，除非获得您的明确授权或属于法律允许的必要情形，上述第三方服务机构仅能通过我司提供的虚拟号码与您联系，以保护您的个人信息。非法定或必要情形下（例如按照监管要求进行业务档案保存等），我们不会向上述第三方机构提供您的信息。（具体详见附录1《合作机构信息共享清单》中所列示的个人信息）"},{kind:"b",text:"我们会尽最大努力确保实际承保的保险公司、联合提供产品/服务的保险中介机构以及实际提供产品/服务的第三方以符合相关行业监管要求的标准对您的信息采取保护措施，但我们仍建议您单独、详细了解实际承保的保险公司、联合提供产品/服务的保险中介机构以及实际提供产品/服务的第三方的个人信息保护政策或类似协议约定，具体第三方的信息处理目的和联系方式可参见附录1《合作机构信息共享清单》中的隐私政策。"},{kind:"p",text:"2.我们可能与第三方合作举办营销宣传活动，为了方便您能及时参与具体的营销活动，以及使得我们的合作伙伴能及时与您联系、发放奖品、领取权益，我们可能需要将在相应营销宣传活动过程中产生的、为完成相应营销活动所必要的一些个人信息提供给第三方。为此，我们会依据法律法规及相关要求，在相应营销活动规则页面、电话或通过其他途径向您明确告知安行天下基于何种营销活动需要向第三方共享您个人信息的相关情况，包括第三方的名称、联系方式、我们提供给该第三方的有关您个人信息的种类，以及第三方处理您这些个人信息的目的、方式，并在取得您的单独同意后，才会将您的上述相关个人信息提供至我们合作的第三方。"},{kind:"p",text:"3.个性化服务：为改进我们的服务、优化我们的产品、从而为您提供个性化服务。您在安行天下平台上的登录ID、浏览轨迹、操作方式等信息将会被记录。我们会将上述信息以及您在投保时提供的信息进行脱敏、去标识化、匿名化等加工处理后，提供至安行天下合作机构（保险公司、保险中介机构等）、关联方（如星火智云（上海）科技发展有限公司），用于为您提供营销推荐、信息展示等个性化服务。"},{kind:"p",text:"例如，当我们为您提供投保方案定制服务或会员福利时，我们可能会使用您先前使用我们产品/服务时所提供的信息（姓名、性别、生日、年龄、省份、已购买保险产品的产品名称及保费情况）为您拟定相应投保方案，并可能会委托合作的保险公司或保险中介机构（合称“保险机构”）向您解释投保方案并共同协助您完成投保，享受后续服务。该等场景下，我们合作的保险机构仅可以通过我们提供的虚拟号码联系您，我们仅会出于合法、正当、必要的目的提供您的个人信息，并要求第三方对您的信息采取保护措施并严格遵守法律法规与监管要求。除非您另行授权同意，我们的合作伙伴无权将您的个人信息用于任何其他用途。"},{kind:"b",text:"若您不同意接受此类个性化服务，您可以直接根据电话/短信中的指示取消该等服务，或直接联系我们的客服4006-199-588要求我们停止个性化服务。"},{kind:"p",text:"4.为了遵守法律法规要求、落实监管部门规定、保护良好的金融秩序，或者为防止欺诈等违法活动，而与其他金融相关的公司和组织交换必要的信息。"},{kind:"p",text:"5.根据法律法规的规定、有权机关的要求，或是为了依法维护我们的合法权益，或是经您明示同意的。"},{kind:"p",text:"6.如我们向任何上述第三方提供您的个人信息，我们将努力确保该等第三方在使用您的个人信息时遵守本协议及我们要求其遵守的其他适当的保密和安全措施。"},{kind:"h2",text:"（二）委托处理"},{kind:"p",text:"为了提升信息处理的质量与效率，我们可能会在法律法规允许的范围内，委托有能力的合作机构代表我们来处理信息。具体场景如下："},{kind:"p",text:"1.为实现身份信息、账户信息真实性认证以及履行反欺诈等法定义务。根据法律法规及监管要求，为您提供保险服务时，我们需要依法对投保人、被保险人、受益人身份信息（如姓名、身份证件类型、证件号码、证件有效期等信息）、账户信息、保险标的信息（如车辆信息）提供至法律法规规定的保险实名查验登记系统或合法第三方信息认证机构，用于验证投保人、被保险人、受益人身份信息真实性、保险标的真实性、投保人账户信息真实性等。"},{kind:"p",text:"2.账户安全管理"},{kind:"p",text:"为防范和打击网络黑灰产，保障微信账户登录下的安行天下平台账户安全，我们会将您的登录ID等信息进行脱敏、去标识化、匿名化加工处理后提供至行政机关、司法机关、安行天下合作机构、关联方（如星火智云（上海）科技发展有限公司等），由行政机关、司法机关、合作机构、关联方协助安行天下识别账户安全状态，包括账户安全等级、风险状况评估等。"},{kind:"p",text:"3.为提供相应的客户服务及提升服务体验"},{kind:"p",text:"（1）我们可能会委托第三方广告商、电信运营商、分析服务提供商等具有大数据建模与处理能力（包括但不限于查询、核实、采集、整理、保存、加工）的授权合作伙伴处理您的信息，并将查询处理结果反馈给我司，以用于汇聚分析、提供广告曝光检测或服务决策，为您提供更好的服务。"},{kind:"p",text:"我们委托这些合作伙伴处理的是统计类信息、去标识化或匿名化后的信息或者其他不会识别到您个人身份的信息。我们会不时对该等合作伙伴进行监督或审计，以最大限度地确保其依法、依规、依约收集和使用数据。具体第三方的信息处理目的和方式可参见附录3《委托处理清单》。"},{kind:"p",text:"（2）为提供客户服务以及在取得您的营销授权后开展合法营销的目的，我们也可能会委托合作的短信、语音等服务供应商及运营商向您发送营销信息或拨打营销活动电话。如您拒绝接收此类营销信息，您可以通过联系在线客服、拨打400-619-9588客服热线或接收营销类短信时回复退订指令等方式拒绝后续接收该类营销信息。"},{kind:"p",text:"我们郑重承诺，我们会遵守法律法规关于委托处理的相关规定，充分审查、评估此类合作机构保护个人信息的能力，通过书面协议、审计等方式要求合作机构严格遵守保密义务，采取技术方式对委托处理的信息进行脱敏处理，并禁止其将这些信息用于未经您授权的用途。在委托关系解除时，我们会要求合作机构不再保存相关信息。"},{kind:"h2",text:"（三）转让"},{kind:"p",text:"我们不会主动将您的个人信息转让至第三方，但以下情形除外∶"},{kind:"p",text:"1.该转让已经征得您的单独同意;"},{kind:"p",text:"2.根据法律法规的规定、有权机关的要求需要转让您的个人信息的。"},{kind:"p",text:"另外，为完成合并、分立、收购或资产转让而将您的信息转移或披露给任何非关联权利承接的第三方时，我们会按照法律法规及不低于本政策所规定的标准继续保护或要求该等第三方继续保护您的个人信息。如转让后变更个人信息使用目的时，我们将要求该等第三方重新取得您的明确同意。"},{kind:"h2",text:"（四）公开披露"},{kind:"p",text:"我们不会对外公开披露您的个人信息;如必须公开披露时，我们会向您告知公开披露的目的、披露信息的类型及可能涉及的敏感信息，并征得您的单独同意。"},{kind:"h1",text:"六、征得授权同意的例外"},{kind:"p",text:"根据相关法律法规及国家标准，在以下情形中，我们可能会依法收集、使用或提供、转让、公开披露您的个人信息，且无需征得您的同意∶"},{kind:"p",text:"1.为订立、履行个人作为一方当事人的合同所必需，或者按照依法制定的劳动规章制度和依法签订的集体合同实施人力资源管理所必需；"},{kind:"p",text:"2.为履行法定职责或者法定义务所必需；"},{kind:"p",text:"3.为应对突发公共卫生事件，或者紧急情况下为保护自然人的生命健康和财产安全所必需；"},{kind:"p",text:"4.为公共利益实施新闻报道、舆论监督等行为，在合理的范围内处理个人信息；"},{kind:"p",text:"5.依照《个人信息保护法》规定在合理的范围内处理个人自行公开或者其他已经合法公开的个人信息；"},{kind:"p",text:"6.法律、行政法规规定的其他情形。"},{kind:"h1",text:"七、您如何行使您的个人信息权利"},{kind:"b",text:"您明确知晓并同意，在符合法定的情形下，您对个人信息拥有合法的查阅、复制、更正、补充、删除、撤回同意等权利。与此同时，您行使上述权利不得与安行天下需要遵循的法定义务相违背，也不应超出下列合法需求范围。"},{kind:"h2",text:"（一）查阅、复制您的个人信息"},{kind:"p",text:"您有权随时访问、查询、复制我们平台上您的头像、联系人、地址、保单、理赔进度等个人信息，但法律法规规定的例外情况除外。您可以联系客服4006-199-588行使上述权利。"},{kind:"h2",text:"（二）更正、补充您的个人信息"},{kind:"p",text:"当您发现我们处理的关于您的个人信息有错误时，您有权要求我们作出更正、补充。我们将对其您的个人信息予以核实，并及时更正、补充。您可以联系客服4006-199-588行使上述权利。"},{kind:"h2",text:"（三）删除您的个人信息"},{kind:"p",text:"在以下情形中，我们会主动删除您的个人信息，您也可以向我们提出删除个人信息的请求："},{kind:"p",text:"1.如果我们处理您个人信息的目的已实现、无法实现或者为实现处理目的不再必要；"},{kind:"p",text:"2.如果您撤回您的同意；"},{kind:"p",text:"3.如果我们违反法律、行政法规或者违反约定处理您的个人信息；"},{kind:"p",text:"4.如果您不再使用我们的产品或服务，或您注销了账户；"},{kind:"p",text:"5.如果我们不再为您提供产品或服务，或者保存期限已届满。"},{kind:"p",text:"若法律、行政法规规定的保存期限未届满，或者删除个人信息从技术上难以实现的，我们会停止除存储和采取必要的安全保护措施之外的处理。您可联系客服4006-199-588要求删除已在安行天下注册登记的实名信息。当您删除实名信息后，安行天下将不再向您展示您在安行天下的投保记录、生效中的保单信息。为了保障您的合法权益，建议您谨慎操作。如您删除实名信息后仍需查询投保记录或生效中的保单，请您与我们的客服联系，我们会在核对完您的身份信息后为您提供查询服务。"},{kind:"h2",text:"（四）改变您的授权同意范围或撤销授权"},{kind:"p",text:"您有权决定我们是否对您的个人信息进行采集、存储等授权，您可以通过联系客服4006-199-588，撤销同意《安行天下个人信息保护政策》中涉及到的授权内容。撤销后，安行天下将不再处理您的个人信息（如您已就具体产品或服务与安行天下另行签署授权的除外）。撤销授权后，您可以以访客身份继续浏览安行天下提供的产品或服务，但您撤销授权的，不会影响安行天下此前基于您授权已经开展的个人信息处理活动。"},{kind:"p",text:"如您还有其他关于个人信息主体权利的疑问，请您随时与安行天下客服取得联系，我们会尽快协助您解决。"},{kind:"h2",text:"（五）注销您的账户"},{kind:"p",text:"您随时可联系客服4006-199-588要求注销此前注册的账户，在注销账户之后，我们将停止为您提供产品或服务，并依据您的要求，删除您的个人信息，法律法规另有规定的除外。"},{kind:"h2",text:"（六）个人信息处理规则的解释说明"},{kind:"p",text:"您可以随时联系客服4006-199-588要求安行天下对我们的个人信息处理规则进行解释说明。"},{kind:"h2",text:"（七）逝者相关权利"},{kind:"p",text:"若您身故，您的近亲属为了自身的合法、正当利益，可以联系客服4006-199-588对您的相关个人信息行使本条款规定的查阅、复制、更正、删除等相关权利；您生前另有安排的除外。"},{kind:"h2",text:"（八）响应您的上述请求"},{kind:"p",text:"为保障安全，您可能需要提供书面请求，或以其他方式证明您的身份。我们可能会先要求您验证自己的身份，然后再处理您的请求。"},{kind:"p",text:"对于您合理的请求，我们原则上不收取费用，但对多次重复、超出合理限度的请求，我们将视情况收取一定成本费用。对于无端重复、需要过多技术手段（例如，需要开发新系统或从根本上改变现行惯例）、给他人合法权益带来风险或者非常不切实际的请求，我们可能会予以拒绝，但会向您说明理由。"},{kind:"p",text:"此外，在以下情形中，我们可能无法响应您的请求，但会向您说明理由："},{kind:"p",text:"1.与我们履行法律法规规定的义务相关的；"},{kind:"p",text:"2.与国家安全、国防安全有关的；"},{kind:"p",text:"3.与公共安全、公共卫生、重大公共利益有关的；"},{kind:"p",text:"4.与犯罪侦查、起诉、审判和执行判决等有关的；"},{kind:"p",text:"5.有充分证据表明您存在主观恶意或滥用权利的；"},{kind:"p",text:"6.出于维护您或其他个人的生命、财产等重大合法权益但又很难得到本人同意的；"},{kind:"p",text:"7.响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的；"},{kind:"p",text:"8.涉及商业秘密的。"},{kind:"h1",text:"八、我们如何保护未成年人的个人信息权益"},{kind:"p",text:"我们非常重视对未成年人信息的保护。您理解并同意，我们仅向实名登记且具有法律规定的完全民事权利能力和民事行为能力、能够独立承担民事责任的成年人提供安行天下产品和服务。如果您是18周岁以下的未成年人，我们将不会对您提供服务(但在未提供相应服务情况下进行的有限浏览情形除外)。"},{kind:"p",text:"平台涉及的某些特定产品和/或服务可能会涉及收集未成年人的个人信息。我们承诺，我们将根据国家相关法律法规及本政策的规定确保未成年人个人信息的保密性及安全性。如果我们发现自己在未事先获得可证实的父母或法定监护人同意的情况下收集了未成年人的个人信息，我们会采取必要措施主动及时地删除相关信息。"},{kind:"p",text:"若您是未成年人的监护人，当您注意到您所监护的未成年人存在使用平台上的产品和/或服务或自行向我们提供的个人信息的情况时，请您及时与我们联系。"},{kind:"h1",text:"九、本政策如何更新"},{kind:"p",text:"我们的个人信息保护政策可能变更。未经您明确同意，我们不会削减您按照本政策所应享有的权利。我们会在官网以及相关页面上及时更新本政策。对于重大变更，我们还会以更为显著的方式，如弹窗等方式通知您，以便您能及时了解本政策的变更。"},{kind:"p",text:"本政策所指的重大变更包括但不限于："},{kind:"p",text:"1.我们的服务模式发生重大变化。如处理个人信息的目的、处理个人信息的类型、个人信息的使用方式等；"},{kind:"p",text:"2.我们在控制权等方面发生重大变化。如并购重组等；"},{kind:"p",text:"3.个人信息共享、转让或公开披露的主要对象发生变化；"},{kind:"p",text:"4.您参与个人信息处理方面的权利及其行使方式发生重大变化；"},{kind:"p",text:"5.我们负责处理个人信息安全的责任部门、联络方式及投诉渠道发生变化；"},{kind:"p",text:"若您在本政策修订后继续使用安行天下提供的产品或服务，即视为您已充分阅读、理解并愿意接受修订后的政策约束，如果您不接受修改后的政策内容，您有权停止使用安行天下提供的产品或服务。"},{kind:"h1",text:"十、如何联系我们"},{kind:"b",text:"我们设立了专职个人信息保护负责人和个人信息保护工作机构，个人信息保护负责人的联系方式为data-security@axinsur.com.如您在使用安行天下服务时就您的个人信息的收集、使用、共享、保存等事宜有任何困惑，或您对本政策有任何意见或建议，甚至因本政策产生任何争议的，可通过上述邮箱地址或客服专线：4006-199-588联系我们，我们将在收到您的请求或者投诉的15日内，进行受理、核查及处理。"},{kind:"b",text:"为保障我们高效处理您的问题并及时向您反馈，部分情况下我们可能会要求您提交身份证明、有效联系方式和书面请求及相关证据，我们会在验证您的身份后处理您的请求。"},{kind:"b",text:"如果您对我们的回复不满意，特别是您认为我们的个人信息处理行为损害了您的合法权益，您还可以通过以下外部途径寻求解决方案：向上海市浦东新区人民法院提起诉讼，您也可向有关政府部门或者行业协会进行反映。"},{kind:"h1",text:"十一、本政策中关键词说明"},{kind:"p",text:"本政策中的“敏感个人信息”是指：一旦泄露或者非法使用，容易导致自然人的人格尊严受到侵害或者人身、财产安全受到危害的个人信息，包括生物识别、宗教信仰、特定身份、医疗健康、金融账户、行踪轨迹等信息，以及不满十四周岁未成年人的个人信息。"},{kind:"b",text:"附录1：合作机构信息共享清单"},{kind:"table",rows:[["序号","第三方接受主体名称","信息处理目的","信息处理方式","涉及的个人信息","隐私政策链接地址/客服热线"],["1","泰康在线财产保险股份有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","http://www.tk.cn"],["2","中国平安财产保险股份有限公司","承保","收集、存储、使用、传输、加工、删除",`投保人姓名、被保人姓名、证件号码、手机号码\n投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）`,"https://property.pingan.com/"],["3","众安在线财产保险股份有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://www.zhongan.com"],["4","招商信诺人寿保险有限公司","投保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）、营业执照、身份证、投保单盖章件、财产原值、财产照片、财产标的地址、工程合同、法人身份证复印件、公司信息","https://www.cignacmb.com"],["5","太平人寿保险有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://ife.cntaiping.com"],["6","永诚财产保险股份有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://www.alltrust.com.cn"],["7","太平财产保险有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://caixian.cntaiping.com"],["8","中国太平洋财产保险股份有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://property.cpic.com.cn"],["9","平安健康保险股份有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://health.pingan.com"],["10","阳光财产保险股份有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://www.4000-000-000.com"],["11","国泰财产保险有限责任公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://www.cathay-ins.com.cn"],["12","中国人寿财产保险股份有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://www.chinalife-p.com.cn"],["13","融盛财产保险股份有限公司","承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://www.erongsheng.com"],["14","中国人民人寿保险股份有限公司","保险咨询、承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://www.picclife.com/picclifewebsite/webfile//yszc/index.html"],["15","幸福人寿保险股份有限公司","保险咨询、承保","收集、存储、使用、传输、加工、删除","投保人姓名、投保人身份证号码、投保人手机号、投保人护照号、投保人港澳通行证号码、投保人军官证号码、投保人台胞证号码、投保人性别、投保人生日、投保人户口本号码（身份证号码）、被保人姓名、被保人身份证号码、被保人手机号、被保人护照号、被保人港澳通行证号码、被保人军官证号码、被保人台胞证号码、被保人性别、被保人生日、被保人户口本号码（身份证号码）、投被保人关系、被保人社保参保状态、职业、地址、邮编、投保人身份证影像（正反面）","https://www.happyinsurance.com.cn/other/single_189_184.html"],["16","黑龙江鹤芝灵生物科技有限公司","领取健康服务礼包","收集、存储、使用、传输、加工、删除","姓名、手机号、地域、地址",""],["17","青岛海尔保险代理有限公司","互联网保险业务转委托","收集、存储、使用、传输、删除（仅限于依据监管要求的业务存档及双方业务结算）","投保人姓名、投保人证件类型、投保人证件号码、投保人性别、投保人出生日期、投保人手机号、被保人姓名、被保人证件类型、被保人证件号码、被保人性别、被保人出生日期、被保人手机号、被保人与投保人关系","https://h5.haierbx.net/home/aggrement/2"]]},{kind:"b",text:"附录2：第三方SDK服务列表"},{kind:"b",text:"WEB类SDK"},{kind:"table",rows:[["序号","SDK类型","功能类型","第三方名称","使用目的","使用场景","个人信息类型","第三方隐私政策或官网链接"],["1","Web","埋点SDK","星火智云（上海）科技发展有限公司","收集用户在系统上的行为数据，分析用户行为习惯改善用户体验","用户访问投放页面","用户行为数据、浏览器信息UA、客户端信息、用户手机号","https://www.axinsur.com/"],["2","Web","广告SDK","星火智云（上海）科技发展有限公司","广告素材曝光、数据采集，评估广告效果，改善用户体验","部分手机广告位页面，比如投保成功页，用户左划弹框","用户在系统中的id、手机号（登录状态下）","https://www.axinsur.com/"],["3","Web","众安可回溯SDK","众安信息技术服务有限公司","收集用户在投保页面的行为数据，满足监管要求","投保页面","用户行为数据","https://zhongan.io/"],["4","Web","一键登录","中国移动通信集团有限公司、中国移动通信集团上海有限公司","手机号一键登录、减少用户操作","部分投保页面","用户手机号、用户网络环境","https://dev.10086.cn/docInside?contentId=11039014795609"],["5","Web","微信 JS SDK","深圳市腾讯计算机系统有限公司","微信分享、静默授权、小程序","微信环境下","无信息收集场景","https://open.weixin.qq.com/"],["6","Web","闪验","深圳市和讯华谷信息技术有限公司","快速验证手机号","部分投保页面","用户手机号、用户网络环境","https://www.jiguang.cn/"],["7","Web","阿里云ARMS监控","阿里巴巴集团控股有限公司","监控页面性能指标","所有页面","用户信息:用户标识(默认随机生成字符串作为用户标识,用户可通过配置自定义标识替换)应用信息:应用ID设备信息:包括:设备ID、设备型号、品牌信息、操作系统及系统版本号、宿主应用、屏幕分辨率网络状态信息:包括:IP地址、网络制式、运营商信息","https://terms.alicdn.com/legal-agreement/terms/privacy_policy_full/20240614153247459/20240614153247459.html"],["8","Web","在线客服","杭州网易智企科技有限公司","在线客服","部分投保页面","唯一设备识别码(APNSToken)最终用户的语音信息最终用户的图片和视频信息设备信息:设备品牌及型号、设备所运行系统版本、名称、编辑版本信息;日志信息:浏览器类型及版本信息、网络连接类型及状态、通信服务运行日志信息网络信息:网络状态、wifi信息,IP地址IOS应用的BundleID及/或您开发的Android应用的应用包名距离传感器信息","https://b.163.com/home/privacypolicy/privacy-ys-intelligent"],["9","Web","H5掩码一键登录","深圳市和讯华谷信息技术有限公司","在手机H5页面中，一键点击完成登录/注册","部分投保页面","用户手机号、用户网络环境","https://www.jiguang.cn/"]]},{kind:"b",text:"APP类SDK"},{kind:"table",rows:[["序号","SDK类型","SDK名称","包含信息","使用目的","使用权限","个人信息类型","第三方隐私政策或官网链接"],["1","APP","微信开放平台","com.tencent.mm","登录、分享、支付","android.permission.ACCESS_NETWORK_STATEandroid.permission.ACCESS_WIFI_STATE","存储的个人文件、网络信息","https://weixin.qq.com/cgi-bin/readtemplate?lang=zh_CN&t=weixin_agreement&s=privacy"],["2","APP","新浪开放平台","com.sina.weibo","登录、分享","android.permission.ACCESS_NETWORK_STATEandroid.permission.ACCESS_WIFI_STATE","存储的个人文件、网络信息","https://weibo.com/signup/v5/privacy?spm=a1zaa.8161610.0.0.4f8776217Wu8R1"],["3","APP","QQ开放平台","com.tencent.open","登录、分享","android.permission.MODIFY_AUDIO_SETTINGSandroid.permission.ACCESS_NETWORK_STATEandroid.permission.ACCESS_WIFI_STATE","存储的个人文件、读取手机状态和身份、网络信息","https://wiki.connect.qq.com/qq%e4%ba%92%e8%81%94sdk%e9%9a%90%e7%a7%81%e4%bf%9d%e6%8a%a4%e5%a3%b0%e6%98%8e"],["4","APP","支付宝开放平台","com.alipay","登录、分享","android.permission.ACCESS_NETWORK_STATEandroid.permission.ACCESS_WIFI_STATE","网络信息","https://render.alipay.com/p/yuyan/180020010001196791/preview.html?agreementId=AG00000132"],["5","APP","个验一键登录","com.g.elogin、com.g.gysdk","登录","android.permission.READ_PHONE_STATEandroid.permission.READ_EXTERNAL_STORAGEandroid.permission.WRITE_EXTERNAL_STORAGEandroid.permission.ACCESS_NETWORK_STATEandroid.permission.ACCESS_WIFI_STATEandroid.permission.CHANGE_NETWORK_STATE","存储的个人文件、读取手机状态和身份、网络信息","https://docs.getui.com/privacy/"],["6","APP","阿里weexSDK","com.taobao","uni-app基础模块默认集成，用于渲染uniapp的nvue页面引擎","android.permission.WRITE_EXTERNAL_STORAGEandroid.permission.READ_EXTERNAL_STORAG","存储的个人文件","https://weexapp.com/zh/"],["7","APP","Fresco图库","com.facebook.fresco","用于nvue页面加载图片使用","android.permission.WRITE_EXTERNAL_STORAGEandroid.permission.READ_EXTERNAL_STORAG","存储的个人文件","https://www.fresco-cn.org/"],["8","APP","glide图库","com.bumptech.glide","用于图片预览使用","android.permission.WRITE_EXTERNAL_STORAGEandroid.permission.READ_EXTERNAL_STORAG","存储的个人文件","http://bumptech.github.io/glide/"],["9","APP","gif-drawable","pl.droidsonroids.gif","加载gif图","android.permission.WRITE_EXTERNAL_STORAGEandroid.permission.READ_EXTERNAL_STORAG","存储文件","https://github.com/koral--/android-gif-drawable"],["10","APP","移动安全联盟 OAID","com.bun.miitmdid、com.zui.opendeviceidlibrary、com.netease.nis、com.samsung.android、com.huawei.hms","获取oaid","无","设备信息","http://www.msa-alliance.cn/col.jsp?id=122"],["11","APP","uni-app(5+、web2app)","io.dcloud","基础模块","android.permission.INTERNETandroid.permission.ACCESS_NETWORK_STATEandroid.permission.WRITE_EXTERNAL_STORAGEandroid.permission.READ_EXTERNAL_STORAGandroid.permission.READ_PHONE_STATE","存储的个人文件，设备信息（IMEI、ANDROID_ID、DEVICE_ID、IMSI），网络信息","https://ask.dcloud.net.cn/protocol.html"],["12","APP","Messaging","io.dcloud.feature.messagings","管理设备通讯功能，可用于短信、彩信、邮件发送等","android.permission.SEND_SMS","读写短信、彩信、邮件",""]]},{kind:"b",text:"附录3：委托处理清单"},{kind:"table",rows:[["序号","委托处理机构名称","委托处理目的","委托处理方式","涉及的个人信息","备注","第三方隐私政策或官网链接"],["1","上海数因网络科技有限公司","基于提升服务的目的，了解用户消费及银行卡使用偏好（不涉及任何具体消费校验明细或相关账户查询等敏感数据）","查询、核实、采集、整理、保存、加工","手机号码、身份证号码","处理中部分工作将由中国银联股份有限公司、银联智策顾问(上海)有限公司、银联商务支付股份有限公司完成",""],["","","基于提升服务目的，对用户身份进行有效性核验及信息便捷填写","采集、查询、核验、加工、保存","姓名、手机号码、身份证号码","处理中部分工作将由银联商务支付股份有限公司、中移互联网有限公司、中国移动通信集团有限公司完成",""],["2","中国银联股份有限公司、银联智策顾问（上海）有限公司、银联商务支付股份有限公司","基于提升服务的目的，了解用户消费及银行卡使用偏好（不涉及任何具体消费校验明细或相关账户查询等敏感数据）","查询、核实、采集、整理、保存、加工","手机号码、身份证号码","通过与上海数因网络科技有限公司合作产生间接委托处理关系",""],["3","银联商务支付股份有限公司、中移互联网有限公司、中国移动通信集团有限公司","基于提升服务目的，对用户身份进行有效性核验及信息便捷填写","采集、查询、核验、加工、保存","姓名、手机号码、身份证号码","通过与上海数因网络科技有限公司合作产生间接委托处理关系",""]]}]},or={title:"《中国移动认证梧桐数盾隐私政策》",blocks:[{kind:"h1",text:"中国移动认证梧桐数盾隐私政策"},{kind:"p",text:"更新时间：2026年6月3日"},{kind:"p",text:"生效时间：2026年6月3日"},{kind:"p",text:"中移互联网有限公司移动认证业务（以下称”我们”）非常重视用户的隐私和个人信息安全保护，我们将按照法律法规要求，采取相应安全保护措施，尽力保护您的个人信息安全可控。"},{kind:"p",text:"我们希望通过《隐私政策》（以下简称”本政策”）向您说明移动认证（以下简称”本服务”）如何收集、使用、存储和共享您的个人信息，以及您可以如何行使您的隐私权利。"},{kind:"p",text:"请您在使用本服务前，认真阅读并充分理解本《隐私政策》的全部内容，特别是以字体加粗方式标识的内容。在阅读过程中如您对本政策内容有任何疑问、意见或建议，请联系我们。您使用或在我们更新本政策后继续使用我们的产品或服务，即表示您同意本政策（含更新版本）内容，并且同意我们按照本政策收集、存储、使用和共享您的相关信息。您方表示同意的方式包括但不限于主动点击”同意”、”接受”、“授权”选项或签字等。"},{kind:"p",text:"本隐私政策将帮助您了解以下内容："},{kind:"h1",text:"一. 我们如何收集和使用您的个人信息。"},{kind:"h1",text:"二. 我们如何使用Cookie和同类技术。"},{kind:"h1",text:"三. 我们如何共享、转让、公开披露您的个人信息。"},{kind:"h1",text:"四. 我们如何保护和保存您的个人信息。"},{kind:"h1",text:"五. 您的权利。"},{kind:"h1",text:"六. 例外情况。"},{kind:"h1",text:"七. 我们如何处理未成年人的个人信息。"},{kind:"h1",text:"八. 您的个人信息如何在全球范围转移。"},{kind:"h1",text:"九. 本政策如何更新。"},{kind:"h1",text:"十. 如何联系我们。"},{kind:"h1",text:"一、我们如何收集和使用您的个人信息"},{kind:"p",text:"个人信息是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，不包括匿名化处理后的信息。我们会以“最小化”原则收集、使用、存储和传输用户个人信息，并通过用户协议和隐私政策告知您信息的使用目的和范围。"},{kind:"p",text:"我们会为您提供的各项具体功能场景包括："},{kind:"h2",text:"（一）为保证您正常使用本服务的内容，我们需要收集和使用下列与您有关的信息："},{kind:"h2",text:"1、移动认证安全基座SDK功能"},{kind:"p",text:"根据《T/TAF 188-2023 软件开发工具包（SDK）收集个人信息技术要求》，本 SDK 属于认证类。"},{kind:"p",text:"移动认证安全基座SDK包含本机号码校验功能。"},{kind:"p",text:"为实现本机号码校验功能，需要获取您的网络类型、网络地址（ip 地址）、运营商类型、本机号码信息、SIM 卡状态，用于一键获取您的手机号码；同时，使用手机设备类型、手机操作系统、硬件厂商，用于问题查询、分析、风险控制和追踪，如您拒绝提供，将不能使用本服务。"},{kind:"h2",text:"2、H5移动认证安全基座 功能"},{kind:"p",text:"H5移动认证安全基座包含本机号码校验、号码授权、信息助填和区块链存证功能。"},{kind:"p",text:"为实现H5场景本机号码校验和号码授权功能，需要收集您的本机号码、运营商类型、网络类型，用于获取您的手机号码进行本机号码校验和号码授权服务。同时使用您的浏览器指纹用于业务风控，浏览器指纹具体包括：操作系统、用户代理（浏览器类型）、浏览器版本号、浏览器是否启动cookie、cpu 等级、cpu 虚拟核心数、系统语言、浏览器插件、屏幕可用宽度、屏幕可用高度、颜⾊质量、时差区。如您拒绝提供，将不能使用服务。"},{kind:"p",text:"为实现H5场景信息展示的服务，您填写身份证号码后四位，并授权我们及中国移动通信集团有限公司获取您的手机号码。同时我们将使用您在我们及中国移动通信集团有限公司预留的身份证号码、手机号码进行身份证号码后四位校验，校验成功后，您的【姓名、手机号、身份证号码前十四位】将以密文形式存放到您的中移互联可信数据空间中，在获得您确认授权后，我们会从您的可信数据空间中获取您的【姓名、手机号、身份证号码前十四位】信息并提供给银联商务支付股份有限公司及相关使用方，并使用该信息为您完成H5场景下展示的服务。为保障您的数据安全，在向银联商务支付股份有限公司及相关使用方提供您的【姓名、身份证号码前十四位】信息后，我们将从中移互联可信数据空间删除您的【姓名、身份证号码前十四位】信息。如您拒绝提供，将不能使用H5场景信息助填服务，但不影响使用一键登录和本机号码校验功能。"},{kind:"p",text:"为实现H5场景区块链存证功能，需要获取您的手机号、IP地址、当前操作信息、使用时间、服务协议条款，用于将您的使用信息上传至区块链存证。如您拒绝提供，将不能使用区块链存证服务。"},{kind:"h2",text:"3、移动认证安全基座SDK移动设备系统权限申请声明"},{kind:"li",text:"（1）为满足基本业务要求，需要获取您的以下权限："},{kind:"table",rows:[["权限","操作系统","使用场景","使用目的"],["INTERNET（必选）","Android","网络通信","允许应用程序联网，用于访问网关和认证服务器"],[`ACCESS_NETWORK_STAT\nE（必选）`,"Android","查看网络状态","允许 SDK 访问网络状态，用于判断设备网络类型是蜂窝网络或 WIFI 网络"],[`CHANGE_NETWORK_STA\nTE（必选）`,"Android","进行网络切换通信",`允许程序改变网络连接状态 , 当\n用户未使用数据流量时，切换为数据流量，以获取用户手机号码`],["蜂窝网络权限（必选）","iOS","获取用户手机号","用于一键获取您的手机号码"]]},{kind:"p",text:"如您拒绝提供以上移动设备系统权限，将不能使用服务。"},{kind:"h2",text:"（二）从第三方获得您的个人信息："},{kind:"p",text:"为向您提供H5场景信息助填服务，经您授权同意，我们可能会接收中国移动通信集团有限公司提供的您的【加密身份证号码、加密姓名】。我们将在确认接收的个人信息来源的合法性后，依相关法律法规及第三方约定将您的前述信息用于H5场景信息助填服务。"},{kind:"h2",text:"（三）在以下情形中我们使用您的信息时无需征得您的授权同意："},{kind:"p",text:"1.关系国家安全、国防安全的情况时。"},{kind:"p",text:"2.关系公共安全、公共卫生、重大公共利益的情况时。"},{kind:"p",text:"3.关系犯罪侦查、起诉、审判和判决执行的情况时。"},{kind:"p",text:"4.出于维护个人信息主体或其他个人的生命、财产安全，但又很难得到本人同意的情况下。"},{kind:"p",text:"5.所收集的个人信息是个人信息主体自行向社会公众公开的信息。"},{kind:"p",text:"6.从合法公开披露的信息中收集的您的个人信息的，如合法的新闻报道、政府信息公开渠道。"},{kind:"p",text:"7.根据您的要求签订合同所必需的。"},{kind:"p",text:"8.用于维护所提供的产品与/或服务的安全稳定运行所必需的，例如发现、处置产品与/或服务的故障。"},{kind:"p",text:"9.为合法的新闻报道所必需的。"},{kind:"p",text:"10.学术研究机构基于公共利益开展统计或学术研究所必要，且对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的。"},{kind:"p",text:"11.法律法规规定的其他情形。"},{kind:"h2",text:"（四）基于合法获取的数据，我方将依法按照业内领先的去标识化、匿名化等数据安全技术对信息进行处理。对我方及合作方合法合规获取的数据进行汇聚融合、加工分析、开展隐私计算、联邦学习等处理，形成数据产品，为第三方客户提供用户增长、营销辅助、风险识别、广告反作弊等大数据解决方案，如您不希望我们进行前述处理，您可以通过本政策列明的联系方式与我们联系取消授权。"},{kind:"h2",text:"（五）请您注意，您同意我们使用以上信息及权限即代表您授权我们可以收集和使用这些个人信息，您关闭权限即代表您取消了这些授权，则我们将不再继续收集和使用您的个人信息，也无法为您提供与这些授权所对应的相关功能。您关闭授权的决定不会影响此前基于您的授权所进行的个人信息的处理。"},{kind:"h2",text:"（六）请您放心，我们收集和使用的个人信息均是在经过您的授权后通过合法渠道获得，不会从任何非法渠道间接获取您的个人信息。我们不会使用个人信息对您进行个性化推荐，当我们要将信息用于本政策未载明的其他用途时，会事先征求您的同意。"},{kind:"h1",text:"二、我们如何使用Cookie 和同类技术"},{kind:"p",text:"为确保本服务的正常运转，我们会在您的移动设备上存储名为Cookie 的小数据文件。Cookie通常包含标识符、站点名称以及一些号码和字符。通过Cookie，我们能够缓存您的数据以便下次快速获取您的手机号码。"},{kind:"p",text:"我们不会将Cookie 用于本政策所述目的之外的任何用途。您可根据自己的偏好清除手机缓存。"},{kind:"h1",text:"三、我们如何共享、转让、公开披露您的个人信息"},{kind:"h2",text:"（一）共享"},{kind:"p",text:"我们不会与中移互联网有限公司以外的任何公司、组织和个人分享您的个人信息，但以下情况除外："},{kind:"p",text:"1.我们可能会根据法律法规规定，或按政府主管部门的强制性要求，对外共享您的个人信息。"},{kind:"p",text:"2.如您同意本隐私政策，我们可能会将您的【手机号码、授权凭证】共享给中国移动通信集团有限公司，同时将您的【手机号码】共享给银联商务支付股份有限公司及相关使用方，以确保您在可信助填场景中的授权以及身份真实有效。我们只会共享必要的个人信息，且受隐私政策中所声明目的的约束。"},{kind:"h2",text:"（二）转让"},{kind:"p",text:"除以下情况外，我们不会将您的个人信息转让给任何公司、组织和个人。"},{kind:"p",text:"1.获得您的明确授权后，我们会向您授权的第三方转让您的个人信息。"},{kind:"p",text:"2.在本业务合并、收购或破产清算时，如涉及到个人信息转让时，我们会要求新的公司继续按本隐私政策接收、管理、使用和转让您的信息。若无法达成共识，我们会要求新的公司重新向您征求授权。"},{kind:"h2",text:"（三）公开披露"},{kind:"p",text:"除以下情况外，我们不会公开披露您的个人信息："},{kind:"p",text:"1.获得您明确同意后，按您授权情况披露您的个人信息。"},{kind:"p",text:"2.在法律、法律程序或政府主管部门强制性要求的情况下，我们可能会按要求披露您的个人信息。"},{kind:"h1",text:"四、我们如何保护和保存您的个人信息"},{kind:"h2",text:"（一）我们如何保存您的个人信息"},{kind:"h3",text:"1.信息存储的地点"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内，不存在境外收集用户信息情况。"},{kind:"h3",text:"2.信息存储的期限"},{kind:"p",text:"一般而言，移动认证将在您使用期间保存您的个人信息，并且您的个人信息将在法律规定范围内最短期限保留。在超出保留期限后，我们会根据适用法律的要求删除或匿名化处理您的个人信息。"},{kind:"p",text:"当您注销中国移动账户后，我们将删除相应的个人信息或进行匿名化处理。"},{kind:"p",text:"当我们的产品或服务发生停止运营的情形时，我们将以推送通知、公告的形式通知您，并在法律规定的期限内删除您的个人信息或进行匿名化处理。"},{kind:"p",text:"注：法律法规有规定不能删除时或不能匿名化处理的情况除外。"},{kind:"h2",text:"（二）我们如何保护您的个人信息"},{kind:"p",text:"我们会严格按照《中华人民共和国个人信息保护法》《中华人民共和国网络安全法》《全国人民代表大会常务委员会关于加强网络信息保护的决定》《电信和互联网用户个人信息保护规定》（工业和信息化部令第24 号）、《电话用户真实身份信息登记规定》（工业和信息化部令第25 号）等法律法规的要求，建立信息安全保障制度，采取技术措施和其他必要措施保护您的个人信息安全。"},{kind:"p",text:"1.我们保护您个人信息的技术与措施"},{kind:"p",text:"我们非常重视个人信息安全，并采取一切合理可行的措施保护您的个人信息："},{kind:"h3",text:"（1）数据安全技术措施"},{kind:"p",text:"我们会采用符合业界标准的安全保护措施，包括建立合理的制度规范、安全技术来防止您的个人信息遭到未经授权的访问使用、修改，避免数据的损坏或丢失。"},{kind:"p",text:"中移互联网的网络服务采取了传输层安全协议和其他加密技术，通过https 和其他方式提供浏览服务，确保用户数据在传输过程中的安全性。"},{kind:"p",text:"中移互联网采取加密技术对用户个人信息进行加密保存，并通过隔离技术进行隔离。"},{kind:"p",text:"在个人信息使用时，例如个人信息展示，我们会采取多种复杂的数据脱敏技术增强个人信息在使用中的安全性。"},{kind:"p",text:"中移互联网采用代码安全检查、数据方位日志分析技术进行个人信息安全审计。"},{kind:"h3",text:"（2）中移互联网为保护个人信息采取的其他安全措施"},{kind:"p",text:"中移互联网通过建立数据分类分级制度、数据安全管理规范、数据安全开发规范来管理规范个人信息的存储和使用。通过信息接触者保密协议、监控和审计制度来对数据进行全⾯安全控 制。同时建立安全管理中心并下设信息保护专职部门、数据安全应急响应组织来推进和保障个人信息安全，加强安全意识。我们还会定期举办安全和隐私保护培训课程来加强对个人信息保护重要性的认识，同时进行定期安全审计。"},{kind:"p",text:"2.安全事件处置"},{kind:"p",text:"为应对个人信息泄露、损毁和丢失等可能出现的风险，中移互联网制定了多项制度，明确安全事件、安全漏洞的分类分级标准及相应的处理流程。中移互联网也为本服务系统安全事件建立了专门的应急响应团队，按照安全事件处置规范要求，针对不同安全事件启动安全预案，进行止损、分析、定位、制定补救措施并联合相关部门进行溯源和打击。"},{kind:"p",text:"若不幸发生个人信息安全事件，我们将按照法律法规的要求，及时告知您安全事件的基本情况和可能的影响、我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议、对您的补救措施等信息。我们将及时将事件相关情况以邮件、信函、电话、推送通知的方式告知您。在难以逐一告知个人信息主体时，我们会采取合理、有效的方式发布公告。同时，我们还将按照监管部门要求，主动上报个人信息安全事件的处置情况。"},{kind:"p",text:"3.请您理解：互联网环境并非百分之百安全，我们将尽力确保或担保您发送给我们的任何信息的安全性。如果我们的物理、技术或管理防护设施遭到破坏，导致信息被非授权访问、公开披露、篡改或毁坏，导致您的合法权益受损，我们将依照法律法规承担相应责任。如果您对我们的个人信息保护有任何疑问，可通过本隐私政策中约定的联系方式联系我们。如果您发现自己的个人信息泄露，尤其是您的账户及密码发生泄露，请您立即通过本隐私政策【十、如何联系我们】中约定的联系方式联络我们，以便我们采取相应措施。"},{kind:"h1",text:"五、您的权利"},{kind:"h2",text:"（一）查询、更正、补充和限制您的个人信息"},{kind:"h2",text:"若您希望查询、更正、补充和限制您的个人信息，您可以联系我们的客服电话10086联系我们，我们会有专门的客服人员帮助您。"},{kind:"h2",text:"删除您的个人信息"},{kind:"p",text:"您可以通过联系10086客服电话的方式删除您的部分信息，或申请注销手机号码删除您的全部信息，我们将在验证通过后的十五天内处理您的删除申请。在以下情形中，您可以向客服申请，提出删除个人信息的请求："},{kind:"p",text:"1.如果我们处理个人信息的行为违反了相关法律法规。"},{kind:"p",text:"2.如果我们收集、使用您的个人信息，却未征得您的同意。"},{kind:"p",text:"3.如果我们处理个人信息的行为违反了与您的约定。"},{kind:"p",text:"4.如果您不再使用我们的产品或服务，或您注销了中国移动手机号。"},{kind:"p",text:"5.如果我们不再为您提供产品或服务。"},{kind:"p",text:"当您从我们的服务中删除信息后，我们可能不会立即从备份系统中删除相应的信息，但会在备份更新时及时删除这些信息。"},{kind:"h2",text:"（三）注销账户"},{kind:"p",text:"您可以通过联系10086客服电话的方式申请注销，我们将在十五天内处理您的注销申请，您主动注销您的账户之后，我们将停止为您提供产品或服务，并依据您的要求，删除或匿名化您的个人信息，法律法规另有规定的除外。"},{kind:"h2",text:"（四）复制个人信息副本"},{kind:"p",text:"如果你需要复制我们收集存储的个人信息，您可以联系10086，联系客服协助您复制、转移你的个人信息。"},{kind:"h2",text:"（五）个人信息可携权"},{kind:"h2",text:"在符合国家相关法律法规及网信部门规定的条件下，如您请求将个人信息转移至指定的个人信息处理者，我们将按照相关规定的要求提供转移的途径。"},{kind:"h2",text:"（六）撤销已同意授权功能"},{kind:"p",text:"如您已授权我们获得某些移动设备系统权限同意我们处理您的个人信息，您可以通过APP 系统权限设置撤回您的授权。您可登录梧桐数盾页面（https://slw.h5cmpassport.com:9091/h5/login），点击底部栏【授权】--【授权凭证】--【可信助填授权凭证】--【撤销授权】路径撤回您的对本产品隐私政策的授权同意，当您收回同意的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"p",text:"当您撤回同意或授权后，我们无法继续为您提供撤回同意或授权所对应的服务，也将不再处理您相应的个人信息。但您撤回同意或授权的决定，不会影响此前基于您的同意或授权而开展的个人信息处理。"},{kind:"h2",text:"（七）响应时限"},{kind:"p",text:"对于您行使上述（一）至（六）项权利所提出的相关请求，我们将在收到您的申请之日起十五天内作出答复。"},{kind:"h1",text:"六、例外情况"},{kind:"p",text:"请您充分理解并同意，我们在以下情况下收集、使用您的个人信息无需您的授权，且我们可能不会响应您提出的删除、注销的请求："},{kind:"p",text:"1.与国家安全、国防安全有关的情况。"},{kind:"p",text:"2.与公共安全、公共卫生、重大公共利益有关的情况。"},{kind:"p",text:"3.与犯罪侦查、起诉、审判和执行判决等有关的情况。"},{kind:"p",text:"4.有充分证据表明个人信息主体存在主观恶意或滥用权利的情况。"},{kind:"p",text:"5.响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的情况。"},{kind:"p",text:"6.涉及商业秘密的情况。"},{kind:"p",text:"7.法律法规规定的其他情形。"},{kind:"h1",text:"七、我们如何处理未成年人的个人信息"},{kind:"h2",text:"（一）我们非常重视保护未成年人个人信息，特别是14周岁以下的儿童。若您是未成年人，在使用我们的服务前，应提前取得您的父母或法定监护人的书面同意。我们将根据国家相关法律法规保护未成年人的个人信息。"},{kind:"h2",text:"（二）对于已经过未成年人的父母或法定监护人同意而收集的未成年人个人信息，我们只会在法律允许、父母或法定监护人明确同意、保护未成年人所必要的情况下使用或公开披露相关信息。"},{kind:"h2",text:"（三）如果我们发现在未事先获得未成年人的父母或法定监护人同意的情况下收集了未成年人的个人信息，会立即删除相关数据。"},{kind:"h1",text:"八、您的个人信息如何在全球范围转移"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内,我们不会将您的个人信息传输至中华人民共和国境外。"},{kind:"h1",text:"九、本政策如何更新"},{kind:"p",text:"我们的隐私政策可能变更。"},{kind:"p",text:"未经您的同意，我们不会削减您应享有的个人隐私权利。我们会以弹窗形式发布对本政策所做的任何变更。对于变更后的隐私政策，我们会再次征求您的同意。"},{kind:"h1",text:"十、如何联系我们"},{kind:"p",text:"如您对本政策存在任何疑问，或对于您的个人信息处理存在任何投诉、意见，请通过以下渠道联系我们："},{kind:"p",text:"公司名称：中移互联网有限公司"},{kind:"p",text:"公司地址：中国广东省广州市天河区高唐路323号中国移动南方基地智汇中心"},{kind:"p",text:"联系方式：10086"},{kind:"p",text:"我们已经建立客户投诉管理机制，包括跟踪流程。一般来说，我们将在验证通过后的五个工作日内处理完成，特殊情形下最长将在不超过十五天内作出答复。"},{kind:"p",text:"中国移动版权所有"}]},ar={title:"《第三方共享个人信息清单》",blocks:[{kind:"h1",text:"第三方对外提供个人信息清单"},{kind:"table",rows:[[{kind:"text",text:"合作方",colSpan:7}],["合作方名称","共享目的","共享场景","个人信息","提供方式","隐私政策或官网","联系方式"],["东方大地（武汉）保险经纪有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token、姓名、身份证号前十四位、手机号","API接口",{kind:"doc-link",text:"《隐私政策》",docKey:"dongfangdadi-v2-privacy-policy"},"doc@dfdadi.com"],["中移互联网有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token","API接口",{kind:"doc-link",text:"《中国移动认证梧桐数盾隐私政策》",docKey:"dongfangdadi-v2-cmcc-privacy-policy"},"10086"]]}]},sr={title:"《隐私政策》",blocks:[{kind:"h1",text:"隐私政策"},{kind:"p",text:"【更新日期】2026年8月12日"},{kind:"p",text:"【生效日期】2026年8月12日"},{kind:"p",text:"【特别提示】尊敬的用户：感谢您的信任，为了帮助您了解我们对个人信息的处理和保护规则，我们特制定“隐私政策”。请您仔细阅读本隐私政策尤其是粗体显示的内容。如您有任何疑问、意见或建议，您可通过本隐私政策第十节的联系方式与我们联系。"},{kind:"p",text:"本隐私政策适用于东方大地（武汉）保险经纪有限公司及其关联公司（统称“我们”）通过官方网站、基于Android（安卓）系统和iOS系统开发的应用程序（APP）、及相关小程序、公众号、H5页面、网页以及随技术发展出现的新形态向您提供的产品和服务。为了更好地为您提供贴心的服务，您在使用我们的产品或服务时，我们可能会收集和使用您的相关信息。我们非常重视用户的隐私和个人信息保护，我们希望通过本隐私政策向您说明我们在您使用我们的产品或服务时如何收集、使用、保存、共享、转让和保护这些信息，以及我们为您提供的管理这些信息的方式。"},{kind:"p",text:"在本隐私政策中，个人信息，是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，不包括匿名化处理后的信息。敏感个人信息，是指一旦泄露或者非法使用，容易导致自然人的人格尊严受到侵害或者人身、财产安全受到危害的个人信息，包括生物识别、宗教信仰、特定身份、医疗健康、金融账户、行踪轨迹等信息，以及不满十四周岁未成年人的个人信息。我们将在本隐私政策中对个人信息以粗体进行显著标识。"},{kind:"p",text:"我们在此特别提醒您：我们致力于打造多样的产品和服务以满足您的需求。因我们向您提供的产品和服务种类众多，且不同用户选择使用的具体产品/服务范围存在差异，故收集使用的个人信息类型、范围会有所区别，请以具体的产品/服务功能为准。"},{kind:"p",text:"本隐私政策将帮助您了解以下内容："},{kind:"h1",text:"一、 我们收集了哪些个人信息"},{kind:"h1",text:"二、 我们如何使用您的个人信息"},{kind:"h1",text:"三、 征得授权同意的例外"},{kind:"h1",text:"四、 我们如何存储您的个人信息"},{kind:"h1",text:"五、 我们如何共享、委托、转让、公开披露您的个人信息"},{kind:"h1",text:"六、 我们如何保护您的个人信息"},{kind:"h1",text:"七、 您管理个人信息的权利"},{kind:"h1",text:"八、 未成年人个人信息保护"},{kind:"h1",text:"九、 隐私政策的适用范围、变更和修订"},{kind:"h1",text:"十、 如何联系我们"},{kind:"h1",text:"一、我们收集了哪些个人信息"},{kind:"p",text:"在您使用我们服务过程中，我们将按照如下方式收集您在使用服务时主动提供或因您使用服务而产生的信息，用以向您提供下述服务、优化我们的服务并保障您的账号安全。由于我们产品和服务的形态较多，具体的服务类型和可能处理的个人信息以您使用的产品界面展示为准。"},{kind:"h2",text:"（一）为您提供保险服务基本功能相关的个人信息"},{kind:"p",text:"1. 投保"},{kind:"p",text:"当您购买保险产品投保时，我们将收集您的投保信息，以便帮助您与保险公司签订保险单，完成投保，这些信息包括投保人的姓名、身份证件信息、手机号码、社保状态（有无）、住址、邮箱，被保险人的姓名、性别、与投保人关系、身份证件号码、联系方式、健康状况、职业，受益人的姓名、受益比例，保险订单信息及其他投保所需的必要信息（以您在投保时相关产品界面所要求提供的信息字段为准）。除上述基本信息，我们还可能获取您的保险标的相关信息，例如您通过我们购买机动车保险时，我们需要您提供车辆行驶证信息、车牌号、车架号、投保地区及其它必要信息。根据法律法规及监管规定，我们将完整记录和保存投保的主要业务过程，包括在您拨打或接听保险客服顾问电话时，我们将会对电话通话过程全程录音，或者按照监管要求对投保过程进行同步录音录像或投保轨迹记录和保存。"},{kind:"p",text:"您可以通过我们为其他人投保保险产品，您向我们提供该实际被保险人的前述个人信息之前，您需确保您已经取得其授权同意。如果您拒绝提供这些信息，我们无法为您订购保险产品并办理投保手续，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"2. 保险理赔"},{kind:"p",text:"当您通过我们申请理赔时，基于法律法规等要求，我们可能收集您申请理赔时所需的相关信息，包括被保险人或者受益人的姓名或者名称、联系方式、有效身份证件信息、出险描述、所在医院、职业、银行卡信息、诊断证明、病历信息、就诊费用信息、保险标的信息、在线沟通记录和电话记录及必要的风险信息。在报案人并非被保险人的情况下，我们还将收集报案人姓名、电话、投保信息、与被保险人的关系、在线沟通记录和电话记录，您向我们提供该实际被保险人的前述个人信息之前，您需确保您已经取得其授权同意。如果您拒绝提供这些信息，我们无法协助您向保险公司申请保险理赔，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"3. 保险合同变更、退保"},{kind:"p",text:"当您通过我们进行保险合同变更、退保时，我们还将收集您主动提供或上传的信息，包括保单号、投保人电话、被保人的姓名、身份证号码、身份证照片、保全申请事由信息、退保申请事由信息、银行账户信息。在涉及您的父母、配偶或子女的情况下，我们会向您收集您的父母、配偶、或子女的相应上述个人信息。您向我们提供前述个人信息之前，您需确保您已经取得其授权同意。如果您拒绝提供这些信息，我们无法向您提供合同变更、退保等服务，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"根据法律法规及监管规定，当您通过我们投保成功，或使用我们提供的协助理赔、协助保全、协助退保、保单查询功能时，由于保险单实际是由为您承保的保险公司提供，因此我们需要从为您承保的保险公司获取您的保险单信息，以便为您提供上述服务。"},{kind:"p",text:"4. 资格核验、风险控制及适当性管理"},{kind:"p",text:"在向您提供各项保险服务过程中，我们可能会向第三方核验调查您是否具备相应的资格或符合法定的条件。在这种情况下，我们可能会收集您留存在我们关联公司、与我们合作的保险公司处的个人信息，我们还可能向行政机关、司法机关、征信机构、医疗机构、保险公估公司、健康服务机构、背景调查公司、信息技术服务机构、电信运营商（或其授权的服务商）以及其他合法了解掌握相关信息的自然人和法人收集或查询相关信息。您同意我们向上述机构收集、查询、使用您的身份、医疗、财产、信用、风险水平、健康状况相关信息以核验您的身份信息的真实性以及是否具有相应的资格或符合法定的条件，防范欺诈等违法活动和减少信用风险。"},{kind:"p",text:"基于账户安全管理、风险控制、防范保险欺诈、消费者适当性管理等原因，我们可能从行政机关、司法机关及我们的合作机构、关联公司等第三方获取去标识化处理后的风险水平类、账户安全类、风控类信息，用于提供风险控制、保险反欺诈、反黑灰产、产品推荐、投保交易风控、智能协助理赔等服务，保障您的账户安全、信息安全及满足法律法规要求。"},{kind:"p",text:"5. 依据法律法规及监管规定履行法定义务"},{kind:"p",text:"根据互联网及金融监管等要求，我们需履行法定义务，如：保险交易可回溯管理义务、实名制管理义务、反洗钱反恐怖融资义务（客户身份识别、客户身份资料和交易记录保存、尽职调查、严格保密等）等。这些法定义务要求我们向您收集您的个人身份信息、电话录音、录音录像、投保轨迹等，其中“身份信息”包括您的姓名、性别、国籍、职业、住所地（或经常居住地）或者工作单位地址、联系方式、身份证件或者身份证明文件的种类、号码和有效期限。“投保轨迹”包括相关交易信息、保单信息、账户信息。如您拒绝提供上述信息，则可能无法使用与监管要求相关的部分服务，但不影响您使用我们提供的其他服务。您知晓并同意，根据您所需的保险产品和服务的不同以及监管机构的要求，我们所收集的信息类型以具体产品或服务申请页面为准。"},{kind:"h2",text:"（二）与改善和优化服务及保障账号安全相关的个人信息"},{kind:"p",text:"为了保障用户的账号安全、交易安全、系统运行安全，满足法律法规和我们协议规则的相关要求，以及不断地改进我们的产品，在您使用我们的产品和服务时，我们需要收集相关的设备信息与日志信息。设备信息包括与您使用设备的软硬件特征和设备环境信息相关的信息，例如IMEI、Android ID、OAID、IDFA、IMSI、网络设备地址（MAC）、BSSID、iccid、设备型号、设备名称、系统版本号、任务列表、设备应用安装列表、手机制造商、运营商名称；日志信息包括IP地址、访问的浏览器信息、点击和浏览我们产品和服务功能或页面的URL地址及其使用情况与频率、应用崩溃情况、总体安装使用情况、性能数据、应用来源。如果您需要使用微信分享功能，我们将使用您的剪切板信息，以确保功能正常使用。"},{kind:"h2",text:"（三）与信息推送、搜索和展示有关的个人信息"},{kind:"p",text:"我们可能收集和使用包括IMEI、Android ID、OAID、IDFA、网络设备地址（MAC）、IMSI、BSSID、MEID、设备型号、设备名称、系统版本号、设备应用安装列表、手机制造商在内的与您使用设备的软硬件特征和设备环境信息相关的信息，用于向您推送信息和内容，该等信息展示与推送可能使用第三方服务。您有权按照本隐私政策第七节“您管理个人信息的权利”指引的撤回同意的方式关闭该等信息推送，在您关闭后，您的设备将不再收到我们的推送信息，关闭信息推送不会影响您使用其他服务。"},{kind:"p",text:"当您使用搜索功能时，我们会自动收集您输入的关键字信息和搜索记录。如果您拒绝提供上述信息，您无法享受搜索服务，但不影响您使用我们提供的其他功能。"},{kind:"h2",text:"（四）为您提供客服和售后服务有关的个人信息"},{kind:"p",text:"在您使用我们产品或服务的过程中，如果您有任何疑问、意见或建议，您可以通过在线客服、发送邮件或拨打电话与我们取得联系，我们将可能收集您的账号信息、电话录音、在线沟通记录、您与客服人员的对话信息（其中可能包括您主动提供的个人信息）。如果您参与问卷调查，我们还将收集您在问卷中向我们提供的信息。为了保证服务体验、改善服务品质，您与客服的通话信息可能会被录音。当您在保险服务过程中出现服务投诉或纠纷时，我们可依法调取并使用录音信息作为解决纠纷的参考依据。"},{kind:"p",text:"当您需要我们提供与保单相关的客户服务时，我们可能会查询您的相关交易信息以便向您提供适当的服务。当您需要客服协助您修改有关信息（如地址、联系方式等）时，您可能还需要提供相应的信息以完成修改。您知悉并同意，如果我们的客服人员无法立刻解决您的问题，我们可能在核实情况后，通过您主动提供的联系方式与您取得联系、解答您的问题、回应您的诉求。"},{kind:"h2",text:"（五）支付订单的个人信息"},{kind:"p",text:"您通过我们支付订单时，可以选择我们合作的银行和第三方支付机构（如支付宝、微信支付等合作方）所提供的服务进行支付。我们需要收集您的订单信息、对账信息及其他法律要求的必要信息并与这些合作机构共享，以确认您的支付指令并帮助您完成支付。同时，为了帮助您实现基于银行卡支付的功能，您授权并同意，我们收集您的姓名、身份证号、银行卡号、银行卡预留手机号、发卡行、卡类型等银行卡信息，以便于将您的银行卡与您的账户进行绑定。我们会将该等信息通过我们的第三方合作支付机构向发卡银行进行验证。在您使用支付服务时，我们还需要记录、收集您的交易信息。您授权我们在向您提供支付服务时可以向必要的第三方合作支付机构提供前述支付必要信息，以确认您的支付指令并帮助您完成支付。"},{kind:"h2",text:"（六）扩展业务、增值服务相关的个人信息"},{kind:"p",text:"我们可能会提供保险产品或服务相关扩展业务、增值服务，具体包括以下内容："},{kind:"p",text:"1. 选择保险方案"},{kind:"p",text:"为向您提供“免费领取保险方案”功能，您需要向我们提供您的年龄、投保金额、您的姓名、您的电话，以根据您提供的信息测算适合您的保险方案，并向您发送测算结果。如果您拒绝提供这些信息，我们无法为您提供“免费领取保险方案”功能，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"为向您提供“保险定制”功能，您需要向我们提供您的手机号、年龄、个人月收入区间、家庭成员、家庭年收入。如果您拒绝提供这些信息，我们无法为您提供“保险定制”功能，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"2. 保费计算"},{kind:"p",text:"在您投保过程中，为方便您计算保费，您需要向我们提供您的生日、投保份数、保障期限、交费方式、性别。如果您拒绝提供这些信息，我们无法为您提供保费计算功能，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"3. 邮寄纸质保单或发送电子保单"},{kind:"p",text:"如果您选择由我们为您提供邮寄纸质保单服务，您需要提供收件人的姓名、手机号码、收货地址及您需要备注的其他信息，以便于您的保单能够安全准确送达并完成。如收件人不是您本人，请您知悉收件人可能接收到包括保单在内的上述信息，并确认收件人已经获得了接收这些信息的授权同意。同时，您已就向我们提供收件人的相关信息取得收件人的授权同意。如果您选择由我们向您发送电子保单，需要您提供接受电子保单的邮箱地址。如果您拒绝提供收件人信息或邮箱地址，我们无法向您发送保单，但不影响您使用我们提供的其他功能。"},{kind:"h2",text:"（七）使用 Cookie 和同类技术收集的信息"},{kind:"p",text:"为确保我们网站正常运转、为您获得更轻松的访问体验，我们会在您的计算机或移动设备上放置安全的Cookie及相关技术（统称“Cookie”）收集信息。Cookie是您浏览网页时，网站服务器放在客户端（您的计算机、移动电话或其他智能终端）里面的一个小小的文本文件，存储了一些与用户访问网站有关的信息。Cookie可帮助我们："},{kind:"p",text:"1. 按照您所希望的服务样式、外观设置为您提供服务；"},{kind:"p",text:"2. 保障数据和服务的安全性，排查针对我们的产品和服务的作弊、黑客、欺诈行为；"},{kind:"p",text:"3. 避免不必要的服务器负载，提高服务效率，节省资源、能源；"},{kind:"p",text:"4. 了解您使用我们服务的方式，以求改善我们的产品和服务的用户体验，为新产品或功能的研发提供参考数据。"},{kind:"p",text:"如果您的浏览器或浏览器附加服务允许，您可修改对Cookie的接受程度或拒绝我们的Cookie。但如果您这么做，在某些情况下可能会影响您安全访问我们的网站，且可能需要在每一次访问我们的网站时更改用户设置。"},{kind:"h2",text:"（八）通过获取权限收集的信息"},{kind:"p",text:"为实现相关业务功能，我们需要调用以下权限并收集您的信息："},{kind:"p",text:"1. 为了保障您的账号及交易安全、统计我们产品的用户数量、分析产品的使用状况以不断改进我们的产品以及向您推荐您可能感兴趣的产品和服务，当您首次使用我们的产品和服务时，我们会在获得您的自主选择同意后，获取您的读取电话状态权限，收集您使用设备的设备唯一标识信息。拒绝提供该权限会使您无法使用上述功能，但不影响您正常使用我们其他功能。"},{kind:"p",text:"2. 为向您发送消息和通知，帮助您更及时地了解我们的服务动态，当您首次使用我们的产品和服务时，我们会在获得您的自主选择同意后，获取您的推送信息权限（通知权限），向您推送保单状态信息等服务消息。拒绝提供该权限会使您无法收到我们的信息推送，但不影响您正常使用我们其他功能。"},{kind:"p",text:"请您注意，尽管我们会通过合同和技术手段要求该等第三方严格保护您的个人信息，但该等第三方将依据其个人信息保护政策对您的个人信息独立承担保护责任。"},{kind:"h1",text:"二、我们如何使用您的个人信息"},{kind:"h2",text:"（一）使用您的相关个人信息，用以实现本隐私政策第一部分所列产品和服务的功能。"},{kind:"h2",text:"（二）为提供投保服务、理赔、合同变更、退保服务之目的，将会有调查公司、公估公司等提供调查服务。此等服务提供商可能会利用您提供的或根据本隐私政策所合法收集的信息，核验并确定您是否具有相应资格及是否符合法定的条件，防止欺诈等违法活动和减少信用风险。"},{kind:"h2",text:"（三）为防止欺诈等违法活动和减少信用风险的目的,您授权我司使用您去标识化后的信息(包括手机号码、身份证件号码等去标识化的信息)向第三方机构(包括中国银联股份有限公司、银联智策顾问(上海)有限公司、银联商务支付股份有限公司等)查询、核实、采集、整理、保存、加工您的消费信息、银行卡交易信息等,并且将查询处理所得信息反馈给我司。前述第三方机构将仅在本项目的提升服务目的范围内使用您的信息,在取得您的授权同意前,第三方机构不会擅自将此信息提供给其他第三方或用于其他目的。"},{kind:"h2",text:"（四）为保险实名制、银行卡支付绑卡等身份有效性核验、便利信息填写的目的,您授权我司向第三方机构(包括银联商务支付股份有限公司、中移互联网有限公司及中国移动通信集团有限公司等)采集、查询、核验、加工、保存您的个人身份信息(包含姓名、身份证号、手机号),并将查询、核验结果提供给我司。"},{kind:"h2",text:"（五）我们可能采取去标识化等方式将在业务中收集的您的个人信息以及我们关联公司、合作伙伴取得您授权或依据法律共享的信息进行综合研究、统计分析和预测，以统计产品的用户数量、分析产品的使用状况、排查产品崩溃原因、减少崩溃的情况，改善我们的产品和服务的设计和功能，优化用户体验或进行学术研究、科学研究。"},{kind:"h2",text:"（六）为保证服务得以完成或向您提供您可能需要的服务，我们还可能根据您提供的联系方式对您进行必要的电话回访或短信通知，包括但不限于验证码、保单生效通知等。如因您的联系方式（如手机号码）发生改变或无法触达，导致我们无法继续为您提供服务时，您授权我们可以通过合法的失联修复服务提供商（例如电信业务运营商）对您进行失联修复，以便及时与您取得联系，履行法律法规规定的我们的义务，避免您或其它用户的合法利益受到损害。"},{kind:"h2",text:"（七）为提高您使用我们及我们关联公司、合作伙伴提供服务的安全性，保护您或其他用户或公众的人身财产安全免遭侵害，更好地预防钓鱼网站、欺诈、网络漏洞、计算机病毒、网络攻击、网络侵入等安全风险，更准确地识别违反法律法规或我们相关协议规则的情况，我们可能会使用或整合您的个人信息，如账号信息、设备信息、服务日志信息、应用程序使用信息等以及我们关联公司、合作伙伴取得您授权或依据法律共享的信息。为了依法维护您或我们的合法权益，我们可能使用上述信息解决您与我们、保险机构或者其他服务机构之间产生的违约纠纷或投诉。"},{kind:"h2",text:"（八）为了解您的保险需求及风险水平是否与保险产品相匹配，满足消费者适当性管理的要求、向您推荐保险产品、健康产品及其他您可能感兴趣的产品或服务，我们可能会根据您使用我们的产品和服务，包括通过我们选购保险产品、投保及理赔的情况，结合您使用我们的关联公司服务的情况，以及行政机关、司法机关及我们的合作机构等第三方合法收集的去标识化处理后的风险水平类、风险控制类信息，提取您的兴趣偏好、消费及服务需求等特征，进行数据抽象分析，以向您展示和推送我们、我们关联公司及合作伙伴提供产品或服务的信息。在向您展示个性化内容时，我们会标注“为您推荐”或提供类似标识。"},{kind:"p",text:"我们还可能会根据您提供的联系方式，通过短信或电话或您同意的其他方式联系您，向您推荐我们、我们关联公司及合作伙伴提供的您可能感兴趣的产品或服务，以及向您发送营销活动通知、商业性电子信息、提供与您相关的广告。如您拒绝接受短信或电话联系，您可以根据短信或电话中的指引，退订我们的短信或要求拒绝通过电话联系。"},{kind:"h2",text:"（九）为及时向您推荐符合您需求的保险或健康产品服务，提升您的保险服务体验，与我们有合作关系的保险中介机构可能会通过我们平台联系您，向您提供回访咨询、产品咨询或推荐符合您需求的保险或健康产品或服务。该等第三方合作伙伴仅可以通过我们提供的虚拟号码与您进行联系，非必要情形下，我们不会向这些合作伙伴提供您的身份信息或其它可识别到您的个人身份的信息，确保您的个人信息安全。同时，我们将努力通过采取“号码保护”、“保单信息去标识化”等合理的举措尽全力保护您的个人信息安全。如您拒绝接受此等服务，您有权根据电话中的指引，要求拒绝通过电话联系提供服务。"},{kind:"h2",text:"（十）您知悉并理解，我们的业务是由我们的合作伙伴提供的，如果您最终选择通过我们使用该等合作伙伴以其独立名义提供的相关服务，则我们将根据您的授权同意向其提供您的必要个人信息以缔结和履行相关产品或服务合同（详见本隐私政策第五节关于您个人信息的共享）。"},{kind:"h2",text:"（十一）根据适用的法律法规，我们可能会对您与我们的沟通记录及相关内容（包括语音通话信息、您在使用客服服务时输入的文字对话信息）进行去标识化处理，在无法识别您身份的情况下，将其用于算法模型训练，为您提供智能问答对话客服服务或智能语音服务，但我们不会根据您的对话内容对您个人进行特定身份的识别。"},{kind:"h2",text:"（十二）如果您购买的保险产品中附赠或您单独通过我们的产品购买或获得电话医生服务、健康体检服务、图文问诊服务或其他健康产品或服务，则我们需要向该等服务提供商提供上述服务所必要的个人信息，包括您的姓名、身份证件号码、手机号码、保单号及其它必要的保单信息（如保单状态、保单起始日期等）。我们收集该信息是为了帮助您完成实名认证，确保您可享受电话医生、健康体检等服务，防止欺诈或滥用他人身份享受服务。"},{kind:"h2",text:"（十三）如果我们将信息用于本隐私政策未载明的其他用途，或者将基于特定目的收集而来的信息用于其他目的，我们会事先征求您的同意。我们可能在某些具体服务或功能项下，通过交互文案、产品界面或弹窗等方式向您单独告知处理个人信息的目的、方式或范围，若单独告知的内容与本隐私政策不一致的，以单独告知的内容为准。"},{kind:"h1",text:"三、征得授权同意的例外"},{kind:"p",text:"根据相关法律法规规定，以下情形中收集和使用您的个人信息无需征得您的授权同意："},{kind:"p",text:"1. 与我们履行法律法规规定的义务相关的；"},{kind:"p",text:"2. 与国家安全、国防安全直接有关的；"},{kind:"p",text:"3. 与公共安全、公共卫生、重大公共利益直接相关的。例如：为应对突发公共卫生事件，或者紧急情况下为保护自然人的生命健康和财产安全所必需；"},{kind:"p",text:"4. 与刑事侦查、起诉、审判和判决执行等直接有关的；"},{kind:"p",text:"5. 出于维护个人信息主体或其他个人的生命、财产等重大合法权益但又很难得到您本人同意的；"},{kind:"p",text:"6. 为公共利益实施新闻报道、舆论监督等行为，在合理的范围内处理您的个人信息；"},{kind:"p",text:"7. 所涉及的个人信息是您自行向社会公众公开的；"},{kind:"p",text:"8. 根据您要求签订和履行合同所必需的；"},{kind:"p",text:"9. 从合法公开披露的信息中收集个人信息的，如合法的新闻报道、政府信息公开等渠道；"},{kind:"p",text:"10. 维护所提供的产品或服务的安全稳定运行所必需的，例如发现、处置产品或服务的故障；"},{kind:"p",text:"11. 学术研究机构出于公共利益开展统计或学术研究所必要，且对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的；"},{kind:"p",text:"12. 法律、法规或国家标准规定的其他情形。"},{kind:"p",text:"请注意，经匿名化处理的、单独或与其它信息相结合无法识别您的身份或者与您直接建立联系的信息，不属于个人信息，我们对此类数据的处理将无需另行向您通知并征得您的同意。如果我们将单独无法与任何特定个人建立联系的信息与其它信息结合用于识别自然人个人身份，或者将其与个人信息结合使用，则在结合使用期间，此类信息将被视为个人信息，按照本隐私政策进行处理与保护。"},{kind:"h1",text:"四、我们如何存储您的个人信息"},{kind:"p",text:"我们在中华人民共和国境内收集和产生的个人信息将存储在中华人民共和国境内。如涉及到跨境传输，我们会按照国家相关法律法规及相关标准的规定执行。"},{kind:"p",text:"我们只会在达成本隐私政策所述目的所需的期限内保留您的个人信息，除非法律有强制的留存要求。我们判断个人信息的存储期限主要参考以下标准并以其中较长者为准："},{kind:"p",text:"1. 完成您同意使用的业务功能；"},{kind:"p",text:"2. 保证我们为您提供服务的安全和质量；"},{kind:"p",text:"3. 您同意的更长的留存期间；"},{kind:"p",text:"4. 是否存在有关保留期限的其他特别约定。"},{kind:"p",text:"在超出保留期间后，我们会根据适用法律的要求删除您的个人信息，或使其匿名化处理。"},{kind:"p",text:"如我们停止运营我们的产品或服务，我们将及时停止继续收集您个人信息的活动，并将以公告的形式进行停止运营通知。同时，对我们存储的个人信息进行删除或匿名化处理。"},{kind:"h1",text:"五、我们如何共享、委托、转让、公开披露您的个人信息"},{kind:"h2",text:"（一） 共享"},{kind:"p",text:"我们不会与任何公司、组织或个人共享您的个人信息，但以下情况除外："},{kind:"p",text:"1. 取得您同意的情况下共享：在获取您明示同意的情况下，我们会与其他方共享您的个人信息。"},{kind:"p",text:"2. 履行法定义务所必需的共享：我们可能会根据法律法规规定、诉讼、争议解决需要，或按行政、司法机关依法提出的要求，以及其它法定义务履行的需要，共享必要的您的个人信息。"},{kind:"p",text:"3. 为订立、履行您作为一方当事人的合同所必需的情况下的共享："},{kind:"p",text:"如您通过我们订购或获得保险或健康产品或服务，为缔结和履行保险或健康产品或服务合同，提供相关产品或服务，我们需要向健康服务公司、医疗机构、物流服务供应商、保险公司、保险中介机构，披露提供上述服务所必需的个人信息，例如您的身份信息、财产信息、健康信息、保单信息、投保过程（如录音录像、通话录音、投保轨迹等）、申请理赔、保全、退保及其它保单服务的信息。我们还可能与这些机构联合研发或优化保险或健康服务产品。您理解，在这种情况下这些产品或服务提供者构成独立的个人信息控制者，他们对您个人信息的收集、使用、存储及采取安全保护措施将受他们的隐私协议或服务条款约束，他们可能自行将您的个人信息用于提供产品或服务之外的其他目的。这些产品或服务提供者将对他们处理您个人信息的活动独立承担责任。"},{kind:"p",text:"4. 在法律法规允许的范围内，为维护我们、我们的关联公司或合作伙伴、您或其他我们用户或社会公众的合法利益，或者为了解决您与我们、保险机构或者其他服务机构之间产生的纠纷争议或投诉处理而有必要共享您的个人信息。"},{kind:"p",text:"5. 为了配合合作保险机构履行法律法规的规定及行政/司法机关的要求，如实名制管理、反洗钱、反保险欺诈、保险可回溯管理等，我们可能需要将收集的信息（如投保人与被保险人身份信息、保险标的信息、投保过程信息（如录音录像、通话录音、投保轨迹等）及必要的风险信息等）向合作保险机构提供，或提交监管机构或其指定机构进行核验。"},{kind:"p",text:"6. 与我们的关联公司共享。您购买我们的其他产品或服务，这些服务可能是由我们的关联公司提供。为向您提供前述产品或服务、防止欺诈与安全风险以及便于您进行统一账号管理，我们可能会将您的个人信息与我们的关联公司共享。但我们只会共享必要的个人信息，且关联公司对您个人信息的使用受本隐私政策，或经过您授权同意的且对您的个人信息提供与本隐私政策保护水平实质相同的关联公司隐私政策的约束（您可以在相关应用程序或我们的官方网站上查看我们旗下相关产品适用的隐私政策）。我们和我们的关联公司均会严格遵守我们的个人信息及数据安全保护制度和政策。"},{kind:"h2",text:"（二） 委托处理"},{kind:"p",text:"我们可能会委托第三方合作伙伴代我们处理个人信息，以便授权合作伙伴代表我们为您提供某些服务或履行职能。但我们仅会出于合法、正当、必要、明确的目的委托其处理您的个人信息，授权合作伙伴只能接触到其提供服务或履行职能所必要的个人信息。我们将会通过协议要求其不得将此信息用于其它任何超出委托范围的目的。除非您另行授权同意，我们的合作伙伴无权将您的个人信息用于任何其他我们未委托的用途。我们委托的合作伙伴包括以下类型："},{kind:"p",text:"1. 保险或健康产品或服务提供者及其代理人。为向您推荐符合您需求的保险，我们可能会委托与我们有合作关系的保险中介机构通过我们的平台联系您向您提供回访咨询、产品咨询或推荐您可能感兴趣的产品或服务。在这种情况下，该等第三方合作伙伴仅可以通过我们提供的虚拟号码联系您，非必要情形下，我们不会向这些合作伙伴提供您的身份信息或其它可识别到您的个人身份的信息，确保您的个人信息安全。我们将努力通过采取“号码保护”、 “保单信息去标识化”等合理的举措尽全力保护您的个人信息安全。"},{kind:"p",text:"2. 供应商、服务提供商和其它合作伙伴。我们可能会将您的个人信息提供给支持我们提供服务的第三方服务提供商及合作伙伴。这些服务提供商、合作伙伴包括为我们提供基础设施技术服务、数据处理、核验、公估、信用审查、风控和客户服务、支付服务、完成交易所必须的快递服务或进行学术研究和调查等的机构。但我们要求这些服务提供商、合作伙伴只能出于为我们提供服务的目的使用您的信息，而不得出于其自身利益使用您的信息。"},{kind:"p",text:"3. 广告、分析服务类的授权合作伙伴。经您授权，我们会与提供广告投放推广的服务提供商、统计分析服务提供商（例如应用流量监测服务提供商）或其他合作伙伴共享信息，但我们仅会向这些合作伙伴提供汇总后的信息、匿名化后的信息或者其他不会识别到您的个人身份的信息，不会分享您的任何身份信息、账号信息或其他可识别信息。例如，我们的产品中可能会嵌入第三方软件工具开发包（SDK），以统计用户使用应用程序的习惯或偏好，或点击访问广告的情况。我们会不时对该等合作伙伴进行技术检测和行为审计，以最大限度地确保其依法、依规、依约收集和使用数据。"},{kind:"h2",text:"（三）转让"},{kind:"p",text:"我们不会将您的个人信息转让给其他任何公司、组织和个人，但以下情形除外："},{kind:"p",text:"1. 事先获得您明确的同意或授权；"},{kind:"p",text:"2. 根据适用的法律法规、法律程序的要求、强制性的行政或司法要求所必须的情况进行提供；"},{kind:"p",text:"3. 符合与您签署的相关协议（包括在线签署的电子协议以及相应的平台规则）或其他的法律文件约定所提供；"},{kind:"p",text:"4. 随着我们公司业务的发展，我们及我们的关联公司有可能进行合并、收购、资产转让或其他类似的交易。如相关交易涉及到您的个人信息转让，我们会要求新持有您个人信息的公司、组织和个人继续受此政策约束，否则我们将要求该公司、组织和个人重新征得您的授权同意。"},{kind:"h2",text:"（四）公开披露"},{kind:"p",text:"我们仅会在以下情况，且采取符合业界标准的安全防护措施的前提下，才会公开披露您的个人信息："},{kind:"p",text:"1. 根据您的需求，在您明确同意的披露方式下披露您所指定的个人信息；"},{kind:"p",text:"2. 根据法律、法规的要求、强制性的行政执法或司法要求所必须提供您个人信息的情况下，我们可能会依据所要求的个人信息类型和披露方式公开披露您的个人信息。在符合法律法规的前提下，当我们收到上述披露信息的请求时，我们会要求必须出具与之相应的法律文件，如传票或核查函。我们坚信，对于要求我们提供的信息，应该在法律允许的范围内尽可能保持透明。我们对所有的请求都进行了慎重的审查，以确保其具备合法依据，且仅限于执法部门因特定核查目的且有合法权利获取的数据。"},{kind:"p",text:"请注意，您在使用我们服务时自愿发布甚至公开分享的信息，可能会涉及您或他人的个人信息甚至敏感个人信息，如您的交易信息，以及您在评价时选择上传包含个人信息的文字、图片或视频等各种形式的信息。请您在使用我们的服务时更加谨慎地考虑，是否要发布甚至公开分享相关信息。"},{kind:"h1",text:"六、我们如何保护您的个人信息"},{kind:"p",text:"我们已采取符合业界标准的安全防护措施保护您提供的个人信息，防止数据遭到未经授权访问、公开披露、使用、修改、损坏或丢失。我们会采取一切合理可行的措施，保护您的个人信息。"},{kind:"p",text:"1. 我们设置了专门的个人信息保护负责人，负责处理我们相关产品和服务可能涉及到用户个人信息的各项事务，以及规划和制定公司的隐私政策、审核各产品的用户使用协议、监督各产品的工作原理和信息处理机制等。"},{kind:"p",text:"2. 我们进行了信息安全等级保护的定级测评，我们的信息系统被认定为符合信息安全等级保护第三等级（金融机构信息系统级别的保护）要求，并按照法律法规要求就定级报告向公安机关进行了备案。我们按照信息安全等级保护的要求制定了信息安全工作的总体方针和安全策略，建立了覆盖主机、数据、应用、管理等层面的安全管理制度，设立了专职部门负责信息安全管理工作，明确了安全管理机构内的各个部门和岗位的职责、分工和技能要求，制定了明确的人员录用和离职管理规范。"},{kind:"p",text:"3. 我们会对可识别的敏感个人信息进行加密传输和存储，以确保数据的保密性。"},{kind:"p",text:"4. 我们存储用户个人信息的服务器系统均为安全加固后的操作系统。我们会对服务器操作进行账号审计及监控。如果发现外部公告有安全问题的服务器操作系统，我们会在第一时间进行服务器安全升级，确保我们所有服务器系统及应用安全。"},{kind:"p",text:"5. 我们为工作人员定期举办个人信息保护相关法律法规培训，以加强工作人员的用户个人隐私保护意识。"},{kind:"p",text:"6. 我们制定了信息安全事件应急预案，并调配足够的资源保障确保应急预案的执行。我们每年对应急预案进行了培训和应急事件演练。如果我们的物理、技术或管理防护措施不幸遭到破坏，我们会及时启动应急预案，防止安全事件扩大，按照法律法规的要求上报国家主管机关，并及时采取推送、公告等合理、有效的方式向您告知安全事件的基本情况、可能的影响、已经采取的措施或将要采取的措施等。"},{kind:"h1",text:"七、您管理个人信息的权利"},{kind:"p",text:"按照中国相关的法律、法规、标准，在您使用我们的产品或服务期间，您可以参考下述指引查询、复制、更正、删除您的个人信息，行使撤回同意以及注销账号的权利。另外，您可以通过本隐私政策第十节载明的方式与我们联系，您的意见会及时得到处理。"},{kind:"h2",text:"（一）查询、复制、更正、删除您的个人信息"},{kind:"p",text:"您可以通过本政策第十节提供的联系方式联系我们查询、复制、更正和删除您的个人信息。"},{kind:"p",text:"以下情况发生时，您可以通过本隐私政策提供的联系方式要求我们删除您的个人信息："},{kind:"p",text:"1. 我们没有征求您的明确同意，收集了您的个人信息。"},{kind:"p",text:"2. 我们处理您的个人信息违反了法律法规要求。"},{kind:"p",text:"3. 我们违反了与您的约定来使用和处理您的个人信息。"},{kind:"p",text:"4. 您注销了我们账号、卸载或者不再使用我们的产品或服务。"},{kind:"p",text:"5. 我们停止对您提供服务。"},{kind:"p",text:"您可以通过本隐私政策第十节提供的方式联系我们要求删除您的个人信息，我们会在收到您的反馈并验证您的用户身份后的15个工作日内给予答复。当我们从服务器中删除您的个人信息后，我们可能不会立即从备份系统中删除相应的数据，但会在备份更新的时候删除这些信息。"},{kind:"h2",text:"（二）获得解释的权利"},{kind:"p",text:"您有权要求我们就个人信息处理规则作出解释说明。您可以通过本隐私政策载明的联系方式与我们取得联系。"},{kind:"p",text:"三） 逝者近亲属相关权利"},{kind:"p",text:"若我们用户不幸身故，其近亲属为了自身的合法、正当利益，可以对我们用户的相关个人信息行使本条款规定的查阅、复制、更正、删除等相关权利；我们用户生前另有安排的除外。"},{kind:"h2",text:"（四）响应您的上述请求"},{kind:"p",text:"如果您选择删除个人信息或者注销个人账号，您可以通过本隐私政策第十节的联系方式联系我们，我们会在收到您的反馈并验证您的用户身份后的15个工作日内给予答复。"},{kind:"p",text:"在以下情形中，按照法律法规要求，我们将无法响应您的请求："},{kind:"p",text:"1. 与我们履行法律法规规定的义务相关的；"},{kind:"p",text:"2. 与国家安全、国防安全直接相关的；"},{kind:"p",text:"3. 与公共安全、公共卫生、重大公共利益直接相关的；"},{kind:"p",text:"4. 与刑事侦查、起诉、审判和判决执行等直接相关的；"},{kind:"p",text:"5. 有充分证据表明您存在主观恶意或滥用权利的；"},{kind:"p",text:"6. 出于维护个人信息主体或其他个人的生命、财产等重大合法权益但又很难得到本人同意的;"},{kind:"p",text:"7. 响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的；"},{kind:"p",text:"8. 涉及商业秘密的。"},{kind:"h1",text:"八、未成年人个人信息保护"},{kind:"p",text:"我们非常重视未成年个人信息的保护。我们的产品和服务主要面对成人。我们原则上不会主动从未成年人处收集未成年人的个人信息；如果没有父母或监护人的同意，未成年人不应注册和使用我们的服务。如您为未成年人，我们建议您请您的父母或监护人为您阅读本隐私政策，并在您提交个人信息之前征得父母或监护人的同意。若您是未成年人的监护人，当您对您所监护的未成年人的个人信息有疑问时，您可以通过本隐私政策第十节的联系方式与我们联系。"},{kind:"p",text:"如果特定服务需要提供未成年人个人信息（例如父母或监护人为未成年子女投保时，需要提供未成年人的姓名、身份证号等个人信息），那么我们仅会在法律法规允许、父母或监护人同意并主动提交这些信息的情况下，收集这些信息。对于经父母或监护人同意使用我们的产品或服务而收集未成年人个人信息的情况，我们只会在法律法规允许、父母或监护人明确同意或者保护未成年人所必要的情况下使用、共享、转让或披露此信息。如果我们发现自己在未事先获得可证实的父母或法定监护人同意的情况下收集了未成年人的个人信息，则会在法律要求的情况下尽快删除相关数据。"},{kind:"h1",text:"九、隐私政策的适用范围、变更和修订"},{kind:"p",text:"如我们在本隐私政策序言部分所述，本隐私政策适用于我们产品和服务。您可能通过我们产品中的链接跳转至我们运营的其他产品或服务，这些产品或服务可能会通过其另行设置的隐私政策向您说明收集和使用您个人信息的情况并据此处理您的个人信息。我们的产品或服务均会按照与本隐私政策实质相同的标准对您的个人信息提供完善的保护。"},{kind:"p",text:"需要特别说明的是，本隐私政策不适用于其他第三方向您提供的服务。例如您通过我们链接或购买的保险产品。我们会在与这些第三方开展合作过程中尽最大努力督促其保护您的个人信息，但您理解这些服务由第三方独立向您提供，第三方将依照其隐私政策或用户协议单独对您的个人信息处理承担责任。"},{kind:"p",text:"我们的隐私政策可能变更。未经您明确同意，我们不会限制您按照本隐私政策所应享有的权利。"},{kind:"p",text:"本政策所指的重大变更包括但不限于："},{kind:"p",text:"1. 我们的服务模式发生重大变化。如处理个人信息的目的、处理个人信息的类型、个人信息的使用方式等；"},{kind:"p",text:"2. 我们在控制权等方面发生重大变化。如并购重组等引起的所有者变更等；"},{kind:"p",text:"3. 个人信息共享、转让或公开披露的主要对象发生变化；"},{kind:"p",text:"4. 您参与个人信息处理方面的权利及其行使方式发生重大变化；"},{kind:"p",text:"5. 我们负责处理个人信息安全的责任部门、联络方式及投诉渠道发生变化时；"},{kind:"p",text:"6. 个人信息安全影响评估报告表明存在高风险时。"},{kind:"h1",text:"十、如何联系我们"},{kind:"p",text:"如您在使用我们产品或服务的过程中对本个人信息保护政策有任何疑问或建议，请通过以下联系方式与我们联系："},{kind:"p",text:"公司名称： 东方大地（武汉）保险经纪有限公司"},{kind:"p",text:"地址： 湖北省武汉市江汉区新华路385号南达大楼9楼909、910室"},{kind:"p",text:"网络安全负责人：荣谦"},{kind:"p",text:"电子邮件： doc@dfdadi.com"},{kind:"p",text:"为保障我们高效处理您的问题并及时向您反馈，需要您提交身份证明、有效联系"},{kind:"p",text:"方式和书面请求及相关证据，我们会在验证您的身份后处理您的请求。 一般情况"},{kind:"p",text:"下，我们将在三十天内回复。"},{kind:"p",text:"如果您对我们的回复不满意，特别是您认为我们的个人信息处理行为损害了您的"},{kind:"p",text:"合法权益，您还可以通过以下外部途径寻求解决方案：向东方大地（武汉）保险经纪有限公司住所地有管辖权的法院提起诉讼。"}]},cr={title:"《中国移动认证梧桐数盾隐私政策》",blocks:[{kind:"h1",text:"中国移动认证梧桐数盾隐私政策"},{kind:"p",text:"更新时间：2026年6月3日"},{kind:"p",text:"生效时间：2026年6月3日"},{kind:"p",text:"中移互联网有限公司移动认证业务（以下称”我们”）非常重视用户的隐私和个人信息安全保护，我们将按照法律法规要求，采取相应安全保护措施，尽力保护您的个人信息安全可控。"},{kind:"p",text:"我们希望通过《隐私政策》（以下简称”本政策”）向您说明移动认证（以下简称”本服务”）如何收集、使用、存储和共享您的个人信息，以及您可以如何行使您的隐私权利。"},{kind:"p",text:"请您在使用本服务前，认真阅读并充分理解本《隐私政策》的全部内容，特别是以字体加粗方式标识的内容。在阅读过程中如您对本政策内容有任何疑问、意见或建议，请联系我们。您使用或在我们更新本政策后继续使用我们的产品或服务，即表示您同意本政策（含更新版本）内容，并且同意我们按照本政策收集、存储、使用和共享您的相关信息。您方表示同意的方式包括但不限于主动点击”同意”、”接受”、“授权”选项或签字等。"},{kind:"p",text:"本隐私政策将帮助您了解以下内容："},{kind:"h1",text:"一. 我们如何收集和使用您的个人信息。"},{kind:"h1",text:"二. 我们如何使用Cookie和同类技术。"},{kind:"h1",text:"三. 我们如何共享、转让、公开披露您的个人信息。"},{kind:"h1",text:"四. 我们如何保护和保存您的个人信息。"},{kind:"h1",text:"五. 您的权利。"},{kind:"h1",text:"六. 例外情况。"},{kind:"h1",text:"七. 我们如何处理未成年人的个人信息。"},{kind:"h1",text:"八. 您的个人信息如何在全球范围转移。"},{kind:"h1",text:"九. 本政策如何更新。"},{kind:"h1",text:"十. 如何联系我们。"},{kind:"h1",text:"一、我们如何收集和使用您的个人信息"},{kind:"p",text:"个人信息是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，不包括匿名化处理后的信息。我们会以“最小化”原则收集、使用、存储和传输用户个人信息，并通过用户协议和隐私政策告知您信息的使用目的和范围。"},{kind:"p",text:"我们会为您提供的各项具体功能场景包括："},{kind:"h2",text:"（一）为保证您正常使用本服务的内容，我们需要收集和使用下列与您有关的信息："},{kind:"h2",text:"1、移动认证安全基座SDK功能"},{kind:"p",text:"根据《T/TAF 188-2023 软件开发工具包（SDK）收集个人信息技术要求》，本 SDK 属于认证类。"},{kind:"p",text:"移动认证安全基座SDK包含本机号码校验功能。"},{kind:"p",text:"为实现本机号码校验功能，需要获取您的网络类型、网络地址（ip 地址）、运营商类型、本机号码信息、SIM 卡状态，用于一键获取您的手机号码；同时，使用手机设备类型、手机操作系统、硬件厂商，用于问题查询、分析、风险控制和追踪，如您拒绝提供，将不能使用本服务。"},{kind:"h2",text:"2、H5移动认证安全基座 功能"},{kind:"p",text:"H5移动认证安全基座包含本机号码校验、号码授权、信息助填和区块链存证功能。"},{kind:"p",text:"为实现H5场景本机号码校验和号码授权功能，需要收集您的本机号码、运营商类型、网络类型，用于获取您的手机号码进行本机号码校验和号码授权服务。同时使用您的浏览器指纹用于业务风控，浏览器指纹具体包括：操作系统、用户代理（浏览器类型）、浏览器版本号、浏览器是否启动cookie、cpu 等级、cpu 虚拟核心数、系统语言、浏览器插件、屏幕可用宽度、屏幕可用高度、颜⾊质量、时差区。如您拒绝提供，将不能使用服务。"},{kind:"p",text:"为实现H5场景信息展示的服务，您填写身份证号码后四位，并授权我们及中国移动通信集团有限公司获取您的手机号码。同时我们将使用您在我们及中国移动通信集团有限公司预留的身份证号码、手机号码进行身份证号码后四位校验，校验成功后，您的【姓名、手机号、身份证号码前十四位】将以密文形式存放到您的中移互联可信数据空间中，在获得您确认授权后，我们会从您的可信数据空间中获取您的【姓名、手机号、身份证号码前十四位】信息并提供给银联商务支付股份有限公司及相关使用方，并使用该信息为您完成H5场景下展示的服务。为保障您的数据安全，在向银联商务支付股份有限公司及相关使用方提供您的【姓名、身份证号码前十四位】信息后，我们将从中移互联可信数据空间删除您的【姓名、身份证号码前十四位】信息。如您拒绝提供，将不能使用H5场景信息助填服务，但不影响使用一键登录和本机号码校验功能。"},{kind:"p",text:"为实现H5场景区块链存证功能，需要获取您的手机号、IP地址、当前操作信息、使用时间、服务协议条款，用于将您的使用信息上传至区块链存证。如您拒绝提供，将不能使用区块链存证服务。"},{kind:"h2",text:"3、移动认证安全基座SDK移动设备系统权限申请声明"},{kind:"li",text:"（1）为满足基本业务要求，需要获取您的以下权限："},{kind:"table",rows:[["权限","操作系统","使用场景","使用目的"],["INTERNET（必选）","Android","网络通信","允许应用程序联网，用于访问网关和认证服务器"],[`ACCESS_NETWORK_STAT\nE（必选）`,"Android","查看网络状态","允许 SDK 访问网络状态，用于判断设备网络类型是蜂窝网络或 WIFI 网络"],[`CHANGE_NETWORK_STA\nTE（必选）`,"Android","进行网络切换通信",`允许程序改变网络连接状态 , 当\n用户未使用数据流量时，切换为数据流量，以获取用户手机号码`],["蜂窝网络权限（必选）","iOS","获取用户手机号","用于一键获取您的手机号码"]]},{kind:"p",text:"如您拒绝提供以上移动设备系统权限，将不能使用服务。"},{kind:"h2",text:"（二）从第三方获得您的个人信息："},{kind:"p",text:"为向您提供H5场景信息助填服务，经您授权同意，我们可能会接收中国移动通信集团有限公司提供的您的【加密身份证号码、加密姓名】。我们将在确认接收的个人信息来源的合法性后，依相关法律法规及第三方约定将您的前述信息用于H5场景信息助填服务。"},{kind:"h2",text:"（三）在以下情形中我们使用您的信息时无需征得您的授权同意："},{kind:"p",text:"1.关系国家安全、国防安全的情况时。"},{kind:"p",text:"2.关系公共安全、公共卫生、重大公共利益的情况时。"},{kind:"p",text:"3.关系犯罪侦查、起诉、审判和判决执行的情况时。"},{kind:"p",text:"4.出于维护个人信息主体或其他个人的生命、财产安全，但又很难得到本人同意的情况下。"},{kind:"p",text:"5.所收集的个人信息是个人信息主体自行向社会公众公开的信息。"},{kind:"p",text:"6.从合法公开披露的信息中收集的您的个人信息的，如合法的新闻报道、政府信息公开渠道。"},{kind:"p",text:"7.根据您的要求签订合同所必需的。"},{kind:"p",text:"8.用于维护所提供的产品与/或服务的安全稳定运行所必需的，例如发现、处置产品与/或服务的故障。"},{kind:"p",text:"9.为合法的新闻报道所必需的。"},{kind:"p",text:"10.学术研究机构基于公共利益开展统计或学术研究所必要，且对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的。"},{kind:"p",text:"11.法律法规规定的其他情形。"},{kind:"h2",text:"（四）基于合法获取的数据，我方将依法按照业内领先的去标识化、匿名化等数据安全技术对信息进行处理。对我方及合作方合法合规获取的数据进行汇聚融合、加工分析、开展隐私计算、联邦学习等处理，形成数据产品，为第三方客户提供用户增长、营销辅助、风险识别、广告反作弊等大数据解决方案，如您不希望我们进行前述处理，您可以通过本政策列明的联系方式与我们联系取消授权。"},{kind:"h2",text:"（五）请您注意，您同意我们使用以上信息及权限即代表您授权我们可以收集和使用这些个人信息，您关闭权限即代表您取消了这些授权，则我们将不再继续收集和使用您的个人信息，也无法为您提供与这些授权所对应的相关功能。您关闭授权的决定不会影响此前基于您的授权所进行的个人信息的处理。"},{kind:"h2",text:"（六）请您放心，我们收集和使用的个人信息均是在经过您的授权后通过合法渠道获得，不会从任何非法渠道间接获取您的个人信息。我们不会使用个人信息对您进行个性化推荐，当我们要将信息用于本政策未载明的其他用途时，会事先征求您的同意。"},{kind:"h1",text:"二、我们如何使用Cookie 和同类技术"},{kind:"p",text:"为确保本服务的正常运转，我们会在您的移动设备上存储名为Cookie 的小数据文件。Cookie通常包含标识符、站点名称以及一些号码和字符。通过Cookie，我们能够缓存您的数据以便下次快速获取您的手机号码。"},{kind:"p",text:"我们不会将Cookie 用于本政策所述目的之外的任何用途。您可根据自己的偏好清除手机缓存。"},{kind:"h1",text:"三、我们如何共享、转让、公开披露您的个人信息"},{kind:"h2",text:"（一）共享"},{kind:"p",text:"我们不会与中移互联网有限公司以外的任何公司、组织和个人分享您的个人信息，但以下情况除外："},{kind:"p",text:"1.我们可能会根据法律法规规定，或按政府主管部门的强制性要求，对外共享您的个人信息。"},{kind:"p",text:"2.如您同意本隐私政策，我们可能会将您的【手机号码、授权凭证】共享给中国移动通信集团有限公司，同时将您的【手机号码】共享给银联商务支付股份有限公司及相关使用方，以确保您在可信助填场景中的授权以及身份真实有效。我们只会共享必要的个人信息，且受隐私政策中所声明目的的约束。"},{kind:"h2",text:"（二）转让"},{kind:"p",text:"除以下情况外，我们不会将您的个人信息转让给任何公司、组织和个人。"},{kind:"p",text:"1.获得您的明确授权后，我们会向您授权的第三方转让您的个人信息。"},{kind:"p",text:"2.在本业务合并、收购或破产清算时，如涉及到个人信息转让时，我们会要求新的公司继续按本隐私政策接收、管理、使用和转让您的信息。若无法达成共识，我们会要求新的公司重新向您征求授权。"},{kind:"h2",text:"（三）公开披露"},{kind:"p",text:"除以下情况外，我们不会公开披露您的个人信息："},{kind:"p",text:"1.获得您明确同意后，按您授权情况披露您的个人信息。"},{kind:"p",text:"2.在法律、法律程序或政府主管部门强制性要求的情况下，我们可能会按要求披露您的个人信息。"},{kind:"h1",text:"四、我们如何保护和保存您的个人信息"},{kind:"h2",text:"（一）我们如何保存您的个人信息"},{kind:"h3",text:"1.信息存储的地点"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内，不存在境外收集用户信息情况。"},{kind:"h3",text:"2.信息存储的期限"},{kind:"p",text:"一般而言，移动认证将在您使用期间保存您的个人信息，并且您的个人信息将在法律规定范围内最短期限保留。在超出保留期限后，我们会根据适用法律的要求删除或匿名化处理您的个人信息。"},{kind:"p",text:"当您注销中国移动账户后，我们将删除相应的个人信息或进行匿名化处理。"},{kind:"p",text:"当我们的产品或服务发生停止运营的情形时，我们将以推送通知、公告的形式通知您，并在法律规定的期限内删除您的个人信息或进行匿名化处理。"},{kind:"p",text:"注：法律法规有规定不能删除时或不能匿名化处理的情况除外。"},{kind:"h2",text:"（二）我们如何保护您的个人信息"},{kind:"p",text:"我们会严格按照《中华人民共和国个人信息保护法》《中华人民共和国网络安全法》《全国人民代表大会常务委员会关于加强网络信息保护的决定》《电信和互联网用户个人信息保护规定》（工业和信息化部令第24 号）、《电话用户真实身份信息登记规定》（工业和信息化部令第25 号）等法律法规的要求，建立信息安全保障制度，采取技术措施和其他必要措施保护您的个人信息安全。"},{kind:"p",text:"1.我们保护您个人信息的技术与措施"},{kind:"p",text:"我们非常重视个人信息安全，并采取一切合理可行的措施保护您的个人信息："},{kind:"h3",text:"（1）数据安全技术措施"},{kind:"p",text:"我们会采用符合业界标准的安全保护措施，包括建立合理的制度规范、安全技术来防止您的个人信息遭到未经授权的访问使用、修改，避免数据的损坏或丢失。"},{kind:"p",text:"中移互联网的网络服务采取了传输层安全协议和其他加密技术，通过https 和其他方式提供浏览服务，确保用户数据在传输过程中的安全性。"},{kind:"p",text:"中移互联网采取加密技术对用户个人信息进行加密保存，并通过隔离技术进行隔离。"},{kind:"p",text:"在个人信息使用时，例如个人信息展示，我们会采取多种复杂的数据脱敏技术增强个人信息在使用中的安全性。"},{kind:"p",text:"中移互联网采用代码安全检查、数据方位日志分析技术进行个人信息安全审计。"},{kind:"h3",text:"（2）中移互联网为保护个人信息采取的其他安全措施"},{kind:"p",text:"中移互联网通过建立数据分类分级制度、数据安全管理规范、数据安全开发规范来管理规范个人信息的存储和使用。通过信息接触者保密协议、监控和审计制度来对数据进行全⾯安全控 制。同时建立安全管理中心并下设信息保护专职部门、数据安全应急响应组织来推进和保障个人信息安全，加强安全意识。我们还会定期举办安全和隐私保护培训课程来加强对个人信息保护重要性的认识，同时进行定期安全审计。"},{kind:"p",text:"2.安全事件处置"},{kind:"p",text:"为应对个人信息泄露、损毁和丢失等可能出现的风险，中移互联网制定了多项制度，明确安全事件、安全漏洞的分类分级标准及相应的处理流程。中移互联网也为本服务系统安全事件建立了专门的应急响应团队，按照安全事件处置规范要求，针对不同安全事件启动安全预案，进行止损、分析、定位、制定补救措施并联合相关部门进行溯源和打击。"},{kind:"p",text:"若不幸发生个人信息安全事件，我们将按照法律法规的要求，及时告知您安全事件的基本情况和可能的影响、我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议、对您的补救措施等信息。我们将及时将事件相关情况以邮件、信函、电话、推送通知的方式告知您。在难以逐一告知个人信息主体时，我们会采取合理、有效的方式发布公告。同时，我们还将按照监管部门要求，主动上报个人信息安全事件的处置情况。"},{kind:"p",text:"3.请您理解：互联网环境并非百分之百安全，我们将尽力确保或担保您发送给我们的任何信息的安全性。如果我们的物理、技术或管理防护设施遭到破坏，导致信息被非授权访问、公开披露、篡改或毁坏，导致您的合法权益受损，我们将依照法律法规承担相应责任。如果您对我们的个人信息保护有任何疑问，可通过本隐私政策中约定的联系方式联系我们。如果您发现自己的个人信息泄露，尤其是您的账户及密码发生泄露，请您立即通过本隐私政策【十、如何联系我们】中约定的联系方式联络我们，以便我们采取相应措施。"},{kind:"h1",text:"五、您的权利"},{kind:"h2",text:"（一）查询、更正、补充和限制您的个人信息"},{kind:"h2",text:"若您希望查询、更正、补充和限制您的个人信息，您可以联系我们的客服电话10086联系我们，我们会有专门的客服人员帮助您。"},{kind:"h2",text:"删除您的个人信息"},{kind:"p",text:"您可以通过联系10086客服电话的方式删除您的部分信息，或申请注销手机号码删除您的全部信息，我们将在验证通过后的十五天内处理您的删除申请。在以下情形中，您可以向客服申请，提出删除个人信息的请求："},{kind:"p",text:"1.如果我们处理个人信息的行为违反了相关法律法规。"},{kind:"p",text:"2.如果我们收集、使用您的个人信息，却未征得您的同意。"},{kind:"p",text:"3.如果我们处理个人信息的行为违反了与您的约定。"},{kind:"p",text:"4.如果您不再使用我们的产品或服务，或您注销了中国移动手机号。"},{kind:"p",text:"5.如果我们不再为您提供产品或服务。"},{kind:"p",text:"当您从我们的服务中删除信息后，我们可能不会立即从备份系统中删除相应的信息，但会在备份更新时及时删除这些信息。"},{kind:"h2",text:"（三）注销账户"},{kind:"p",text:"您可以通过联系10086客服电话的方式申请注销，我们将在十五天内处理您的注销申请，您主动注销您的账户之后，我们将停止为您提供产品或服务，并依据您的要求，删除或匿名化您的个人信息，法律法规另有规定的除外。"},{kind:"h2",text:"（四）复制个人信息副本"},{kind:"p",text:"如果你需要复制我们收集存储的个人信息，您可以联系10086，联系客服协助您复制、转移你的个人信息。"},{kind:"h2",text:"（五）个人信息可携权"},{kind:"h2",text:"在符合国家相关法律法规及网信部门规定的条件下，如您请求将个人信息转移至指定的个人信息处理者，我们将按照相关规定的要求提供转移的途径。"},{kind:"h2",text:"（六）撤销已同意授权功能"},{kind:"p",text:"如您已授权我们获得某些移动设备系统权限同意我们处理您的个人信息，您可以通过APP 系统权限设置撤回您的授权。您可登录梧桐数盾页面（https://slw.h5cmpassport.com:9091/h5/login），点击底部栏【授权】--【授权凭证】--【可信助填授权凭证】--【撤销授权】路径撤回您的对本产品隐私政策的授权同意，当您收回同意的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"p",text:"当您撤回同意或授权后，我们无法继续为您提供撤回同意或授权所对应的服务，也将不再处理您相应的个人信息。但您撤回同意或授权的决定，不会影响此前基于您的同意或授权而开展的个人信息处理。"},{kind:"h2",text:"（七）响应时限"},{kind:"p",text:"对于您行使上述（一）至（六）项权利所提出的相关请求，我们将在收到您的申请之日起十五天内作出答复。"},{kind:"h1",text:"六、例外情况"},{kind:"p",text:"请您充分理解并同意，我们在以下情况下收集、使用您的个人信息无需您的授权，且我们可能不会响应您提出的删除、注销的请求："},{kind:"p",text:"1.与国家安全、国防安全有关的情况。"},{kind:"p",text:"2.与公共安全、公共卫生、重大公共利益有关的情况。"},{kind:"p",text:"3.与犯罪侦查、起诉、审判和执行判决等有关的情况。"},{kind:"p",text:"4.有充分证据表明个人信息主体存在主观恶意或滥用权利的情况。"},{kind:"p",text:"5.响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的情况。"},{kind:"p",text:"6.涉及商业秘密的情况。"},{kind:"p",text:"7.法律法规规定的其他情形。"},{kind:"h1",text:"七、我们如何处理未成年人的个人信息"},{kind:"h2",text:"（一）我们非常重视保护未成年人个人信息，特别是14周岁以下的儿童。若您是未成年人，在使用我们的服务前，应提前取得您的父母或法定监护人的书面同意。我们将根据国家相关法律法规保护未成年人的个人信息。"},{kind:"h2",text:"（二）对于已经过未成年人的父母或法定监护人同意而收集的未成年人个人信息，我们只会在法律允许、父母或法定监护人明确同意、保护未成年人所必要的情况下使用或公开披露相关信息。"},{kind:"h2",text:"（三）如果我们发现在未事先获得未成年人的父母或法定监护人同意的情况下收集了未成年人的个人信息，会立即删除相关数据。"},{kind:"h1",text:"八、您的个人信息如何在全球范围转移"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内,我们不会将您的个人信息传输至中华人民共和国境外。"},{kind:"h1",text:"九、本政策如何更新"},{kind:"p",text:"我们的隐私政策可能变更。"},{kind:"p",text:"未经您的同意，我们不会削减您应享有的个人隐私权利。我们会以弹窗形式发布对本政策所做的任何变更。对于变更后的隐私政策，我们会再次征求您的同意。"},{kind:"h1",text:"十、如何联系我们"},{kind:"p",text:"如您对本政策存在任何疑问，或对于您的个人信息处理存在任何投诉、意见，请通过以下渠道联系我们："},{kind:"p",text:"公司名称：中移互联网有限公司"},{kind:"p",text:"公司地址：中国广东省广州市天河区高唐路323号中国移动南方基地智汇中心"},{kind:"p",text:"联系方式：10086"},{kind:"p",text:"我们已经建立客户投诉管理机制，包括跟踪流程。一般来说，我们将在验证通过后的五个工作日内处理完成，特殊情形下最长将在不超过十五天内作出答复。"},{kind:"p",text:"中国移动版权所有"}]},pr={title:"《第三方共享个人信息清单》",blocks:[{kind:"h1",text:"第三方对外提供个人信息清单"},{kind:"table",rows:[[{kind:"text",text:"合作方",colSpan:7}],["合作方名称","共享目的","共享场景","个人信息","提供方式","隐私政策或官网","联系方式"],["海客（天津）保险经纪有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token、姓名、身份证号前十四位、手机号","API接口",{kind:"doc-link",text:"《蓝鲸保隐私政策》",docKey:"haike-v2-privacy-policy"},"4000-161-100"],["中移互联网有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token","API接口",{kind:"doc-link",text:"《中国移动认证梧桐数盾隐私政策》",docKey:"haike-v2-cmcc-privacy-policy"},"10086"]]}]},kr={title:"《蓝鲸保隐私政策》",blocks:[{kind:"h1",text:"隐私政策"},{kind:"p",text:"【发布日期】2026年1月23日"},{kind:"p",text:"【生效日期】2026年1月23日"},{kind:"p",text:"【特别提示】尊敬的用户：感谢您的信任，为了帮助您了解我们对个人信息的处理和保护规则，我们特制定《蓝鲸保隐私政策》（“隐私政策”）。请您仔细阅读本隐私政策尤其是粗体显示的内容。如您有任何疑问、意见或建议，您可通过本隐私政策第十节的联系方式与我们联系。"},{kind:"p",text:"本隐私政策适用于海客（天津）保险经纪有限公司及其关联公司（统称“我们”或“蓝鲸保”）通过官方网站（https://www.hkinur.com）、相关小程序、公众号、H5页面、网页以及随技术发展出现的新形态向您提供的产品和服务（统称“蓝鲸保”）。为了更好地为您提供贴心的服务，您在使用我们的产品或服务时，我们可能会收集和使用您的相关信息。我们非常重视用户的隐私和个人信息保护，希望通过本隐私政策向您说明我们在您使用我们的产品或服务时如何收集、使用、保存、共享、转让和保护这些信息，以及我们为您提供的管理这些信息的方式。"},{kind:"p",text:"在本隐私政策中，个人信息，是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，不包括匿名化处理后的信息。敏感个人信息，是指一旦泄露或者非法使用，容易导致自然人的人格尊严受到侵害或者人身、财产安全受到危害的个人信息，包括生物识别、宗教信仰、特定身份、医疗健康、金融账户、行踪轨迹等信息，以及不满十四周岁未成年人的个人信息。我们将在本隐私政策中对个人信息以粗体进行显著标识。"},{kind:"p",text:"我们在此特别提醒您：我们致力于打造多样的产品和服务以满足您的需求。因我们向您提供的产品和服务种类众多，且不同用户选择使用的具体产品/服务范围存在差异，故收集使用的个人信息类型、范围会有所区别，请以具体的产品/服务功能为准。"},{kind:"p",text:"本隐私政策将帮助您了解以下内容："},{kind:"li",text:"我们收集了哪些个人信息"},{kind:"li",text:"我们如何使用您的个人信息"},{kind:"li",text:"征得授权同意的例外"},{kind:"li",text:"我们如何存储您的个人信息"},{kind:"li",text:"我们如何共享、委托处理、转让、公开披露您的个人信息"},{kind:"li",text:"我们如何保护您的个人信息"},{kind:"li",text:"您管理个人信息的权利"},{kind:"li",text:"未成年人个人信息保护"},{kind:"li",text:"隐私政策的适用范围、变更和修订"},{kind:"li",text:"如何联系我们"},{kind:"li",text:"隐私政策的生效"},{kind:"li",text:"我们收集了哪些个人信息"},{kind:"b",text:"在您使用服务过程中，我们将按照如下方式收集您在使用服务时主动提供或因您使用服务而产生的信息，用以向您提供下述服务、优化我们的服务并保障您的账号安全。由于蓝鲸保产品和服务的形态较多，具体的服务类型和可能处理的个人信息以您使用的产品界面展示为准。"},{kind:"li",text:"账号注册、登录相关的个人信息"},{kind:"p",text:"当您注册、登录成为我们用户时，我们可能会收集您的手机号码以创建账号；当您选择授权使用第三方账号（如微信）登录时，我们会通过第三方获取您授权共享的第三方账号信息（包括微信昵称、微信头像、openid、unionid等，具体以第三方平台授权的个人信息类型为准）并可能收集您的手机号码进行账号绑定。收集这些信息是为了帮助您完成账号注册，保护您的账号安全。我们收集手机号码，是为了验证您的身份，满足相关法律法规的网络实名制要求。如果您拒绝提供这些信息，您可能无法正常注册账号，亦无法在我们的平台上购买保险产品。"},{kind:"p",text:"基于我们与通信运营商的合作，当您使用一键登录功能时，经过您的同意，我们会使用运营商提供的功能，将您设备中的手机号码作为您的注册、登录账号并免于密码或动态验证码核验，为您提供快捷的注册、登录服务。"},{kind:"li",text:"为您提供保险服务基本功能相关的个人信息"},{kind:"li",text:"投保"},{kind:"p",text:"当您购买保险产品投保时，我们将收集您的投保信息，以便帮助您与保险公司签订保险单，完成投保，这些信息包括投保人的姓名、身份证件信息、身份证件号码、手机号码、社保状态（有无）、住址或者有效联系地址、邮箱，被保险人的姓名、性别、与投保人关系、身份证件信息、身份证件号码、手机号码、健康状况、职业，受益人的姓名、受益比例，保险订单信息及其他投保所需的必要信息（以您在投保时相关产品界面所要求提供的信息字段为准）。除上述基本信息，我们还可能根据您购买保险产品种类或接受服务的不同，收集与所提供服务相关的您的信息，具体以您购买的保险产品要求为准。收集方式包括您在使用服务时主动提供、从我们的关联公司或与您购买保险产品相关的服务场景平台、保险机构、政府机关授权单位以及其它合法留存您的信息的服务提供方（如健康服务机构、信息技术服务机构、服务提供商等）处收集。根据法律法规及监管规定，我们将完整记录和保存投保的主要业务过程，包括在您拨打或接听保险客服顾问电话时，我们将会对电话通话过程全程录音，或者按照监管要求对投保过程进行同步录音录像或投保轨迹记录和保存。"},{kind:"p",text:"您可以通过蓝鲸保为其他人投保保险产品，您向蓝鲸保提供该实际被保险人的前述个人信息之前，您需确保您已经取得其授权同意。"},{kind:"p",text:"如果您拒绝提供这些信息，我们无法为您订购保险产品并办理投保手续，但不影响您使用我们提供的其他功能。"},{kind:"li",text:"保险合同变更、退保"},{kind:"p",text:"当您通过我们进行保险合同变更、退保时，我们还将收集您主动提供或上传的信息，包括保单号、投保人电话、被保人的姓名、身份证件信息、身份证件号码、身份证照片、保全申请事由信息、退保申请事由信息、银行账户信息及其他必要信息。在涉及您的父母、配偶或子女的情况下，我们会向您收集您的父母、配偶、或子女的相应上述个人信息。您向蓝鲸保提供前述个人信息之前，您需确保您已经取得其授权同意。如果您拒绝提供这些信息，我们无法向您提供合同变更、退保等服务，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"根据法律法规及监管规定，当您通过我们投保成功，或使用我们提供的协助理赔、协助保全、协助退保、保单查询功能时，由于保险单实际是由为您承保的保险公司提供，因此我们需要从为您承保的保险公司获取您的保险单信息，以便为您提供上述服务。"},{kind:"li",text:"资格核验、风险控制及适当性管理"},{kind:"p",text:"在向您提供各项保险服务过程中，我们可能会向第三方核验调查您是否具备相应的资格或符合法定的条件。在这种情况下，我们可能会收集您留存在我们关联公司、与我们合作的保险公司、保险中介机构处的个人信息，我们还可能向行政机关、司法机关、征信机构、医疗机构、社保机构、保险公估公司、健康服务机构、背景调查公司、信息技术服务机构、银联、电信运营商（或其授权的服务提供商）、服务提供商以及其他合法了解掌握相关信息的自然人和法人收集或查询相关信息。您同意我们向上述机构收集、查询、使用您的身份信息、医疗健康信息、社保信息、财产信息、个人信用信息、涉诉信息、在网信息等相关信息以核验您的身份信息的真实性以及是否具有相应的资格或符合法定的条件，防范欺诈等违法活动和减少信用风险。"},{kind:"p",text:"基于账户安全管理、风险控制、防范保险欺诈、个性化展示、消费者适当性管理等原因，我们可能从行政机关、司法机关及我们的合作机构（包括服务提供商、征信机构、信息技术服务机构、社保机构或其授权的服务提供商、银联或其授权的服务提供商、电信运营商或其授权的服务提供商）、关联公司等第三方获取去标识化处理后的风险水平类、账户安全类、风控类、标签类相关信息，用于提供风险控制、保险反欺诈、反黑灰产、产品推荐、投保交易风控、智能协助理赔等服务，保障您的账户安全、信息安全及满足法律法规要求。"},{kind:"li",text:"依据法律法规及监管规定履行法定义务"},{kind:"p",text:"根据互联网及金融监管等要求，我们需履行法定义务，如：保险交易可回溯管理义务、实名制管理义务、反洗钱反恐怖融资义务（客户身份识别、客户身份资料和交易记录保存、尽职调查、严格保密等）等。这些法定义务要求我们向您收集您的个人身份信息、电话录音、录音录像、投保轨迹等，并根据您所投保的产品向相应保险机构提供。其中“身份信息”包括您的姓名、性别、国籍、职业、住所地（或经常居住地）或者工作单位地址、联系方式、身份证件或者身份证明文件的种类、号码和有效期限。“投保轨迹”包括相关交易信息、保单信息、账户信息。如您拒绝提供上述信息，则可能无法使用与监管要求相关的部分服务，但不影响您使用我们提供的其他服务。您知晓并同意，根据您所需的保险产品和服务的不同以及监管机构的要求，我们所收集的信息类型以具体产品或服务申请页面为准。"},{kind:"p",text:"为了提升您的服务体验，如果您在使用我们的关联公司服务过程中曾经留存过有效的个人身份信息（姓名、联系方式、身份证件号码等），我们可能会向关联公司收集上述信息并帮助您自动填写您合法留存的历史信息（以您最近一次保存的内容为准），以免您重复提交，并满足互联网及金融监管法定义务。上述关联公司情况详见《自动填写信息授权书》（请嵌入文件超链接后删除标黄文字）"},{kind:"li",text:"与改善和优化服务及保障账号安全相关的个人信息"},{kind:"p",text:"为了保障用户的账号安全、交易安全、系统运行安全，满足法律法规和我们协议规则的相关要求，以及不断地改进我们的产品、提高用户体验，我们需要收集相关的设备信息与日志信息。设备信息包括与您使用设备的软硬件特征和设备环境信息相关的信息，例如IMEI、Android ID、OAID、IDFA、IMSI、网络设备地址（MAC）、BSSID、iccid、设备型号、设备名称、系统版本号、任务列表、设备应用安装列表、手机制造商、运营商名称；日志信息包括IP地址、访问的浏览器信息、点击和浏览我们产品和服务功能或页面的URL地址及其使用情况与频率、应用崩溃情况、总体安装使用情况、性能数据、应用来源。收集方式包括您在使用服务时主动提供、从我们的关联公司、合作伙伴或与您购买保险产品相关的服务场景平台、保险机构、政府机关授权单位以及其它合法留存您的信息的服务提供方（如健康服务机构、信息技术服务机构、服务提供商等）处收集。如果您需要使用微信分享功能，我们将使用您的剪切板信息，以确保功能正常使用。"},{kind:"li",text:"与信息推送、搜索和展示有关的个人信息"},{kind:"p",text:"我们可能收集和使用包括设备信息（例如IMEI、Android ID、OAID、IDFA、网络设备地址（MAC）、IMSI、BSSID、MEID、设备型号、设备名称、系统版本号、设备应用安装列表、手机制造商、运营商名称）、日志信息（包括IP地址、访问的浏览器信息、点击和浏览我们产品和服务功能或页面的URL地址及其使用情况与频率、总体安装使用情况、性能数据、应用来源），用于向您推送信息和内容，该等信息展示与推送可能使用第三方服务。基于为您提供更精准的信息推荐、产品推荐的目的，我们可能向合作的第三方机构收集、查询、核验相关信息（该信息为无法识别用户个人身份的信息，如开放匿名设备标识符OAID等设备信息、曝光、点击等广告媒体数据、去标识化标签数据等）。您理解并同意，部分保险产品可能仅面向特定地域提供服务，我们在向您提供相关服务时，可能需要获取您的所处位置信息，用于为您匹配相应产品和服务信息。您有权按照本隐私政策第七节“您管理个人信息的权利”指引的撤回同意的方式关闭该等信息推送，在您关闭后，您的设备将不再收到我们的推送信息，关闭信息推送不会影响您使用其他服务。"},{kind:"p",text:"当您使用搜索功能时，我们会自动收集您输入的关键字信息和搜索记录。如果您拒绝提供上述信息，您无法享受搜索服务，但不影响您使用我们提供的其他功能。"},{kind:"li",text:"为您提供客服和售后服务有关的个人信息"},{kind:"p",text:"在您使用我们产品或服务的过程中，如果您有任何疑问、意见或建议，您可以通过在线客服、发送邮件或拨打电话与我们取得联系，我们将可能收集您的账号信息、电话录音、在线沟通记录、您与客服人员的对话信息（其中可能包括您主动提供的个人信息）。如果您参与问卷调查，我们还将收集您在问卷中向我们提供的信息。为了保证服务体验、改善服务品质，您与客服的通话信息可能会被录音。当您在保险服务过程中出现服务投诉或纠纷时，我们可依法调取并使用录音信息作为解决纠纷的参考依据。"},{kind:"p",text:"当您需要我们提供与保单相关的客户服务时，我们可能会查询您的相关交易信息以便向您提供适当的服务。当您需要客服协助您修改有关信息（如地址、联系方式等）时，您可能还需要提供相应的信息以完成修改。您知悉并同意，如果我们的客服人员无法立刻解决您的问题，我们可能在核实情况后，通过您主动提供的联系方式与您取得联系、解答您的问题、回应您的诉求。"},{kind:"p",text:"为了向您提供智能客服等相关服务，我们将收集您主动输入或提供的文本、语音、图片、视频、语音通话等多个模态的信息以及与我们的沟通记录及相关内容。上述信息将作为智能对话（包括文本对话、语音对话等）的内容识别、语义理解和生成回复的基础。该等智能客服等相关服务可能使用第三方服务（包括阿里巴巴达摩院(杭州)科技有限公司、北京百度网讯科技有限公司、腾讯云计算（北京）有限责任公司等）。"},{kind:"li",text:"支付订单的个人信息"},{kind:"p",text:"您通过我们支付订单时，可以选择我们合作的银行和第三方支付机构（如支付宝、微信支付等合作方）所提供的服务进行支付。我们需要收集您的订单信息、对账信息及其他法律要求的必要信息并与这些合作机构共享，以确认您的支付指令并帮助您完成支付。同时，为了帮助您实现基于银行卡支付的功能，您授权并同意，我们收集您主动提交的或从合法留存您信息的第三方收集您的姓名、身份证号、银行卡号、银行卡预留手机号、发卡行、卡类型等银行卡信息，以便于将您的银行卡与您的账户进行绑定。我们会将该等信息提供给我们的第三方合作支付机构（以具体的产品/服务页面展示的第三方合作支付机构为准）用于验证、支付。在您使用支付服务时，我们还需要记录、收集您的交易信息。您授权我们在向您提供支付服务时可以向必要的第三方合作支付机构提供前述支付必要信息，以确认您的支付指令并帮助您完成支付。"},{kind:"b",text:"您理解并同意，为提升您的服务体验，便于您便捷地选择需要进行绑定的银行卡，您授权我们将您的必要身份信息（包括姓名、银行预留手机号码、身份证号码）或具体产品/服务页面提示的其它信息，提供给我们的合作伙伴（包括蚂蚁区块链科技(上海)有限公司等），以加密展示、查询验证相关银行卡及活跃状态等信息，并在相关支付页面为您展示或推荐更优质或更便捷的银行卡支付服务。"},{kind:"li",text:"扩展业务、增值服务相关的个人信息"},{kind:"p",text:"我们可能会提供保险产品或服务相关扩展业务、增值服务，具体包括以下内容："},{kind:"li",text:"选择保险方案"},{kind:"p",text:"为向您提供选择保险方案服务，您需要向我们提供您的年龄、投保金额、您的姓名、您的电话，以根据您提供的信息测算适合您的保险方案，并向您发送测算结果。如果您拒绝提供这些信息，我们无法为您提供相应服务，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"为向您提供保险定制功能，您需要向我们提供您的手机号、年龄、个人月收入区间、家庭成员、家庭年收入。如果您拒绝提供这些信息，我们无法为您提供相应服务，但不影响您使用我们提供的其他功能。"},{kind:"li",text:"保费计算"},{kind:"p",text:"在您投保过程中，为方便您计算保费，我们还向您提供保费计算功能。您需要向我们提供您的生日、投保份数、保障期限、交费方式、性别。如果您拒绝提供这些信息，我们无法为您提供相应服务，但不影响您使用我们提供的其他功能。"},{kind:"li",text:"发送电子保单"},{kind:"p",text:"如果您选择由我们向您发送电子保单，需要您提供接受电子保单的邮箱地址。如果您拒绝提供收件人信息或邮箱地址，我们无法向您发送保单，但不影响您使用我们提供的其他功能。"},{kind:"li",text:"视频播放/直播功能"},{kind:"p",text:"当您使用视频播放/直播功能，我们会收集您的设备信息及日志信息。除“改善和优化服务及保障账号安全”功能部分提到的日志信息外，我们还将收集您的播放时间、软件版本型号、您的浏览记录、播放记录、播放时长、访问日期和时间、收藏/关注/订阅/阅读记录。如果您拒绝提供上述信息，您无法享受视频播放/直播服务，但不影响您使用我们提供的其他功能。"},{kind:"li",text:"点赞、分享、信息公开发布功能相关的个人信息"},{kind:"p",text:"当您、点赞、分享您感兴趣的视频、推文，我们需要收集您的点赞、分享记录。"},{kind:"p",text:"如您在蓝鲸保相关页面公开发表评价、发布图文等，我们将收集您发布的信息并在商品评价等公共页面向所有用户公开展示您的昵称、头像、您账户发布的内容等。请注意，您公开发布的信息中可能会涉及您或他人的个人信息甚至敏感个人信息，如您在评价时选择上传包含个人信息的图片，请您更加谨慎地考虑，是否在使用我们的服务时共享甚至公开分享相关信息。若您公开发布的信息中涉及他人个人信息的，您需在发布前征得他人的同意。如您选择以匿名方式发布评价信息时，我们将不展示您的昵称、头像。如我们在其它产品功能中使用您发表的评论，我们将通过去标识化的方式展示，确保您的个人信息安全。"},{kind:"p",text:"以上增值服务均为扩展业务功能服务，我们会在符合法律规定的情况下收集并使用您主动提供或因您使用服务而产生的信息。您可以拒绝提供或收集相关信息，但不影响您使用我们提供的基本功能及其它服务。"},{kind:"li",text:"使用 Cookie 和同类技术收集的信息"},{kind:"p",text:"为确保我们网站正常运转、为您获得更轻松的访问体验，我们会在您的计算机或移动设备上放置安全的Cookie及相关技术（统称“Cookie”）收集信息。Cookie是您浏览网页时，网站服务器放在客户端（您的计算机、移动电话或其他智能终端）里面的一个小小的文本文件，存储了一些与用户访问网站有关的信息。Cookie可帮助我们："},{kind:"li",text:"按照您所希望的服务样式、外观设置为您提供服务；"},{kind:"li",text:"保障数据和服务的安全性，排查针对我们的产品和服务的作弊、黑客、欺诈行为；"},{kind:"li",text:"避免不必要的服务器负载，提高服务效率，节省资源、能源；"},{kind:"li",text:"了解您使用我们服务的方式，以求改善我们的产品和服务的用户体验，为新产品或功能的研发提供参考数据。"},{kind:"p",text:"如果您的浏览器或浏览器附加服务允许，您可修改对Cookie的接受程度或拒绝我们的Cookie。但如果您这么做，在某些情况下可能会影响您安全访问我们的网站，且可能需要在每一次访问我们的网站时更改用户设置。"},{kind:"li",text:"第三方SDK的使用情况"},{kind:"p",text:"在某些特定业务场景下，为了保障本服务的稳定运行、功能实现，使您能够使用和享受更多的服务及功能，我们的应用中会嵌入第三方的SDK或其他类似的应用程序（简称SDK）来为您提供服务。"},{kind:"p",text:"请您点击此处查看我们产品中接入的第三方SDK目录（《接入第三方SDK目录》）（请嵌入《接入第三方SDK目录》文件超链接后删除标黄文字），以了解可能获得您信息的第三方SDK、相关服务提供方身份、其通过蓝鲸保收集或获取的您的个人信息范围以及使用目的。我们会不时对该等合作伙伴或服务提供商进行技术检测和行为审计，并要求其遵循合作法律协议，以最大限度地确保其依法、依规、依约收集和使用数据。"},{kind:"b",text:"请您注意，尽管我们会通过合同和技术手段要求该等第三方严格保护您的个人信息，但该等第三方将依据其个人信息保护政策对您的个人信息独立承担保护责任。"},{kind:"li",text:"我们如何使用您的个人信息"},{kind:"h2",text:"（一）使用您的相关个人信息，用以实现本隐私政策第一部分所列产品和服务的功能。"},{kind:"h2",text:"（二）为提供投保服务、理赔、合同变更、退保服务之目的，将会有调查公司、公估公司等提供调查服务。此等服务提供商可能会利用您提供的或根据本隐私政策所合法收集的信息，核验并确定您是否具有相应资格及是否符合法定的条件，防止欺诈等违法活动和减少信用风险。"},{kind:"h2",text:"（三）我们可能采取去标识化等方式将在业务中收集的您的个人信息以及我们关联公司、合作伙伴取得您授权或依据法律共享的信息进行综合研究、统计分析和预测，以统计产品的用户数量、分析产品的使用状况、排查产品崩溃原因、减少崩溃的情况，改善我们的产品和服务的设计和功能，优化用户体验或进行学术研究、科学研究。"},{kind:"h2",text:"（四）为保证服务得以完成或向您提供您可能需要的服务，我们还可能根据您提供的联系方式对您进行必要的电话回访或短信通知，包括但不限于验证码、保单生效通知等。"},{kind:"h2",text:"（五）为提高您使用我们及我们关联公司、合作伙伴提供服务的安全性，保护您或其他用户或公众的人身财产安全免遭侵害，更好地预防钓鱼网站、欺诈、网络漏洞、计算机病毒、网络攻击、网络侵入等安全风险，更准确地识别违反法律法规或蓝鲸保相关协议规则的情况，我们可能会使用或整合您的个人信息，如账号信息、设备信息、服务日志信息、应用程序使用信息等以及我们关联公司、合作伙伴取得您授权或依据法律共享的信息。为了依法维护您或我们的合法权益，我们可能使用上述信息解决您与蓝鲸保、保险机构或者其他服务机构之间产生的违约纠纷或投诉。"},{kind:"h2",text:"（六）为了解您的保险需求及风险水平是否与保险产品相匹配，满足消费者适当性管理的要求、向您推荐保险产品、健康管理增值服务及其他您可能感兴趣的产品或服务，我们可能会根据您使用我们的产品和服务，包括您通过蓝鲸保选购保险产品、投保、理赔、享受客服服务等信息及在蓝鲸保平台的浏览记录、操作记录、日志信息、设备信息、网络信息、位置信息等，结合您使用我们的关联公司服务的情况，以及行政机关、司法机关及我们的合作机构等第三方合法收集的去标识化处理后的风险水平类、风险控制类、标签类信息，综合分析并提取您的兴趣偏好、消费及服务需求等特征，用于向您展示和推送我们、我们关联公司及合作伙伴提供产品或服务的信息。"},{kind:"h2",text:"（七）我们可能会将合法合规收集的用户个人信息（包括身份信息、设备信息、日志信息、网络信息、位置信息、操作记录、投保状态等）进行综合分析，根据您提供的联系方式或者与互联网流量平台、第三方广告发布平台合作，通过页面、网络客户端消息推送、短信、企微消息、电话或您同意的其他方式联系您，向您推荐我们、我们关联公司及合作伙伴提供的您可能感兴趣的产品或服务，以及向您发送营销活动通知、商业性电子信息以及提供与您相关的广告，进行相关产品的精准投放与营销触达。如您拒绝接受短信或电话联系，您可以根据短信或电话中的指引，退订我们的短信或要求拒绝通过电话联系。"},{kind:"h2",text:"（八）根据适用的法律法规，我们可能会对您与我们的沟通记录及相关内容（包括语音通话信息、您在使用客服服务时输入的文字对话信息）进行去标识化处理，在无法识别您身份的情况下，将其用于算法模型训练，为您提供智能问答对话客服服务或智能语音服务，但我们不会根据您的对话内容对您个人进行特定身份的识别。"},{kind:"h2",text:"（九）如果您通过我们的产品享有电话医生服务、健康体检服务、图文问诊服务或其他健康管理产品或服务，则我们需要向该等服务提供商提供上述服务所必要的个人信息，包括您的姓名、身份证件号码、手机号码、保单号及其它必要的保单信息（如保单状态、保单起始日期等）。我们收集该信息是为了帮助您完成实名认证，确保您可享受电话医生、健康体检等服务，防止欺诈或滥用他人身份享受服务。"},{kind:"h2",text:"（十）如果我们将信息用于本隐私政策未载明的其他用途，或者将基于特定目的收集而来的信息用于其他目的，我们会事先征求您的同意。我们可能在某些具体服务或功能项下，通过交互文案、产品界面或弹窗等方式向您单独告知处理个人信息的目的、方式或范围，若单独告知的内容与本隐私政策不一致的，以单独告知的内容为准。"},{kind:"li",text:"征得授权同意的例外"},{kind:"b",text:"根据相关法律法规规定，以下情形中收集和使用您的个人信息无需征得您的授权同意："},{kind:"li",text:"与我们履行法律法规规定的义务相关的；"},{kind:"li",text:"与国家安全、国防安全直接有关的；"},{kind:"li",text:"与公共安全、公共卫生、重大公共利益直接相关的。例如：为应对突发公共卫生事件，或者紧急情况下为保护自然人的生命健康和财产安全所必需；"},{kind:"li",text:"与刑事侦查、起诉、审判和判决执行等直接有关的；"},{kind:"li",text:"出于维护个人信息主体或其他个人的生命、财产等重大合法权益但又很难得到您本人同意的；"},{kind:"li",text:"为公共利益实施新闻报道、舆论监督等行为，在合理的范围内处理您的个人信息；"},{kind:"li",text:"所涉及的个人信息是您自行向社会公众公开的；"},{kind:"li",text:"根据您要求签订和履行合同所必需的；"},{kind:"li",text:"从合法公开披露的信息中收集个人信息的，如合法的新闻报道、政府信息公开等渠道；"},{kind:"li",text:"维护所提供的产品或服务的安全稳定运行所必需的，例如发现、处置产品或服务的故障；"},{kind:"li",text:"学术研究机构出于公共利益开展统计或学术研究所必要，且对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的；"},{kind:"li",text:"法律、法规或国家标准规定的其他情形。"},{kind:"p",text:"请注意，经匿名化处理的、单独或与其它信息相结合无法识别您的身份或者与您直接建立联系的信息，不属于个人信息，我们对此类数据的处理将无需另行向您通知并征得您的同意。如果我们将单独无法与任何特定个人建立联系的信息与其它信息结合用于识别自然人个人身份，或者将其与个人信息结合使用，则在结合使用期间，此类信息将被视为个人信息，按照本隐私政策进行处理与保护。"},{kind:"li",text:"我们如何存储您的个人信息"},{kind:"p",text:"我们在中华人民共和国境内收集和产生的个人信息将存储在中华人民共和国境内。如涉及到跨境传输，我们会按照国家相关法律法规及相关标准的规定执行。"},{kind:"p",text:"我们只会在达成本隐私政策所述目的所需的期限内保留您的个人信息，除非法律有强制的留存要求。我们判断个人信息的存储期限主要参考以下标准并以其中较长者为准："},{kind:"li",text:"完成您同意使用的业务功能；"},{kind:"li",text:"保证我们为您提供服务的安全和质量；"},{kind:"li",text:"您同意的更长的留存期间；"},{kind:"li",text:"是否存在有关保留期限的其他特别约定。"},{kind:"p",text:"在超出保留期间后，我们会根据适用法律的要求删除您的个人信息，或使其匿名化处理。"},{kind:"p",text:"如我们停止运营蓝鲸保的产品或服务，我们将及时停止继续收集您个人信息的活动，并将以公告的形式进行停止运营通知。同时，对我们存储的个人信息进行删除或匿名化处理。"},{kind:"li",text:"我们如何共享、委托处理、转让、公开披露您的个人信息"},{kind:"li",text:"共享"},{kind:"p",text:"我们不会与任何公司、组织或个人共享您的个人信息，但以下情况除外（具体第三方信息情况请查看《与第三方共享个人信息清单》【请嵌入文件超链接后删除标黄文字】，主要包括以下情形）："},{kind:"li",text:"取得您同意的情况下共享：在获取您明示同意的情况下，我们会与其他方共享您的个人信息。"},{kind:"li",text:"履行法定义务所必需的共享：我们可能会根据法律法规规定、诉讼、争议解决需要，或按行政、司法机关依法提出的要求，以及其它法定义务履行的需要，共享必要的您的个人信息。"},{kind:"li",text:"为订立、履行您作为一方当事人的合同所必需的情况下的共享："},{kind:"p",text:"如您通过我们订购或获得保险或健康管理产品或服务，为缔结和履行保险或健康管理产品或服务合同，提供相关产品或服务，我们需要向健康服务公司、医疗机构、物流服务提供商、保险公司、保险中介机构，披露提供上述服务所必需的个人信息，例如您的身份信息、财产信息、健康信息、保单信息、投保过程（如录音录像、通话录音、投保轨迹等）、申请理赔、保全、退保及其它保单服务的信息。我们还可能与这些机构联合研发或优化保险或健康管理服务产品。您理解，在这种情况下这些产品或服务提供者构成独立的个人信息控制者，他们对您个人信息的收集、使用、存储及采取安全保护措施将受他们的隐私协议或服务条款约束，他们可能自行将您的个人信息用于提供产品或服务之外的其他目的。这些产品或服务提供者将对他们处理您个人信息的活动独立承担责任。"},{kind:"li",text:"在法律法规允许的范围内，为维护我们、我们的关联公司或合作伙伴、您或其他蓝鲸保用户或社会公众的合法利益，或者为了解决您与我们、保险机构或者其他服务机构之间产生的纠纷争议或投诉处理而有必要共享您的个人信息。"},{kind:"li",text:"为了配合合作保险机构履行法律法规的规定及行政/司法机关的要求，如实名制管理、反洗钱、反保险欺诈、保险可回溯管理等，我们可能需要将收集的信息（如投保人与被保险人身份信息、保险标的信息、投保过程信息（如录音录像、通话录音、投保轨迹等）及必要的风险信息等）向合作保险机构提供，或提交监管机构或其指定机构进行核验。"},{kind:"li",text:"与我们的关联公司共享。您可以通过统一的账号登录我们的其他产品或服务，这些服务可能是由我们的关联公司提供。为向您提供前述基于统一账号的产品或服务、防止欺诈与安全风险以及便于您进行统一账号管理，我们可能会将您的基础用户账号信息（如账号ID、头像、昵称、手机号码）、必要的身份信息（姓名、身份证件号码）等个人信息与我们的关联公司共享。但我们只会共享必要的个人信息，且关联公司对您个人信息的使用受本隐私政策，或经过您授权同意的且对您的个人信息提供与本隐私政策保护水平实质相同的关联公司隐私政策的约束（您可以在相关应用程序或我们的官方网站上查看相关产品适用的隐私政策）。我们和我们的关联公司均会严格遵守相应的个人信息及数据安全保护制度和政策。"},{kind:"li",text:"委托处理"},{kind:"p",text:"我们可能会委托第三方合作伙伴代我们处理个人信息，以便授权合作伙伴代表我们为您提供某些服务或履行职能。但我们仅会出于合法、正当、必要、明确的目的委托其处理您的个人信息，授权合作伙伴只能接触到其提供服务或履行职能所必要的个人信息。我们将会通过协议要求其不得将此信息用于其它任何超出委托范围的目的。除非您另行授权同意，我们的合作伙伴无权将您的个人信息用于任何其他我们未委托的用途。我们委托的合作伙伴包括以下类型："},{kind:"li",text:"供应商、服务提供商和其它合作伙伴。我们可能会将您的个人信息提供给支持我们提供服务的第三方服务提供商及合作伙伴。这些服务提供商、合作伙伴包括为我们提供基础设施技术服务、数据处理、核验、公估、信用审查、风控、质检、短信息服务、语音呼叫服务、客户服务、支付结算服务和完成交易所必须的快递服务或进行学术研究和调查等的机构。但我们要求这些服务提供商、合作伙伴只能出于为我们提供服务的目的使用您的信息，而不得出于其自身利益使用您的信息。"},{kind:"li",text:"广告、分析服务类的授权合作伙伴。经您授权，我们会与提供广告投放推广的服务提供商、统计分析服务提供商（例如应用流量监测服务提供商）或其他合作伙伴共享信息，但我们仅会向这些合作伙伴提供汇总后的信息、匿名化后的信息或者其他不会识别到您的个人身份的信息，不会分享您的任何身份信息、账号信息或其他可识别信息。例如，我们的产品中可能会嵌入第三方软件工具开发包（SDK），以统计用户使用应用程序的习惯或偏好，或点击访问广告的情况。我们会不时对该等合作伙伴进行技术检测和行为审计，以最大限度地确保其依法、依规、依约收集和使用数据。有关广告、分析类服务类第三方SDK的个人信息处理情况详见《接入第三方SDK目录》【请嵌入文件超链接后删除标黄文字】。"},{kind:"li",text:"转让"},{kind:"p",text:"我们不会将您的个人信息转让给其他任何公司、组织和个人，但以下情形除外："},{kind:"li",text:"事先获得您明确的同意或授权；"},{kind:"li",text:"根据适用的法律法规、法律程序的要求、强制性的行政或司法要求所必须的情况进行提供；"},{kind:"li",text:"符合与您签署的相关协议（包括在线签署的电子协议以及相应的平台规则）或其他的法律文件约定所提供；"},{kind:"li",text:"随着我们公司业务的发展，我们及我们的关联公司有可能进行合并、收购、资产转让或其他类似的交易。如相关交易涉及到您的个人信息转让，我们会要求新持有您个人信息的公司、组织和个人继续受此政策约束，否则我们将要求该公司、组织和个人重新征得您的授权同意。"},{kind:"li",text:"公开披露"},{kind:"p",text:"我们仅会在以下情况，且采取符合业界标准的安全防护措施的前提下，才会公开披露您的个人信息："},{kind:"li",text:"根据您的需求，在您明确同意的披露方式下披露您所指定的个人信息；"},{kind:"li",text:"根据法律、法规的要求、强制性的行政执法或司法要求所必须提供您个人信息的情况下，我们可能会依据所要求的个人信息类型和披露方式公开披露您的个人信息。在符合法律法规的前提下，当我们收到上述披露信息的请求时，我们会要求必须出具与之相应的法律文件，如传票或核查函。我们坚信，对于要求我们提供的信息，应该在法律允许的范围内尽可能保持透明。我们对所有的请求都进行了慎重的审查，以确保其具备合法依据，且仅限于执法部门因特定核查目的且有合法权利获取的数据。"},{kind:"p",text:"请注意，您在使用我们服务时自愿发布甚至公开分享的信息，可能会涉及您或他人的个人信息甚至敏感个人信息，如您的交易信息，以及您在评价时选择上传包含个人信息的文字、图片或视频等各种形式的信息。请您在使用我们的服务时更加谨慎地考虑，是否要发布甚至公开分享相关信息。"},{kind:"li",text:"我们如何保护您的个人信息"},{kind:"p",text:"我们已采取符合业界标准的安全防护措施保护您提供的个人信息，防止数据遭到未经授权访问、公开披露、使用、修改、损坏或丢失。我们会采取一切合理可行的措施，保护您的个人信息。"},{kind:"li",text:"我们设置了专门的个人信息保护负责人，负责处理我们相关产品和服务可能涉及到用户个人信息的各项事务，以及规划和制定公司的隐私政策、审核各产品的用户使用协议、监督各产品的工作原理和信息处理机制等。"},{kind:"li",text:"我们进行了信息安全等级保护的定级测评，我们的信息系统被认定为符合信息安全等级保护第三等级（金融机构信息系统级别的保护）要求，并按照法律法规要求就定级报告向公安机关进行了备案。我们按照信息安全等级保护的要求制定了信息安全工作的总体方针和安全策略，建立了覆盖主机、数据、应用、管理等层面的安全管理制度，设立了专职部门负责信息安全管理工作，明确了安全管理机构内的各个部门和岗位的职责、分工和技能要求，制定了明确的人员录用和离职管理规范。"},{kind:"li",text:"我们会对可识别的敏感个人信息进行加密传输和存储，以确保数据的保密性。我们的应用系统提供了身份鉴别、用户标识唯一性检查、登录失败处理、基于角色的访问控制等功能，采用HTTPS安全协议进行通信，设置了最大并发会话连接数，能够对系统服务水平降低到预先规定的最小值进行检测和报警。我们在服务端部署访问控制机制，对可能接触到您个人信息的工作人员采取最小够用授权原则，并定期核查访问人员名单和访问记录。我们的服务器操作系统和数据库系统口令有复杂度要求，采用SSH安全协议进行远程管理，严格限制默认账号的访问权限，并修改了默认口令，审计记录全面并覆盖了所有用户。"},{kind:"li",text:"我们存储用户个人信息的服务器系统均为安全加固后的操作系统。我们会对服务器操作进行账号审计及监控。如果发现外部公告有安全问题的服务器操作系统，我们会在第一时间进行服务器安全升级，确保我们所有服务器系统及应用安全。"},{kind:"li",text:"我们为工作人员定期举办个人信息保护相关法律法规培训，以加强工作人员的用户个人隐私保护意识。"},{kind:"li",text:"我们制定了信息安全事件应急预案，并调配足够的资源保障确保应急预案的执行。我们每年对应急预案进行了培训和应急事件演练。如果我们的物理、技术或管理防护措施不幸遭到破坏，我们会及时启动应急预案，防止安全事件扩大，按照法律法规的要求上报国家主管机关，并及时采取推送、公告等合理、有效的方式向您告知安全事件的基本情况、可能的影响、已经采取的措施或将要采取的措施等。"},{kind:"li",text:"您管理个人信息的权利"},{kind:"p",text:"按照中国相关的法律、法规、标准，在您使用我们的产品或服务期间，您可以参考下述指引查询、复制、更正、删除您的个人信息，行使撤回同意以及注销账号的权利。另外，您可以通过本隐私政策第十节载明的方式与我们联系，您的意见会及时得到处理。"},{kind:"li",text:"查询、复制、更正、删除您的个人信息"},{kind:"p",text:"您可以通过本政策第十节提供的联系方式联系我们查询、复制、更正和删除您的个人信息。"},{kind:"p",text:"以下情况发生时，您可以通过本隐私政策提供的联系方式要求我们删除您的个人信息："},{kind:"li",text:"我们没有征求您的明确同意，收集了您的个人信息。"},{kind:"li",text:"我们处理您的个人信息违反了法律法规要求。"},{kind:"li",text:"我们违反了与您的约定来使用和处理您的个人信息。"},{kind:"li",text:"您注销了账号、卸载或者不再使用我们的产品或服务。"},{kind:"li",text:"我们停止对您提供服务。"},{kind:"p",text:"您可以通过本隐私政策第十节提供的方式联系我们要求删除您的个人信息，我们会在收到您的反馈并验证您的用户身份后的15个工作日内给予答复。当我们从服务器中删除您的个人信息后，我们可能不会立即从备份系统中删除相应的数据，但会在备份更新的时候删除这些信息。"},{kind:"li",text:"改变或撤回您的授权或改变您授权同意的范围"},{kind:"p",text:"如果您想改变或撤回授予给我们的设备权限，您随时可通过以下方式改变或撤回："},{kind:"li",text:"您可以在您移动设备本身操作系统中的“设置”中关闭对应的权限改变同意范围或撤回您的授权。撤回授权后我们将不再使用该等权限。"},{kind:"li",text:"当您使用小程序时，您可以在小程序界面中管理小程序获得的应用权限，您可以撤回对小程序的应用权限授权。"},{kind:"li",text:"请您理解，每个业务功能需要一些必要的个人信息才能得以完成，当您撤回同意或授权后，我们将无法继续为您提供撤回同意或授权所对应的服务和功能，也不再处理您相应的个人信息。但您撤回同意或授权的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"li",text:"获得解释的权利"},{kind:"p",text:"您有权要求我们就个人信息处理规则作出解释说明。您可以通过本隐私政策载明的联系方式与我们取得联系。"},{kind:"li",text:"注销您的账号"},{kind:"p",text:"在您通过我们的产品注册了我们账号的情况下，您可以通过本隐私政策第十节的联系方式联系我们注销您的账号，我们会在收到您的反馈并验证您的用户身份后的15个工作日内给予答复。我们在此善意地提醒您，您注销账号的行为，将导致我们终止对您提供服务，也将会给您带来诸多不便。"},{kind:"li",text:"如果您经慎重考虑，确定注销您的账号，您的账号需同时满足以下条件："},{kind:"li",text:"账号处于安全状态，无异常行为记录，无被盗风险；"},{kind:"li",text:"账号相关财产权益已结清，无未完成或存在争议的订单和服务；"},{kind:"li",text:"自愿放弃账号中的资产和虚拟权益（包括但不限于账号余额、积分、会员权益等）；"},{kind:"li",text:"账号无任何未结纠纷，包括投诉举报或被投诉举报。"},{kind:"li",text:"账号一旦被注销将不可恢复，请您在操作之前自行备份本账号相关的所有信息和数据，确认与本账号相关的所有服务均已进行妥善处理。账号成功注销后，您将无法再使用本账号，也将无法找回您账号中及与账号相关的任何内容或信息，包括但不限于："},{kind:"li",text:"您将无法登录、使用本账号；"},{kind:"li",text:"本账号的个人资料和历史信息（包括但不限于用户名、头像、身份信息、订单信息等）都将无法查看、无法找回；"},{kind:"li",text:"您通过本账号进行登录的我们旗下产品或服务（包括但不限于蓝鲸保等）的所有记录将无法找回。您将无法再登录、使用前述服务，您曾获得的账号余额、积分、会员权益等视为您自行放弃，将无法继续使用。您理解并同意，我们无法协助您重新恢复前述服务。请您在提交注销申请前，务必先了解您须解绑的其他相关账号信息，具体可通过本隐私政策第十节提供的联系方式与我们联系。"},{kind:"p",text:"注销成功后，除法律法规要求我们保存相关信息的情况外，我们将删除您的个人信息，使其保持不可被检索、访问的状态或对其进行匿名化处理。您知晓并理解，注销账号并不代表注销前的账号行为和相关责任得到豁免或减轻。"},{kind:"li",text:"逝者近亲属相关权利"},{kind:"p",text:"若用户不幸身故，其近亲属为了自身的合法、正当利益，可以对用户的相关个人信息行使本条款规定的查阅、复制、更正、删除等相关权利；用户生前另有安排的除外。"},{kind:"li",text:"响应您的上述请求"},{kind:"p",text:"如果您选择删除个人信息或者注销个人账号，您可以通过本隐私政策第十节的联系方式联系我们，我们会在收到您的反馈并验证您的用户身份后的15个工作日内给予答复。"},{kind:"b",text:"在以下情形中，按照法律法规要求，我们将无法响应您的请求："},{kind:"li",text:"与我们履行法律法规规定的义务相关的；"},{kind:"li",text:"与国家安全、国防安全直接相关的；"},{kind:"li",text:"与公共安全、公共卫生、重大公共利益直接相关的；"},{kind:"li",text:"与刑事侦查、起诉、审判和判决执行等直接相关的；"},{kind:"li",text:"有充分证据表明您存在主观恶意或滥用权利的；"},{kind:"li",text:"出于维护个人信息主体或其他个人的生命、财产等重大合法权益但又很难得到本人同意的;"},{kind:"li",text:"响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的；"},{kind:"li",text:"涉及商业秘密的。"},{kind:"li",text:"未成年人个人信息保护"},{kind:"p",text:"我们非常重视未成年人个人信息的保护。我们的产品和服务主要面对成人。我们原则上不会主动从未成年人处收集未成年人的个人信息；如果没有父母或监护人的同意，未成年人不应注册和使用我们的服务。如您为未成年人，我们建议您请您的父母或监护人为您阅读本隐私政策，并在您提交个人信息之前征得父母或监护人的同意。若您是未成年人的监护人，当您对您所监护的未成年人的个人信息有疑问时，您可以通过本隐私政策第十节的联系方式与我们联系。"},{kind:"p",text:"如果特定服务需要提供未成年人个人信息（例如父母或监护人为未成年子女投保时，需要提供未成年人的姓名、身份证号等个人信息），那么我们仅会在法律法规允许、父母或监护人同意并主动提交这些信息的情况下，收集这些信息。对于经父母或监护人同意使用我们的产品或服务而收集未成年人个人信息的情况，我们只会在法律法规允许、父母或监护人明确同意或者保护未成年人所必要的情况下使用、共享、转让或披露此信息。如果我们发现自己在未事先获得可证实的父母或法定监护人同意的情况下收集了未成年人的个人信息，则会在法律要求的情况下尽快删除相关数据。"},{kind:"b",text:"特别提示：我们为处理儿童（不满十四周岁的未成年人）个人信息制定了专门的《儿童个人信息保护政策》(请嵌入《儿童个人信息保护政策》超链接后删除标黄文字）。儿童及其监护人在使用蓝鲸保产品或服务之前，应仔细阅读我们专门制定的《儿童个人信息保护政策》。只有在取得监护人对《儿童个人信息保护政策》的同意后，儿童才能在监护人的指导下使用蓝鲸保产品或服务。"},{kind:"li",text:"隐私政策的适用范围、变更和修订"},{kind:"b",text:"如我们在本隐私政策序言部分所述，本隐私政策适用于蓝鲸保产品和服务。您可能通过蓝鲸保产品中的链接跳转至我们运营的其他产品或服务，这些产品或服务可能会通过其另行设置的隐私政策向您说明收集和使用您个人信息的情况并据此处理您的个人信息。我们的产品或服务均会按照与本隐私政策实质相同的标准对您的个人信息提供完善的保护。"},{kind:"b",text:"需要特别说明的是，本隐私政策不适用于其他第三方向您提供的服务。例如您通过蓝鲸保链接或购买的保险产品或健康服务产品。我们会在与这些第三方开展合作过程中尽最大努力督促其保护您的个人信息，但您理解这些服务由第三方独立向您提供，第三方将依照其隐私政策或用户协议单独对您的个人信息处理承担责任。"},{kind:"p",text:"我们的隐私政策可能变更。未经您明确同意，我们不会限制您按照本隐私政策所应享有的权利。"},{kind:"p",text:"对于本隐私政策的重大变更，我们还会提供显著的通知（例如，在软件改版或升级、或您重新登录时，以消息形式对您进行及时通知）。您亦可以通过蓝鲸保官方网站（https://www.hkinur.com/）随时查看最新版的隐私政策。"},{kind:"p",text:"本政策所指的重大变更包括但不限于："},{kind:"li",text:"我们的服务模式发生重大变化。如处理个人信息的目的、处理个人信息的类型、个人信息的使用方式等；"},{kind:"li",text:"我们在控制权等方面发生重大变化。如并购重组等引起的所有者变更等；"},{kind:"li",text:"个人信息共享、转让或公开披露的主要对象发生变化；"},{kind:"li",text:"您参与个人信息处理方面的权利及其行使方式发生重大变化；"},{kind:"li",text:"我们负责处理个人信息安全的责任部门、联络方式及投诉渠道发生变化时；"},{kind:"li",text:"个人信息安全影响评估报告表明存在高风险时。"},{kind:"li",text:"如何联系我们"},{kind:"p",text:"海客（天津）保险经纪有限公司为我们蓝鲸保的运营主体，注册地址为天津自贸试验区（东疆保税港区）亚洲路6865号金融贸易中心北区1-1-2403-4。如果您对我们的隐私政策及对您个人信息的处理有任何疑问、意见、建议或投诉，或就您个人信息的收集、使用、共享、查询、更正、删除等有任何要求、意见或建议，请拨打电话：4000161100，与我们取得联系。我们将尽快审核所涉问题，并在验证您的用户身份后15个工作日内予以回复。"},{kind:"p",text:"您理解，由于材料审核、业务核对、操作流程等原因，对您请求的处理完成时间可能会长于上述时限。如果您对我们的回复不满意，特别是我们的个人信息处理行为损害了您的合法权益，您还可以向网信、电信、公安及工商等监管部门进行投诉或举报；或向具有管辖权的法院提起诉讼。我们希望您在向政府或法院投诉或起诉前，可以与我们进行友好协商，欢迎并感谢您对我们的监督和建议。"},{kind:"li",text:"隐私政策的生效"},{kind:"p",text:"本隐私政策版本发布日期为2026年1月23日，将于2026年1月23日正式生效。"}]},lr={title:"《中国移动认证梧桐数盾隐私政策》",blocks:[{kind:"h1",text:"中国移动认证梧桐数盾隐私政策"},{kind:"p",text:"更新时间：2026年6月3日"},{kind:"p",text:"生效时间：2026年6月3日"},{kind:"p",text:"中移互联网有限公司移动认证业务（以下称”我们”）非常重视用户的隐私和个人信息安全保护，我们将按照法律法规要求，采取相应安全保护措施，尽力保护您的个人信息安全可控。"},{kind:"p",text:"我们希望通过《隐私政策》（以下简称”本政策”）向您说明移动认证（以下简称”本服务”）如何收集、使用、存储和共享您的个人信息，以及您可以如何行使您的隐私权利。"},{kind:"p",text:"请您在使用本服务前，认真阅读并充分理解本《隐私政策》的全部内容，特别是以字体加粗方式标识的内容。在阅读过程中如您对本政策内容有任何疑问、意见或建议，请联系我们。您使用或在我们更新本政策后继续使用我们的产品或服务，即表示您同意本政策（含更新版本）内容，并且同意我们按照本政策收集、存储、使用和共享您的相关信息。您方表示同意的方式包括但不限于主动点击”同意”、”接受”、“授权”选项或签字等。"},{kind:"p",text:"本隐私政策将帮助您了解以下内容："},{kind:"h1",text:"一. 我们如何收集和使用您的个人信息。"},{kind:"h1",text:"二. 我们如何使用Cookie和同类技术。"},{kind:"h1",text:"三. 我们如何共享、转让、公开披露您的个人信息。"},{kind:"h1",text:"四. 我们如何保护和保存您的个人信息。"},{kind:"h1",text:"五. 您的权利。"},{kind:"h1",text:"六. 例外情况。"},{kind:"h1",text:"七. 我们如何处理未成年人的个人信息。"},{kind:"h1",text:"八. 您的个人信息如何在全球范围转移。"},{kind:"h1",text:"九. 本政策如何更新。"},{kind:"h1",text:"十. 如何联系我们。"},{kind:"h1",text:"一、我们如何收集和使用您的个人信息"},{kind:"p",text:"个人信息是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，不包括匿名化处理后的信息。我们会以“最小化”原则收集、使用、存储和传输用户个人信息，并通过用户协议和隐私政策告知您信息的使用目的和范围。"},{kind:"p",text:"我们会为您提供的各项具体功能场景包括："},{kind:"h2",text:"（一）为保证您正常使用本服务的内容，我们需要收集和使用下列与您有关的信息："},{kind:"h2",text:"1、移动认证安全基座SDK功能"},{kind:"p",text:"根据《T/TAF 188-2023 软件开发工具包（SDK）收集个人信息技术要求》，本 SDK 属于认证类。"},{kind:"p",text:"移动认证安全基座SDK包含本机号码校验功能。"},{kind:"p",text:"为实现本机号码校验功能，需要获取您的网络类型、网络地址（ip 地址）、运营商类型、本机号码信息、SIM 卡状态，用于一键获取您的手机号码；同时，使用手机设备类型、手机操作系统、硬件厂商，用于问题查询、分析、风险控制和追踪，如您拒绝提供，将不能使用本服务。"},{kind:"h2",text:"2、H5移动认证安全基座 功能"},{kind:"p",text:"H5移动认证安全基座包含本机号码校验、号码授权、信息助填和区块链存证功能。"},{kind:"p",text:"为实现H5场景本机号码校验和号码授权功能，需要收集您的本机号码、运营商类型、网络类型，用于获取您的手机号码进行本机号码校验和号码授权服务。同时使用您的浏览器指纹用于业务风控，浏览器指纹具体包括：操作系统、用户代理（浏览器类型）、浏览器版本号、浏览器是否启动cookie、cpu 等级、cpu 虚拟核心数、系统语言、浏览器插件、屏幕可用宽度、屏幕可用高度、颜⾊质量、时差区。如您拒绝提供，将不能使用服务。"},{kind:"p",text:"为实现H5场景信息展示的服务，您填写身份证号码后四位，并授权我们及中国移动通信集团有限公司获取您的手机号码。同时我们将使用您在我们及中国移动通信集团有限公司预留的身份证号码、手机号码进行身份证号码后四位校验，校验成功后，您的【姓名、手机号、身份证号码前十四位】将以密文形式存放到您的中移互联可信数据空间中，在获得您确认授权后，我们会从您的可信数据空间中获取您的【姓名、手机号、身份证号码前十四位】信息并提供给银联商务支付股份有限公司及相关使用方，并使用该信息为您完成H5场景下展示的服务。为保障您的数据安全，在向银联商务支付股份有限公司及相关使用方提供您的【姓名、身份证号码前十四位】信息后，我们将从中移互联可信数据空间删除您的【姓名、身份证号码前十四位】信息。如您拒绝提供，将不能使用H5场景信息助填服务，但不影响使用一键登录和本机号码校验功能。"},{kind:"p",text:"为实现H5场景区块链存证功能，需要获取您的手机号、IP地址、当前操作信息、使用时间、服务协议条款，用于将您的使用信息上传至区块链存证。如您拒绝提供，将不能使用区块链存证服务。"},{kind:"h2",text:"3、移动认证安全基座SDK移动设备系统权限申请声明"},{kind:"li",text:"（1）为满足基本业务要求，需要获取您的以下权限："},{kind:"table",rows:[["权限","操作系统","使用场景","使用目的"],["INTERNET（必选）","Android","网络通信","允许应用程序联网，用于访问网关和认证服务器"],[`ACCESS_NETWORK_STAT\nE（必选）`,"Android","查看网络状态","允许 SDK 访问网络状态，用于判断设备网络类型是蜂窝网络或 WIFI 网络"],[`CHANGE_NETWORK_STA\nTE（必选）`,"Android","进行网络切换通信",`允许程序改变网络连接状态 , 当\n用户未使用数据流量时，切换为数据流量，以获取用户手机号码`],["蜂窝网络权限（必选）","iOS","获取用户手机号","用于一键获取您的手机号码"]]},{kind:"p",text:"如您拒绝提供以上移动设备系统权限，将不能使用服务。"},{kind:"h2",text:"（二）从第三方获得您的个人信息："},{kind:"p",text:"为向您提供H5场景信息助填服务，经您授权同意，我们可能会接收中国移动通信集团有限公司提供的您的【加密身份证号码、加密姓名】。我们将在确认接收的个人信息来源的合法性后，依相关法律法规及第三方约定将您的前述信息用于H5场景信息助填服务。"},{kind:"h2",text:"（三）在以下情形中我们使用您的信息时无需征得您的授权同意："},{kind:"p",text:"1.关系国家安全、国防安全的情况时。"},{kind:"p",text:"2.关系公共安全、公共卫生、重大公共利益的情况时。"},{kind:"p",text:"3.关系犯罪侦查、起诉、审判和判决执行的情况时。"},{kind:"p",text:"4.出于维护个人信息主体或其他个人的生命、财产安全，但又很难得到本人同意的情况下。"},{kind:"p",text:"5.所收集的个人信息是个人信息主体自行向社会公众公开的信息。"},{kind:"p",text:"6.从合法公开披露的信息中收集的您的个人信息的，如合法的新闻报道、政府信息公开渠道。"},{kind:"p",text:"7.根据您的要求签订合同所必需的。"},{kind:"p",text:"8.用于维护所提供的产品与/或服务的安全稳定运行所必需的，例如发现、处置产品与/或服务的故障。"},{kind:"p",text:"9.为合法的新闻报道所必需的。"},{kind:"p",text:"10.学术研究机构基于公共利益开展统计或学术研究所必要，且对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的。"},{kind:"p",text:"11.法律法规规定的其他情形。"},{kind:"h2",text:"（四）基于合法获取的数据，我方将依法按照业内领先的去标识化、匿名化等数据安全技术对信息进行处理。对我方及合作方合法合规获取的数据进行汇聚融合、加工分析、开展隐私计算、联邦学习等处理，形成数据产品，为第三方客户提供用户增长、营销辅助、风险识别、广告反作弊等大数据解决方案，如您不希望我们进行前述处理，您可以通过本政策列明的联系方式与我们联系取消授权。"},{kind:"h2",text:"（五）请您注意，您同意我们使用以上信息及权限即代表您授权我们可以收集和使用这些个人信息，您关闭权限即代表您取消了这些授权，则我们将不再继续收集和使用您的个人信息，也无法为您提供与这些授权所对应的相关功能。您关闭授权的决定不会影响此前基于您的授权所进行的个人信息的处理。"},{kind:"h2",text:"（六）请您放心，我们收集和使用的个人信息均是在经过您的授权后通过合法渠道获得，不会从任何非法渠道间接获取您的个人信息。我们不会使用个人信息对您进行个性化推荐，当我们要将信息用于本政策未载明的其他用途时，会事先征求您的同意。"},{kind:"h1",text:"二、我们如何使用Cookie 和同类技术"},{kind:"p",text:"为确保本服务的正常运转，我们会在您的移动设备上存储名为Cookie 的小数据文件。Cookie通常包含标识符、站点名称以及一些号码和字符。通过Cookie，我们能够缓存您的数据以便下次快速获取您的手机号码。"},{kind:"p",text:"我们不会将Cookie 用于本政策所述目的之外的任何用途。您可根据自己的偏好清除手机缓存。"},{kind:"h1",text:"三、我们如何共享、转让、公开披露您的个人信息"},{kind:"h2",text:"（一）共享"},{kind:"p",text:"我们不会与中移互联网有限公司以外的任何公司、组织和个人分享您的个人信息，但以下情况除外："},{kind:"p",text:"1.我们可能会根据法律法规规定，或按政府主管部门的强制性要求，对外共享您的个人信息。"},{kind:"p",text:"2.如您同意本隐私政策，我们可能会将您的【手机号码、授权凭证】共享给中国移动通信集团有限公司，同时将您的【手机号码】共享给银联商务支付股份有限公司及相关使用方，以确保您在可信助填场景中的授权以及身份真实有效。我们只会共享必要的个人信息，且受隐私政策中所声明目的的约束。"},{kind:"h2",text:"（二）转让"},{kind:"p",text:"除以下情况外，我们不会将您的个人信息转让给任何公司、组织和个人。"},{kind:"p",text:"1.获得您的明确授权后，我们会向您授权的第三方转让您的个人信息。"},{kind:"p",text:"2.在本业务合并、收购或破产清算时，如涉及到个人信息转让时，我们会要求新的公司继续按本隐私政策接收、管理、使用和转让您的信息。若无法达成共识，我们会要求新的公司重新向您征求授权。"},{kind:"h2",text:"（三）公开披露"},{kind:"p",text:"除以下情况外，我们不会公开披露您的个人信息："},{kind:"p",text:"1.获得您明确同意后，按您授权情况披露您的个人信息。"},{kind:"p",text:"2.在法律、法律程序或政府主管部门强制性要求的情况下，我们可能会按要求披露您的个人信息。"},{kind:"h1",text:"四、我们如何保护和保存您的个人信息"},{kind:"h2",text:"（一）我们如何保存您的个人信息"},{kind:"h3",text:"1.信息存储的地点"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内，不存在境外收集用户信息情况。"},{kind:"h3",text:"2.信息存储的期限"},{kind:"p",text:"一般而言，移动认证将在您使用期间保存您的个人信息，并且您的个人信息将在法律规定范围内最短期限保留。在超出保留期限后，我们会根据适用法律的要求删除或匿名化处理您的个人信息。"},{kind:"p",text:"当您注销中国移动账户后，我们将删除相应的个人信息或进行匿名化处理。"},{kind:"p",text:"当我们的产品或服务发生停止运营的情形时，我们将以推送通知、公告的形式通知您，并在法律规定的期限内删除您的个人信息或进行匿名化处理。"},{kind:"p",text:"注：法律法规有规定不能删除时或不能匿名化处理的情况除外。"},{kind:"h2",text:"（二）我们如何保护您的个人信息"},{kind:"p",text:"我们会严格按照《中华人民共和国个人信息保护法》《中华人民共和国网络安全法》《全国人民代表大会常务委员会关于加强网络信息保护的决定》《电信和互联网用户个人信息保护规定》（工业和信息化部令第24 号）、《电话用户真实身份信息登记规定》（工业和信息化部令第25 号）等法律法规的要求，建立信息安全保障制度，采取技术措施和其他必要措施保护您的个人信息安全。"},{kind:"p",text:"1.我们保护您个人信息的技术与措施"},{kind:"p",text:"我们非常重视个人信息安全，并采取一切合理可行的措施保护您的个人信息："},{kind:"h3",text:"（1）数据安全技术措施"},{kind:"p",text:"我们会采用符合业界标准的安全保护措施，包括建立合理的制度规范、安全技术来防止您的个人信息遭到未经授权的访问使用、修改，避免数据的损坏或丢失。"},{kind:"p",text:"中移互联网的网络服务采取了传输层安全协议和其他加密技术，通过https 和其他方式提供浏览服务，确保用户数据在传输过程中的安全性。"},{kind:"p",text:"中移互联网采取加密技术对用户个人信息进行加密保存，并通过隔离技术进行隔离。"},{kind:"p",text:"在个人信息使用时，例如个人信息展示，我们会采取多种复杂的数据脱敏技术增强个人信息在使用中的安全性。"},{kind:"p",text:"中移互联网采用代码安全检查、数据方位日志分析技术进行个人信息安全审计。"},{kind:"h3",text:"（2）中移互联网为保护个人信息采取的其他安全措施"},{kind:"p",text:"中移互联网通过建立数据分类分级制度、数据安全管理规范、数据安全开发规范来管理规范个人信息的存储和使用。通过信息接触者保密协议、监控和审计制度来对数据进行全⾯安全控 制。同时建立安全管理中心并下设信息保护专职部门、数据安全应急响应组织来推进和保障个人信息安全，加强安全意识。我们还会定期举办安全和隐私保护培训课程来加强对个人信息保护重要性的认识，同时进行定期安全审计。"},{kind:"p",text:"2.安全事件处置"},{kind:"p",text:"为应对个人信息泄露、损毁和丢失等可能出现的风险，中移互联网制定了多项制度，明确安全事件、安全漏洞的分类分级标准及相应的处理流程。中移互联网也为本服务系统安全事件建立了专门的应急响应团队，按照安全事件处置规范要求，针对不同安全事件启动安全预案，进行止损、分析、定位、制定补救措施并联合相关部门进行溯源和打击。"},{kind:"p",text:"若不幸发生个人信息安全事件，我们将按照法律法规的要求，及时告知您安全事件的基本情况和可能的影响、我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议、对您的补救措施等信息。我们将及时将事件相关情况以邮件、信函、电话、推送通知的方式告知您。在难以逐一告知个人信息主体时，我们会采取合理、有效的方式发布公告。同时，我们还将按照监管部门要求，主动上报个人信息安全事件的处置情况。"},{kind:"p",text:"3.请您理解：互联网环境并非百分之百安全，我们将尽力确保或担保您发送给我们的任何信息的安全性。如果我们的物理、技术或管理防护设施遭到破坏，导致信息被非授权访问、公开披露、篡改或毁坏，导致您的合法权益受损，我们将依照法律法规承担相应责任。如果您对我们的个人信息保护有任何疑问，可通过本隐私政策中约定的联系方式联系我们。如果您发现自己的个人信息泄露，尤其是您的账户及密码发生泄露，请您立即通过本隐私政策【十、如何联系我们】中约定的联系方式联络我们，以便我们采取相应措施。"},{kind:"h1",text:"五、您的权利"},{kind:"h2",text:"（一）查询、更正、补充和限制您的个人信息"},{kind:"h2",text:"若您希望查询、更正、补充和限制您的个人信息，您可以联系我们的客服电话10086联系我们，我们会有专门的客服人员帮助您。"},{kind:"h2",text:"删除您的个人信息"},{kind:"p",text:"您可以通过联系10086客服电话的方式删除您的部分信息，或申请注销手机号码删除您的全部信息，我们将在验证通过后的十五天内处理您的删除申请。在以下情形中，您可以向客服申请，提出删除个人信息的请求："},{kind:"p",text:"1.如果我们处理个人信息的行为违反了相关法律法规。"},{kind:"p",text:"2.如果我们收集、使用您的个人信息，却未征得您的同意。"},{kind:"p",text:"3.如果我们处理个人信息的行为违反了与您的约定。"},{kind:"p",text:"4.如果您不再使用我们的产品或服务，或您注销了中国移动手机号。"},{kind:"p",text:"5.如果我们不再为您提供产品或服务。"},{kind:"p",text:"当您从我们的服务中删除信息后，我们可能不会立即从备份系统中删除相应的信息，但会在备份更新时及时删除这些信息。"},{kind:"h2",text:"（三）注销账户"},{kind:"p",text:"您可以通过联系10086客服电话的方式申请注销，我们将在十五天内处理您的注销申请，您主动注销您的账户之后，我们将停止为您提供产品或服务，并依据您的要求，删除或匿名化您的个人信息，法律法规另有规定的除外。"},{kind:"h2",text:"（四）复制个人信息副本"},{kind:"p",text:"如果你需要复制我们收集存储的个人信息，您可以联系10086，联系客服协助您复制、转移你的个人信息。"},{kind:"h2",text:"（五）个人信息可携权"},{kind:"h2",text:"在符合国家相关法律法规及网信部门规定的条件下，如您请求将个人信息转移至指定的个人信息处理者，我们将按照相关规定的要求提供转移的途径。"},{kind:"h2",text:"（六）撤销已同意授权功能"},{kind:"p",text:"如您已授权我们获得某些移动设备系统权限同意我们处理您的个人信息，您可以通过APP 系统权限设置撤回您的授权。您可登录梧桐数盾页面（https://slw.h5cmpassport.com:9091/h5/login），点击底部栏【授权】--【授权凭证】--【可信助填授权凭证】--【撤销授权】路径撤回您的对本产品隐私政策的授权同意，当您收回同意的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"p",text:"当您撤回同意或授权后，我们无法继续为您提供撤回同意或授权所对应的服务，也将不再处理您相应的个人信息。但您撤回同意或授权的决定，不会影响此前基于您的同意或授权而开展的个人信息处理。"},{kind:"h2",text:"（七）响应时限"},{kind:"p",text:"对于您行使上述（一）至（六）项权利所提出的相关请求，我们将在收到您的申请之日起十五天内作出答复。"},{kind:"h1",text:"六、例外情况"},{kind:"p",text:"请您充分理解并同意，我们在以下情况下收集、使用您的个人信息无需您的授权，且我们可能不会响应您提出的删除、注销的请求："},{kind:"p",text:"1.与国家安全、国防安全有关的情况。"},{kind:"p",text:"2.与公共安全、公共卫生、重大公共利益有关的情况。"},{kind:"p",text:"3.与犯罪侦查、起诉、审判和执行判决等有关的情况。"},{kind:"p",text:"4.有充分证据表明个人信息主体存在主观恶意或滥用权利的情况。"},{kind:"p",text:"5.响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的情况。"},{kind:"p",text:"6.涉及商业秘密的情况。"},{kind:"p",text:"7.法律法规规定的其他情形。"},{kind:"h1",text:"七、我们如何处理未成年人的个人信息"},{kind:"h2",text:"（一）我们非常重视保护未成年人个人信息，特别是14周岁以下的儿童。若您是未成年人，在使用我们的服务前，应提前取得您的父母或法定监护人的书面同意。我们将根据国家相关法律法规保护未成年人的个人信息。"},{kind:"h2",text:"（二）对于已经过未成年人的父母或法定监护人同意而收集的未成年人个人信息，我们只会在法律允许、父母或法定监护人明确同意、保护未成年人所必要的情况下使用或公开披露相关信息。"},{kind:"h2",text:"（三）如果我们发现在未事先获得未成年人的父母或法定监护人同意的情况下收集了未成年人的个人信息，会立即删除相关数据。"},{kind:"h1",text:"八、您的个人信息如何在全球范围转移"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内,我们不会将您的个人信息传输至中华人民共和国境外。"},{kind:"h1",text:"九、本政策如何更新"},{kind:"p",text:"我们的隐私政策可能变更。"},{kind:"p",text:"未经您的同意，我们不会削减您应享有的个人隐私权利。我们会以弹窗形式发布对本政策所做的任何变更。对于变更后的隐私政策，我们会再次征求您的同意。"},{kind:"h1",text:"十、如何联系我们"},{kind:"p",text:"如您对本政策存在任何疑问，或对于您的个人信息处理存在任何投诉、意见，请通过以下渠道联系我们："},{kind:"p",text:"公司名称：中移互联网有限公司"},{kind:"p",text:"公司地址：中国广东省广州市天河区高唐路323号中国移动南方基地智汇中心"},{kind:"p",text:"联系方式：10086"},{kind:"p",text:"我们已经建立客户投诉管理机制，包括跟踪流程。一般来说，我们将在验证通过后的五个工作日内处理完成，特殊情形下最长将在不超过十五天内作出答复。"},{kind:"p",text:"中国移动版权所有"}]},fr={title:"《第三方共享个人信息清单》",blocks:[{kind:"h1",text:"第三方对外提供个人信息清单"},{kind:"table",rows:[[{kind:"text",text:"合作方",colSpan:7}],["合作方名称","共享目的","共享场景","个人信息","提供方式","隐私政策或官网","联系方式"],["恒大保险经纪有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token、姓名、身份证号前十四位、手机号","API接口",{kind:"doc-link",text:"《恒大保险经纪隐私政策》",docKey:"hengda-v2-privacy-policy"},"0769-33551837"],["中移互联网有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token","API接口",{kind:"doc-link",text:"《中国移动认证梧桐数盾隐私政策》",docKey:"hengda-v2-cmcc-privacy-policy"},"10086"]]}]},hr={title:"《恒大保险经纪隐私政策》",blocks:[{kind:"h1",text:"恒大保险经纪隐私政策"},{kind:"p",text:"【更新日期】2026年7月1日"},{kind:"p",text:"【生效日期】2026年7月1日"},{kind:"p",text:"【特别提示】尊敬的用户：感谢您的信任，为了帮助您了解我们对个人信息的处理和保护规则，我们特制定《隐私政策》（“隐私政策”）。请您仔细阅读本隐私政策尤其是粗体显示的内容。如您有任何疑问、意见或建议，您可通过本隐私政策第十节的联系方式与我们联系。"},{kind:"p",text:"本隐私政策适用于恒大保险经纪有限公司及其关联公司（统称“恒大保险经纪”或“我们”）通过恒大保险经纪官方网站（https:// www.hengdainsurance.com）、基于Android（安卓）系统和iOS系统开发的“恒智汇”应用程序（APP）、及恒大保险经纪相关小程序、公众号、H5页面、网页以及随技术发展出现的新形态向您提供的产品和服务（统称“恒大保险经纪”）。为了更好地为您提供贴心的服务，您在使用我们的产品或服务时，我们可能会收集和使用您的相关信息。恒大保险经纪非常重视用户的隐私和个人信息保护，我们希望通过本隐私政策向您说明我们在您使用我们的产品或服务时如何收集、使用、保存、共享、转让和保护这些信息，以及我们为您提供的管理这些信息的方式。"},{kind:"p",text:"在本隐私政策中，个人信息，是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，不包括匿名化处理后的信息。敏感个人信息，是指一旦泄露或者非法使用，容易导致自然人的人格尊严受到侵害或者人身、财产安全受到危害的个人信息，包括生物识别、宗教信仰、特定身份、医疗健康、金融账户、行踪轨迹等信息，以及不满十四周岁未成年人的个人信息。我们将在本隐私政策中对个人信息以粗体进行显著标识。"},{kind:"p",text:"我们在此特别提醒您：我们致力于打造多样的产品和服务以满足您的需求。因我们向您提供的产品和服务种类众多，且不同用户选择使用的具体产品/服务范围存在差异，故收集使用的个人信息类型、范围会有所区别，请以具体的产品/服务功能为准。"},{kind:"p",text:"本隐私政策将帮助您了解以下内容："},{kind:"h1",text:"一、 我们收集了哪些个人信息"},{kind:"h1",text:"二、 我们如何使用您的个人信息"},{kind:"h1",text:"三、 征得授权同意的例外"},{kind:"h1",text:"四、 我们如何存储您的个人信息"},{kind:"h1",text:"五、 我们如何共享、委托、转让、公开披露您的个人信息"},{kind:"h1",text:"六、 我们如何保护您的个人信息"},{kind:"h1",text:"七、 您管理个人信息的权利"},{kind:"h1",text:"八、 未成年人个人信息保护"},{kind:"h1",text:"九、 隐私政策的适用范围、变更和修订"},{kind:"h1",text:"十、 如何联系我们"},{kind:"h1",text:"一、我们收集了哪些个人信息"},{kind:"p",text:"在您使用恒大保险经纪服务过程中，我们将按照如下方式收集您在使用服务时主动提供或因您使用服务而产生的信息，用以向您提供下述服务、优化我们的服务并保障您的账号安全。由于恒大保险经纪产品和服务的形态较多，具体的服务类型和可能处理的个人信息以您使用的产品界面展示为准。"},{kind:"h2",text:"（一）账号注册、登录相关的个人信息"},{kind:"p",text:"当您注册、登录成为恒大保险经纪用户时，我们可能会收集您的手机号码以创建恒大保险经纪账号；当您选择授权使用第三方账号（如微信）登录时，我们会通过第三方获取您授权共享的第三方账号信息（包括微信昵称、微信头像）并收集您的手机号码进行账号绑定。收集这些信息是为了帮助您完成恒大保险经纪账号注册，保护您的账号安全。我们收集手机号码，是为了验证您的身份，满足相关法律法规的网络实名制要求。如果您拒绝提供这些信息，您可能无法正常注册恒大保险经纪账号，亦无法在我们的平台上购买保险产品。"},{kind:"p",text:"基于我们与通信运营商的合作，当您使用一键登录功能时，经过您的同意，我们会使用运营商提供的功能，将您设备中的手机号码作为您的注册、登录账号并免于密码或动态验证码核验，为您提供快捷的注册、登录服务。"},{kind:"h2",text:"（二）为您提供保险服务基本功能相关的个人信息"},{kind:"p",text:"1. 投保"},{kind:"p",text:"当您购买保险产品投保时，我们将收集您的投保信息，以便帮助您与保险公司签订保险单，完成投保，这些信息包括投保人的姓名、身份证件信息、手机号码、社保状态（有无）、住址、邮箱，被保险人的姓名、性别、与投保人关系、身份证件号码、联系方式、健康状况、职业，受益人的姓名、受益比例，保险订单信息及其他投保所需的必要信息（以您在投保时相关产品界面所要求提供的信息字段为准）。除上述基本信息，我们还可能获取您的保险标的相关信息，例如您通过我们购买机动车保险时，我们需要您提供车辆行驶证信息、车牌号、车架号、投保地区及其它必要信息。根据法律法规及监管规定，我们将完整记录和保存投保的主要业务过程，包括在您拨打或接听保险客服顾问电话时，我们将会对电话通话过程全程录音，或者按照监管要求对投保过程进行同步录音录像或投保轨迹记录和保存。"},{kind:"p",text:"您可以通过恒大保险经纪为其他人投保保险产品，您向恒大保险经纪提供该实际被保险人的前述个人信息之前，您需确保您已经取得其授权同意。如果您拒绝提供这些信息，我们无法为您订购保险产品并办理投保手续，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"2. 保险理赔"},{kind:"p",text:"当您通过我们申请理赔时，基于法律法规等要求，我们可能收集您申请理赔时所需的相关信息，包括被保险人或者受益人的姓名或者名称、联系方式、有效身份证件信息、出险描述、所在医院、职业、银行卡信息、诊断证明、病历信息、就诊费用信息、保险标的信息、在线沟通记录和电话记录及必要的风险信息。在报案人并非被保险人的情况下，我们还将收集报案人姓名、电话、投保信息、与被保险人的关系、在线沟通记录和电话记录，您向恒大保险经纪提供该实际被保险人的前述个人信息之前，您需确保您已经取得其授权同意。如果您拒绝提供这些信息，我们无法协助您向保险公司申请保险理赔，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"3. 保险合同变更、退保"},{kind:"p",text:"当您通过我们进行保险合同变更、退保时，我们还将收集您主动提供或上传的信息，包括保单号、投保人电话、被保人的姓名、身份证号码、身份证照片、保全申请事由信息、退保申请事由信息、银行账户信息。在涉及您的父母、配偶或子女的情况下，我们会向您收集您的父母、配偶、或子女的相应上述个人信息。您向恒大保险经纪提供前述个人信息之前，您需确保您已经取得其授权同意。如果您拒绝提供这些信息，我们无法向您提供合同变更、退保等服务，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"根据法律法规及监管规定，当您通过我们投保成功，或使用我们提供的协助理赔、协助保全、协助退保、保单查询功能时，由于保险单实际是由为您承保的保险公司提供，因此我们需要从为您承保的保险公司获取您的保险单信息，以便为您提供上述服务。"},{kind:"p",text:"4. 资格核验、风险控制及适当性管理"},{kind:"p",text:"在向您提供各项保险服务过程中，我们可能会向第三方核验调查您是否具备相应的资格或符合法定的条件。在这种情况下，我们可能会收集您留存在我们关联公司、与我们合作的保险公司处的个人信息，我们还可能向行政机关、司法机关、征信机构、医疗机构、保险公估公司、健康服务机构、背景调查公司、信息技术服务机构、电信运营商（或其授权的服务商）以及其他合法了解掌握相关信息的自然人和法人收集或查询相关信息。您同意我们向上述机构收集、查询、使用您的身份、医疗、财产、信用、风险水平、健康状况相关信息以核验您的身份信息的真实性以及是否具有相应的资格或符合法定的条件，防范欺诈等违法活动和减少信用风险。"},{kind:"p",text:"基于账户安全管理、风险控制、防范保险欺诈、消费者适当性管理等原因，我们可能从行政机关、司法机关及我们的合作机构、关联公司等第三方获取去标识化处理后的风险水平类、账户安全类、风控类信息，用于提供风险控制、保险反欺诈、反黑灰产、产品推荐、投保交易风控、智能协助理赔等服务，保障您的账户安全、信息安全及满足法律法规要求。"},{kind:"p",text:"5. 依据法律法规及监管规定履行法定义务"},{kind:"p",text:"根据互联网及金融监管等要求，我们需履行法定义务，如：保险交易可回溯管理义务、实名制管理义务、反洗钱反恐怖融资义务（客户身份识别、客户身份资料和交易记录保存、尽职调查、严格保密等）等。这些法定义务要求我们向您收集您的个人身份信息、电话录音、录音录像、投保轨迹等，其中“身份信息”包括您的姓名、性别、国籍、职业、住所地（或经常居住地）或者工作单位地址、联系方式、身份证件或者身份证明文件的种类、号码和有效期限。“投保轨迹”包括相关交易信息、保单信息、账户信息。如您拒绝提供上述信息，则可能无法使用与监管要求相关的部分服务，但不影响您使用我们提供的其他服务。您知晓并同意，根据您所需的保险产品和服务的不同以及监管机构的要求，我们所收集的信息类型以具体产品或服务申请页面为准。"},{kind:"h2",text:"（三）与改善和优化服务及保障账号安全相关的个人信息"},{kind:"p",text:"为了保障用户的账号安全、交易安全、系统运行安全，满足法律法规和我们协议规则的相关要求，以及不断地改进我们的产品，在您使用我们的产品和服务时，我们需要收集相关的设备信息与日志信息。设备信息包括与您使用设备的软硬件特征和设备环境信息相关的信息，例如IMEI、Android ID、OAID、IDFA、IMSI、网络设备地址（MAC）、BSSID、iccid、设备型号、设备名称、系统版本号、任务列表、设备应用安装列表、手机制造商、运营商名称；日志信息包括IP地址、访问的浏览器信息、点击和浏览我们产品和服务功能或页面的URL地址及其使用情况与频率、应用崩溃情况、总体安装使用情况、性能数据、应用来源。如果您需要使用微信分享功能，我们将使用您的剪切板信息，以确保功能正常使用。"},{kind:"h2",text:"（四）与信息推送、搜索和展示有关的个人信息"},{kind:"p",text:"我们可能收集和使用包括IMEI、Android ID、OAID、IDFA、网络设备地址（MAC）、IMSI、BSSID、MEID、设备型号、设备名称、系统版本号、设备应用安装列表、手机制造商在内的与您使用设备的软硬件特征和设备环境信息相关的信息，用于向您推送信息和内容，该等信息展示与推送可能使用第三方服务。您有权按照本隐私政策第七节“您管理个人信息的权利”指引的撤回同意的方式关闭该等信息推送，在您关闭后，您的设备将不再收到我们的推送信息，关闭信息推送不会影响您使用其他服务。"},{kind:"p",text:"当您使用搜索功能时，我们会自动收集您输入的关键字信息和搜索记录。如果您拒绝提供上述信息，您无法享受搜索服务，但不影响您使用我们提供的其他功能。"},{kind:"h2",text:"（五）为您提供客服和售后服务有关的个人信息"},{kind:"p",text:"在您使用我们产品或服务的过程中，如果您有任何疑问、意见或建议，您可以通过在线客服、发送邮件或拨打电话与我们取得联系，我们将可能收集您的账号信息、电话录音、在线沟通记录、您与客服人员的对话信息（其中可能包括您主动提供的个人信息）。如果您参与问卷调查，我们还将收集您在问卷中向我们提供的信息。为了保证服务体验、改善服务品质，您与客服的通话信息可能会被录音。当您在保险服务过程中出现服务投诉或纠纷时，我们可依法调取并使用录音信息作为解决纠纷的参考依据。"},{kind:"p",text:"当您需要我们提供与保单相关的客户服务时，我们可能会查询您的相关交易信息以便向您提供适当的服务。当您需要客服协助您修改有关信息（如地址、联系方式等）时，您可能还需要提供相应的信息以完成修改。您知悉并同意，如果我们的客服人员无法立刻解决您的问题，我们可能在核实情况后，通过您主动提供的联系方式与您取得联系、解答您的问题、回应您的诉求。"},{kind:"h2",text:"（六）支付订单的个人信息"},{kind:"p",text:"您通过恒大保险经纪支付订单时，可以选择我们合作的银行和第三方支付机构（如支付宝、微信支付等合作方）所提供的服务进行支付。我们需要收集您的订单信息、对账信息及其他法律要求的必要信息并与这些合作机构共享，以确认您的支付指令并帮助您完成支付。同时，为了帮助您实现基于银行卡支付的功能，您授权并同意，我们收集您的姓名、身份证号、银行卡号、银行卡预留手机号、发卡行、卡类型等银行卡信息，以便于将您的银行卡与您的账户进行绑定。我们会将该等信息通过我们的第三方合作支付机构向发卡银行进行验证。在您使用支付服务时，我们还需要记录、收集您的交易信息。您授权我们在向您提供支付服务时可以向必要的第三方合作支付机构提供前述支付必要信息，以确认您的支付指令并帮助您完成支付。"},{kind:"h2",text:"（七）扩展业务、增值服务相关的个人信息"},{kind:"p",text:"恒大保险经纪可能会提供保险产品或服务相关扩展业务、增值服务，具体包括以下内容："},{kind:"p",text:"1. 选择保险方案"},{kind:"p",text:"为向您提供“免费领取保险方案”功能，您需要向我们提供您的年龄、投保金额、您的姓名、您的电话，以根据您提供的信息测算适合您的保险方案，并向您发送测算结果。如果您拒绝提供这些信息，我们无法为您提供“免费领取保险方案”功能，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"为向您提供“保险定制”功能，您需要向我们提供您的手机号、年龄、个人月收入区间、家庭成员、家庭年收入。如果您拒绝提供这些信息，我们无法为您提供“保险定制”功能，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"2. 保费计算"},{kind:"p",text:"在您投保过程中，为方便您计算保费，我们还向您提供“算一算保费”功能。您需要向我们提供您的生日、投保份数、保障期限、交费方式、性别。如果您拒绝提供这些信息，我们无法为您提供“算一算保费”功能，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"3. 邮寄纸质保单或发送电子保单"},{kind:"p",text:"如果您选择由恒大保险经纪为您提供邮寄纸质保单服务，您需要提供收件人的姓名、手机号码、收货地址及您需要备注的其他信息，以便于您的保单能够安全准确送达并完成。如收件人不是您本人，请您知悉收件人可能接收到包括保单在内的上述信息，并确认收件人已经获得了接收这些信息的授权同意。同时，您已就向我们提供收件人的相关信息取得收件人的授权同意。如果您选择由恒大保险经纪向您发送电子保单，需要您提供接受电子保单的邮箱地址。如果您拒绝提供收件人信息或邮箱地址，我们无法向您发送保单，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"4. 视频播放/直播功能"},{kind:"p",text:"当您使用视频播放/直播功能，我们会收集您的设备信息及日志信息。除“改善和优化服务及保障账号安全”功能部分提到的日志信息外，我们还将收集您的播放时间、软件版本型号、您的浏览记录、播放记录、播放时长、访问日期和时间、收藏/关注/订阅/阅读记录。如果您拒绝提供上述信息，您无法享受视频播放/直播服务，但不影响您使用我们提供的其他功能。"},{kind:"p",text:"5. 点赞、评价、信息公开发布功能相关的个人信息"},{kind:"p",text:"当您在首页视频、“恒智汇”点赞、评价您感兴趣的保险知识视频、推文，我们需要收集您的点赞、评价记录。"},{kind:"p",text:"如您在恒大保险经纪相关页面公开发表评价、发布图文等，我们将收集您发布的信息并在商品评价等公共页面向所有用户公开展示您的昵称、头像、您账户发布的内容等。请注意，您公开发布的信息中可能会涉及您或他人的个人信息甚至敏感个人信息，如您在评价时选择上传包含个人信息的图片，请您更加谨慎地考虑，是否在使用我们的服务时共享甚至公开分享相关信息。若您公开发布的信息中涉及他人个人信息的，您需在发布前征得他人的同意。如您选择以匿名方式发布评价信息时，我们将不展示您的昵称、头像。如我们在其它产品功能中使用您发表的评论，我们将通过去标识化的方式展示，确保您的个人信息安全。"},{kind:"p",text:"以上增值服务均为扩展业务功能服务，我们会在符合法律规定的情况下收集并使用您主动提供或因您使用服务而产生的信息。您可以拒绝提供或收集相关信息，但不影响您使用我们提供的基本功能及其它服务。"},{kind:"h2",text:"（八）使用 Cookie 和同类技术收集的信息"},{kind:"p",text:"为确保我们网站正常运转、为您获得更轻松的访问体验，我们会在您的计算机或移动设备上放置安全的Cookie及相关技术（统称“Cookie”）收集信息。Cookie是您浏览网页时，网站服务器放在客户端（您的计算机、移动电话或其他智能终端）里面的一个小小的文本文件，存储了一些与用户访问网站有关的信息。Cookie可帮助我们："},{kind:"p",text:"1. 按照您所希望的服务样式、外观设置为您提供服务；"},{kind:"p",text:"2. 保障数据和服务的安全性，排查针对我们的产品和服务的作弊、黑客、欺诈行为；"},{kind:"p",text:"3. 避免不必要的服务器负载，提高服务效率，节省资源、能源；"},{kind:"p",text:"4. 了解您使用我们服务的方式，以求改善我们的产品和服务的用户体验，为新产品或功能的研发提供参考数据。"},{kind:"p",text:"如果您的浏览器或浏览器附加服务允许，您可修改对Cookie的接受程度或拒绝我们的Cookie。但如果您这么做，在某些情况下可能会影响您安全访问我们的网站，且可能需要在每一次访问我们的网站时更改用户设置。"},{kind:"h2",text:"（九）通过获取权限收集的信息"},{kind:"b",text:"为实现相关业务功能，我们需要调用以下权限并收集您的信息："},{kind:"p",text:"1. 为便于您在客服聊天或其它场景中上传图片和视频及日志缓存，我们会对用户拍摄的照片和视频进行存储。因此，当您主动上传时，如果您使用的是Android系统，我们会在获得您的自主选择同意后，获取您的外部存储的读取和写入权限。如果您使用的是iOS系统，我们将获取您的照片权限，用于写入和读取您的相册信息。拒绝提供该权限会使您无法使用上述功能，但不影响您正常使用我们其他功能。您可以随时通过APP-我的-个人中心-权限管理或在手机系统设置中关闭该授权；"},{kind:"p",text:"2. 为了保障您的账号及交易安全、统计我们产品的用户数量、分析产品的使用状况以不断改进我们的产品以及向您推荐您可能感兴趣的产品和服务，当您首次使用我们的产品和服务时，我们会在获得您的自主选择同意后，获取您的登录状态，收集您使用设备的设备唯一标识信息。拒绝提供该权限会使您无法使用上述功能，但不影响您正常使用我们其他功能。您可以随时在手机系统设置中关闭该授权；"},{kind:"p",text:"3. 为向您发送消息和通知，帮助您更及时地了解我们的服务动态，当您首次使用我们的产品和服务时，我们会在获得您的自主选择同意后，获取您的推送信息权限（通知权限），向您推送保单状态信息等服务消息。拒绝提供该权限会使您无法收到我们的信息推送，但不影响您正常使用我们其他功能。您可以随时在手机系统设置中关闭该授权；"},{kind:"p",text:"4. 当您使用我们的拍摄功能时，例如拍摄照片、视频，用于客服聊天或其它场景中上传图片和视频，我们会在获得您的自主选择同意后，获取您的相机（拍摄）权限。拒绝提供该权限会使您无法使用上述功能，但不影响您正常使用我们其他功能。您可以随时在手机系统设置中关闭该授权。"},{kind:"h2",text:"（十）第三方SDK的使用情况"},{kind:"p",text:"在某些特定业务场景下，为了保障本服务的稳定运行、功能实现，使您能够使用和享受更多的服务及功能，我们的应用中会嵌入第三方的SDK或其他类似的应用程序（简称SDK）来为您提供服务。"},{kind:"p",text:"此处查看我们产品中接入的第三方SDK目录，以了解可能获得您信息的第三方SDK、相关服务提供方身份、其通过恒大保险经纪收集或获取的您的个人信息范围以及使用目的。我们会不时对该等合作伙伴或服务提供商进行技术检测和行为审计，并要求其遵循合作法律协议，以最大限度地确保其依法、依规、依约收集和使用数据。"},{kind:"b",text:"请您注意，尽管我们会通过合同和技术手段要求该等第三方严格保护您的个人信息，但该等第三方将依据其个人信息保护政策对您的个人信息独立承担保护责任。"},{kind:"b",text:"数据保护方式：1、采用SSL协议加密及HTTPS传输加密技术保障安全；2、采取加密、去标识化等安全措施脱敏处理。"},{kind:"table",rows:[["SDK名称","使用目的","收集数据类型","隐私政策/官网链接"],["阿里实人认证","认证环节，入司识别","姓名、身份证号、人脸信息设备信息，包括Android ID、OAID、IDFA、BSSID、SSID、IMEI、IMSI、MAC、SN。","https://terms.aliyun.com/legal-agreement/terms/suit_bu1_ali_cloud/suit_bu1_ali_cloud202111292014_72878.html"],["腾讯云实人认证","认证环节，入司识别","姓名、身份证号、人脸信息设备信息，包括Android ID、OAID、IDFA、BSSID、SSID、IMEI、IMSI、MAC、SN。","https://cloud.tencent.com/document/product/301/11470"],["极光推送","推送服务","设备信息（IMEI/MAC/Android ID/IDFA/OAID/UAID/OpenUDID/GUID/SIM卡IMSI信息等）网络信息与位置信息（IP地址，WiFi信息，基站信息等相关信息）APP安装列表信息","https://www.jiguang.cn/license/privacy"],["欧畅视点播、直播","学吧视频、音频、直播","恒智汇用户ID","https://www.occloud.net/"],["友盟社会化分享","微信登录，社交平台分享","设备信息（IMEI/MAC/Android ID/IDFA/OpenUDID/GUID/SIM卡IMSI/IP/地理位置）","https://www.umeng.com/page/policy"],["微信开放平台","微信支付","硬件设备型号、终端系统类型、设备识别码、使用的软件版本信息、软件语言设置信息、IP地址、所在的地区、移动网络信息、标准网络日志数据和网络使用习惯以及您使用财付通服务的操作记录","https://support.weixin.qq.com/cgi-bin/mmsupportacctnodeweb-bin/pages/RYiYJkLOrQwu0nb8#__section1"],["百度IDL人脸识别采集","认证环节，入司识别","姓名、身份证号、人脸信息设备信息，包括Android ID、OAID、IDFA、BSSID、SSID、IMEI、IMSI、MAC、SN。","https://ai.baidu.com/ai-doc/REFERENCE/Vkdygjliz"],["Vivo推送","消息推送","设备信息（IMEI/MAC/Android ID/IDFA/OAID/UAID/OpenUDID/GUID/SIM卡IMSI信息等）网络信息与位置信息（IP地址，WiFi信息，基站信息等相关信息）APP安装列表信息","https://dev.vivo.com.cn/documentCenter/doc/359"],["华为推送","消息推送","设备信息（IMEI/MAC/Android ID/IDFA/OAID/UAID/OpenUDID/GUID/SIM卡IMSI信息等）网络信息与位置信息（IP地址，WiFi信息，基站信息等相关信息）APP安装列表信息","https://developer.huawei.com/consumer/cn/doc/development/HMSCore-Guides/sdk-data-security-0000001050042177"],["小米推送","消息推送","设备信息（IMEI/MAC/Android ID/IDFA/OAID/UAID/OpenUDID/GUID/SIM卡IMSI信息等）网络信息与位置信息（IP地址，WiFi信息，基站信息等相关信息）APP安装列表信息","https://dev.mi.com/distribute/doc/details?pId=1534"],["OPPO推送","消息推送","设备信息（IMEI/MAC/Android ID/IDFA/OAID/UAID/OpenUDID/GUID/SIM卡IMSI信息等）网络信息与位置信息（IP地址，WiFi信息，基站信息等相关信息）APP安装列表信息","https://open.oppomobile.com/new/developmentDoc/info?id=10288"]]},{kind:"h1",text:"二、我们如何使用您的个人信息"},{kind:"h2",text:"（一）使用您的相关个人信息，用以实现本隐私政策第一部分所列产品和服务的功能。"},{kind:"h2",text:"（二）为提供投保服务、理赔、合同变更、退保服务之目的，将会有调查公司、公估公司等提供调查服务。此等服务提供商可能会利用您提供的或根据本隐私政策所合法收集的信息，核验并确定您是否具有相应资格及是否符合法定的条件，防止欺诈等违法活动和减少信用风险。"},{kind:"h2",text:"（三）我们可能采取去标识化等方式将在业务中收集的您的个人信息以及我们关联公司、合作伙伴取得您授权或依据法律共享的信息进行综合研究、统计分析和预测，以统计产品的用户数量、分析产品的使用状况、排查产品崩溃原因、减少崩溃的情况，改善我们的产品和服务的设计和功能，优化用户体验或进行学术研究、科学研究。"},{kind:"h2",text:"（四）为保证服务得以完成或向您提供您可能需要的服务，我们还可能根据您提供的联系方式对您进行必要的电话回访或短信通知，包括但不限于验证码、保单生效通知等。"},{kind:"h2",text:"（五）为提高您使用我们及我们关联公司、合作伙伴提供服务的安全性，保护您或其他用户或公众的人身财产安全免遭侵害，更好地预防钓鱼网站、欺诈、网络漏洞、计算机病毒、网络攻击、网络侵入等安全风险，更准确地识别违反法律法规或恒大保险经纪相关协议规则的情况，我们可能会使用或整合您的个人信息，如账号信息、设备信息、服务日志信息、应用程序使用信息等以及我们关联公司、合作伙伴取得您授权或依据法律共享的信息。为了依法维护您或我们的合法权益，我们可能使用上述信息解决您与恒大保险经纪、保险机构或者其他服务机构之间产生的违约纠纷或投诉。"},{kind:"h2",text:"（六）为了解您的保险需求及风险水平是否与保险产品相匹配，满足消费者适当性管理的要求、向您推荐保险产品、健康产品及其他您可能感兴趣的产品或服务。"},{kind:"b",text:"我们还可能会根据您提供的联系方式，通过短信或电话或您同意的其他方式联系您，向您推荐我们、我们关联公司及合作伙伴提供的您可能感兴趣的产品或服务，以及向您发送营销活动通知、商业性电子信息、提供与您相关的广告。如您拒绝接受短信或电话联系，您可以根据短信或电话中的指引，退订我们的短信或要求拒绝通过电话联系。"},{kind:"h2",text:"（七）为及时向您推荐符合您需求的保险或健康产品服务，提升您的保险服务体验，与我们有合作关系的保险中介机构可能会通过我们平台联系您，向您提供回访咨询、产品咨询或推荐符合您需求的保险或健康产品或服务。该等第三方合作伙伴仅可以通过我们提供的虚拟号码与您进行联系，非必要情形下，我们不会向这些合作伙伴提供您的身份信息或其它可识别到您的个人身份的信息，确保您的个人信息安全。同时，我们将努力通过采取“号码保护”、“保单信息去标识化”等合理的举措尽全力保护您的个人信息安全。如您拒绝接受此等服务，您有权根据电话中的指引，要求拒绝通过电话联系提供服务。"},{kind:"h2",text:"（八）您知悉并理解，恒大保险经纪平台上的部分业务（尤其是保险服务）是由我们的合作伙伴提供的，如果您最终选择通过恒大保险经纪平台使用该等合作伙伴以其独立名义提供的相关服务，则我们将根据您的授权同意向其提供您的必要个人信息以缔结和履行相关产品或服务合同（详见本隐私政策第五节关于您个人信息的共享）。"},{kind:"h2",text:"（九）根据适用的法律法规，我们可能会对您与我们的沟通记录及相关内容（包括语音通话信息、您在使用客服服务时输入的文字对话信息）进行去标识化处理，在无法识别您身份的情况下，将其用于算法模型训练，为您提供智能问答对话客服服务或智能语音服务，但我们不会根据您的对话内容对您个人进行特定身份的识别。"},{kind:"h2",text:"（十）如果我们将信息用于本隐私政策未载明的其他用途，或者将基于特定目的收集而来的信息用于其他目的，我们会事先征求您的同意。我们可能在某些具体服务或功能项下，通过交互文案、产品界面或弹窗等方式向您单独告知处理个人信息的目的、方式或范围，若单独告知的内容与本隐私政策不一致的，以单独告知的内容为准。"},{kind:"h1",text:"三、征得授权同意的例外"},{kind:"b",text:"根据相关法律法规规定，以下情形中收集和使用您的个人信息无需征得您的授权同意："},{kind:"p",text:"1. 与我们履行法律法规规定的义务相关的；"},{kind:"p",text:"2. 与国家安全、国防安全直接有关的；"},{kind:"p",text:"3. 与公共安全、公共卫生、重大公共利益直接相关的。例如：为应对突发公共卫生事件，或者紧急情况下为保护自然人的生命健康和财产安全所必需；"},{kind:"p",text:"4. 与刑事侦查、起诉、审判和判决执行等直接有关的；"},{kind:"p",text:"5. 出于维护个人信息主体或其他个人的生命、财产等重大合法权益但又很难得到您本人同意的；"},{kind:"p",text:"6. 为公共利益实施新闻报道、舆论监督等行为，在合理的范围内处理您的个人信息；"},{kind:"p",text:"7. 所涉及的个人信息是您自行向社会公众公开的；"},{kind:"p",text:"8. 根据您要求签订和履行合同所必需的；"},{kind:"p",text:"9. 从合法公开披露的信息中收集个人信息的，如合法的新闻报道、政府信息公开等渠道；"},{kind:"p",text:"10. 维护所提供的产品或服务的安全稳定运行所必需的，例如发现、处置产品或服务的故障；"},{kind:"p",text:"11. 学术研究机构出于公共利益开展统计或学术研究所必要，且对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的；"},{kind:"p",text:"12. 法律、法规或国家标准规定的其他情形。"},{kind:"p",text:"请注意，经匿名化处理的、单独或与其它信息相结合无法识别您的身份或者与您直接建立联系的信息，不属于个人信息，我们对此类数据的处理将无需另行向您通知并征得您的同意。如果我们将单独无法与任何特定个人建立联系的信息与其它信息结合用于识别自然人个人身份，或者将其与个人信息结合使用，则在结合使用期间，此类信息将被视为个人信息，按照本隐私政策进行处理与保护。"},{kind:"h1",text:"四、我们如何存储您的个人信息"},{kind:"p",text:"我们在中华人民共和国境内收集和产生的个人信息将存储在中华人民共和国境内。如涉及到跨境传输，我们会按照国家相关法律法规及相关标准的规定执行。"},{kind:"p",text:"我们只会在达成本隐私政策所述目的所需的期限内保留您的个人信息，除非法律有强制的留存要求。我们判断个人信息的存储期限主要参考以下标准并以其中较长者为准："},{kind:"p",text:"1. 完成您同意使用的业务功能；"},{kind:"p",text:"2. 保证我们为您提供服务的安全和质量；"},{kind:"p",text:"3. 您同意的更长的留存期间；"},{kind:"p",text:"4. 是否存在有关保留期限的其他特别约定。"},{kind:"p",text:"在超出保留期间后，我们会根据适用法律的要求删除您的个人信息，或使其匿名化处理。"},{kind:"p",text:"如我们停止运营恒大保险经纪的产品或服务，我们将及时停止继续收集您个人信息的活动，并将以公告的形式进行停止运营通知。同时，对我们存储的个人信息进行删除或匿名化处理。"},{kind:"h1",text:"五、我们如何共享、委托、转让、公开披露您的个人信息"},{kind:"h2",text:"（一） 共享"},{kind:"p",text:"我们不会与任何公司、组织或个人共享您的个人信息，但以下情况除外（主要包括以下情形）："},{kind:"p",text:"1. 取得您同意的情况下共享：在获取您明示同意的情况下，我们会与其他方共享您的个人信息。"},{kind:"p",text:"2. 履行法定义务所必需的共享：我们可能会根据法律法规规定、诉讼、争议解决需要，或按行政、司法机关依法提出的要求，以及其它法定义务履行的需要，共享必要的您的个人信息。"},{kind:"p",text:"3. 为订立、履行您作为一方当事人的合同所必需的情况下的共享："},{kind:"p",text:"如您通过我们订购或获得保险或健康产品或服务，为缔结和履行保险或健康产品或服务合同，提供相关产品或服务，我们需要向健康服务公司、医疗机构、物流服务供应商、保险公司、保险中介机构，披露提供上述服务所必需的个人信息，例如您的身份信息、财产信息、健康信息、保单信息、投保过程（如录音录像、通话录音、投保轨迹等）、申请理赔、保全、退保及其它保单服务的信息。我们还可能与这些机构联合研发或优化保险或健康服务产品。您理解，在这种情况下这些产品或服务提供者构成独立的个人信息控制者，他们对您个人信息的收集、使用、存储及采取安全保护措施将受他们的隐私协议或服务条款约束，他们可能自行将您的个人信息用于提供产品或服务之外的其他目的。这些产品或服务提供者将对他们处理您个人信息的活动独立承担责任。"},{kind:"p",text:"4.  在法律法规允许的范围内，为维护我们、我们的关联公司或合作伙伴、您或其他恒大保险经纪用户或社会公众的合法利益，或者为了解决您与恒大保险经纪、保险机构或者其他服务机构之间产生的纠纷争议或投诉处理而有必要共享您的个人信息。"},{kind:"p",text:"5. 为了配合合作保险机构履行法律法规的规定及行政/司法机关的要求，如实名制管理、反洗钱、反保险欺诈、保险可回溯管理等，我们可能需要将收集的信息（如投保人与被保险人身份信息、保险标的信息、投保过程信息（如录音录像、通话录音、投保轨迹等）及必要的风险信息等）向合作保险机构提供，或提交监管机构或其指定机构进行核验。"},{kind:"p",text:"6. 与我们的关联公司共享。您可以通过统一的恒大保险经纪账号登录恒大保险经纪的其他产品或服务，这些服务可能是由我们的关联公司提供。为向您提供前述基于恒大保险经纪统一账号的产品或服务、防止欺诈与安全风险以及便于您进行统一账号管理，我们可能会将您的个人信息与我们的关联公司共享。但我们只会共享必要的个人信息，且关联公司对您个人信息的使用受本隐私政策，或经过您授权同意的且对您的个人信息提供与本隐私政策保护水平实质相同的关联公司隐私政策的约束（您可以在相关应用程序或我们的官方网站上查看恒大保险经纪旗下相关产品适用的隐私政策）。我们和我们的关联公司均会严格遵守恒大保险经纪的个人信息及数据安全保护制度和政策。"},{kind:"h2",text:"（二） 委托处理"},{kind:"p",text:"我们可能会委托第三方合作伙伴代我们处理个人信息，以便授权合作伙伴代表我们为您提供某些服务或履行职能。但我们仅会出于合法、正当、必要、明确的目的委托其处理您的个人信息，授权合作伙伴只能接触到其提供服务或履行职能所必要的个人信息。我们将会通过协议要求其不得将此信息用于其它任何超出委托范围的目的。除非您另行授权同意，我们的合作伙伴无权将您的个人信息用于任何其他我们未委托的用途。我们委托的合作伙伴包括以下类型："},{kind:"p",text:"1. 保险或健康产品或服务提供者及其代理人。为向您推荐符合您需求的保险或健康产品服务，我们可能会委托与我们有合作关系的保险中介机构通过我们的平台联系您向您提供回访咨询、产品咨询或推荐您可能感兴趣的产品或服务。在这种情况下，该等第三方合作伙伴仅可以通过我们提供的虚拟号码联系您，非必要情形下，我们不会向这些合作伙伴提供您的身份信息或其它可识别到您的个人身份的信息，确保您的个人信息安全。我们将努力通过采取“号码保护”、 “保单信息去标识化”等合理的举措尽全力保护您的个人信息安全。"},{kind:"p",text:"2. 供应商、服务提供商和其它合作伙伴。我们可能会将您的个人信息提供给支持我们提供服务的第三方服务提供商及合作伙伴。这些服务提供商、合作伙伴包括为我们提供基础设施技术服务、数据处理、核验、公估、信用审查、风控和客户服务、支付服务、完成交易所必须的快递服务或进行学术研究和调查等的机构。但我们要求这些服务提供商、合作伙伴只能出于为我们提供服务的目的使用您的信息，而不得出于其自身利益使用您的信息。"},{kind:"p",text:"3. 广告、分析服务类的授权合作伙伴。经您授权，我们会与提供广告投放推广的服务提供商、统计分析服务提供商（例如应用流量监测服务提供商）或其他合作伙伴共享信息，但我们仅会向这些合作伙伴提供汇总后的信息、匿名化后的信息或者其他不会识别到您的个人身份的信息，不会分享您的任何身份信息、账号信息或其他可识别信息。例如，我们的产品中可能会嵌入第三方软件工具开发包（SDK），以统计用户使用应用程序的习惯或偏好，或点击访问广告的情况。我们会不时对该等合作伙伴进行技术检测和行为审计，以最大限度地确保其依法、依规、依约收集和使用数据。"},{kind:"h2",text:"（三）支付服务的委托处理和共享"},{kind:"p",text:"1. 基于提升服务的目的，您授权我司使用您去标识化后的信息 (包括手机号码、身份证件号码等去标识化的信息) 向第三方机构 (包括中国银联股份有限公司、银联智策顾问 (上海) 有限公司、银联商务支付股份有限公司等) 查询、核实、采集、整理、保存、加工您的消费信息、银行卡交易信息等，并且将查询处理所得信息反馈给我司。前述第三方机构将仅在本项目的提升服务目的范围内使用您的信息，在取得您的授权同意前，第三方机构不会擅自将此信息提供给其他第三方或用于其他目的。"},{kind:"p",text:"2. 出于保险实名制、银行卡支付绑卡等身份有效性核验、便利信息填写的目的，您授权我司向第三方机构（包括银联商务支付股份有限公司、中移互联网有限公司及中国移动通信集团有限公司等）采集、查询、核验、加工、保存您的个人身份信息（包含姓名、身份证号、手机号），并将查询、核验结果提供给我司。"},{kind:"h2",text:"（四）转让"},{kind:"p",text:"我们不会将您的个人信息转让给其他任何公司、组织和个人，但以下情形除外："},{kind:"p",text:"1. 事先获得您明确的同意或授权；"},{kind:"p",text:"2. 根据适用的法律法规、法律程序的要求、强制性的行政或司法要求所必须的情况进行提供；"},{kind:"p",text:"3. 符合与您签署的相关协议（包括在线签署的电子协议以及相应的平台规则）或其他的法律文件约定所提供；"},{kind:"p",text:"4. 随着我们公司业务的发展，我们及我们的关联公司有可能进行合并、收购、资产转让或其他类似的交易。如相关交易涉及到您的个人信息转让，我们会要求新持有您个人信息的公司、组织和个人继续受此政策约束，否则我们将要求该公司、组织和个人重新征得您的授权同意。"},{kind:"h2",text:"（五）公开披露"},{kind:"p",text:"我们仅会在以下情况，且采取符合业界标准的安全防护措施的前提下，才会公开披露您的个人信息："},{kind:"p",text:"1. 根据您的需求，在您明确同意的披露方式下披露您所指定的个人信息；"},{kind:"p",text:"2. 根据法律、法规的要求、强制性的行政执法或司法要求所必须提供您个人信息的情况下，我们可能会依据所要求的个人信息类型和披露方式公开披露您的个人信息。在符合法律法规的前提下，当我们收到上述披露信息的请求时，我们会要求必须出具与之相应的法律文件，如传票或核查函。我们坚信，对于要求我们提供的信息，应该在法律允许的范围内尽可能保持透明。我们对所有的请求都进行了慎重的审查，以确保其具备合法依据，且仅限于执法部门因特定核查目的且有合法权利获取的数据。"},{kind:"p",text:"请注意，您在使用我们服务时自愿发布甚至公开分享的信息，可能会涉及您或他人的个人信息甚至敏感个人信息，如您的交易信息，以及您在评价时选择上传包含个人信息的文字、图片或视频等各种形式的信息。请您在使用我们的服务时更加谨慎地考虑，是否要发布甚至公开分享相关信息。"},{kind:"h1",text:"六、我们如何保护您的个人信息"},{kind:"p",text:"我们已采取符合业界标准的安全防护措施保护您提供的个人信息，防止数据遭到未经授权访问、公开披露、使用、修改、损坏或丢失。我们会采取一切合理可行的措施，保护您的个人信息。"},{kind:"p",text:"1. 恒大保险经纪设置了专门的个人信息保护负责人，负责处理恒大保险经纪相关产品和服务可能涉及到用户个人信息的各项事务，以及规划和制定公司的隐私政策、审核各产品的用户使用协议、监督各产品的工作原理和信息处理机制等。"},{kind:"p",text:"2. 我们进行了信息安全等级保护的定级测评，我们的信息系统被认定为符合信息安全等级保护第三等级（金融机构信息系统级别的保护）要求，并按照法律法规要求就定级报告向公安机关进行了备案。我们按照信息安全等级保护的要求制定了信息安全工作的总体方针和安全策略，建立了覆盖主机、数据、应用、管理等层面的安全管理制度，设立了专职部门负责信息安全管理工作，明确了安全管理机构内的各个部门和岗位的职责、分工和技能要求，制定了明确的人员录用和离职管理规范。"},{kind:"p",text:"3. 我们会对可识别的敏感个人信息进行加密传输和存储，以确保数据的保密性。我们的应用系统提供了身份鉴别、用户标识唯一性检查、登录失败处理、基于角色的访问控制等功能，采用HTTPS安全协议进行通信，设置了最大并发会话连接数，能够对系统服务水平降低到预先规定的最小值进行检测和报警。我们在服务端部署访问控制机制，对可能接触到您个人信息的工作人员采取最小够用授权原则，并定期核查访问人员名单和访问记录。我们的服务器操作系统和数据库系统口令有复杂度要求，采用SSH安全协议进行远程管理，严格限制默认账号的访问权限，并修改了默认口令，审计记录全面并覆盖了所有用户。"},{kind:"p",text:"4. 我们存储用户个人信息的服务器系统均为安全加固后的操作系统。我们会对服务器操作进行账号审计及监控。如果发现外部公告有安全问题的服务器操作系统，恒大保险经纪会在第一时间进行服务器安全升级，确保恒大保险经纪所有服务器系统及应用安全。"},{kind:"p",text:"5. 我们为工作人员定期举办个人信息保护相关法律法规培训，以加强工作人员的用户个人隐私保护意识。"},{kind:"p",text:"6. 我们制定了信息安全事件应急预案，并调配足够的资源保障确保应急预案的执行。我们每年对应急预案进行了培训和应急事件演练。如果我们的物理、技术或管理防护措施不幸遭到破坏，我们会及时启动应急预案，防止安全事件扩大，按照法律法规的要求上报国家主管机关，并及时采取推送、公告等合理、有效的方式向您告知安全事件的基本情况、可能的影响、已经采取的措施或将要采取的措施等。"},{kind:"h1",text:"七、您管理个人信息的权利"},{kind:"p",text:"按照中国相关的法律、法规、标准，在您使用我们的产品或服务期间，您可以参考下述指引查询、复制、更正、删除您的个人信息，行使撤回同意以及注销账号的权利。另外，您可以通过本隐私政策第十节载明的方式与我们联系，您的意见会及时得到处理。"},{kind:"h2",text:"（一）查询、复制、更正、删除您的个人信息"},{kind:"p",text:"您可以通过恒大保险经纪公众号或恒智汇APP--我的--个人中心，或者通过本政策第十节提供的联系方式联系我们查询、复制、更正和删除您的个人信息。"},{kind:"p",text:"以下情况发生时，您可以通过本隐私政策提供的联系方式要求恒大保险经纪删除您的个人信息："},{kind:"p",text:"1. 我们没有征求您的明确同意，收集了您的个人信息。"},{kind:"p",text:"2. 我们处理您的个人信息违反了法律法规要求。"},{kind:"p",text:"3. 我们违反了与您的约定来使用和处理您的个人信息。"},{kind:"p",text:"4. 您注销了恒大保险经纪账号、卸载或者不再使用我们的产品或服务。"},{kind:"p",text:"5. 我们停止对您提供服务。"},{kind:"p",text:"您可以通过本隐私政策第十节提供的方式联系我们要求删除您的个人信息，我们会在收到您的反馈并验证您的用户身份后的15个工作日内给予答复。当我们从服务器中删除您的个人信息后，我们可能不会立即从备份系统中删除相应的数据，但会在备份更新的时候删除这些信息。"},{kind:"h2",text:"（二）改变或撤回您的授权或改变您授权同意的范围"},{kind:"p",text:"如果您想改变或撤回授予给我们的设备权限，您随时可通过以下方式改变或撤回："},{kind:"p",text:"1． 您可以在您移动设备本身操作系统中的“设置”中关闭存储权限、相机权限、照片权限、通知功能，改变同意范围或撤回您的授权。撤回授权后我们将不再使用该等权限。"},{kind:"p",text:"2． 当您使用小程序时，您可以在小程序界面中管理小程序获得的应用权限，您可以撤回对小程序的应用权限授权。"},{kind:"p",text:"3． 请您理解，每个业务功能需要一些必要的个人信息才能得以完成，当您撤回同意或授权后，我们将无法继续为您提供撤回同意或授权所对应的服务和功能，也不再处理您相应的个人信息。但您撤回同意或授权的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"h2",text:"（三）获得解释的权利"},{kind:"p",text:"您有权要求我们就个人信息处理规则作出解释说明。您可以通过本隐私政策载明的联系方式与我们取得联系。"},{kind:"h2",text:"（四）注销您的账号"},{kind:"p",text:"在您通过我们的产品注册了恒大保险经纪账号的情况下，您可以通过本隐私政策第十节的联系方式联系我们注销您的恒大保险经纪账号，我们会在收到您的反馈并验证您的用户身份后的15个工作日内给予答复。我们在此善意地提醒您，您注销账号的行为，将导致我们终止对您提供服务，也将会给您带来诸多不便。"},{kind:"p",text:"1.如果您经慎重考虑，确定注销您的账号，您的账号需同时满足以下条件："},{kind:"p",text:"（1）账号处于安全状态，无异常行为记录，无被盗风险；"},{kind:"p",text:"（2）账号相关财产权益已结清，无未完成或存在争议的订单和服务；"},{kind:"p",text:"（3）自愿放弃账号中的资产和虚拟权益（包括但不限于账号、积分等）；"},{kind:"p",text:"（4）账号无任何未结纠纷，包括投诉举报或被投诉举报。"},{kind:"p",text:"2.账号一旦被注销将不可恢复，请您在操作之前自行备份本账号相关的所有信息和数据，确认与本账号相关的所有服务均已进行妥善处理。账号成功注销后，您将无法再使用本账号，也将无法找回您账号中及与账号相关的任何内容或信息，包括但不限于："},{kind:"p",text:"（1）您将无法登录、使用本账号；"},{kind:"p",text:"（2）本账号的个人资料和历史信息（包括但不限于用户名、头像、身份信息、订单信息等）都将无法查看、无法找回；"},{kind:"p",text:"（3）您通过本账号进行登录的恒大保险经纪旗下产品或服务（包括但不限于恒大保险经纪、恒智汇APP等）的所有记录将无法找回。您将无法再登录、使用前述服务，您曾获得的账号权益等视为您自行放弃，将无法继续使用。您理解并同意，我们无法协助您重新恢复前述服务。请您在提交注销申请前，务必先了解您须解绑的其他相关账号信息，具体可通过本隐私政策第十节提供的联系方式与我们联系。"},{kind:"p",text:"注销成功后，除法律法规要求我们保存相关信息的情况外，我们将删除您的个人信息，使其保持不可被检索、访问的状态或对其进行匿名化处理。您知晓并理解，注销账号并不代表注销前的账号行为和相关责任得到豁免或减轻。"},{kind:"b",text:"(五） 逝者近亲属相关权利"},{kind:"p",text:"若恒大保险经纪用户不幸身故，其近亲属为了自身的合法、正当利益，可以对恒大保险经纪用户的相关个人信息行使本条款规定的查阅、复制、更正、删除等相关权利；恒大保险经纪用户生前另有安排的除外。"},{kind:"h2",text:"（六）响应您的上述请求"},{kind:"p",text:"如果您选择删除个人信息或者注销个人账号，您可以通过本隐私政策第十节的联系方式联系我们，我们会在收到您的反馈并验证您的用户身份后的15个工作日内给予答复。"},{kind:"b",text:"在以下情形中，按照法律法规要求，我们将无法响应您的请求："},{kind:"p",text:"1. 与我们履行法律法规规定的义务相关的；"},{kind:"p",text:"2. 与国家安全、国防安全直接相关的；"},{kind:"p",text:"3. 与公共安全、公共卫生、重大公共利益直接相关的；"},{kind:"p",text:"4. 与刑事侦查、起诉、审判和判决执行等直接相关的；"},{kind:"p",text:"5. 有充分证据表明您存在主观恶意或滥用权利的；"},{kind:"p",text:"6. 出于维护个人信息主体或其他个人的生命、财产等重大合法权益但又很难得到本人同意的;"},{kind:"p",text:"7. 响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的；"},{kind:"p",text:"8. 涉及商业秘密的。"},{kind:"h1",text:"八、未成年人个人信息保护"},{kind:"p",text:"我们非常重视未成年个人信息的保护。我们的产品和服务主要面对成人。我们原则上不会主动从未成年人处收集未成年人的个人信息；如果没有父母或监护人的同意，未成年人不应注册和使用我们的服务。如您为未成年人，我们建议您请您的父母或监护人为您阅读本隐私政策，并在您提交个人信息之前征得父母或监护人的同意。若您是未成年人的监护人，当您对您所监护的未成年人的个人信息有疑问时，您可以通过本隐私政策第十节的联系方式与我们联系。"},{kind:"p",text:"如果特定服务需要提供未成年人个人信息（例如父母或监护人为未成年子女投保时，需要提供未成年人的姓名、身份证号等个人信息），那么我们仅会在法律法规允许、父母或监护人同意并主动提交这些信息的情况下，收集这些信息。对于经父母或监护人同意使用我们的产品或服务而收集未成年人个人信息的情况，我们只会在法律法规允许、父母或监护人明确同意或者保护未成年人所必要的情况下使用、共享、转让或披露此信息。如果我们发现自己在未事先获得可证实的父母或法定监护人同意的情况下收集了未成年人的个人信息，则会在法律要求的情况下尽快删除相关数据。"},{kind:"b",text:"特别提示：本政策中，将未满十四周岁的未成年人称作“儿童”，我们将通过您提供的身份证号码或者其他有效证明文件判断该自然人是否属于儿童。儿童及其监护人在使用恒大保险经纪产品或服务之前，应仔细阅读我们专门制定的《儿童个人信息保护政策》。只有在取得监护人对《儿童个人信息保护政策》的同意后，儿童才能在监护人的指导下使用恒大保险经纪产品或服务。"},{kind:"p",text:"儿童的个人信息构成敏感信息，因此我们制定了不同于成年自然人信息的处理规则。"},{kind:"b",text:"《儿童个人信息保护政策》"},{kind:"p",text:"1. 未经监护人许可不应提供儿童个人信息儿童的个人信息属于敏感信息，未经监护人允许，儿童个人不得提交儿童个人信息；成年自然人在提交该敏感信息之前应确保您为其合法监护人或者您已经获得其合法监护人的同意及授权，否则不应提供。2. 儿童个人信息收集的种类和用途在保险产品购买环节，您提交的被保险人和/或受益人信息中，存在儿童信息的（具体信息和使用用途您可参阅第一部分 我们如何收集您的个人信息 进行详细了解），我们仅应法律法规保存必要信息、向父母或其他合法监护人推荐、提供必要保险产品、验证监护人与儿童身份使用。如果我们需要超出上述用途使用儿童信息，我们将再行向监护人进行告知并征得监护人的同意。3. 儿童个人信息的共享、转移、披露一般情况下，我们不会共享、转移、披露儿童的个人信息，以下情形除外    • 法律法规等规范性文件的要求    • 行政机关、司法机关的命令    • 征得您同意的前提下4 儿童个人信息的存储我们将儿童个人信息储存在中华人民共和国境内并采取技术措施保证儿童个人信息的安全，我们不会超过实现信息收集和使用目的所需要的最短时间。5 您有权更正儿童个人信息监护人发现我们收集、使用的儿童信息有错误时，可以联系我们进行更正。6 儿童信息的删除超过必要处理期限后，我们会对儿童信息做匿名化处理。如果我们发现自己在未事先获得可证实的父母同意的情况下收集了儿童的个人信息，我们会设法尽快删除相关数据。您在以下情形中，也可以要求我们删除处理的儿童信息，在不违反法律法规规定的基础上，我们会尽快删除：    • 您发现我们违反法律法规定或者我们的约定处理儿童信息    • 您撤回授权若您是14周岁以下的未成年人，建议您请您的监护人仔细阅读本个人信息保护政策，并在征得您的监护人同意的前提下使用我们的产品和/或服务或向我们提供信息。本章节未规定之处，参照本隐私政策适用。如果您对章节内容有任何疑问和建议，您可以通过第十条列明的联系方式联系我们。"},{kind:"h1",text:"九、隐私政策的适用范围、变更和修订"},{kind:"b",text:"如我们在本隐私政策序言部分所述，本隐私政策适用于恒大保险经纪产品和服务。您可能通过恒大保险经纪产品中的链接跳转至恒大保险经纪运营的其他产品或服务，这些产品或服务可能会通过其另行设置的隐私政策向您说明收集和使用您个人信息的情况并据此处理您的个人信息。恒大保险经纪的产品或服务均会按照与本隐私政策实质相同的标准对您的个人信息提供完善的保护。"},{kind:"b",text:"需要特别说明的是，本隐私政策不适用于其他第三方向您提供的服务。例如您通过恒大保险经纪链接或购买的保险产品或健康服务产品。我们会在与这些第三方开展合作过程中尽最大努力督促其保护您的个人信息，但您理解这些服务由第三方独立向您提供，第三方将依照其隐私政策或用户协议单独对您的个人信息处理承担责任。"},{kind:"p",text:"我们的隐私政策可能变更。未经您明确同意，我们不会限制您按照本隐私政策所应享有的权利。"},{kind:"b",text:"对于本隐私政策的重大变更，我们还会提供显著的通知（例如，在软件改版或升级、或您重新登录时，以弹窗形式对您进行及时通知）。您亦可以通过恒大保险经纪APP--我的--关于我们或恒大保险经纪官方网站（https://www.hengdainsurance.com/）随时查看最新版的隐私政策。"},{kind:"p",text:"本政策所指的重大变更包括但不限于："},{kind:"p",text:"1. 我们的服务模式发生重大变化。如处理个人信息的目的、处理个人信息的类型、个人信息的使用方式等；"},{kind:"p",text:"2. 我们在控制权等方面发生重大变化。如并购重组等引起的所有者变更等；"},{kind:"p",text:"3. 个人信息共享、转让或公开披露的主要对象发生变化；"},{kind:"p",text:"4. 您参与个人信息处理方面的权利及其行使方式发生重大变化；"},{kind:"p",text:"5. 我们负责处理个人信息安全的责任部门、联络方式及投诉渠道发生变化时；"},{kind:"p",text:"6. 个人信息安全影响评估报告表明存在高风险时。"},{kind:"h1",text:"十、如何联系我们"},{kind:"p",text:"如您对本隐私政策或您个人信息的相关事宜有任何问题、意见或建议，请通过发送邮件至hdbxxxjjs@evergrande.com或拨打我们客服电话0769-33551837等多种方式与我们联系。我们设立了个人信息保护专职部门（或个人信息保护专员），您可以通过发送邮件至hdbxxxjjs@evergrande.com的方式与其联系。 一般情况下，我们将在十五天内回复。如果您对我们的回复不满意，特别是我们的个人信息处理行为损害了您的合法权益，您还可以向网信、电信、公安及工商等监管部门进行投诉或举报。注：隐私政策中的“我们”或“恒大保险经纪”是指恒大保险经纪有限公司，注册地址为深圳市前海深港合作区南山街道梦海大道5033号前海卓越金融中心（一期）8号楼401-1。再次感谢您对恒大保险经纪及恒智汇APP的信任和使用！"}]},ur={title:"《中国移动认证梧桐数盾隐私政策》",blocks:[{kind:"h1",text:"中国移动认证梧桐数盾隐私政策"},{kind:"p",text:"更新时间：2026年6月3日"},{kind:"p",text:"生效时间：2026年6月3日"},{kind:"p",text:"中移互联网有限公司移动认证业务（以下称”我们”）非常重视用户的隐私和个人信息安全保护，我们将按照法律法规要求，采取相应安全保护措施，尽力保护您的个人信息安全可控。"},{kind:"p",text:"我们希望通过《隐私政策》（以下简称”本政策”）向您说明移动认证（以下简称”本服务”）如何收集、使用、存储和共享您的个人信息，以及您可以如何行使您的隐私权利。"},{kind:"p",text:"请您在使用本服务前，认真阅读并充分理解本《隐私政策》的全部内容，特别是以字体加粗方式标识的内容。在阅读过程中如您对本政策内容有任何疑问、意见或建议，请联系我们。您使用或在我们更新本政策后继续使用我们的产品或服务，即表示您同意本政策（含更新版本）内容，并且同意我们按照本政策收集、存储、使用和共享您的相关信息。您方表示同意的方式包括但不限于主动点击”同意”、”接受”、“授权”选项或签字等。"},{kind:"p",text:"本隐私政策将帮助您了解以下内容："},{kind:"h1",text:"一. 我们如何收集和使用您的个人信息。"},{kind:"h1",text:"二. 我们如何使用Cookie和同类技术。"},{kind:"h1",text:"三. 我们如何共享、转让、公开披露您的个人信息。"},{kind:"h1",text:"四. 我们如何保护和保存您的个人信息。"},{kind:"h1",text:"五. 您的权利。"},{kind:"h1",text:"六. 例外情况。"},{kind:"h1",text:"七. 我们如何处理未成年人的个人信息。"},{kind:"h1",text:"八. 您的个人信息如何在全球范围转移。"},{kind:"h1",text:"九. 本政策如何更新。"},{kind:"h1",text:"十. 如何联系我们。"},{kind:"h1",text:"一、我们如何收集和使用您的个人信息"},{kind:"p",text:"个人信息是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，不包括匿名化处理后的信息。我们会以“最小化”原则收集、使用、存储和传输用户个人信息，并通过用户协议和隐私政策告知您信息的使用目的和范围。"},{kind:"p",text:"我们会为您提供的各项具体功能场景包括："},{kind:"h2",text:"（一）为保证您正常使用本服务的内容，我们需要收集和使用下列与您有关的信息："},{kind:"h2",text:"1、移动认证安全基座SDK功能"},{kind:"p",text:"根据《T/TAF 188-2023 软件开发工具包（SDK）收集个人信息技术要求》，本 SDK 属于认证类。"},{kind:"p",text:"移动认证安全基座SDK包含本机号码校验功能。"},{kind:"p",text:"为实现本机号码校验功能，需要获取您的网络类型、网络地址（ip 地址）、运营商类型、本机号码信息、SIM 卡状态，用于一键获取您的手机号码；同时，使用手机设备类型、手机操作系统、硬件厂商，用于问题查询、分析、风险控制和追踪，如您拒绝提供，将不能使用本服务。"},{kind:"h2",text:"2、H5移动认证安全基座 功能"},{kind:"p",text:"H5移动认证安全基座包含本机号码校验、号码授权、信息助填和区块链存证功能。"},{kind:"p",text:"为实现H5场景本机号码校验和号码授权功能，需要收集您的本机号码、运营商类型、网络类型，用于获取您的手机号码进行本机号码校验和号码授权服务。同时使用您的浏览器指纹用于业务风控，浏览器指纹具体包括：操作系统、用户代理（浏览器类型）、浏览器版本号、浏览器是否启动cookie、cpu 等级、cpu 虚拟核心数、系统语言、浏览器插件、屏幕可用宽度、屏幕可用高度、颜⾊质量、时差区。如您拒绝提供，将不能使用服务。"},{kind:"p",text:"为实现H5场景信息展示的服务，您填写身份证号码后四位，并授权我们及中国移动通信集团有限公司获取您的手机号码。同时我们将使用您在我们及中国移动通信集团有限公司预留的身份证号码、手机号码进行身份证号码后四位校验，校验成功后，您的【姓名、手机号、身份证号码前十四位】将以密文形式存放到您的中移互联可信数据空间中，在获得您确认授权后，我们会从您的可信数据空间中获取您的【姓名、手机号、身份证号码前十四位】信息并提供给银联商务支付股份有限公司及相关使用方，并使用该信息为您完成H5场景下展示的服务。为保障您的数据安全，在向银联商务支付股份有限公司及相关使用方提供您的【姓名、身份证号码前十四位】信息后，我们将从中移互联可信数据空间删除您的【姓名、身份证号码前十四位】信息。如您拒绝提供，将不能使用H5场景信息助填服务，但不影响使用一键登录和本机号码校验功能。"},{kind:"p",text:"为实现H5场景区块链存证功能，需要获取您的手机号、IP地址、当前操作信息、使用时间、服务协议条款，用于将您的使用信息上传至区块链存证。如您拒绝提供，将不能使用区块链存证服务。"},{kind:"h2",text:"3、移动认证安全基座SDK移动设备系统权限申请声明"},{kind:"li",text:"（1）为满足基本业务要求，需要获取您的以下权限："},{kind:"table",rows:[["权限","操作系统","使用场景","使用目的"],["INTERNET（必选）","Android","网络通信","允许应用程序联网，用于访问网关和认证服务器"],[`ACCESS_NETWORK_STAT\nE（必选）`,"Android","查看网络状态","允许 SDK 访问网络状态，用于判断设备网络类型是蜂窝网络或 WIFI 网络"],[`CHANGE_NETWORK_STA\nTE（必选）`,"Android","进行网络切换通信",`允许程序改变网络连接状态 , 当\n用户未使用数据流量时，切换为数据流量，以获取用户手机号码`],["蜂窝网络权限（必选）","iOS","获取用户手机号","用于一键获取您的手机号码"]]},{kind:"p",text:"如您拒绝提供以上移动设备系统权限，将不能使用服务。"},{kind:"h2",text:"（二）从第三方获得您的个人信息："},{kind:"p",text:"为向您提供H5场景信息助填服务，经您授权同意，我们可能会接收中国移动通信集团有限公司提供的您的【加密身份证号码、加密姓名】。我们将在确认接收的个人信息来源的合法性后，依相关法律法规及第三方约定将您的前述信息用于H5场景信息助填服务。"},{kind:"h2",text:"（三）在以下情形中我们使用您的信息时无需征得您的授权同意："},{kind:"p",text:"1.关系国家安全、国防安全的情况时。"},{kind:"p",text:"2.关系公共安全、公共卫生、重大公共利益的情况时。"},{kind:"p",text:"3.关系犯罪侦查、起诉、审判和判决执行的情况时。"},{kind:"p",text:"4.出于维护个人信息主体或其他个人的生命、财产安全，但又很难得到本人同意的情况下。"},{kind:"p",text:"5.所收集的个人信息是个人信息主体自行向社会公众公开的信息。"},{kind:"p",text:"6.从合法公开披露的信息中收集的您的个人信息的，如合法的新闻报道、政府信息公开渠道。"},{kind:"p",text:"7.根据您的要求签订合同所必需的。"},{kind:"p",text:"8.用于维护所提供的产品与/或服务的安全稳定运行所必需的，例如发现、处置产品与/或服务的故障。"},{kind:"p",text:"9.为合法的新闻报道所必需的。"},{kind:"p",text:"10.学术研究机构基于公共利益开展统计或学术研究所必要，且对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的。"},{kind:"p",text:"11.法律法规规定的其他情形。"},{kind:"h2",text:"（四）基于合法获取的数据，我方将依法按照业内领先的去标识化、匿名化等数据安全技术对信息进行处理。对我方及合作方合法合规获取的数据进行汇聚融合、加工分析、开展隐私计算、联邦学习等处理，形成数据产品，为第三方客户提供用户增长、营销辅助、风险识别、广告反作弊等大数据解决方案，如您不希望我们进行前述处理，您可以通过本政策列明的联系方式与我们联系取消授权。"},{kind:"h2",text:"（五）请您注意，您同意我们使用以上信息及权限即代表您授权我们可以收集和使用这些个人信息，您关闭权限即代表您取消了这些授权，则我们将不再继续收集和使用您的个人信息，也无法为您提供与这些授权所对应的相关功能。您关闭授权的决定不会影响此前基于您的授权所进行的个人信息的处理。"},{kind:"h2",text:"（六）请您放心，我们收集和使用的个人信息均是在经过您的授权后通过合法渠道获得，不会从任何非法渠道间接获取您的个人信息。我们不会使用个人信息对您进行个性化推荐，当我们要将信息用于本政策未载明的其他用途时，会事先征求您的同意。"},{kind:"h1",text:"二、我们如何使用Cookie 和同类技术"},{kind:"p",text:"为确保本服务的正常运转，我们会在您的移动设备上存储名为Cookie 的小数据文件。Cookie通常包含标识符、站点名称以及一些号码和字符。通过Cookie，我们能够缓存您的数据以便下次快速获取您的手机号码。"},{kind:"p",text:"我们不会将Cookie 用于本政策所述目的之外的任何用途。您可根据自己的偏好清除手机缓存。"},{kind:"h1",text:"三、我们如何共享、转让、公开披露您的个人信息"},{kind:"h2",text:"（一）共享"},{kind:"p",text:"我们不会与中移互联网有限公司以外的任何公司、组织和个人分享您的个人信息，但以下情况除外："},{kind:"p",text:"1.我们可能会根据法律法规规定，或按政府主管部门的强制性要求，对外共享您的个人信息。"},{kind:"p",text:"2.如您同意本隐私政策，我们可能会将您的【手机号码、授权凭证】共享给中国移动通信集团有限公司，同时将您的【手机号码】共享给银联商务支付股份有限公司及相关使用方，以确保您在可信助填场景中的授权以及身份真实有效。我们只会共享必要的个人信息，且受隐私政策中所声明目的的约束。"},{kind:"h2",text:"（二）转让"},{kind:"p",text:"除以下情况外，我们不会将您的个人信息转让给任何公司、组织和个人。"},{kind:"p",text:"1.获得您的明确授权后，我们会向您授权的第三方转让您的个人信息。"},{kind:"p",text:"2.在本业务合并、收购或破产清算时，如涉及到个人信息转让时，我们会要求新的公司继续按本隐私政策接收、管理、使用和转让您的信息。若无法达成共识，我们会要求新的公司重新向您征求授权。"},{kind:"h2",text:"（三）公开披露"},{kind:"p",text:"除以下情况外，我们不会公开披露您的个人信息："},{kind:"p",text:"1.获得您明确同意后，按您授权情况披露您的个人信息。"},{kind:"p",text:"2.在法律、法律程序或政府主管部门强制性要求的情况下，我们可能会按要求披露您的个人信息。"},{kind:"h1",text:"四、我们如何保护和保存您的个人信息"},{kind:"h2",text:"（一）我们如何保存您的个人信息"},{kind:"h3",text:"1.信息存储的地点"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内，不存在境外收集用户信息情况。"},{kind:"h3",text:"2.信息存储的期限"},{kind:"p",text:"一般而言，移动认证将在您使用期间保存您的个人信息，并且您的个人信息将在法律规定范围内最短期限保留。在超出保留期限后，我们会根据适用法律的要求删除或匿名化处理您的个人信息。"},{kind:"p",text:"当您注销中国移动账户后，我们将删除相应的个人信息或进行匿名化处理。"},{kind:"p",text:"当我们的产品或服务发生停止运营的情形时，我们将以推送通知、公告的形式通知您，并在法律规定的期限内删除您的个人信息或进行匿名化处理。"},{kind:"p",text:"注：法律法规有规定不能删除时或不能匿名化处理的情况除外。"},{kind:"h2",text:"（二）我们如何保护您的个人信息"},{kind:"p",text:"我们会严格按照《中华人民共和国个人信息保护法》《中华人民共和国网络安全法》《全国人民代表大会常务委员会关于加强网络信息保护的决定》《电信和互联网用户个人信息保护规定》（工业和信息化部令第24 号）、《电话用户真实身份信息登记规定》（工业和信息化部令第25 号）等法律法规的要求，建立信息安全保障制度，采取技术措施和其他必要措施保护您的个人信息安全。"},{kind:"p",text:"1.我们保护您个人信息的技术与措施"},{kind:"p",text:"我们非常重视个人信息安全，并采取一切合理可行的措施保护您的个人信息："},{kind:"h3",text:"（1）数据安全技术措施"},{kind:"p",text:"我们会采用符合业界标准的安全保护措施，包括建立合理的制度规范、安全技术来防止您的个人信息遭到未经授权的访问使用、修改，避免数据的损坏或丢失。"},{kind:"p",text:"中移互联网的网络服务采取了传输层安全协议和其他加密技术，通过https 和其他方式提供浏览服务，确保用户数据在传输过程中的安全性。"},{kind:"p",text:"中移互联网采取加密技术对用户个人信息进行加密保存，并通过隔离技术进行隔离。"},{kind:"p",text:"在个人信息使用时，例如个人信息展示，我们会采取多种复杂的数据脱敏技术增强个人信息在使用中的安全性。"},{kind:"p",text:"中移互联网采用代码安全检查、数据方位日志分析技术进行个人信息安全审计。"},{kind:"h3",text:"（2）中移互联网为保护个人信息采取的其他安全措施"},{kind:"p",text:"中移互联网通过建立数据分类分级制度、数据安全管理规范、数据安全开发规范来管理规范个人信息的存储和使用。通过信息接触者保密协议、监控和审计制度来对数据进行全⾯安全控 制。同时建立安全管理中心并下设信息保护专职部门、数据安全应急响应组织来推进和保障个人信息安全，加强安全意识。我们还会定期举办安全和隐私保护培训课程来加强对个人信息保护重要性的认识，同时进行定期安全审计。"},{kind:"p",text:"2.安全事件处置"},{kind:"p",text:"为应对个人信息泄露、损毁和丢失等可能出现的风险，中移互联网制定了多项制度，明确安全事件、安全漏洞的分类分级标准及相应的处理流程。中移互联网也为本服务系统安全事件建立了专门的应急响应团队，按照安全事件处置规范要求，针对不同安全事件启动安全预案，进行止损、分析、定位、制定补救措施并联合相关部门进行溯源和打击。"},{kind:"p",text:"若不幸发生个人信息安全事件，我们将按照法律法规的要求，及时告知您安全事件的基本情况和可能的影响、我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议、对您的补救措施等信息。我们将及时将事件相关情况以邮件、信函、电话、推送通知的方式告知您。在难以逐一告知个人信息主体时，我们会采取合理、有效的方式发布公告。同时，我们还将按照监管部门要求，主动上报个人信息安全事件的处置情况。"},{kind:"p",text:"3.请您理解：互联网环境并非百分之百安全，我们将尽力确保或担保您发送给我们的任何信息的安全性。如果我们的物理、技术或管理防护设施遭到破坏，导致信息被非授权访问、公开披露、篡改或毁坏，导致您的合法权益受损，我们将依照法律法规承担相应责任。如果您对我们的个人信息保护有任何疑问，可通过本隐私政策中约定的联系方式联系我们。如果您发现自己的个人信息泄露，尤其是您的账户及密码发生泄露，请您立即通过本隐私政策【十、如何联系我们】中约定的联系方式联络我们，以便我们采取相应措施。"},{kind:"h1",text:"五、您的权利"},{kind:"h2",text:"（一）查询、更正、补充和限制您的个人信息"},{kind:"h2",text:"若您希望查询、更正、补充和限制您的个人信息，您可以联系我们的客服电话10086联系我们，我们会有专门的客服人员帮助您。"},{kind:"h2",text:"删除您的个人信息"},{kind:"p",text:"您可以通过联系10086客服电话的方式删除您的部分信息，或申请注销手机号码删除您的全部信息，我们将在验证通过后的十五天内处理您的删除申请。在以下情形中，您可以向客服申请，提出删除个人信息的请求："},{kind:"p",text:"1.如果我们处理个人信息的行为违反了相关法律法规。"},{kind:"p",text:"2.如果我们收集、使用您的个人信息，却未征得您的同意。"},{kind:"p",text:"3.如果我们处理个人信息的行为违反了与您的约定。"},{kind:"p",text:"4.如果您不再使用我们的产品或服务，或您注销了中国移动手机号。"},{kind:"p",text:"5.如果我们不再为您提供产品或服务。"},{kind:"p",text:"当您从我们的服务中删除信息后，我们可能不会立即从备份系统中删除相应的信息，但会在备份更新时及时删除这些信息。"},{kind:"h2",text:"（三）注销账户"},{kind:"p",text:"您可以通过联系10086客服电话的方式申请注销，我们将在十五天内处理您的注销申请，您主动注销您的账户之后，我们将停止为您提供产品或服务，并依据您的要求，删除或匿名化您的个人信息，法律法规另有规定的除外。"},{kind:"h2",text:"（四）复制个人信息副本"},{kind:"p",text:"如果你需要复制我们收集存储的个人信息，您可以联系10086，联系客服协助您复制、转移你的个人信息。"},{kind:"h2",text:"（五）个人信息可携权"},{kind:"h2",text:"在符合国家相关法律法规及网信部门规定的条件下，如您请求将个人信息转移至指定的个人信息处理者，我们将按照相关规定的要求提供转移的途径。"},{kind:"h2",text:"（六）撤销已同意授权功能"},{kind:"p",text:"如您已授权我们获得某些移动设备系统权限同意我们处理您的个人信息，您可以通过APP 系统权限设置撤回您的授权。您可登录梧桐数盾页面（https://slw.h5cmpassport.com:9091/h5/login），点击底部栏【授权】--【授权凭证】--【可信助填授权凭证】--【撤销授权】路径撤回您的对本产品隐私政策的授权同意，当您收回同意的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"p",text:"当您撤回同意或授权后，我们无法继续为您提供撤回同意或授权所对应的服务，也将不再处理您相应的个人信息。但您撤回同意或授权的决定，不会影响此前基于您的同意或授权而开展的个人信息处理。"},{kind:"h2",text:"（七）响应时限"},{kind:"p",text:"对于您行使上述（一）至（六）项权利所提出的相关请求，我们将在收到您的申请之日起十五天内作出答复。"},{kind:"h1",text:"六、例外情况"},{kind:"p",text:"请您充分理解并同意，我们在以下情况下收集、使用您的个人信息无需您的授权，且我们可能不会响应您提出的删除、注销的请求："},{kind:"p",text:"1.与国家安全、国防安全有关的情况。"},{kind:"p",text:"2.与公共安全、公共卫生、重大公共利益有关的情况。"},{kind:"p",text:"3.与犯罪侦查、起诉、审判和执行判决等有关的情况。"},{kind:"p",text:"4.有充分证据表明个人信息主体存在主观恶意或滥用权利的情况。"},{kind:"p",text:"5.响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的情况。"},{kind:"p",text:"6.涉及商业秘密的情况。"},{kind:"p",text:"7.法律法规规定的其他情形。"},{kind:"h1",text:"七、我们如何处理未成年人的个人信息"},{kind:"h2",text:"（一）我们非常重视保护未成年人个人信息，特别是14周岁以下的儿童。若您是未成年人，在使用我们的服务前，应提前取得您的父母或法定监护人的书面同意。我们将根据国家相关法律法规保护未成年人的个人信息。"},{kind:"h2",text:"（二）对于已经过未成年人的父母或法定监护人同意而收集的未成年人个人信息，我们只会在法律允许、父母或法定监护人明确同意、保护未成年人所必要的情况下使用或公开披露相关信息。"},{kind:"h2",text:"（三）如果我们发现在未事先获得未成年人的父母或法定监护人同意的情况下收集了未成年人的个人信息，会立即删除相关数据。"},{kind:"h1",text:"八、您的个人信息如何在全球范围转移"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内,我们不会将您的个人信息传输至中华人民共和国境外。"},{kind:"h1",text:"九、本政策如何更新"},{kind:"p",text:"我们的隐私政策可能变更。"},{kind:"p",text:"未经您的同意，我们不会削减您应享有的个人隐私权利。我们会以弹窗形式发布对本政策所做的任何变更。对于变更后的隐私政策，我们会再次征求您的同意。"},{kind:"h1",text:"十、如何联系我们"},{kind:"p",text:"如您对本政策存在任何疑问，或对于您的个人信息处理存在任何投诉、意见，请通过以下渠道联系我们："},{kind:"p",text:"公司名称：中移互联网有限公司"},{kind:"p",text:"公司地址：中国广东省广州市天河区高唐路323号中国移动南方基地智汇中心"},{kind:"p",text:"联系方式：10086"},{kind:"p",text:"我们已经建立客户投诉管理机制，包括跟踪流程。一般来说，我们将在验证通过后的五个工作日内处理完成，特殊情形下最长将在不超过十五天内作出答复。"},{kind:"p",text:"中国移动版权所有"}]},Ar={title:"《第三方共享个人信息清单》",blocks:[{kind:"h1",text:"第三方对外提供个人信息清单"},{kind:"table",rows:[[{kind:"text",text:"合作方",colSpan:7}],["合作方名称","共享目的","共享场景","个人信息","提供方式","隐私政策或官网","联系方式"],["天天有保（湖南）保险经纪服务有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token、姓名、身份证号前十四位、手机号","API接口",{kind:"doc-link",text:"《个人隐私协议》",docKey:"tiantianyoubao-v2-privacy-policy"},"010-87227385"],["中移互联网有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token","API接口",{kind:"doc-link",text:"《中国移动认证梧桐数盾隐私政策》",docKey:"tiantianyoubao-v2-cmcc-privacy-policy"},"10086"]]}]},Er={title:"《个人隐私协议》",blocks:[{kind:"h1",text:"个人隐私协议"},{kind:"p",text:"本政策仅适用于【如果保(重庆)网络科技有限公司】【天天有保（湖南）保险经纪服务有限公司】【无锡信成网络科技有限公司】及其关联公司提供的【如果保】系列产品或服务，包括但不限于【如果有保】、【如果保】等。"},{kind:"p",text:"最近更新日期：2019年03月。"},{kind:"p",text:"如果您有任何疑问、意见或建议，请通过以下联系方式与我们联系："},{kind:"p",text:"电子邮件：service@heiniubao.com"},{kind:"p",text:"电话：010-87227385"},{kind:"p",text:"本政策将帮助您了解以下内容："},{kind:"p",text:"1、我们如何收集和使用您的个人信息"},{kind:"p",text:"2、我们如何使用Cookie和同类技术"},{kind:"p",text:"3、我们如何共享、转让、公开披露您的个人信息"},{kind:"p",text:"4、我们如何保护您的个人信息"},{kind:"p",text:"5、您的权利"},{kind:"p",text:"6、我们如何处理未成年人的个人信息"},{kind:"p",text:"7、本政策如何更新"},{kind:"p",text:"如果保产品和服务的运营商（以下简称“如果保”）深知个人信息对您的重要性，并会尽力保护您的个人信息安全可靠。我们致力于维持您对我们的信任，恪守以下原则，保护您的个人信息：权责一致原则、目的明确原则、选择同意原则、最少够用原则、确保安全原则、主体参与原则、公开透明原则等。同时，如果保承诺，我们将按业界成熟的安全标准，采取相应的安全保护措施来保护您的个人信息。"},{kind:"p",text:"请在使用我们的产品（或服务）前，仔细阅读并了解本《隐私政策》。"},{kind:"p",text:"本《隐私政策》是如果保系列产品用户协议的组成部分。如果您不明白或不接受本《隐私政策》的内容，请勿使用如果保提供的产品和服务。"},{kind:"h1",text:"一、我们如何收集和使用您的个人信息"},{kind:"p",text:"个人信息是指以电子或者其他方式记录的能够单独或者与其他信息结合识别特定自然人身份或者反映特定自然人活动情况的各种信息。"},{kind:"p",text:"如果保仅会出于本政策所述的以下目的，收集和使用您的个人信息"},{kind:"h2",text:"（一）为您提供网上购物服务（包括购买商品和服务）"},{kind:"p",text:"1、业务功能一：注册成为用户。"},{kind:"p",text:"为完成创建账号，您需提供以下信息：您的姓名、手机号、身份证号。在注册过程中，如果您提供以下额外信息，将有助于我们给您提供更好的服务和体验：工作职位、公司、教育背景等。但如果您不提供这些信息，将不会影响使用本服务的基本功能。"},{kind:"p",text:"2、业务功能二：发送促销营销信息。"},{kind:"p",text:"为向您推荐适合的服务，您需提供以下信息：您的姓名、电话。"},{kind:"p",text:"3、业务功能四：支付结算。"},{kind:"p",text:"为完成线上支付服务，您需提供以下信息：您的姓名、电话、联系地址。"},{kind:"h2",text:"（二）交付产品或服务"},{kind:"p",text:"为向您配送所购买的商品，您需提供以下信息：您的姓名、电话、联系地址。"},{kind:"h2",text:"（三）推荐产品或服务"},{kind:"p",text:"为向合适的第三方推荐您主动申请的产品或服务，您需提供以下信息的部分或全部：您的姓名、手机号、身份证号。"},{kind:"p",text:"在推荐过程中，如果您提供以下额外信息的部分或全部，将有助于我们给您提供更好的服务和体验：手机号、工作职位、公司、教育背景。但如果您不提供这些信息，将不会影响使用相关服务的基本功能。"},{kind:"p",text:"向第三方推荐您的信息时，我们会按照第三章“我们如何共享、转让、公开披露您的个人信息”的要求进行，并按照本隐私政策的规定保护您的合法权益。"},{kind:"h2",text:"（四）开展内部审计、数据分析和研究，改善我们的产品或服务"},{kind:"p",text:"为了规范如果保的用户信息保护，为了向您和其他用户提供更好的服务，我们会使用您所提供的信息进行分析和研究。我们进行分析和研究时，会对您的信息进行去标识化处理。"},{kind:"li",text:"基于提升服务的目的，您授权我司使用您去标识化后的信息 (包括手机号码、身份证件号码等去标识化的信息) 向第三方机构 (包括中国银联股份有限公司、银联智策顾问 (上海) 有限公司、银联商务支付股份有限公司等) 查询、核实、采集、整理、保存、加工您的消费信息、银行卡交易信息等，并且将查询处理所得信息反馈给我司。前述第三方机构将仅在本项目的提升服务目的范围内使用您的信息，在取得您的授权同意前，第三方机构不会擅自将此信息提供给其他第三方或用于其他目的。"},{kind:"li",text:"出于保险实名制、银行卡支付绑卡等身份有效性核验、便利信息填写的目的，您授权我司向第三方机构（包括银联商务支付股份有限公司、中移互联网有限公司及中国移动通信集团有限公司等）采集、查询、核验、加工、保存您的个人身份信息（包含姓名、身份证号、手机号），并将查询、核验结果提供给我司。"},{kind:"h2",text:"（七）其他"},{kind:"p",text:"当我们要将信息用于本政策未载明的其它用途时，会事先征求您的同意。"},{kind:"p",text:"当我们要将基于特定目的收集而来的信息用于其他目的时，会事先征求您的同意。"},{kind:"p",text:"您提供的上述信息，将在您使用本服务期间持续授权我们使用。在您注销账号时，我们将停止使用并删除上述信息。"},{kind:"h1",text:"二、我们如何使用Cookie和同类技术"},{kind:"h2",text:"（一）Cookie"},{kind:"p",text:"为确保网站正常运转，我们会在您的计算机或移动设备上存储名为Cookie的小数据文件。Cookie通常包含标识符、站点名称以及一些号码和字符。借助于Cookie，网站能够存储您的偏好或购物篮内的商品等数据。"},{kind:"p",text:"我们不会将Cookie用于本政策所述目的之外的任何用途。您可根据自己的偏好管理或删除Cookie。有关详情，请参见AboutCookies.org。您可以清除计算机上保存的所有Cookie，大部分网络浏览器都设有阻止Cookie的功能。但如果您这么做，则需要在每一次访问我们的网站时亲自更改用户设置。"},{kind:"h2",text:"（二）网站信标和像素标签"},{kind:"p",text:"除Cookie外，我们还会在网站上使用网站信标和像素标签等其他同类技术。例如，我们向您发送的电子邮件可能含有链接至我们网站内容的点击URL。如果您点击该链接，我们则会跟踪此次点击，帮助我们了解您的产品或服务偏好并改善客户服务。网站信标通常是一种嵌入到网站或电子邮件中的透明图像。借助于电子邮件中的像素标签，我们能够获知电子邮件是否被打开。如果您不希望自己的活动以这种方式被追踪，则可以随时从我们的寄信名单中退订。"},{kind:"h2",text:"（三）DoNotTrack（请勿追踪）"},{kind:"p",text:"很多网络浏览器均设有DoNotTrack功能，该功能可向网站发布DoNotTrack请求。目前，主要互联网标准组织尚未设立相关政策来规定网站应如何应对此类请求。但如果您的浏览器启用了DoNotTrack，那么我们的所有网站都会尊重您的选择。"},{kind:"h1",text:"三、我们如何共享、转让、公开披露您的个人信息"},{kind:"h2",text:"（一）共享"},{kind:"p",text:"我们不会与无锡信成网络科技有限公司以外的任何公司、组织和个人分享您的个人信息，但以下情况除外："},{kind:"p",text:"（1）在获取明确同意的情况下共享：获得您的明确同意后，我们会与其他方共享您的个人信息；"},{kind:"p",text:"（2）我们可能会根据法律法规规定，或按政府主管部门的强制性要求，对外共享您的个人信息；"},{kind:"p",text:"（3）与我们的附属公司、关联公司共享：您的个人信息可能会与无锡信成网络科技有限公司的附属公司、关联公司共享，我们只会共享必要的个人信息，且受本隐私政策中所声明目的的约束，附属公司、关联公司如要改变个人信息的处理目的，将再次征求您的授权同意；"},{kind:"p",text:"（4）与授权合作伙伴共享：仅为实现本政策中声明的目的，我们的某些服务将由授权合作伙伴提供。我们可能会与合作伙伴共享您的某些个人信息，以提供更好的客户服务和用户体验。"},{kind:"p",text:"对我们与之共享个人信息的公司、组织和个人，我们会与其签署严格的保密协定，要求他们按照我们的说明、本隐私政策以及其他相关的保密和安全措施来处理个人信息。"},{kind:"h2",text:"（二）转让"},{kind:"p",text:"我们不会将您的个人信息转让给任何公司、组织和个人，但以下情况除外："},{kind:"p",text:"1、在获取明确同意的情况下转让：获得您的明确同意后，我们会向其他方转让您的个人信息；"},{kind:"p",text:"2、在涉及合并、收购或破产清算时，如涉及到个人信息转让，我们会在要求新的持有您个人信息的公司、组织继续受此隐私政策的约束，否则我们将要求该公司、组织重新向您征求授权同意。"},{kind:"h2",text:"（三）公开披露"},{kind:"p",text:"我们仅会在以下情况下，公开披露您的个人信息："},{kind:"p",text:"1、获得您明确同意后；"},{kind:"p",text:"2、基于法律的披露：在法律、法律程序、诉讼或政府主管部门强制性要求的情况下，我们可能会公开披露您的个人信息。"},{kind:"h1",text:"四、我们如何保护您的个人信息"},{kind:"h2",text:"（一）我们已使用符合业界标准的安全防护措施保护您提供的个人信息，防止数据遭到未经授权访问、公开披露、使用、修改、损坏或丢失。我们会采取一切合理可行的措施，保护您的个人信息。"},{kind:"h2",text:"（二）我们会采取合理可行的措施，确保未收集无关的个人信息。我们只会在达成本政策所述目的所需的期限内保留您的个人信息，除非需要延长保留期或受到法律的允许。"},{kind:"h2",text:"（三）互联网并非绝对安全的环境，而且电子邮件、即时通讯、及与其他如果保用户的交流方式并未加密，我们强烈建议您不要通过此类方式发送个人信息。请使用复杂密码，协助我们保证您的账号安全。"},{kind:"h2",text:"（四）我们将定期更新并公开安全风险、个人信息安全影响评估等报告的有关内容。您可通过查看网站公告的方式获得。"},{kind:"h2",text:"（五）互联网环境并非百分之百安全，我们将尽力确保或担保您发送给我们的任何信息的安全性。"},{kind:"h2",text:"（六）在不幸发生个人信息安全事件后，我们将按照法律法规的要求，及时向您告知：安全事件的基本情况和可能的影响、我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议、对您的补救措施等。我们将及时将事件相关情况以邮件、信函、电话、推送通知等方式告知您，难以逐一告知个人信息主体时，我们会采取合理、有效的方式发布公告。同时，我们还将按照监管部门要求，主动上报个人信息安全事件的处置情况。"},{kind:"h1",text:"五、您的权利"},{kind:"p",text:"按照中国相关的法律、法规、标准，以及其他国家、地区的通行做法，我们保障您对自己的个人信息行使以下权利："},{kind:"h2",text:"（一）访问您的个人信息您有权访问您的个人信息，法律法规规定的例外情况除外。如果您想行使数据访问权，可以"},{kind:"p",text:"通过以下方式自行访问："},{kind:"p",text:"账户信息——如果您希望访问或编辑您的账户中的个人资料信息和支付信息、更改您的密码、添加安全信息或关闭您的账户等，您可以通过发送电子邮件至service@heiniubao.com我们将在30天内回复您的访问请求。"},{kind:"p",text:"对于您在使用我们的产品或服务过程中产生的其他个人信息，只要我们不需要过多投入，我们会向您提供。如果您想行使数据访问权，请发送电子邮件至service@heiniubao.com。"},{kind:"h2",text:"（二）更正您的个人信息"},{kind:"p",text:"当您发现我们处理的关于您的个人信息有错误时，您有权要求我们做出更正。您可以通过"},{kind:"h2",text:"（一）访问您的个人信息”中罗列的方式提出更正申请。"},{kind:"p",text:"如果您无法通过上述链接更正这些个人信息，您可以随时发送电子邮件至service@heiniubao.com。我们将在30天内回复您的更正请求。"},{kind:"h2",text:"（三）删除您的个人信息"},{kind:"p",text:"在以下情形中，您可以向我们提出删除个人信息的请求："},{kind:"p",text:"1、如果我们处理个人信息的行为违反法律法规；"},{kind:"p",text:"2、如果我们收集、使用您的个人信息，却未征得您的同意；"},{kind:"p",text:"3、如果我们处理个人信息的行为违反了与您的约定；"},{kind:"p",text:"4、如果您不再使用我们的产品或服务，或您注销了账号；"},{kind:"p",text:"5、如果我们不再为您提供产品或服务。"},{kind:"p",text:"若我们决定响应您的删除请求，我们还将同时通知从我们获得您的个人信息的实体，要求其及时删除，除非法律法规另有规定，或这些实体获得您的独立授权。"},{kind:"p",text:"当您从我们的服务中删除信息后，我们可能不会立即备份系统中删除相应的信息，但会在备份更新时删除这些信息。"},{kind:"h2",text:"（四）改变您授权同意的范围"},{kind:"p",text:"每个业务功能需要一些基本的个人信息才能得以完成（见本政策“第一部分”）。对于额外收集的个人信息的收集和使用，您可以随时发送电子邮件至service@heiniubao.com，给予或收回您的授权同意。我们将在30天内回复您的变更请求。"},{kind:"p",text:"当您收回同意后，我们将不再处理相应的个人信息。但您收回同意的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"p",text:"如果您不想接受我们给您发送的商业广告，您随时可通过以下方式取消："},{kind:"p",text:"（1）使用短信或电子邮件中的退订；"},{kind:"p",text:"（2）若您无法使用（1）中的方式取消，您可以随时发送电子邮件至service@heiniubao.com要求退订我们的商业广告，我们将在30天内回复您的取消请求。"},{kind:"h2",text:"（五）个人信息主体注销账户"},{kind:"p",text:"您随时可注销此前注册的账户，您可以访问service@heiniubao.com注销您的账户。在注销账户之后，我们将停止为您提供产品或服务，并依据您的要求，删除您的个人信息，法律法规另有规定的除外。"},{kind:"h2",text:"（六）个人信息主体获取个人信息副本"},{kind:"p",text:"您有权获取您的个人信息副本，您可以随时发送电子邮件至service@heiniubao.com，我们将在30天内回复您的获取请求。"},{kind:"h2",text:"（七）约束信息系统自动决策"},{kind:"p",text:"在某些业务功能中，我们可能仅依据信息系统、算法等在内的非人工自动决策机制做出决定。如果这些决定显著影响您的合法权益，您有权要求我们做出解释，我们也将提供适当的救济方式。"},{kind:"h2",text:"（八）响应您的上述请求"},{kind:"p",text:"为保障安全，您可能需要提供书面请求，或以其他方式证明您的身份。我们可能会先要求您验证自己的身份，然后再处理您的请求。"},{kind:"p",text:"我们将在三十天内做出答复。如您不满意，还可以通过如果保产品页面上载明的联系方式进行申诉。"},{kind:"p",text:"对于您合理的请求，我们原则上不收取费用，但对多次重复、超出合理限度的请求，我们将视情收取一定成本费用。对于那些无端重复、需要过多技术手段（例如，需要开发新系统或从根本上改变现行惯例）、给他人合法权益带来风险或者非常不切实际（例如，涉及备份磁带上存放的信息）的请求，我们可能会予以拒绝。"},{kind:"p",text:"在以下情形中，按照法律法规要求，我们将无法响应您的请求："},{kind:"p",text:"1、与国家安全、国防安全直接相关的；"},{kind:"p",text:"2、与公共安全、公共卫生、重大公共利益直接相关的；"},{kind:"p",text:"3、与犯罪侦查、起诉、审判和判决执行等直接相关的；"},{kind:"p",text:"4、有充分证据表明您存在主观恶意或滥用权利的；"},{kind:"p",text:"5、响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的。"},{kind:"p",text:"6、涉及商业秘密的。"},{kind:"h1",text:"六、我们如何处理未成年人的个人信息"},{kind:"p",text:"我们的产品、网站和服务主要面向成人。如果没有父母或监护人的同意，未成年人不得创建自己的用户账户。"},{kind:"p",text:"对于经父母同意而收集未成年人个人信息的情况，我们只会在受到法律允许、父母或监护人明确同意或者保护未成年人所必要的情况下使用或公开披露此信息。尽管当地法律和习俗对未成年人的定义不同，但我们将不满18周岁的任何人均视为未成年人。"},{kind:"p",text:"如果我们发现自己在未事先获得可证实的父母同意的情况下收集了未成年人的个人信息，则会设法尽快删除相关数据。"},{kind:"h1",text:"七、本政策如何更新"},{kind:"p",text:"我们的隐私政策可能变更。"},{kind:"p",text:"未经您明确同意，我们不会削减您按照本隐私政策所应享有的权利。我们会在本页面上发布对本政策所做的任何变更。"},{kind:"p",text:"对于重大变更，我们还会提供更为显著的通知（包括对于某些服务，我们会通过电子邮件发送通知，说明隐私政策的具体变更内容）。"},{kind:"p",text:"本政策所指的重大变更包括但不限于："},{kind:"p",text:"1、我们的服务模式发生重大变化。如处理个人信息的目的、处理的个人信息类型、个人信息的使用方式等；"},{kind:"p",text:"2、个人信息共享、转让或公开披露的主要对象发生变化；"},{kind:"p",text:"3、您参与个人信息处理方面的权利及其行使方式发生重大变化；"},{kind:"p",text:"4、个人信息安全影响评估报告表明存在高风险时。"},{kind:"p",text:"我们还会将本政策的旧版本存档，供您查阅。"}]},vr={title:"《中国移动认证梧桐数盾隐私政策》",blocks:[{kind:"h1",text:"中国移动认证梧桐数盾隐私政策"},{kind:"p",text:"更新时间：2026年6月3日"},{kind:"p",text:"生效时间：2026年6月3日"},{kind:"p",text:"中移互联网有限公司移动认证业务（以下称”我们”）非常重视用户的隐私和个人信息安全保护，我们将按照法律法规要求，采取相应安全保护措施，尽力保护您的个人信息安全可控。"},{kind:"p",text:"我们希望通过《隐私政策》（以下简称”本政策”）向您说明移动认证（以下简称”本服务”）如何收集、使用、存储和共享您的个人信息，以及您可以如何行使您的隐私权利。"},{kind:"p",text:"请您在使用本服务前，认真阅读并充分理解本《隐私政策》的全部内容，特别是以字体加粗方式标识的内容。在阅读过程中如您对本政策内容有任何疑问、意见或建议，请联系我们。您使用或在我们更新本政策后继续使用我们的产品或服务，即表示您同意本政策（含更新版本）内容，并且同意我们按照本政策收集、存储、使用和共享您的相关信息。您方表示同意的方式包括但不限于主动点击”同意”、”接受”、“授权”选项或签字等。"},{kind:"p",text:"本隐私政策将帮助您了解以下内容："},{kind:"h1",text:"一. 我们如何收集和使用您的个人信息。"},{kind:"h1",text:"二. 我们如何使用Cookie和同类技术。"},{kind:"h1",text:"三. 我们如何共享、转让、公开披露您的个人信息。"},{kind:"h1",text:"四. 我们如何保护和保存您的个人信息。"},{kind:"h1",text:"五. 您的权利。"},{kind:"h1",text:"六. 例外情况。"},{kind:"h1",text:"七. 我们如何处理未成年人的个人信息。"},{kind:"h1",text:"八. 您的个人信息如何在全球范围转移。"},{kind:"h1",text:"九. 本政策如何更新。"},{kind:"h1",text:"十. 如何联系我们。"},{kind:"h1",text:"一、我们如何收集和使用您的个人信息"},{kind:"p",text:"个人信息是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，不包括匿名化处理后的信息。我们会以“最小化”原则收集、使用、存储和传输用户个人信息，并通过用户协议和隐私政策告知您信息的使用目的和范围。"},{kind:"p",text:"我们会为您提供的各项具体功能场景包括："},{kind:"h2",text:"（一）为保证您正常使用本服务的内容，我们需要收集和使用下列与您有关的信息："},{kind:"h2",text:"1、移动认证安全基座SDK功能"},{kind:"p",text:"根据《T/TAF 188-2023 软件开发工具包（SDK）收集个人信息技术要求》，本 SDK 属于认证类。"},{kind:"p",text:"移动认证安全基座SDK包含本机号码校验功能。"},{kind:"p",text:"为实现本机号码校验功能，需要获取您的网络类型、网络地址（ip 地址）、运营商类型、本机号码信息、SIM 卡状态，用于一键获取您的手机号码；同时，使用手机设备类型、手机操作系统、硬件厂商，用于问题查询、分析、风险控制和追踪，如您拒绝提供，将不能使用本服务。"},{kind:"h2",text:"2、H5移动认证安全基座 功能"},{kind:"p",text:"H5移动认证安全基座包含本机号码校验、号码授权、信息助填和区块链存证功能。"},{kind:"p",text:"为实现H5场景本机号码校验和号码授权功能，需要收集您的本机号码、运营商类型、网络类型，用于获取您的手机号码进行本机号码校验和号码授权服务。同时使用您的浏览器指纹用于业务风控，浏览器指纹具体包括：操作系统、用户代理（浏览器类型）、浏览器版本号、浏览器是否启动cookie、cpu 等级、cpu 虚拟核心数、系统语言、浏览器插件、屏幕可用宽度、屏幕可用高度、颜⾊质量、时差区。如您拒绝提供，将不能使用服务。"},{kind:"p",text:"为实现H5场景信息展示的服务，您填写身份证号码后四位，并授权我们及中国移动通信集团有限公司获取您的手机号码。同时我们将使用您在我们及中国移动通信集团有限公司预留的身份证号码、手机号码进行身份证号码后四位校验，校验成功后，您的【姓名、手机号、身份证号码前十四位】将以密文形式存放到您的中移互联可信数据空间中，在获得您确认授权后，我们会从您的可信数据空间中获取您的【姓名、手机号、身份证号码前十四位】信息并提供给银联商务支付股份有限公司及相关使用方，并使用该信息为您完成H5场景下展示的服务。为保障您的数据安全，在向银联商务支付股份有限公司及相关使用方提供您的【姓名、身份证号码前十四位】信息后，我们将从中移互联可信数据空间删除您的【姓名、身份证号码前十四位】信息。如您拒绝提供，将不能使用H5场景信息助填服务，但不影响使用一键登录和本机号码校验功能。"},{kind:"p",text:"为实现H5场景区块链存证功能，需要获取您的手机号、IP地址、当前操作信息、使用时间、服务协议条款，用于将您的使用信息上传至区块链存证。如您拒绝提供，将不能使用区块链存证服务。"},{kind:"h2",text:"3、移动认证安全基座SDK移动设备系统权限申请声明"},{kind:"li",text:"（1）为满足基本业务要求，需要获取您的以下权限："},{kind:"table",rows:[["权限","操作系统","使用场景","使用目的"],["INTERNET（必选）","Android","网络通信","允许应用程序联网，用于访问网关和认证服务器"],[`ACCESS_NETWORK_STAT\nE（必选）`,"Android","查看网络状态","允许 SDK 访问网络状态，用于判断设备网络类型是蜂窝网络或 WIFI 网络"],[`CHANGE_NETWORK_STA\nTE（必选）`,"Android","进行网络切换通信",`允许程序改变网络连接状态 , 当\n用户未使用数据流量时，切换为数据流量，以获取用户手机号码`],["蜂窝网络权限（必选）","iOS","获取用户手机号","用于一键获取您的手机号码"]]},{kind:"p",text:"如您拒绝提供以上移动设备系统权限，将不能使用服务。"},{kind:"h2",text:"（二）从第三方获得您的个人信息："},{kind:"p",text:"为向您提供H5场景信息助填服务，经您授权同意，我们可能会接收中国移动通信集团有限公司提供的您的【加密身份证号码、加密姓名】。我们将在确认接收的个人信息来源的合法性后，依相关法律法规及第三方约定将您的前述信息用于H5场景信息助填服务。"},{kind:"h2",text:"（三）在以下情形中我们使用您的信息时无需征得您的授权同意："},{kind:"p",text:"1.关系国家安全、国防安全的情况时。"},{kind:"p",text:"2.关系公共安全、公共卫生、重大公共利益的情况时。"},{kind:"p",text:"3.关系犯罪侦查、起诉、审判和判决执行的情况时。"},{kind:"p",text:"4.出于维护个人信息主体或其他个人的生命、财产安全，但又很难得到本人同意的情况下。"},{kind:"p",text:"5.所收集的个人信息是个人信息主体自行向社会公众公开的信息。"},{kind:"p",text:"6.从合法公开披露的信息中收集的您的个人信息的，如合法的新闻报道、政府信息公开渠道。"},{kind:"p",text:"7.根据您的要求签订合同所必需的。"},{kind:"p",text:"8.用于维护所提供的产品与/或服务的安全稳定运行所必需的，例如发现、处置产品与/或服务的故障。"},{kind:"p",text:"9.为合法的新闻报道所必需的。"},{kind:"p",text:"10.学术研究机构基于公共利益开展统计或学术研究所必要，且对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的。"},{kind:"p",text:"11.法律法规规定的其他情形。"},{kind:"h2",text:"（四）基于合法获取的数据，我方将依法按照业内领先的去标识化、匿名化等数据安全技术对信息进行处理。对我方及合作方合法合规获取的数据进行汇聚融合、加工分析、开展隐私计算、联邦学习等处理，形成数据产品，为第三方客户提供用户增长、营销辅助、风险识别、广告反作弊等大数据解决方案，如您不希望我们进行前述处理，您可以通过本政策列明的联系方式与我们联系取消授权。"},{kind:"h2",text:"（五）请您注意，您同意我们使用以上信息及权限即代表您授权我们可以收集和使用这些个人信息，您关闭权限即代表您取消了这些授权，则我们将不再继续收集和使用您的个人信息，也无法为您提供与这些授权所对应的相关功能。您关闭授权的决定不会影响此前基于您的授权所进行的个人信息的处理。"},{kind:"h2",text:"（六）请您放心，我们收集和使用的个人信息均是在经过您的授权后通过合法渠道获得，不会从任何非法渠道间接获取您的个人信息。我们不会使用个人信息对您进行个性化推荐，当我们要将信息用于本政策未载明的其他用途时，会事先征求您的同意。"},{kind:"h1",text:"二、我们如何使用Cookie 和同类技术"},{kind:"p",text:"为确保本服务的正常运转，我们会在您的移动设备上存储名为Cookie 的小数据文件。Cookie通常包含标识符、站点名称以及一些号码和字符。通过Cookie，我们能够缓存您的数据以便下次快速获取您的手机号码。"},{kind:"p",text:"我们不会将Cookie 用于本政策所述目的之外的任何用途。您可根据自己的偏好清除手机缓存。"},{kind:"h1",text:"三、我们如何共享、转让、公开披露您的个人信息"},{kind:"h2",text:"（一）共享"},{kind:"p",text:"我们不会与中移互联网有限公司以外的任何公司、组织和个人分享您的个人信息，但以下情况除外："},{kind:"p",text:"1.我们可能会根据法律法规规定，或按政府主管部门的强制性要求，对外共享您的个人信息。"},{kind:"p",text:"2.如您同意本隐私政策，我们可能会将您的【手机号码、授权凭证】共享给中国移动通信集团有限公司，同时将您的【手机号码】共享给银联商务支付股份有限公司及相关使用方，以确保您在可信助填场景中的授权以及身份真实有效。我们只会共享必要的个人信息，且受隐私政策中所声明目的的约束。"},{kind:"h2",text:"（二）转让"},{kind:"p",text:"除以下情况外，我们不会将您的个人信息转让给任何公司、组织和个人。"},{kind:"p",text:"1.获得您的明确授权后，我们会向您授权的第三方转让您的个人信息。"},{kind:"p",text:"2.在本业务合并、收购或破产清算时，如涉及到个人信息转让时，我们会要求新的公司继续按本隐私政策接收、管理、使用和转让您的信息。若无法达成共识，我们会要求新的公司重新向您征求授权。"},{kind:"h2",text:"（三）公开披露"},{kind:"p",text:"除以下情况外，我们不会公开披露您的个人信息："},{kind:"p",text:"1.获得您明确同意后，按您授权情况披露您的个人信息。"},{kind:"p",text:"2.在法律、法律程序或政府主管部门强制性要求的情况下，我们可能会按要求披露您的个人信息。"},{kind:"h1",text:"四、我们如何保护和保存您的个人信息"},{kind:"h2",text:"（一）我们如何保存您的个人信息"},{kind:"h3",text:"1.信息存储的地点"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内，不存在境外收集用户信息情况。"},{kind:"h3",text:"2.信息存储的期限"},{kind:"p",text:"一般而言，移动认证将在您使用期间保存您的个人信息，并且您的个人信息将在法律规定范围内最短期限保留。在超出保留期限后，我们会根据适用法律的要求删除或匿名化处理您的个人信息。"},{kind:"p",text:"当您注销中国移动账户后，我们将删除相应的个人信息或进行匿名化处理。"},{kind:"p",text:"当我们的产品或服务发生停止运营的情形时，我们将以推送通知、公告的形式通知您，并在法律规定的期限内删除您的个人信息或进行匿名化处理。"},{kind:"p",text:"注：法律法规有规定不能删除时或不能匿名化处理的情况除外。"},{kind:"h2",text:"（二）我们如何保护您的个人信息"},{kind:"p",text:"我们会严格按照《中华人民共和国个人信息保护法》《中华人民共和国网络安全法》《全国人民代表大会常务委员会关于加强网络信息保护的决定》《电信和互联网用户个人信息保护规定》（工业和信息化部令第24 号）、《电话用户真实身份信息登记规定》（工业和信息化部令第25 号）等法律法规的要求，建立信息安全保障制度，采取技术措施和其他必要措施保护您的个人信息安全。"},{kind:"p",text:"1.我们保护您个人信息的技术与措施"},{kind:"p",text:"我们非常重视个人信息安全，并采取一切合理可行的措施保护您的个人信息："},{kind:"h3",text:"（1）数据安全技术措施"},{kind:"p",text:"我们会采用符合业界标准的安全保护措施，包括建立合理的制度规范、安全技术来防止您的个人信息遭到未经授权的访问使用、修改，避免数据的损坏或丢失。"},{kind:"p",text:"中移互联网的网络服务采取了传输层安全协议和其他加密技术，通过https 和其他方式提供浏览服务，确保用户数据在传输过程中的安全性。"},{kind:"p",text:"中移互联网采取加密技术对用户个人信息进行加密保存，并通过隔离技术进行隔离。"},{kind:"p",text:"在个人信息使用时，例如个人信息展示，我们会采取多种复杂的数据脱敏技术增强个人信息在使用中的安全性。"},{kind:"p",text:"中移互联网采用代码安全检查、数据方位日志分析技术进行个人信息安全审计。"},{kind:"h3",text:"（2）中移互联网为保护个人信息采取的其他安全措施"},{kind:"p",text:"中移互联网通过建立数据分类分级制度、数据安全管理规范、数据安全开发规范来管理规范个人信息的存储和使用。通过信息接触者保密协议、监控和审计制度来对数据进行全⾯安全控 制。同时建立安全管理中心并下设信息保护专职部门、数据安全应急响应组织来推进和保障个人信息安全，加强安全意识。我们还会定期举办安全和隐私保护培训课程来加强对个人信息保护重要性的认识，同时进行定期安全审计。"},{kind:"p",text:"2.安全事件处置"},{kind:"p",text:"为应对个人信息泄露、损毁和丢失等可能出现的风险，中移互联网制定了多项制度，明确安全事件、安全漏洞的分类分级标准及相应的处理流程。中移互联网也为本服务系统安全事件建立了专门的应急响应团队，按照安全事件处置规范要求，针对不同安全事件启动安全预案，进行止损、分析、定位、制定补救措施并联合相关部门进行溯源和打击。"},{kind:"p",text:"若不幸发生个人信息安全事件，我们将按照法律法规的要求，及时告知您安全事件的基本情况和可能的影响、我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议、对您的补救措施等信息。我们将及时将事件相关情况以邮件、信函、电话、推送通知的方式告知您。在难以逐一告知个人信息主体时，我们会采取合理、有效的方式发布公告。同时，我们还将按照监管部门要求，主动上报个人信息安全事件的处置情况。"},{kind:"p",text:"3.请您理解：互联网环境并非百分之百安全，我们将尽力确保或担保您发送给我们的任何信息的安全性。如果我们的物理、技术或管理防护设施遭到破坏，导致信息被非授权访问、公开披露、篡改或毁坏，导致您的合法权益受损，我们将依照法律法规承担相应责任。如果您对我们的个人信息保护有任何疑问，可通过本隐私政策中约定的联系方式联系我们。如果您发现自己的个人信息泄露，尤其是您的账户及密码发生泄露，请您立即通过本隐私政策【十、如何联系我们】中约定的联系方式联络我们，以便我们采取相应措施。"},{kind:"h1",text:"五、您的权利"},{kind:"h2",text:"（一）查询、更正、补充和限制您的个人信息"},{kind:"h2",text:"若您希望查询、更正、补充和限制您的个人信息，您可以联系我们的客服电话10086联系我们，我们会有专门的客服人员帮助您。"},{kind:"h2",text:"删除您的个人信息"},{kind:"p",text:"您可以通过联系10086客服电话的方式删除您的部分信息，或申请注销手机号码删除您的全部信息，我们将在验证通过后的十五天内处理您的删除申请。在以下情形中，您可以向客服申请，提出删除个人信息的请求："},{kind:"p",text:"1.如果我们处理个人信息的行为违反了相关法律法规。"},{kind:"p",text:"2.如果我们收集、使用您的个人信息，却未征得您的同意。"},{kind:"p",text:"3.如果我们处理个人信息的行为违反了与您的约定。"},{kind:"p",text:"4.如果您不再使用我们的产品或服务，或您注销了中国移动手机号。"},{kind:"p",text:"5.如果我们不再为您提供产品或服务。"},{kind:"p",text:"当您从我们的服务中删除信息后，我们可能不会立即从备份系统中删除相应的信息，但会在备份更新时及时删除这些信息。"},{kind:"h2",text:"（三）注销账户"},{kind:"p",text:"您可以通过联系10086客服电话的方式申请注销，我们将在十五天内处理您的注销申请，您主动注销您的账户之后，我们将停止为您提供产品或服务，并依据您的要求，删除或匿名化您的个人信息，法律法规另有规定的除外。"},{kind:"h2",text:"（四）复制个人信息副本"},{kind:"p",text:"如果你需要复制我们收集存储的个人信息，您可以联系10086，联系客服协助您复制、转移你的个人信息。"},{kind:"h2",text:"（五）个人信息可携权"},{kind:"h2",text:"在符合国家相关法律法规及网信部门规定的条件下，如您请求将个人信息转移至指定的个人信息处理者，我们将按照相关规定的要求提供转移的途径。"},{kind:"h2",text:"（六）撤销已同意授权功能"},{kind:"p",text:"如您已授权我们获得某些移动设备系统权限同意我们处理您的个人信息，您可以通过APP 系统权限设置撤回您的授权。您可登录梧桐数盾页面（https://slw.h5cmpassport.com:9091/h5/login），点击底部栏【授权】--【授权凭证】--【可信助填授权凭证】--【撤销授权】路径撤回您的对本产品隐私政策的授权同意，当您收回同意的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"p",text:"当您撤回同意或授权后，我们无法继续为您提供撤回同意或授权所对应的服务，也将不再处理您相应的个人信息。但您撤回同意或授权的决定，不会影响此前基于您的同意或授权而开展的个人信息处理。"},{kind:"h2",text:"（七）响应时限"},{kind:"p",text:"对于您行使上述（一）至（六）项权利所提出的相关请求，我们将在收到您的申请之日起十五天内作出答复。"},{kind:"h1",text:"六、例外情况"},{kind:"p",text:"请您充分理解并同意，我们在以下情况下收集、使用您的个人信息无需您的授权，且我们可能不会响应您提出的删除、注销的请求："},{kind:"p",text:"1.与国家安全、国防安全有关的情况。"},{kind:"p",text:"2.与公共安全、公共卫生、重大公共利益有关的情况。"},{kind:"p",text:"3.与犯罪侦查、起诉、审判和执行判决等有关的情况。"},{kind:"p",text:"4.有充分证据表明个人信息主体存在主观恶意或滥用权利的情况。"},{kind:"p",text:"5.响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的情况。"},{kind:"p",text:"6.涉及商业秘密的情况。"},{kind:"p",text:"7.法律法规规定的其他情形。"},{kind:"h1",text:"七、我们如何处理未成年人的个人信息"},{kind:"h2",text:"（一）我们非常重视保护未成年人个人信息，特别是14周岁以下的儿童。若您是未成年人，在使用我们的服务前，应提前取得您的父母或法定监护人的书面同意。我们将根据国家相关法律法规保护未成年人的个人信息。"},{kind:"h2",text:"（二）对于已经过未成年人的父母或法定监护人同意而收集的未成年人个人信息，我们只会在法律允许、父母或法定监护人明确同意、保护未成年人所必要的情况下使用或公开披露相关信息。"},{kind:"h2",text:"（三）如果我们发现在未事先获得未成年人的父母或法定监护人同意的情况下收集了未成年人的个人信息，会立即删除相关数据。"},{kind:"h1",text:"八、您的个人信息如何在全球范围转移"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内,我们不会将您的个人信息传输至中华人民共和国境外。"},{kind:"h1",text:"九、本政策如何更新"},{kind:"p",text:"我们的隐私政策可能变更。"},{kind:"p",text:"未经您的同意，我们不会削减您应享有的个人隐私权利。我们会以弹窗形式发布对本政策所做的任何变更。对于变更后的隐私政策，我们会再次征求您的同意。"},{kind:"h1",text:"十、如何联系我们"},{kind:"p",text:"如您对本政策存在任何疑问，或对于您的个人信息处理存在任何投诉、意见，请通过以下渠道联系我们："},{kind:"p",text:"公司名称：中移互联网有限公司"},{kind:"p",text:"公司地址：中国广东省广州市天河区高唐路323号中国移动南方基地智汇中心"},{kind:"p",text:"联系方式：10086"},{kind:"p",text:"我们已经建立客户投诉管理机制，包括跟踪流程。一般来说，我们将在验证通过后的五个工作日内处理完成，特殊情形下最长将在不超过十五天内作出答复。"},{kind:"p",text:"中国移动版权所有"}]},Cr={title:"《用户信息授权协议》",blocks:[{kind:"p",text:"请阅读以下协议内容。"}]},Dr={title:"《收付通用户信息认证授权协议》",blocks:[{kind:"h1",text:"用户信息认证授权协议"},{kind:"p",text:"《用户信息认证授权协议》(以下简称“本协议”)是银联商务支付股份有限公司及相关使用方关联公司（以下简称“我们或银联商务”）与用户（以下简称“您”）所订立的有效合约。请您先仔细阅读本协议内容，尤其是字体加粗或下划线部分。如您对本协议内容或页面提示信息有疑问，请勿进行下一步操作。您通过页面点击或我们认可的其他方式确认本协议，即表示您已充分阅读、理解并同意接受本协议的全部约定内容。"},{kind:"p",text:"1、您授权我们将您填写身份证后四位提供给中国移动及其关联公司核验身份证后四位有效性，校验成功后，您授权中国移动及其关联公司将您的本机号码对应【姓名/身份证前十四位】信息将以密文形式存放到您在中国移动的个人数据空间中。"},{kind:"p",text:"2. 您授权我们将通过中国移动及其关联公司获取您的本机号码，您授权我们从您的的中国移动个人数据可信空间提取您本机号码对应【姓名及身份证前十四位】信息，并使用该信息为您进行实名认证。"},{kind:"p",text:"为保障您的数据安全，在您的【姓名/身份证前十四位】信息输出后，中国移动通信运营商及其关联公司将从中移互联中国移动个人数据空间删除您的【姓名/身份证前十四位】信息。"},{kind:"p",text:"银联商务与相关使用方关联公司如共享您的上述个人信息会通过相关协议另行取得您的授权。"},{kind:"p",text:"3、客服联系方式：95534。您可以根据《收付通用户隐私政策保护》行使您的个人信息权利。"},{kind:"p",text:"4、我们作为非银行支付机构，依据您的明确授权向第三方提供您的上述信息，第三方向您提供的服务由该第三方独立运营并承担责任。因第三方使用您上述信息而产生的纠纷，我们将协调您与第三方协商解决。"},{kind:"p",text:"5、如我们对本协议进行变更，我们将通过弹窗、服务通知或官网公告（www.chinaums.com）等方式告知您更新内容。更新内容将于公告或通知载明的生效之日起开始生效。如果更新的内容需要您授权向第三方提供您的其他个人信息的，我们会再次以显著方式重新征求您的同意。若您无法同意变更后的协议内容，您有权停止使用相关服务；双方协商一致的，也可另行变更相关服务和对应协议内容。"},{kind:"p",text:"6、本协议之效力、解释、变更、执行与争议解决均适用中华人民共和国法律。因本协议产生的争议，双方应尽量友好协商解决，如协商不成的，您同意将相关争议提交至被告住所地人民法院诉讼解决。"}]},Br={title:"《中国移动认证梧桐数盾隐私政策》",blocks:[{kind:"h1",text:"中国移动认证梧桐数盾隐私政策"},{kind:"p",text:"更新时间：2026年4⽉24日"},{kind:"p",text:"生效时间：2026年4⽉24日"},{kind:"p",text:"中移互联网有限公司移动认证业务（以下称”我们”）非常重视用户的隐私和个人信息安全保护，我们将按照法律法规要求，采取相应安全保护措施，尽力保护您的个人信息安全可控。"},{kind:"p",text:"我们希望通过《隐私政策》（以下简称”本政策”）向您说明移动认证（以下简称”本服务”）如何收集、使用、存储和共享您的个人信息，以及您可以如何行使您的隐私权利。"},{kind:"p",text:"请您在使用本服务前，认真阅读并充分理解本《隐私政策》的全部内容，特别是以字体加粗方式标识的内容。在阅读过程中如您对本政策内容有任何疑问、意见或建议，请联系我们。您使用或在我们更新本政策后继续使用我们的产品或服务，即表示您同意本政策（含更新版本）内容，并且同意我们按照本政策收集、存储、使用和共享您的相关信息。您方表示同意的方式包括但不限于主动点击”同意”、”接受”、“授权”选项或签字等。"},{kind:"p",text:"本隐私政策将帮助您了解以下内容："},{kind:"h1",text:"一.  我们如何收集和使用您的个人信息。"},{kind:"h1",text:"二. 我们如何使用Cookie和同类技术。"},{kind:"h1",text:"三. 我们如何共享、转让、公开披露您的个人信息。"},{kind:"h1",text:"四. 我们如何保护和保存您的个人信息。"},{kind:"h1",text:"五. 您的权利。"},{kind:"h1",text:"六. 例外情况。"},{kind:"h1",text:"七. 我们如何处理未成年人的个人信息。"},{kind:"h1",text:"八. 您的个人信息如何在全球范围转移。"},{kind:"h1",text:"九. 本政策如何更新。"},{kind:"h1",text:"十. 如何联系我们。"},{kind:"h1",text:"一、我们如何收集和使用您的个人信息"},{kind:"p",text:"个人信息是指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息，不包括匿名化处理后的信息。我们会以“最小化”原则收集、使用、存储和传输用户个人信息，并通过用户协议和隐私政策告知您信息的使用目的和范围。"},{kind:"p",text:"我们会为您提供的各项具体功能场景包括："},{kind:"p",text:"（一）为保证您正常使用本服务的内容，我们需要收集和使用下列与您有关的信息："},{kind:"h2",text:"1、移动认证安全基座SDK功能"},{kind:"p",text:"根据《T/TAF 188-2023 软件开发工具包（SDK）收集个人信息技术要求》，本 SDK 属于认证类。"},{kind:"p",text:"移动认证安全基座SDK包含本机号码校验功能。"},{kind:"p",text:"为实现本机号码校验功能，需要获取您的网络类型、网络地址（ip 地址）、运营商类型、本机号码信息、SIM 卡状态，用于一键获取您的手机号码；同时，使用手机设备类型、手机操作系统、硬件厂商，用于问题查询、分析、风险控制和追踪，如您拒绝提供，将不能使用本服务。"},{kind:"h2",text:"2、H5移动认证安全基座 功能"},{kind:"b",text:"H5移动认证安全基座包含本机号码校验、号码授权、信息助填和区块链存证功能。"},{kind:"p",text:"为实现H5场景本机号码校验和号码授权功能，需要收集您的本机号码、运营商类型、网络类型，用于获取您的手机号码进行本机号码校验和号码授权服务。同时使用您的浏览器指纹用于业务风控，浏览器指纹具体包括：操作系统、用户代理（浏览器类型）、浏览器版本号、浏览器是否启动cookie、cpu 等级、cpu 虚拟核心数、系统语言、浏览器插件、屏幕可用宽度、屏幕可用高度、颜⾊质量、时差区。如您拒绝提供，将不能使用服务。"},{kind:"p",text:"为实现H5场景信息助填服务，您填写身份证号码后四位，并授权我们及中国移动通信集团有限公司获取您的手机号码，在获得您授权后，将您的手机号码提供给应用运营方及相关使用方关联公司用于开通相关服务。同时我们将使用您在我们及中国移动通信集团有限公司预留的身份证号码、手机号码进行身份证号码后四位校验，校验成功后，您的【姓名、身份证号码前十四位】将以密文形式存放到您的中移互联可信数据空间中，在获得您确认授权后，应用运营方及相关使用方关联公司将从中移互联可信数据空间中查询并获取您的【姓名、身份证号码前十四位】信息，并使用该信息为您完成实名认证。为保障您的数据安全，在应用运营方及相关使用方关联公司获取您的【姓名、身份证号码前十四位】信息后，我们将从中移互联可信数据空间删除您的【姓名、身份证号码前十四位】信息。如您拒绝提供，将不能使用H5场景信息助填服务，但不影响使用一键登录和本机号码校验功能。"},{kind:"p",text:"为实现H5场景区块链存证功能，需要获取您的手机号、IP地址、当前操作信息、使用时间、服务协议条款，用于将您的使用信息上传至区块链存证。如您拒绝提供，将不能使用区块链存证服务。"},{kind:"h2",text:"3、移动认证安全基座SDK移动设备系统权限申请声明"},{kind:"li",text:"（1）为满足基本业务要求，需要获取您的以下权限："},{kind:"table",rows:[["权限","操作系统","使用场景","使用目的"],["INTERNET（必选）","Android","网络通信","允许应用程序联网，用于访问网关和认证服务器"],[`ACCESS_NETWORK_STAT\nE（必选）`,"Android","查看网络状态","允许 SDK 访问网络状态，用于判断设备网络类型是蜂窝网络或 WIFI 网络"],[`CHANGE_NETWORK_STA\nTE（必选）`,"Android","进行网络切换通信",`允许程序改变网络连接状态 , 当\n用户未使用数据流量时，切换为数据流量，以获取用户手机号码`],["蜂窝网络权限（必选）","iOS","获取用户手机号","用于一键获取您的手机号码"]]},{kind:"p",text:"如您拒绝提供以上移动设备系统权限，将不能使用服务。"},{kind:"b",text:"（二）从第三方获得您的个人信息："},{kind:"p",text:"为向您提供H5场景信息助填服务，经您授权同意，我们可能会接收中国移动通信集团有限公司提供的您的【加密身份证号码、加密姓名】。我们将在确认接收的个人信息来源的合法性后，依相关法律法规及第三方约定将您的前述信息用于H5场景信息助填服务。"},{kind:"b",text:"（三）在以下情形中我们使用您的信息时无需征得您的授权同意："},{kind:"p",text:"1.关系国家安全、国防安全的情况时。"},{kind:"p",text:"2.关系公共安全、公共卫生、重大公共利益的情况时。"},{kind:"p",text:"3.关系犯罪侦查、起诉、审判和判决执行的情况时。"},{kind:"p",text:"4.出于维护个人信息主体或其他个人的生命、财产安全，但又很难得到本人同意的情况下。"},{kind:"p",text:"5.所收集的个人信息是个人信息主体自行向社会公众公开的信息。"},{kind:"p",text:"6.从合法公开披露的信息中收集的您的个人信息的，如合法的新闻报道、政府信息公开渠道。"},{kind:"p",text:"7.根据您的要求签订合同所必需的。"},{kind:"p",text:"8.用于维护所提供的产品与/或服务的安全稳定运行所必需的，例如发现、处置产品与/或服务的故障。"},{kind:"p",text:"9.为合法的新闻报道所必需的。"},{kind:"p",text:"10.学术研究机构基于公共利益开展统计或学术研究所必要，且对外提供学术研究或描述的结果时，对结果中所包含的个人信息进行去标识化处理的。"},{kind:"p",text:"11.法律法规规定的其他情形。"},{kind:"p",text:"（四）基于合法获取的数据，我方将依法按照业内领先的去标识化、匿名化等数据安全技术对信息进行处理。对我方及合作方合法合规获取的数据进行汇聚融合、加工分析、开展隐私计算、联邦学习等处理，形成数据产品，为第三方客户提供用户增长、营销辅助、风险识别、广告反作弊等大数据解决方案，如您不希望我们进行前述处理，您可以通过本政策列明的联系方式与我们联系取消授权。"},{kind:"p",text:"（五）请您注意，您同意我们使用以上信息及权限即代表您授权我们可以收集和使用这些个人信息，您关闭权限即代表您取消了这些授权，则我们将不再继续收集和使用您的个人信息，也无法为您提供与这些授权所对应的相关功能。您关闭授权的决定不会影响此前基于您的授权所进行的个人信息的处理。"},{kind:"p",text:"（六）请您放心，我们收集和使用的个人信息均是在经过您的授权后通过合法渠道获得，不会从任何非法渠道间接获取您的个人信息。我们不会使用个人信息对您进行个性化推荐，当我们要将信息用于本政策未载明的其他用途时，会事先征求您的同意。"},{kind:"h1",text:"二、我们如何使用Cookie 和同类技术"},{kind:"p",text:"为确保本服务的正常运转，我们会在您的移动设备上存储名为Cookie 的小数据文件。Cookie通常包含标识符、站点名称以及一些号码和字符。通过Cookie，我们能够缓存您的数据以便下次快速获取您的手机号码。"},{kind:"p",text:"我们不会将Cookie 用于本政策所述目的之外的任何用途。您可根据自己的偏好清除手机缓存。"},{kind:"h1",text:"三、我们如何共享、转让、公开披露您的个人信息"},{kind:"h2",text:"（一）共享"},{kind:"p",text:"我们不会与中移互联网有限公司以外的任何公司、组织和个人分享您的个人信息，但以下情况除外："},{kind:"p",text:"1.我们可能会根据法律法规规定，或按政府主管部门的强制性要求，对外共享您的个人信息。"},{kind:"p",text:"2.如您同意本隐私政策，我们可能会将您的【手机号码、授权凭证】共享给中国移动通信集团有限公司，同时将您的【手机号码】共享给应用运营方及相关使用方关联公司，以确保您在可信助填场景中的授权以及身份真实有效。我们只会共享必要的个人信息，且受隐私政策中所声明目的的约束。"},{kind:"h2",text:"（二）转让"},{kind:"p",text:"除以下情况外，我们不会将您的个人信息转让给任何公司、组织和个人。"},{kind:"p",text:"1.获得您的明确授权后，我们会向您授权的第三方转让您的个人信息。"},{kind:"p",text:"2.在本业务合并、收购或破产清算时，如涉及到个人信息转让时，我们会要求新的公司继续按本隐私政策接收、管理、使用和转让您的信息。若无法达成共识，我们会要求新的公司重新向您征求授权。"},{kind:"h2",text:"（三）公开披露"},{kind:"p",text:"除以下情况外，我们不会公开披露您的个人信息："},{kind:"p",text:"1.获得您明确同意后，按您授权情况披露您的个人信息。"},{kind:"p",text:"2.在法律、法律程序或政府主管部门强制性要求的情况下，我们可能会按要求披露您的个人信息。"},{kind:"h1",text:"四、我们如何保护和保存您的个人信息"},{kind:"h2",text:"（一）我们如何保存您的个人信息"},{kind:"h3",text:"1.信息存储的地点"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内，不存在境外收集用户信息情况。"},{kind:"h3",text:"2.信息存储的期限"},{kind:"p",text:"一般而言，移动认证将在您使用期间保存您的个人信息，并且您的个人信息将在法律规定范围内最短期限保留。在超出保留期限后，我们会根据适用法律的要求删除或匿名化处理您的个人信息。"},{kind:"p",text:"当您注销中国移动账户后，我们将删除相应的个人信息或进行匿名化处理。"},{kind:"p",text:"当我们的产品或服务发生停止运营的情形时，我们将以推送通知、公告的形式通知您，并在法律规定的期限内删除您的个人信息或进行匿名化处理。"},{kind:"p",text:"注：法律法规有规定不能删除时或不能匿名化处理的情况除外。"},{kind:"h2",text:"（二）我们如何保护您的个人信息"},{kind:"p",text:"我们会严格按照《中华人民共和国个人信息保护法》《中华人民共和国网络安全法》《全国人民代表大会常务委员会关于加强网络信息保护的决定》《电信和互联网用户个人信息保护规定》（工业和信息化部令第24 号）、《电话用户真实身份信息登记规定》（工业和信息化部令第25 号）等法律法规的要求，建立信息安全保障制度，采取技术措施和其他必要措施保护您的个人信息安全。"},{kind:"b",text:"1.我们保护您个人信息的技术与措施"},{kind:"p",text:"我们非常重视个人信息安全，并采取一切合理可行的措施保护您的个人信息："},{kind:"h3",text:"（1）数据安全技术措施"},{kind:"p",text:"我们会采用符合业界标准的安全保护措施，包括建立合理的制度规范、安全技术来防止您的个人信息遭到未经授权的访问使用、修改，避免数据的损坏或丢失。"},{kind:"p",text:"中移互联网的网络服务采取了传输层安全协议和其他加密技术，通过https 和其他方式提供浏览服务，确保用户数据在传输过程中的安全性。"},{kind:"p",text:"中移互联网采取加密技术对用户个人信息进行加密保存，并通过隔离技术进行隔离。"},{kind:"p",text:"在个人信息使用时，例如个人信息展示，我们会采取多种复杂的数据脱敏技术增强个人信息在使用中的安全性。"},{kind:"p",text:"中移互联网采用代码安全检查、数据方位日志分析技术进行个人信息安全审计。"},{kind:"h3",text:"（2）中移互联网为保护个人信息采取的其他安全措施"},{kind:"p",text:"中移互联网通过建立数据分类分级制度、数据安全管理规范、数据安全开发规范来管理规范个人信息的存储和使用。通过信息接触者保密协议、监控和审计制度来对数据进行全⾯安全控 制。同时建立安全管理中心并下设信息保护专职部门、数据安全应急响应组织来推进和保障个人信息安全，加强安全意识。我们还会定期举办安全和隐私保护培训课程来加强对个人信息保护重要性的认识，同时进行定期安全审计。"},{kind:"b",text:"2.安全事件处置"},{kind:"p",text:"为应对个人信息泄露、损毁和丢失等可能出现的风险，中移互联网制定了多项制度，明确安全事件、安全漏洞的分类分级标准及相应的处理流程。中移互联网也为本服务系统安全事件建立了专门的应急响应团队，按照安全事件处置规范要求，针对不同安全事件启动安全预案，进行止损、分析、定位、制定补救措施并联合相关部门进行溯源和打击。"},{kind:"p",text:"若不幸发生个人信息安全事件，我们将按照法律法规的要求，及时告知您安全事件的基本情况和可能的影响、我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议、对您的补救措施等信息。我们将及时将事件相关情况以邮件、信函、电话、推送通知的方式告知您。在难以逐一告知个人信息主体时，我们会采取合理、有效的方式发布公告。同时，我们还将按照监管部门要求，主动上报个人信息安全事件的处置情况。"},{kind:"p",text:"3.请您理解：互联网环境并非百分之百安全，我们将尽力确保或担保您发送给我们的任何信息的安全性。如果我们的物理、技术或管理防护设施遭到破坏，导致信息被非授权访问、公开披露、篡改或毁坏，导致您的合法权益受损，我们将依照法律法规承担相应责任。如果您对我们的个人信息保护有任何疑问，可通过本隐私政策中约定的联系方式联系我们。如果您发现自己的个人信息泄露，尤其是您的账户及密码发生泄露，请您立即通过本隐私政策【十、如何联系我们】中约定的联系方式联络我们，以便我们采取相应措施。"},{kind:"h1",text:"五、您的权利"},{kind:"h2",text:"（一）查询、更正、补充和限制您的个人信息"},{kind:"h2",text:"若您希望查询、更正、补充和限制您的个人信息，您可以联系我们的客服电话10086联系我们，我们会有专门的客服人员帮助您。"},{kind:"h2",text:"删除您的个人信息"},{kind:"p",text:"您可以通过联系10086客服电话的方式删除您的部分信息，或申请注销手机号码删除您的全部信息，我们将在验证通过后的十五天内处理您的删除申请。在以下情形中，您可以向客服申请，提出删除个人信息的请求："},{kind:"p",text:"1.如果我们处理个人信息的行为违反了相关法律法规。"},{kind:"p",text:"2.如果我们收集、使用您的个人信息，却未征得您的同意。"},{kind:"p",text:"3.如果我们处理个人信息的行为违反了与您的约定。"},{kind:"p",text:"4.如果您不再使用我们的产品或服务，或您注销了中国移动手机号。"},{kind:"p",text:"5.如果我们不再为您提供产品或服务。"},{kind:"p",text:"当您从我们的服务中删除信息后，我们可能不会立即从备份系统中删除相应的信息，但会在备份更新时及时删除这些信息。"},{kind:"h2",text:"（三）注销账户"},{kind:"p",text:"您可以通过联系10086客服电话的方式申请注销，我们将在十五天内处理您的注销申请，您主动注销您的账户之后，我们将停止为您提供产品或服务，并依据您的要求，删除或匿名化您的个人信息，法律法规另有规定的除外。"},{kind:"h2",text:"（四）复制个人信息副本"},{kind:"p",text:"如果你需要复制我们收集存储的个人信息，您可以联系10086，联系客服协助您复制、转移你的个人信息。"},{kind:"h2",text:"（五）个人信息可携权"},{kind:"h2",text:"在符合国家相关法律法规及网信部门规定的条件下，如您请求将个人信息转移至指定的个人信息处理者，我们将按照相关规定的要求提供转移的途径。"},{kind:"h2",text:"（六）撤销已同意授权功能"},{kind:"p",text:"如您已授权我们获得某些移动设备系统权限同意我们处理您的个人信息，您可以通过APP 系统权限设置撤回您的授权。您可登录梧桐数盾页面（https://slw.h5cmpassport.com:9091/h5/login），点击底部栏【授权】--【授权凭证】--【可信助填授权凭证】--【撤销授权】路径撤回您的对本产品隐私政策的授权同意，当您收回同意的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"p",text:"当您撤回同意或授权后，我们无法继续为您提供撤回同意或授权所对应的服务，也将不再处理您相应的个人信息。但您撤回同意或授权的决定，不会影响此前基于您的同意或授权而开展的个人信息处理。"},{kind:"b",text:"（七）响应时限"},{kind:"p",text:"对于您行使上述（一）至（六）项权利所提出的相关请求，我们将在收到您的申请之日起十五天内作出答复。"},{kind:"h1",text:"六、例外情况"},{kind:"p",text:"请您充分理解并同意，我们在以下情况下收集、使用您的个人信息无需您的授权，且我们可能不会响应您提出的删除、注销的请求："},{kind:"p",text:"1.与国家安全、国防安全有关的情况。"},{kind:"p",text:"2.与公共安全、公共卫生、重大公共利益有关的情况。"},{kind:"p",text:"3.与犯罪侦查、起诉、审判和执行判决等有关的情况。"},{kind:"p",text:"4.有充分证据表明个人信息主体存在主观恶意或滥用权利的情况。"},{kind:"p",text:"5.响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的情况。"},{kind:"p",text:"6.涉及商业秘密的情况。"},{kind:"p",text:"7.法律法规规定的其他情形。"},{kind:"p",text:"七、我们如何处理未成年人的个人信息"},{kind:"p",text:"（一）我们非常重视保护未成年人个人信息，特别是14周岁以下的儿童。若您是未成年人，在使用我们的服务前，应提前取得您的父母或法定监护人的书面同意。我们将根据国家相关法律法规保护未成年人的个人信息。"},{kind:"p",text:"（二）对于已经过未成年人的父母或法定监护人同意而收集的未成年人个人信息，我们只会在法律允许、父母或法定监护人明确同意、保护未成年人所必要的情况下使用或公开披露相关信息。"},{kind:"p",text:"（三）如果我们发现在未事先获得未成年人的父母或法定监护人同意的情况下收集了未成年人的个人信息，会立即删除相关数据。"},{kind:"h1",text:"八、您的个人信息如何在全球范围转移"},{kind:"p",text:"我们会按照法律法规规定，将境内收集的用户个人信息存储于中国境内,我们不会将您的个人信息传输至中华人民共和国境外。"},{kind:"h1",text:"九、本政策如何更新"},{kind:"p",text:"我们的隐私政策可能变更。"},{kind:"p",text:"未经您的同意，我们不会削减您应享有的个人隐私权利。我们会以弹窗形式发布对本政策所做的任何变更。对于变更后的隐私政策，我们会再次征求您的同意。"},{kind:"h1",text:"十、如何联系我们"},{kind:"p",text:"如您对本政策存在任何疑问，或对于您的个人信息处理存在任何投诉、意见，请通过以下渠道联系我们："},{kind:"p",text:"公司名称：中移互联网有限公司"},{kind:"p",text:"公司地址：中国广东省广州市天河区高唐路323号中国移动南方基地智汇中心"},{kind:"p",text:"联系方式：10086"},{kind:"p",text:"我们已经建立客户投诉管理机制，包括跟踪流程。一般来说，我们将在验证通过后的五个工作日内处理完成，特殊情形下最长将在不超过十五天内作出答复。"},{kind:"p",text:"中国移动版权所有"}]},_e={title:"《敏感个人信息处理规则》",blocks:[{kind:"h1",text:"敏感个人信息处理规则"},{kind:"p",text:"银联商务支付股份有限公司（以下简称“我们”）非常重视对您的敏感个人信息的保护。我们将遵循合法、正当、必要和诚信原则处理您的敏感个人信息。"},{kind:"p",text:"“敏感个人信息”是指一旦泄露或者非法使用，容易导致自然人的人格尊严受到侵害或者人身、财产安全受到危害的个人信息，包括生物识别、宗教信仰、特定身份、医疗健康、金融账户、行踪轨迹等信息，以及不满十四周岁未成年人的个人信息。"},{kind:"b",text:"本规则将帮助您了解以下内容："},{kind:"h1",text:"一、我们如何收集、使用以及以其他方式处理您的敏感个人信息"},{kind:"h1",text:"二、我们如何存储和保护敏感个人信息"},{kind:"h1",text:"三、用户权利"},{kind:"h1",text:"四、如何联系我们"},{kind:"h1",text:"五、其他"},{kind:"h1",text:"一、我们如何收集、使用以及以其他方式处理您的敏感个人信息"},{kind:"p",text:"1、为向您提供《【用户认证服务】隐私政策》所述的相关服务，您知悉并同意我们在以下场景/业务功能中处理您的敏感个人信息："},{kind:"table",rows:[["场景/业务功能","处理目的","处理方式","敏感个人信息种类"],["银行卡支付绑卡、需实名制验证或管理的金融场景","身份一致性核验和便利信息填写","收集、存储、使用、加工、传输、提供、删除","身份证号"]]},{kind:"p",text:"2、我们处理您的敏感个人信息，是实现前述处理目的所必需的。如您不提供该等信息将导致处理目的无法实现。对您个人权益的影响是：如果前述敏感个人信息泄露或者被非法使用等，可能危害您的人身和财产安全、损害您的个人名誉等人格权益或导致歧视性差别待遇等。"},{kind:"h1",text:"二、我们如何存储和保护敏感个人信息"},{kind:"p",text:"我们会根据相关法律法规妥善保存和保护您的敏感个人信息。关于我们如何保存和保护敏感个人信息，包括个人信息保存期限、保存期限的确定方法、到期后的处理方式等，均适用《用户认证服务隐私政策》中“我们如何保存您的个人信息”和“我们如何保护您的个人信息”部分的约定。"},{kind:"h1",text:"三、用户权利"},{kind:"p",text:"关于您行使查阅、复制、转移、更正、补充、删除、限制处理个人信息等权利，以及注销账号、撤回同意的方法和途径，适用《用户认证服务隐私政策》“用户权利”部分的约定。"},{kind:"h1",text:"四、如何联系我们"},{kind:"p",text:"如果您有任何疑问、投诉、举报、意见或建议，您可以通过以下方式与我们联系："},{kind:"p",text:"客服电话：95534"},{kind:"p",text:"个人信息保护负责人邮箱：yszc@chinaums.com"},{kind:"p",text:"联系地址：中国（上海）自由贸易试验区张衡路1006、1008号"},{kind:"p",text:"我们会尽最大努力为您提供满意的解决方案。一般情况下，我们将在15天内处理您的疑问、投诉、意见、举报或建议。"},{kind:"p",text:"如果您对我们的回复不满意，特别是认为我们的个人信息处理行为损害了您的合法权益，您还可以向人民银行、支付清算协会、网信、电信、公安及工商等监管部门进行投诉或举报，或向被告住所地有管辖权的人民法院提起诉讼。"},{kind:"h1",text:"五、其他"},{kind:"p",text:"1、当您手动勾选、点击同意、签署或以其他主动方式确认本规则时，即表示您已仔细阅读、充分理解并单独同意我们按照本规则及《用户认证服务隐私政策》的约定处理您的敏感个人信息。"},{kind:"p",text:"2、本规则系《用户认证服务隐私政策》的有效组成部分，本规则有约定的，按照本规则执行；本规则未尽事宜，适用《用户认证服务隐私政策》的相关约定。"}]},mr={title:"《第三方共享个人信息清单》",blocks:[{kind:"h1",text:"第三方对外提供个人信息清单"},{kind:"table",rows:[["合作方名称","共享目的","共享场景","个人信息","提供方式"],["您具体使用的保险场景的合作商户","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token、姓名、身份证号前十四位、手机号","API接口"],["中移互联网有限公司","核验身份一致性、便利信息填写","银行卡支付绑卡、需实名制验证或管理的金融场景","身份证后四位、授权token","API接口"]]}]},Se={title:"《个人信息收集清单》",blocks:[{kind:"h1",text:"个人信息收集清单"},{kind:"p",text:"个人信息：身份证号码后四位"},{kind:"p",text:"收集目的：身份一致性核验和便利信息填写"},{kind:"p",text:"收集场景：银行卡支付绑卡、需实名制验证或管理的金融场景"},{kind:"p",text:"收集方式：从自有H5页面或通过JSSDK由第三方收集"},{kind:"p",text:"收集频率：业务触发时收集"},{kind:"p",text:"个人信息：手机号码、姓名、身份证号码前十四位"},{kind:"p",text:"收集目的：身份一致性核验和便利信息填写"},{kind:"p",text:"收集场景：银行卡支付绑卡、需实名制验证或管理的金融场景"},{kind:"p",text:"收集方式：从第三方收集"},{kind:"p",text:"收集频率：业务触发时收集"}]},be={title:"《用户认证服务隐私政策》",blocks:[{kind:"h1",text:"用户认证服务隐私政策"},{kind:"p",text:"发布日期：【2026】年【7】月【3】日"},{kind:"p",text:"生效日期：【2026】年【7】月【3】日"},{kind:"p",text:"版本号：V1.0_2026"},{kind:"p",text:"银联商务支付股份有限公司（以下简称“我们”）非常重视用户（以下简称“您”，如用户为法人或其他组织的，在本政策中所称的用户或“您”亦包含在使用我们产品或服务过程中实际操作账户的自然人）的个人信息保护，我们将在向您提供服务时，按照本隐私政策（以下简称“本政策”）收集、使用、存储、共享、转让或以其他方式处理您的个人信息，我们也会通过本政策向您说明您可以如何管理您的个人信息。本政策与您使用我们的各项服务关系密切，我们在此特别提醒您：在使用我们提供的服务前，请您仔细阅读并了解本政策的全部内容，特别是其中可能与您的合法利益存在重大关系的条款（为了特别提示您并便于您的阅读，我们采用字体加粗或其他显著格式提请您注意），并在此基础上作出您认为适当的选择。如您对本政策内容有疑问，您可以通过本政策列明的联系方式与我们联系。本政策适用于在中华人民共和国境内(为了本隐私政策的目的，港、澳、台地区除外)收集、使用、存储及对外提供您的个人信息的行为。如果您勾选“我已阅读并同意”（具体表述以产品界面为准）并确认提交，即视为您同意本政策并授权我们按照本政策规定处理您的个人信息。"},{kind:"b",text:"本政策将帮助您了解以下内容："},{kind:"li",text:"定义"},{kind:"li",text:"适用范围"},{kind:"li",text:"个人信息的收集和使用"},{kind:"li",text:"我们如何委托处理、对外提供、转让、公开披露您的个人信息"},{kind:"li",text:"我们如何保存您的信息"},{kind:"li",text:"我们如何保护您的信息"},{kind:"li",text:"我们如何保护未成年人的个人信息"},{kind:"li",text:"用户权利"},{kind:"li",text:"本隐私政策的更新"},{kind:"li",text:"如何联系我们"},{kind:"h1",text:"一、定义"},{kind:"p",text:"个人信息：指以电子或者其他方式记录的与已识别或者可识别的自然人有关的各种信息。个人信息包括但不限于姓名、出生日期、身份证件号码、个人生物识别信息、住址、通信通讯联系方式、通信记录和内容、账号密码、财产信息、征信信息、行踪轨迹、住宿信息、健康生理信息、交易信息等。"},{kind:"p",text:"敏感个人信息：指一旦泄露或者非法使用，容易导致自然人的人格尊严受到侵害或者人身、财产安全受到危害的个人信息。敏感个人信息包括生物识别、宗教信仰、特定身份、医疗健康、金融账户、行踪轨迹等信息，以及不满十四周岁未成年人的个人信息。"},{kind:"p",text:"去标识化：指个人信息经过处理，使其在不借助额外信息的情况下无法识别特定自然人的过程。"},{kind:"p",text:"匿名化：指个人信息经过处理无法识别特定自然人且不能复原的过程。"},{kind:"p",text:"设备：指可用于访问我们的产品和/或服务的装置，例如台式计算机、笔记本电脑、平板电脑或智能手机。"},{kind:"p",text:"唯一设备识别码（专属ID或UUID）：指由设备制造商编入到设备中的一串字符，可用于以独有方式标识相应设备（如IMEI / android ID / IDFA / OpenUDID / GUID / SIM卡IMSI信息等）。"},{kind:"p",text:"IP地址：每台上网的设备都会被指定一个编号，称为互联网协议(IP)地址。这些编号通常都是根据地理区域指定的。IP地址通常可用于识别设备连接至互联网时所在的区域。"},{kind:"li",text:"适用范围"},{kind:"p",text:"本政策适用于【用户认证服务】。如关联公司在其产品或服务中使用了我们的产品或服务，但未设置独立隐私政策的，则本政策同样适用于该用户认证服务部分产品或服务。关联公司就其向您提供的产品或服务单独设立隐私政策的，则相应产品或服务适用该隐私政策。"},{kind:"p",text:"本政策不适用于通过我们的产品或服务而接入的其他第三方所收集的信息，其他第三方有自己的隐私政策，建议您查看并了解其个人信息保护政策。我们会尽商业上的合理努力要求这些主体对您的个人信息采取保护措施，但我们无法保证这些主体一定会按照我们的要求采取保护措施，请您与他们直接联系以获得关于他们的个人信息保护政策的详细情况。如您发现这些第三方创建的网页或第三方开发的应用程序存在风险时，建议您终止相关操作以保护您的合法权益。"},{kind:"li",text:"个人信息的收集和使用"},{kind:"p",text:"我们会按照合法、正当、必要、诚信的原则，收集您因使用服务所产生的、在使用服务时主动提供的信息以及根据法律法规规定或您的同意合法向第三方收集的个人信息，用以向您提供服务。"},{kind:"li",text:"收集的情形"},{kind:"p",text:"1．支付绑卡、实名制验证或管理"},{kind:"p",text:"在您使用【我们及其合作商户的银行卡支付绑卡等支付场景、需实名制验证或管理的金融场景】功能时，出于身份有效性核验和便利信息填写的目的，我们会收集您的【身份证后四位】信息，从第三方【中移互联网有限公司及中国移动通信集团有限公司】收集您的【手机号码、姓名、身份证前十四位】。如您不同意收集、提供上述信息，我们将无法完成对您的身份有效性核验，您将无法使用信息便利填写相关功能。"},{kind:"p",text:"您授权我们将您填写的身份证号码后四位提供给中国移动通信集团有限公司及其关联公司，中国移动通信集团有限公司及其关联公司将使用您在中国移动预留的身份证号码、手机号码进行身份证号码后四位校验，校验成功后，您授权中国移动及其关联公司将您的加密本机号码以及对应的【姓名/身份证前十四位】信息将以密文形式存放到您的中移互联可信数据空间中，并授权中国移动及其关联公司将您的手机号、身份证前十四位、姓名提供给我们。为保障您的数据安全，在您的【姓名/身份证前十四位】信息输出后，中国移动通信集团有限公司及其关联公司将从中移互联可信数据空间中删除您的【姓名/身份证前十四位】信息。"},{kind:"p",text:"请您理解，在您使用服务的过程中，如您同意向第三方提供其他个人信息的，请在第三方的相关页面提供，我们不会收集您向第三方提交的该等个人信息。"},{kind:"b",text:"我们在《个人信息收集清单》中更加简洁、直观地展示了我们收集的个人信息（包括收集频率、信息类型、采用目的、场景描述）。"},{kind:"li",text:"在向您提供服务的过程中，我们可能涉及收集、使用、存储或以其他方式处理您的敏感个人信息，我们处理您的敏感个人信息是向您提供对应功能或服务所必需的。对您个人权益的影响是敏感个人信息一旦泄露或者非法使用，容易导致您的人格尊严受到侵害或者人身、财产安全受到危害。敏感个人信息处理详情请参阅《敏感个人信息处理规则》"},{kind:"li",text:"征得同意的例外"},{kind:"b",text:"您充分知晓，根据相关法律法规，以下情形中，我们收集、使用您的个人信息无需征得您的授权同意："},{kind:"li",text:"为我们履行法律法规规定的义务所必需；"},{kind:"li",text:"为订立、履行您作为一方当事人的合同所必需；"},{kind:"li",text:"为应对突发公共卫生事件，或者紧急情况下为保护自然人的生命健康和财产安全所必需；"},{kind:"li",text:"为公共利益实施新闻报道、舆论监督等行为，在合理的范围内处理您的个人信息；"},{kind:"li",text:"依法在合理的范围内处理您自行公开或者其他已经合法公开的个人信息；"},{kind:"li",text:"法律法规规定的其他情形。"},{kind:"li",text:"我们如何使用您的个人信息"},{kind:"p",text:"为了遵守国家法律法规及监管要求、向您提供相应服务并实现风险防控目的，实现风险防控的目的，您同意并授权我们在以下情形中使用您的信息："},{kind:"li",text:"实现本政策中“我们如何收集您的个人信息”所述目的；"},{kind:"li",text:"为了保障服务的稳定性与安全性，我们会将您的个人信息用"},{kind:"li",text:"于身份验证、安全防范、诈骗监测、预防、降低风险或禁止非法活动；"},{kind:"li",text:"根据法律法规或监管要求向相关部门进行报告。"},{kind:"b",text:"当我们要将您的个人信息用于本政策未载明的其他用途时，我们会按照法律法规的要求再次征得您的同意。"},{kind:"li",text:"我们如何委托处理、对外提供、转让、公开披露您的个人信息"},{kind:"li",text:"委托处理"},{kind:"p",text:"在我们向您提供产品和服务的过程中，为了提升信息处理效率，降低信息处理成本，或提高信息处理准确性，请您理解，我们可能会委托有能力的我们的关联公司或其他专业机构代表我们来处理您的个人信息。我们仅会在您向我们所授权的处理目的、方式、范围内或基于法律规定的合法情形，在合法、正当的前提下委托受托方处理您的信息，并将根据法律规定对受托处理方进行约束与监督。我们会要求受托公司履行严格的保密义务并采取有效的保密措施，并按照相关法律法规要求妥善处理您的个人信息。"},{kind:"li",text:"对外提供"},{kind:"p",text:"原则上，除以下所列情形外，我们不会向第三方提供您的个人信息。我们将要求第三方对您的信息采取保护措施，并且严格遵守相关法律法规及监管要求。在取得您单独同意后，我们仅会出于合法、正当、必要、明确的目的提供您的个人信息，并且只会提供服务所必要的个人信息，法律法规另有规定的除外。"},{kind:"li",text:"事先获得您的单独同意；"},{kind:"li",text:"根据法律法规规定、法律程序、政府的强制命令或司法裁定，对外提供您的个人信息；"},{kind:"li",text:"在法律要求或允许的范围内，为了保护用户或社会公众的利益、财产或安全免遭损害而有必要向第三方提供您的个人信息；"},{kind:"li",text:"我们可能会向我们的关联公司提供您的个人信息，我们只会提供必要的个人信息并会单独征得您的同意。我们仅会出于合法、正当且必要的目的向我们的关联公司共享您的个人信息，且仅会共享所提供产品或服务所必要的个人信息。"},{kind:"li",text:"5、依法取得您的单独同意后，我们可能会向相关合作机构提供您的个人信息,以确保您在银行卡支付绑卡等支付场景、需实名制验证或管理的金融场景中使用相关功能时的身份一致性核验和便利填写。"},{kind:"li",text:"我们向第三方共享个人信息的具体情况详见《第三方共享个人信息清单》，我们仅会出于合法、正当、必要、特定、明确的目的共享您的个人信息，并且只会共享提供功能和服务所必要的个人信息。我们会要求接收方对获取的个人信息严格保密和依法使用，接收方无权将共享的个人信息用于任何其他用途，法律法规另有规定和接收方依法另行取得您同意的除外。"},{kind:"li",text:"转让"},{kind:"b",text:"我们一般不会对外转让您的个人信息。根据法律法规规定，在我们因合并、分立、解散、被宣告破产等原因需要转让个人信息的，我们会告知您接收方的名称或者姓名和联系方式。接收方变更原先的处理目的、处理方式的，应当依照法律法规规定重新取得您的同意。"},{kind:"li",text:"公开披露"},{kind:"b",text:"我们不会公开披露您的个人信息，依法获得您同意的除外。"},{kind:"li",text:"征得同意的例外"},{kind:"b",text:"根据相关法律法规，在以下情形中，我们可能会依法共享、转让、公开披露您的个人信息，无需征得您的同意:"},{kind:"li",text:"为我们履行法律法规规定的义务所必需；"},{kind:"li",text:"为订立、履行您作为一方当事人的合同所必需；"},{kind:"li",text:"为应对突发公共卫生事件，或者紧急情况下为保护自然人的生命健康和财产安全所必需；"},{kind:"li",text:"为公共利益实施新闻报道、舆论监督等行为，在合理的范围内处理您的个人信息；"},{kind:"li",text:"依法在合理的范围内处理您自行公开或者其他已经合法公开的个人信息；"},{kind:"li",text:"法律法规规定的其他情形。"},{kind:"li",text:"我们如何保存您的个人信息"},{kind:"h2",text:"（一）保存地点"},{kind:"b",text:"我们依照法律法规的规定，仅会将收集到的有关您的个人信息存储于中华人民共和国境内。目前我们暂时不存在跨境存储您的个人信息或向境外提供个人信息的场景。如果确有必要进行个人信息的跨境传输，我们会向您明确告知（包括境外接收方的名称或者姓名、联系方式、处理目的、处理方式、个人信息的种类以及个人向境外接收方行使《个人信息保护法》规定权利的方式和程序等），并征得您的单独同意，法律法规另有规定的除外。我们会确保境外接收方有充足的数据保护能力来保护您的个人信息。"},{kind:"h2",text:"（二）保存期限"},{kind:"b",text:"除法律、行政法规另有规定外，我们仅会在为实现处理目的所必要的最短时间内保存您的个人信息。我们将结合以下标准确定个人信息的保存期限：我们为您提供相应功能或服务的期限、我们所承担的法律义务以及合同义务等。超出前述保存期限后，我们会对您的个人信息进行删除或匿名化处理。"},{kind:"b",text:"如我们停止运营，我们将及时停止继续收集您个人信息的活动，并将停止运营的通知以逐一送达或公告的形式通知您，并在终止服务或运营后对所持有的个人信息进行删除或匿名化处理。"},{kind:"b",text:"法律、行政法规规定的保存期限未届满，或者删除、匿名化处理个人信息从技术上难以实现的，我们会停止除存储和采取必要的安全保护措施之外的处理。"},{kind:"li",text:"我们如何保护您的个人信息"},{kind:"h2",text:"我们保护您个人信息的技术与措施"},{kind:"p",text:"1、我们非常重视信息安全，成立了专门的负责团队。我们努力为您提供信息保护，采取了合适的管理、技术以及物理安全措施，参照国内外信息安全标准及最佳实践建立了与业务发展相适应的信息安全保障体系。"},{kind:"p",text:"2、我们使用符合业界标准的安全防护措施保护您提供的个人信息，防止数据遭到未经授权访问、公开披露、使用、修改、损坏或丢失。从数据的生命周期角度出发，在数据收集、存储、显示、处理、使用、销毁等各个环节建立了安全防护措施，根据信息敏感程度的级别采取不同的控制措施，包括但不限于访问控制、SSL（Secure Socket Layer）加密传输、加密存储、敏感信息脱敏显示等。我们已采取符合业界标准、合理可行的安全防护措施保护您提供的个人信息安全，使用加密技术提高个人信息的安全性，使用受信赖的保护机制防止个人信息遭到恶意攻击，防止个人信息遭到未经授权访问、公开披露、使用、修改、损坏或丢失。"},{kind:"p",text:"3、我们部署了访问控制机制，尽力确保只有授权人员才可访问个人信息。我们对可能接触到您信息的员工也采取了严格管理，可监控他们的操作情况，对于数据访问、内外部传输、使用、脱敏、解密等重要操作建立了审批机制，并与上述员工签署保密协议等。与此同时，我们还定期对员工进行信息安全培训，要求员工在日常工作中形成良好操作习惯，提升数据保护意识。"},{kind:"p",text:"4、我们非常重视信息安全，成立了专门的负责团队。我们努力为您提供信息保护，采取了合适的管理、技术以及物理安全措施，参照国内外信息安全标准及最佳实践建立了与业务发展相适应的信息安全保障体系。"},{kind:"p",text:"5、尽管我们采取了前述的安全措施，但同时也请您理解在网络上不存在“完善的安全措施”。我们会按现有的技术提供相应的安全措施来保护您的信息，提供合理的安全保障，我们将尽力做到使您的信息不被泄露、损毁或丢失。"},{kind:"p",text:"6、请您及时保存或备份您的文字、图片等其他信息，您需理解并接受，您接入我们的服务所用的系统和通讯网络，有可能因超出我们控制范围的因素而出现问题。"},{kind:"h2",text:"安全事件处置"},{kind:"p",text:"在不幸发生个人信息安全事件后，我们会启动应急预案，阻止安全事件扩大，并将按照中华人民共和国法律法规的要求向您告知安全事件的基本情况和可能的影响、我们已采取或将要采取的处置措施、您可自主防范和降低风险的建议、对您的补救措施等。我们将以邮件、电话、推送通知等方式告知您事件相关情况，难以逐一告知个人信息主体时，我们会采取合理、有效的方式发布公告。同时，我们还将按照监管部门要求，主动上报信息安全事件的处置情况。"},{kind:"li",text:"我们如何保护未成年人的个人信息"},{kind:"p",text:"按照中华人民共和国相关法律规定，未满18周岁为未成年人，不满14周岁的未成年人为儿童。"},{kind:"p",text:"【用户认证服务】主要面向成年人，如未经父母或监护人同意，我们不向未成年人，尤其是未满14周岁儿童提供相关服务。如您是未成年人的父母或监护人，我们提示您正确履行监护职责，保护未成年人个人信息安全。若您所监护的未成年人使用我们的服务的，您应予以正确引导和监护。"},{kind:"li",text:"用户权利"},{kind:"p",text:"我们非常重视您对个人信息的关注，并尽力保障您对于您个人信息的删除等权利，以使您能够充分保障自身的隐私和安全。您的权利包括："},{kind:"li",text:"删除您的个人信息"},{kind:"p",text:"我们为您提供了向我们提出删除的方式。如您在此访问过程中遇到操作问题或您需要删除您在使用我们服务过程中产生的其他个人信息，您可通过本政策载明的联系方式联系我们，只要我们无需过多投入，我们会在合理的范围内为您删除，法律法规另有规定的除外。"},{kind:"p",text:"在以下情形中，您可以向我们提出删除个人信息的请求，但已做匿名化处理或法律法规另有规定的除外："},{kind:"li",text:"处理目的已实现、无法实现或者为实现处理目的不再必要；"},{kind:"li",text:"我们停止提供产品或者服务，或者保存期限已届满；"},{kind:"li",text:"您撤回同意；"},{kind:"li",text:"我们违反法律、行政法规或者违反约定处理个人信息；"},{kind:"li",text:"法律、行政法规规定的其他情形。"},{kind:"p",text:"当您或我们协助您删除相关信息后，因适用的法律和安全技术限制，我们可能无法立即从备份系统中删除相应的信息，我们将安全地保存您的个人信息并限制对其任何进一步的处理，直到备份可以清除或实现匿名化。此外，如法律、行政法规规定的保存期限未届满，或者删除个人信息从技术上难以实现的，我们也无法立即删除您的相应个人信息，但会停止除存储和采取必要的安全保护措施之外的处理活动。"},{kind:"li",text:"改变您授权同意的范围或撤回您的授权"},{kind:"p",text:"您可以通过本政策载明的联系方式联系我们的方式改变您授权的范围或撤回您的授权，我们将不再基于对应权限继续收集和使用相关个人信息，也无法继续为您提供该权限所对应的服务。您改变授权的范围或撤回您授权的决定不会影响此前基于您的授权所进行的信息收集及使用。。"},{kind:"p",text:"请您理解，每个业务功能需要一些基本的个人信息才能完成，在您撤回同意或授权后，我们将无法继续为您提供撤回同意或授权所对应的服务，也不再处理您相应的个人信息。但您撤回同意或授权的决定，不会影响此前基于您的授权而开展的个人信息处理。"},{kind:"li",text:"个人信息副本的获取与个人信息转移"},{kind:"p",text:"您有权获取您的个人信息副本，您可以通过拨打本政策载明的客服电话申请。如您请求将您的个人信息转移至您指定的个人信息处理者，且该等转移符合能够验证您的真实身份、所转移的是您本人同意提供的或者基于合同收集的个人信息、具备技术可行性、不损害他人合法权益等国家网信部门规定条件的，我们将提供转移的途径。如您请求转移个人信息的次数等明显超出合理范围的，我们将根据转移个人信息的成本收取必要费用。"},{kind:"li",text:"约束信息系统自动化决策"},{kind:"p",text:"在某些业务功能中，我们可能仅依据包括信息系统、算法等在内的非人工自动决策机制做出决定。如果这些决定显著影响您的合法权益，您有权要求我们做出解释，我们也将提供适当的救济方式。"},{kind:"li",text:"响应您的请求"},{kind:"p",text:"如您需要行使其他个人信息法定权利，请通过本政策载明的联系方式联系我们。"},{kind:"p",text:"为了保障您个人信息的安全，我们可能需要您提供书面请求，或以其他方式证明您的身份，我们将在收到您反馈并验证您的身份后在15天内处理您的请求。对于您合理的请求，我们原则上不收取费用，但对多次重复、超出合理限度的请求，我们将视情收取一定成本费用。对于那些无端重复、需要过多技术手段（例如，需要开发新系统或从根本上改变现行惯例）、给他人合法权益带来风险或者非常不切实际的请求，我们可能会予以拒绝。"},{kind:"b",text:"请您谅解，在以下情形中，按照法律法规要求，我们将无法响应您的请求："},{kind:"li",text:"与国家安全、国防安全有关的；"},{kind:"li",text:"与公共安全、公共卫生、重大公共利益有关的；"},{kind:"li",text:"与犯罪侦查、起诉、审判和执行判决等有关的；"},{kind:"li",text:"有充分证据表明您存在主观恶意或滥用权利的；"},{kind:"li",text:"响应您的请求将导致您或其他个人、组织的合法权益受到严重损害的；"},{kind:"li",text:"涉及商业秘密的；"},{kind:"li",text:"出于维护个人信息主体或其他个人的生命、财产等重大合法权益且难以取得本人授权同意的。"},{kind:"li",text:"隐私政策的更新"},{kind:"p",text:"根据国家法律法规的规定以及提供功能和服务、业务运营的需要，我们可能对本政策进行部分或全部修订。但未经您明确同意，我们不会削减您依据本政策所应享有的权利。当下列事项发生变更时，我们会适时对本政策进行更新："},{kind:"li",text:"我们的名称和联系方式；"},{kind:"li",text:"个人信息的处理目的、处理方式，处理的个人信息种类、保存期限；"},{kind:"li",text:"您行使法定权利的方式和程序；"},{kind:"li",text:"法律、行政法规规定应当告知的其他事项。"},{kind:"b",text:"如本政策发生更新，我们可能选择以APP推送通知、弹窗提示、发送邮件/短消息或者发布公告或其他适当的方式来通知您。请您在充分理解我们修改后的隐私政策的基础上，作出您认为适当的选择。如您不同意本政策更新后的内容，应立即停止使用我们提供的服务。"},{kind:"li",text:"如何联系我们"},{kind:"p",text:"如果您有任何疑问、投诉、意见、举报或建议，您可以通过以下方式与我们联系："},{kind:"b",text:"客服电话：95534"},{kind:"b",text:"个人信息保护负责人邮箱：yszc@chinaums.com"},{kind:"b",text:"联系地址：中国(上海)自由贸易试验区张衡路1006、1008号"},{kind:"p",text:"我们会尽最大努力为您提供满意的解决方案，一般情况下，我们将在15天内处理您的疑问、投诉、意见、举报或建议。"},{kind:"b",text:"如果您对我们的回复不满意，特别是认为我们的个人信息处理行为损害了您的合法权益，您还可以向人民银行、支付清算协会、网信、电信、公安及工商等监管部门进行投诉或举报，或向被告住所地有管辖权的人民法院提起诉讼。"}]},ye={entry:Cr,sft:Dr,cmcc:Br,"sensitive-info-rules":_e,"third-party-sharing-list":mr,"personal-info-collection-list":Se,"user-auth-privacy-policy":be,"haike-v2-third-party-sharing":pr,"haike-v2-privacy-policy":kr,"haike-v2-cmcc-privacy-policy":lr,"tiantianyoubao-v2-third-party-sharing":Ar,"tiantianyoubao-v2-privacy-policy":Er,"tiantianyoubao-v2-cmcc-privacy-policy":vr,"dongfangdadi-v2-third-party-sharing":ar,"dongfangdadi-v2-privacy-policy":sr,"dongfangdadi-v2-cmcc-privacy-policy":cr,"anxingtianxia-v2-third-party-sharing":xr,"anxingtianxia-v2-privacy-policy":dr,"anxingtianxia-v2-cmcc-privacy-policy":or,"hengda-v2-third-party-sharing":fr,"hengda-v2-privacy-policy":hr,"hengda-v2-cmcc-privacy-policy":ur};function _r(t){return Object.prototype.hasOwnProperty.call(ye,t)}function Fe(t){return _r(t)?ye[t]:null}const Sr=["10037e6f9d903f86019ed8cfb6320365","8a9481c79c05c8bd019ed8d49fb81df2"],ge="8a9481c79c05c8bd019ed8d7ab571df3",Ie="8a9481c79c05c8bd019f6f42956924a0",br="8a9481c79c05c8bd019f6a0a6c002457",yr="8a9481c79c05c8bd019f8e3061ce25ee",Fr="8a9481c69c05c8c1019ffa21d9722a4b",gr={"haike-v2":{key:"haike-v2",thirdPartySharingDocKey:"haike-v2-third-party-sharing"},"tiantianyoubao-v2":{key:"tiantianyoubao-v2",thirdPartySharingDocKey:"tiantianyoubao-v2-third-party-sharing"},"dongfangdadi-v2":{key:"dongfangdadi-v2",thirdPartySharingDocKey:"dongfangdadi-v2-third-party-sharing"},"anxingtianxia-v2":{key:"anxingtianxia-v2",thirdPartySharingDocKey:"anxingtianxia-v2-third-party-sharing"},"hengda-v2":{key:"hengda-v2",thirdPartySharingDocKey:"hengda-v2-third-party-sharing"},yuanbao:{key:"yuanbao",thirdPartySharingDocKey:"third-party-sharing-list"}},we={[ge]:"haike-v2",[Ie]:"tiantianyoubao-v2",[br]:"dongfangdadi-v2",[yr]:"anxingtianxia-v2",[Fr]:"hengda-v2",...Object.fromEntries(Sr.map(t=>[t,"yuanbao"]))};function Ir(t){if(typeof t!="string")return null;const x=t.trim();if(!Object.prototype.hasOwnProperty.call(we,x))return null;const n=we[x];return n?gr[n]:null}function wr(t){return typeof window>"u"||t?.trim()!==ge?!1:new URLSearchParams(window.location.search).get("layout")==="inline"}function Te(t,x){const{origin:n,pathname:i}=window.location,c=x?.trim(),o=c?`&appId=${encodeURIComponent(c)}`:"",m=wr(x)?"&layout=inline":"";return`${n}${i}?flow=agreement&doc=${encodeURIComponent(t)}${o}${m}`}function Tr(t){return Te("entry",t)}const Re="《用户信息授权协议》",Rr="《第三方共享个人信息清单》",Pe=[{key:"user-auth-privacy-policy",doc:be},{key:"personal-info-collection-list",doc:Se},{key:"sensitive-info-rules",doc:_e}];function Pr(t,x){return[{name:Re,link:x?x("entry",t):Tr(t)}]}function He(t={}){const{appId:x,callerAgreements:n=[],preserveReservedCallerAgreement:i=!1,docUrlResolver:c}=t,m=Ir(x)?.thirdPartySharingDocKey??"third-party-sharing-list",f=Fe(m),E=x?.trim()!==Ie,e=f&&E?[...Pe,{key:m,doc:f}]:Pe,r=i?n:n.filter(({name:D})=>D.trim()!==Rr);return[...e.map(({key:D,doc:d})=>({name:d.title,link:c?c(D,x):Te(D,x)})),...r]}function Ne(t){const x=new URL(t.loaderUrl);if(!["http:","https:"].includes(x.protocol)||!t.sessionId.trim()||Xi(t.parentOrigin)!==t.parentOrigin)throw new TypeError("Invalid custom verification identity or loader URL");return x.search="",x.hash="",x.searchParams.set("sessionId",t.sessionId),x.searchParams.set("parentOrigin",t.parentOrigin),x.searchParams.set("role",t.mode),t.docKey&&x.searchParams.set("doc",t.docKey),x.href}function Hr(t,x,n){const i=new Map,c={},o=window.location.origin,m=window.location.href;function f(y){const u=Ne({loaderUrl:m,mode:"agreement",docKey:y,sessionId:t.sessionId,parentOrigin:o});if(!i.has(u)){i.set(u,y);const _=Fe(y);if(_){c[y]=_;for(const I of _.blocks)if(I.kind==="table")for(const F of I.rows.flat())typeof F!="string"&&F.kind==="doc-link"&&f(F.docKey)}}return u}const E=Pr(t.appId,f),e=He({appId:t.appId,docUrlResolver:f}),r=He({appId:t.appId,docUrlResolver:f,callerAgreements:t.agreements,preserveReservedCallerAgreement:!0}),D=r.map((y,u)=>({name:y.name,link:y.link,...u<e.length?{docKey:i.get(y.link)}:{}}));let d,p,l,A=!1,k,v=!1;const a=new WeakSet,s=y=>{for(let u=y;u;u=u.parentElement){const _=window.getComputedStyle(u);if(u.hidden||_.display==="none"||_.visibility==="hidden")return!1}return!0};function h(){if(!d||v)return;const y=[...d.querySelectorAll(".ydrz-confirm-iframe")];y.forEach(_=>_.querySelectorAll(".ydrz-confirm-header em").forEach(I=>{I.getAttribute("role")!=="button"&&I.setAttribute("role","button"),I.getAttribute("aria-label")!=="关闭协议"&&I.setAttribute("aria-label","关闭协议"),I.tabIndex!==0&&(I.tabIndex=0)}));const u=y.some(_=>_.querySelector("iframe")&&s(_));u!==A&&(A=u,A&&(k=document.activeElement instanceof HTMLElement?document.activeElement:void 0),l?.(A),!A&&k?.isConnected&&k.focus({preventScroll:!0}))}function S(y){y.contentWindow?.postMessage(ut("ASSISTANCE_AUTH_CLOSE",t.sessionId),o);const u=y.closest(".ydrz-confirm-iframe"),_=u.querySelector(".ydrz-confirm-header em");_?_.click():(u.closest(".ydrz-confirm-bg-wrap")??u).remove(),h()}function C(y){if(!d||v||y.origin!==o||!ji(y.data,t.sessionId))return;const u=[...d.querySelectorAll(".ydrz-confirm-iframe iframe")].find(_=>_.contentWindow===y.source&&i.has(_.src));if(u&&(h(),!v)){if(y.data.type==="ASSISTANCE_AUTH_READY"){const _=i.get(u.src),I={mode:"agreement",sessionId:t.sessionId,parentOrigin:o,docKey:_,docs:c,entries:D,css:n.css,styleUrls:n.urls,rootAttributes:n.rootAttributes};u.contentWindow.postMessage(ut("ASSISTANCE_AUTH_CUSTOM_BOOT",t.sessionId,{runtimeSource:x,config:I}),o)}else if(y.data.type==="ASSISTANCE_AUTH_CLOSE")S(u);else if(y.data.type==="ASSISTANCE_AUTH_ERROR_NOTICE"||y.data.type==="ASSISTANCE_AUTH_ERROR"){if(a.has(u))return;a.add(u);const _=y.data.payload;window.parent.postMessage(ut("ASSISTANCE_AUTH_ERROR_NOTICE",t.sessionId,{message:typeof _?.message=="string"?_.message:"阅读资源加载失败，请关闭后重试。",phase:"agreementReader"}),t.parentOrigin)}}}function B(y){(y.key==="Enter"||y.key===" ")&&y.target instanceof HTMLElement&&d?.contains(y.target)&&y.target.matches(".ydrz-confirm-iframe .ydrz-confirm-header em")&&(y.preventDefault(),y.target.click())}function b(){if(!v){v=!0,p?.disconnect(),window.removeEventListener("message",C),document.removeEventListener("keydown",B);for(const y of d?.querySelectorAll(".ydrz-confirm-iframe iframe")??[])i.has(y.src)&&y.contentWindow?.postMessage(ut("ASSISTANCE_AUTH_CLOSE",t.sessionId),o)}}return{agreeArr:E,childArr:r,observe(y,u){v||(p?.disconnect(),d=y,l=u,p=new MutationObserver(h),p.observe(d,{subtree:!0,childList:!0,attributes:!0,attributeFilter:["class","style","hidden","src"]}),window.addEventListener("message",C),document.addEventListener("keydown",B),h())},dispose:b}}async function Nr(t,x,n={}){const i=new AbortController,c=ui();let o,m,f=!1,E=!1,e,r=!1,D=!1,d=!1,p=!1,l="",A=!1,k=!1,v,a,s,h,S,C,B,b=0,y=!1,u=0;const _=new WeakSet,I=t.agreements.map(()=>!1),F={phase:"initializing",idLast4:"",inputError:null,message:null,agreementReaderOpen:!1},P=()=>!f&&!E&&!i.signal.aborted,H=(N,K)=>{!f&&!x.signal.aborted&&window.parent.postMessage(ut(N,t.sessionId,K),t.parentOrigin)},L=()=>{P()&&q.publish(F)},Y=()=>{k=!1,clearInterval(s),clearTimeout(h),s=void 0,h=void 0};function W(){if(!f){f=!0,clearTimeout(C),clearTimeout(B),clearTimeout(S),Y(),v?.disconnect(),a?.disconnect();try{m?.dispose()}catch{}x.signal.removeEventListener("abort",W);try{i.abort()}catch{}try{q.dispose()}catch{}try{o?.dispose()}catch{}if(D||n.recoverableSubmitErrors)try{c.clearControl()}catch{}}}function $(N,K){if(P()){E=!0,F.phase=N==="ASSISTANCE_AUTH_SUCCESS"?"completed":"error";try{q.publish(F),e?(F.phase="error",H("ASSISTANCE_AUTH_ERROR",{code:"CUSTOM_PAGE_FAILED",message:n.safeErrorNotices?G("CUSTOM_PAGE_FAILED"):e.message})):H(N,K)}finally{W()}}}const G=N=>{const K=ht(N);return K.errorKind==="unknown"?"验证失败，请稍后重试。":K.uiText},g=(N,K="CUSTOM_PAGE_FAILED",O)=>{n.safeErrorNotices&&(N=G(K),F.message=N),$("ASSISTANCE_AUTH_ERROR",{code:K,message:N,...O?{phase:O}:{}})},T=(N=b)=>{if(!n.syncSubmitState||!P()||N!==b||!y||p)return;const K=F.phase==="ready"&&/^[0-9X]{4}$/.test(F.idLast4)&&I.every(Boolean);try{c.updateSubmitBtnStatus({disabled:!K,loading:!1})}catch(O){g(O instanceof Error?O.message:String(O))}},R=()=>P()?!r&&Date.now()>=t.deadline?(g("Customer page startup deadline exceeded","NETWORK_TIMEOUT"),!1):!0:!1,w=N=>{clearTimeout(S),F.message=N,L(),P()&&(S=setTimeout(()=>{F.message=null,L()},1400))},q=Zi({callerAgreementCount:t.agreements.length,onIdLast4(N){if(!P()||p)return;const K=F.idLast4.length===4;F.idLast4=N;const O=N.length===4;O&&(F.inputError=null),L(),T(),P()&&r&&O!==K&&(t.stateChangeEnabled||O&&t.beforeLoginNotificationEnabled)&&H("ASSISTANCE_AUTH_STATE_CHANGE",{event:{type:O?"idLast4Complete":"idLast4Incomplete"}})},onCallerAgreement(N,K){!P()||p||(I[N]=K,T())},onClose(){$("ASSISTANCE_AUTH_CANCEL",{message:"用户取消验证"})},onError(N,K){if(E&&!f&&K==="hook"){e=N;return}P()&&(!r||K==="hook"?g(N.message):p||w(n.safeErrorNotices?"请检查输入和协议后重试。":N.message))}});x.signal.addEventListener("abort",W,{once:!0}),x.signal.aborted&&i.abort();const V={signal:i.signal,deadline:t.deadline},Q=N=>{P()&&H("ASSISTANCE_AUTH_ERROR_NOTICE",{message:n.safeErrorNotices?ht("CDN_BLOCKED").uiText:N,phase:"resourceLoad"})};function M(N,K){if(!P())return;const O=Si(N),X=ht(O.code),j=n.safeErrorNotices?G(O.code):X.uiText;if(Je(N)==="cancel"){$("ASSISTANCE_AUTH_CANCEL",{code:O.code||void 0,message:n.safeErrorNotices?"用户取消验证":O.desc||X.uiText});return}if(!r){g(j,O.code||"PROVIDER_VERIFY_FAILED",n.safeErrorNotices?K:void 0);return}if(_.has(N)||(_.add(N),H("ASSISTANCE_AUTH_ERROR_NOTICE",{code:O.code||void 0,message:n.safeErrorNotices?j:O.code==="ALL_CARRIERS_FAILED"?X.uiText:O.desc.trim()||X.uiText,phase:K,...!n.safeErrorNotices&&O.carrier!=="unknown"?{carrier:O.carrier}:{}})),n.recoverableSubmitErrors){K==="initControl"&&p&&l.length===4&&(O.code==="105999"||O.code==="103135")?(p=!1,l="",F.phase="initializing",F.message=j,clearTimeout(S),ot(!0)):g(j,O.code||"PROVIDER_VERIFY_FAILED",n.safeErrorNotices?K:void 0);return}if(p){g(X.uiText,O.code||"PROVIDER_VERIFY_FAILED");return}F.phase="error",F.message=X.uiText,L()}function ot(N=!1){const K=++b;y=!1;const O=N?Date.now()+15e3:t.deadline;let X=!1;const j=()=>!P()||K!==b?!1:N&&!X&&Date.now()>=O?(g(ht("NETWORK_TIMEOUT").uiText,"NETWORK_TIMEOUT"),!1):!0;if(!(N&&(clearTimeout(B),B=setTimeout(()=>{j()&&g(ht("NETWORK_TIMEOUT").uiText,"NETWORK_TIMEOUT")},15e3),L(),!P())))try{D=!0,c.initControl({styleOption:rr({customer:t.styleOption,agreeArr:m.agreeArr,childArr:m.childArr}),beforeSubmit(){if(!j()||!X||p)return!1;if(F.idLast4.length!==4||I.some(U=>!U)){if(F.idLast4.length!==4?(F.inputError="请输入身份证后四位",L()):w("请先同意全部协议"),n.syncSubmitState)T(K);else if(P())try{c.updateSubmitBtnStatus({disabled:!1,loading:!1})}catch{}return!1}return p=!0,l=F.idLast4,F.phase="submitting",F.message="验证中",L(),P()},authReady(){if(!(!j()||X||!N&&!R())&&(X=!0,y=!0,r=!0,clearTimeout(C),clearTimeout(B),F.phase="ready",N||(F.message=null),L(),!!P())){if(n.syncSubmitState){if(T(K),!j())return}else if(N)try{c.updateSubmitBtnStatus({disabled:!1,loading:!1})}catch(U){g(U instanceof Error?U.message:String(U));return}N||(H("ASSISTANCE_AUTH_PRESENTATION_READY"),at())}},success(U){if(!j())return;if(String(U.code??"")!=="103000"){M(U,"initControl");return}if(!p||l.length!==4){g("验证结果返回异常，请稍后重试。","INVALID_SUCCESS_PAYLOAD");return}const nt=typeof U.token=="string"?U.token.trim():"",st=typeof U.encryptPublicKey=="string"?U.encryptPublicKey.trim():"";if(!nt){g("本次授权未返回有效 token，请重新授权后再试。","TOKEN_MISSING");return}if(!st){g("本次授权未返回 keyA，请重新授权后再试。","KEY_A_MISSING");return}$("ASSISTANCE_AUTH_SUCCESS",{status:"success",token:nt,idLast4:l,keyA:st,requestId:t.request.requestId||void 0,message:"验证完成"})},error:U=>{j()&&M(U,"initControl")}})}catch(U){g(U instanceof Error?U.message:String(U))}}function at(){if(!o)return;const N=()=>{if(P()){if(k&&!A){const K=(o.root.querySelector(`#${Ee.phone}`)?.textContent??"").replace(/\\s+/g," ").trim(),O=K.match(/1\\d{2}\\*{4}\\d{4}/)?.[0];O&&(A=!0,Y(),H("ASSISTANCE_AUTH_PHONE_READY",{maskedMobile:O,rawText:K,source:"ydrzPhoneControl"}))}if(t.iframeOptions.heightMode==="auto"){const K=o.root,O=Math.ceil(Math.max(K.getBoundingClientRect().height,K.scrollHeight,K.offsetHeight));Number.isFinite(O)&&O>0&&O!==u&&(u=O,H("ASSISTANCE_AUTH_RESIZE",{height:O}))}}};v=new MutationObserver(N),v.observe(o.root,{childList:!0,subtree:!0,characterData:!0}),typeof ResizeObserver<"u"&&(a=new ResizeObserver(N),a.observe(o.root)),k=!0,s=setInterval(N,50),h=setTimeout(Y,1500),N()}C=setTimeout(()=>g("Customer page startup deadline exceeded","NETWORK_TIMEOUT"),Math.max(0,t.deadline-Date.now()));try{pe();const N={...b0(),enabled:!0,mode:"live"};N.cssUrl=new URL("assistance-mobile-auth/vendor/new-control-style.css",window.location.href).href;const K=Xe({config:N}).resolve({overrides:t.authParams??{appId:t.appId}});if(K.status!=="ready"||!K.data)throw new Error("Mobile authorization parameters are invalid or incomplete");const O=nr(t.page,{document,...V,api:q.api,sealRegistration:q.sealRegistration,onNotice:Q}).then(U=>{if(o=U,!P())throw U.dispose(),new DOMException("Customer page aborted","AbortError");if(L(),!P())throw new DOMException("Customer page aborted","AbortError");return U}),X=Bi(N).then(U=>{if(U.state!=="ready"){const nt=U.reason==="network-timeout"?"NETWORK_TIMEOUT":U.reason==="spa-html-fallback"?"SPA_HTML_FALLBACK":U.state==="disabled"?"SDK_DISABLED":"CDN_BLOCKED";throw g(ht(nt).uiText,nt),U.error??new Error(ht(nt).uiText)}}),j=Promise.all([O,X]);if(j.catch(()=>{}),await Bt(j,V),!P())throw new DOMException("Customer page aborted","AbortError");return m=Hr(t,x.runtimeSource,o.styles),m.observe(document.body,U=>{P()&&(F.agreementReaderOpen=U,L())}),c.showAuthPage({data:K.data,success(U){if(!(!R()||d)){if(d=!0,String(U.code??"")!=="103000"){M(U,"showAuthPage");return}ot()}},error:U=>M(U,"showAuthPage")}),{dispose:W}}catch(N){throw P()&&g(N instanceof Error?N.message:String(N)),W(),n.safeErrorNotices?N instanceof DOMException&&N.name==="AbortError"?new DOMException("Customer page aborted","AbortError"):new Error(G("CUSTOM_PAGE_FAILED")):N}}const Or=".custom-agreement-reader{box-sizing:border-box;width:100%;min-height:100%;padding:16px;color:#333;background:#fff;font:14px/1.7 system-ui,sans-serif;overflow-wrap:anywhere}.custom-agreement-reader header{display:flex;align-items:center;gap:12px;margin-bottom:16px}.custom-agreement-reader button{color:inherit;cursor:pointer;padding:8px 12px;border:1px solid #ddd;border-radius:6px;background:#fff}.custom-agreement-reader h1{font-size:18px}.custom-agreement-reader h2{font-size:16px}.custom-agreement-reader h3{font-size:15px}.custom-agreement-reader p,.custom-agreement-reader li{white-space:pre-wrap}.custom-agreement-reader table{width:100%;border-collapse:collapse;margin:12px 0;table-layout:fixed}.custom-agreement-reader td{border:1px solid #ccc;padding:8px;white-space:pre-wrap;vertical-align:top}.custom-agreement-reader a{color:var(--agreement-link-color, #ed611a);text-decoration:underline}.custom-agreement-reader nav a{display:block;padding:12px 0}.custom-agreement-reader [role=alert]{padding:12px;background:#fff1e8}";async function Lr(t,x){const n=new AbortController,i=document.createElement("main");let c=!1,o=!1,m=t.docKey;const f=[],E=[],e=(B,b)=>{!c&&!n.signal.aborted&&window.parent.postMessage(ut(B,t.sessionId,b),t.parentOrigin)};function r(){if(c||n.signal.aborted||o)return;o=!0;const B=document.createElement("p");B.setAttribute("role","alert"),B.textContent="阅读资源加载失败，请关闭后重试。",i.prepend(B),e("ASSISTANCE_AUTH_ERROR_NOTICE",{message:B.textContent,phase:"agreementReader"})}for(const[B,b]of Object.entries(t.rootAttributes))(B==="class"||B.startsWith("data-"))&&i.setAttribute(B,b);i.classList.add("custom-agreement-reader"),i.setAttribute("data-agreement-reader","");const D=document.createElement("style");D.textContent=Or;const d=document.createElement("style");d.textContent=t.css;function p(B,b,y){B.addEventListener(b,y),E.push(()=>B.removeEventListener(b,y))}const l=t.styleUrls.map(B=>{const b=document.createElement("link");return b.rel="stylesheet",b.href=B,p(b,"error",r),b});p(d,"error",r);const A=document.createElement("header"),k=document.createElement("button");k.type="button",k.textContent="返回",k.setAttribute("data-reader-back","");const v=document.createElement("button");v.type="button",v.textContent="关闭协议",v.setAttribute("data-reader-close","");const a=document.createElement("h1"),s=document.createElement("article");A.append(k,a,v),i.append(D,...l,d,A,s);function h(B,b,y){const u=document.createElement("a");return u.textContent=B,u.dataset.docKey=b,u.href=y??Ne({loaderUrl:window.location.href,mode:"agreement",sessionId:t.sessionId,parentOrigin:t.parentOrigin,docKey:b}),u}function S(B){if(c||n.signal.aborted)return;if(m=B,s.replaceChildren(),k.hidden=B==="entry"&&!f.length,B==="entry"){a.textContent=Re;const y=document.createElement("nav");y.setAttribute("aria-label","协议列表");for(const u of t.entries)if(u.docKey)y.append(h(u.name,u.docKey,u.link));else{const _=document.createElement("a");_.textContent=u.name,_.href=u.link,y.append(_)}s.append(y);return}const b=t.docs[B];if(!b){a.textContent="协议阅读",r();return}a.textContent=b.title;for(const y of b.blocks)if(y.kind==="table"){const u=document.createElement("table");for(const _ of y.rows){const I=document.createElement("tr");for(const F of _){const P=document.createElement("td");typeof F=="string"?P.textContent=F:F.kind==="doc-link"?P.append(h(F.text,F.docKey)):(P.textContent=F.text,P.colSpan=F.colSpan),I.append(P)}u.append(I)}s.append(u)}else{const u=document.createElement(y.kind==="b"?"p":y.kind);if(y.kind==="b"){const _=document.createElement("strong");_.textContent=y.text,u.append(_)}else u.textContent=y.text;s.append(u)}}p(s,"click",B=>{const b=B.target instanceof Element?B.target.closest("a[data-doc-key]"):null;!b||!s.contains(b)||(B.preventDefault(),f.push(m),S(b.dataset.docKey))}),p(k,"click",()=>S(f.pop()??"entry")),p(v,"click",()=>e("ASSISTANCE_AUTH_CLOSE"));function C(){c||(c=!0,n.abort(),x?.signal.removeEventListener("abort",C),E.splice(0).forEach(B=>B()),i.remove())}return x?.signal.addEventListener("abort",C,{once:!0}),x?.signal.aborted?C():(S(m),document.body.append(i)),{dispose:C}}async function Kr(t,x){return t.mode==="agreement"?Lr(t,x):Nr(t,x,{recoverableSubmitErrors:!0,safeErrorNotices:!0,syncSubmitState:!0})}return k0.start=Kr,Object.defineProperty(k0,Symbol.toStringTag,{value:"Module"}),k0})({});\n', fe = 50, Qi = ["headerTitle", "idTitle", "phoneTopNotice", "footerNote"], Zi = /^#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/, Yi = /^(?:[1-9]\d?(?:\.\d+)?px|(?:0?\.\d+|[1-9]\d?(?:\.\d+)?)rem)$/;
+function vt(t) {
+  return typeof t == "object" && t !== null;
+}
+function J(t, i, e) {
+  t?.warn?.({ path: i, reason: e });
+}
+function gt(t, i, e) {
+  if (typeof t != "string") {
+    J(e, i, "Expected a string.");
+    return;
+  }
+  const n = t.trim();
+  if (!n) {
+    J(e, i, "Expected a non-empty string.");
+    return;
+  }
+  return n;
+}
+function O0(t, i, e) {
+  const n = gt(t, i, e);
+  if (n) {
+    if (!Zi.test(n)) {
+      J(e, i, "Expected #RGB or #RRGGBB.");
+      return;
+    }
+    return n;
+  }
+}
+function Xi(t, i, e) {
+  const n = gt(t, i, e);
+  if (n) {
+    if (!Yi.test(n)) {
+      J(e, i, "Expected a px or rem font size.");
+      return;
+    }
+    return n;
+  }
+}
+function me(t, i, e) {
+  const n = gt(t, i, e);
+  if (n)
+    try {
+      const x = new URL(n);
+      if (x.protocol !== "http:" && x.protocol !== "https:") {
+        J(e, i, "Expected an http or https URL.");
+        return;
+      }
+      return x.toString();
+    } catch {
+      J(e, i, "Expected a valid URL.");
+      return;
+    }
+}
+function Ji(t, i, e) {
+  if (typeof t == "number" && Number.isFinite(t) && t > 0)
+    return `${t}px`;
+  if (typeof t == "string") {
+    const n = t.trim(), x = /^(?:0|[1-9]\d*)(?:\.\d+)?px$/.test(n) ? Number(n.slice(0, -2)) : Number.NaN;
+    if (Number.isFinite(x) && x > 0)
+      return n;
+  }
+  J(e, i, "Expected a positive px height.");
+}
+function $i(t, i, e) {
+  if (!vt(t)) {
+    J(e, i, "Expected an object.");
+    return;
+  }
+  const n = t.text === void 0 ? void 0 : gt(t.text, `${i}.text`, e), x = t.fontSize === void 0 ? void 0 : Xi(t.fontSize, `${i}.fontSize`, e), f = t.color === void 0 ? void 0 : O0(t.color, `${i}.color`, e);
+  let b;
+  t.bold !== void 0 && (typeof t.bold == "boolean" ? b = t.bold : J(e, `${i}.bold`, "Expected a boolean."));
+  const m = Object.entries({ text: n, fontSize: x, color: f, bold: b }).filter(([, r]) => r !== void 0);
+  return m.length ? Object.fromEntries(m) : void 0;
+}
+function b0(t, i, e) {
+  if (typeof t == "string") {
+    const u = me(t, `${i}.url`, e);
+    return u ? { url: u } : void 0;
+  }
+  if (!vt(t)) {
+    J(e, i, "Expected a URL string or image object.");
+    return;
+  }
+  const n = me(t.url, `${i}.url`, e);
+  if (!n)
+    return;
+  const x = t.alt === void 0 ? void 0 : gt(t.alt, `${i}.alt`, e), f = t.height === void 0 ? void 0 : Ji(t.height, `${i}.height`, e), b = t.fit === "cover" || t.fit === "contain" ? t.fit : void 0;
+  return t.fit !== void 0 && b === void 0 && J(e, `${i}.fit`, "Expected cover or contain."), {
+    url: n,
+    ...x ? { alt: x } : {},
+    ...f ? { height: f } : {},
+    ...b ? { fit: b } : {}
+  };
+}
+function tr(t, i, e) {
+  const n = `agreements[${i}]`;
+  if (!vt(t)) {
+    J(e, n, "Expected an object.");
+    return;
+  }
+  const x = gt(t.title, `${n}.title`, e), f = me(t.url, `${n}.url`, e);
+  return x && f ? { title: x, url: f } : void 0;
+}
+function N0(t, i = {}) {
+  if (t == null)
+    return {};
+  if (!vt(t))
+    return J(i, "ui", "Expected an object."), {};
+  const e = t.themeColor === void 0 ? void 0 : O0(t.themeColor, "themeColor", i), n = {};
+  if (t.texts !== void 0)
+    if (vt(t.texts)) {
+      const b = t.texts;
+      Qi.forEach((u) => {
+        if (u in b) {
+          const m = $i(b[u], `texts.${u}`, i);
+          m && (n[u] = m);
+        }
+      });
+    } else
+      J(i, "texts", "Expected an object.");
+  const x = {};
+  if (t.images !== void 0)
+    if (vt(t.images)) {
+      const b = t.images.top === void 0 ? void 0 : b0(t.images.top, "images.top", i), u = t.images.bottom === void 0 ? void 0 : b0(t.images.bottom, "images.bottom", i);
+      b && (x.top = b), u && (x.bottom = u);
+    } else
+      J(i, "images", "Expected an object.");
+  let f;
+  if (t.agreements !== void 0)
+    if (Array.isArray(t.agreements)) {
+      const b = t.agreements.map((u, m) => tr(u, m, i)).filter((u) => u !== void 0);
+      f = b.slice(0, fe), b.length > fe && J(i, "agreements", `Only the first ${fe} valid agreements are used.`);
+    } else
+      J(i, "agreements", "Expected an array.");
+  return {
+    ...e ? { themeColor: e } : {},
+    ...Object.keys(n).length ? { texts: n } : {},
+    ...Object.keys(x).length ? { images: x } : {},
+    ...f && f.length ? { agreements: f } : {}
+  };
+}
+function er(t) {
+  return !!(t.themeColor || t.texts && Object.keys(t.texts).length > 0 || t.images && Object.keys(t.images).length > 0 || t.agreements && t.agreements.length > 0);
+}
+function nr(t) {
+  `${t.path}${t.reason}`;
+}
+const U0 = "assistance-mobile-auth", z0 = "ASSISTANCE_AUTH_READY", L0 = "ASSISTANCE_AUTH_PRESENTATION_READY", q0 = "ASSISTANCE_AUTH_SUCCESS", K0 = "ASSISTANCE_AUTH_CANCEL", W0 = "ASSISTANCE_AUTH_ERROR", j0 = "ASSISTANCE_AUTH_ERROR_NOTICE", Ce = "ASSISTANCE_AUTH_CONFIG", V0 = "ASSISTANCE_AUTH_PHONE_READY", Be = "ASSISTANCE_AUTH_RESIZE", le = "ASSISTANCE_AUTH_CLOSE", G0 = "ASSISTANCE_AUTH_PROBE_RESULT", pe = "ASSISTANCE_AUTH_STATE_CHANGE", Q0 = "ASSISTANCE_AUTH_STYLE", Z0 = "ASSISTANCE_AUTH_CUSTOM_BOOT", ir = {
+  closable: !0,
+  useCustomKeyboard: !0,
+  heightMode: "auto"
+};
+function rr(t, i = ir) {
+  return et(t) ? {
+    closable: typeof t.closable == "boolean" ? t.closable : i.closable,
+    useCustomKeyboard: typeof t.useCustomKeyboard == "boolean" ? t.useCustomKeyboard : i.useCustomKeyboard,
+    heightMode: t.heightMode === "auto" || t.heightMode === "fixed" ? t.heightMode : i.heightMode
+  } : { ...i };
+}
+function et(t) {
+  return typeof t == "object" && t !== null;
+}
+function or(t) {
+  return typeof t == "number" && Number.isFinite(t) && t > 0;
+}
+function ar(t) {
+  return t === z0 || t === L0 || t === q0 || t === K0 || t === W0 || t === j0 || t === Ce || t === V0 || t === Be || t === le || t === G0 || t === pe || t === Q0 || t === Z0;
+}
+function C0() {
+  return `assistance-auth-${typeof crypto < "u" && "randomUUID" in crypto ? crypto.randomUUID() : `${Date.now()}-${Math.random().toString(36).slice(2)}`}`;
+}
+function Y0(t) {
+  if (typeof t != "string" || !t.trim())
+    return null;
+  try {
+    const i = new URL(t.trim());
+    return i.protocol !== "http:" && i.protocol !== "https:" || i.username || i.password || i.pathname !== "/" || i.search || i.hash || i.origin === "null" ? null : i.origin;
+  } catch {
+    return null;
+  }
+}
+function dr(t) {
+  if (!(typeof t != "string" || !t.trim()))
+    try {
+      const i = new URL(t.trim());
+      return i.protocol !== "http:" && i.protocol !== "https:" ? void 0 : i.toString();
+    } catch {
+      return;
+    }
+}
+function B0(t) {
+  if (!t || typeof t != "object")
+    return null;
+  const i = t, e = typeof i.src == "string" ? i.src.trim() : "";
+  if (!e)
+    return null;
+  const n = { src: e };
+  return typeof i.width == "string" && i.width.trim() && (n.width = i.width.trim()), typeof i.height == "string" && i.height.trim() && (n.height = i.height.trim()), n;
+}
+function S0({
+  sessionId: t,
+  request: i,
+  verificationUrl: e,
+  pageImages: n,
+  mode: x,
+  layout: f,
+  debugVConsole: b,
+  expectsUiConfig: u,
+  appId: m,
+  parentOrigin: r
+}) {
+  const a = e ?? Vi("verification"), v = new URL(a, typeof window < "u" ? window.location.href : "http://localhost");
+  v.searchParams.set("assistanceAuthSessionId", t), m && v.searchParams.set("appId", m), u && v.searchParams.set("expectsUiConfig", "1"), x === "probe" && v.searchParams.set("mode", "probe"), f === "inline" && v.searchParams.set("layout", "inline"), b && v.searchParams.set("debugVConsole", "1");
+  const o = Y0(r);
+  x !== "probe" && o && v.searchParams.set("assistanceAuthParentOrigin", o), i?.scene && v.searchParams.set("scene", i.scene), i?.requestId && v.searchParams.set("requestId", i.requestId);
+  const A = B0(n?.top);
+  A && v.searchParams.set("topImage", JSON.stringify(A));
+  const p = B0(n?.bottom);
+  if (p && v.searchParams.set("bottomImage", JSON.stringify(p)), typeof window < "u") {
+    const l = new URLSearchParams(window.location.search).get("flow");
+    l && x !== "probe" && v.searchParams.set("flow", l);
+  }
+  return v.toString();
+}
+function Ct(t, i, e) {
+  return {
+    source: U0,
+    type: t,
+    sessionId: i,
+    payload: e
+  };
+}
+function sr(t, i) {
+  return et(t) && t.source === U0 && ar(t.type) && typeof t.sessionId == "string" && (!i || t.sessionId === i);
+}
+function X0(t) {
+  return et(t) && typeof t.message == "string" ? {
+    code: typeof t.code == "string" ? t.code : void 0,
+    message: t.message
+  } : { message: "验证失败，请稍后重试。" };
+}
+function xr(t) {
+  const i = X0(t);
+  return et(t) ? {
+    ...i,
+    phase: t.phase === "resourceLoad" || t.phase === "showAuthPage" || t.phase === "initControl" ? t.phase : void 0,
+    carrier: typeof t.carrier == "string" ? t.carrier : void 0
+  } : i;
+}
+function cr(t) {
+  return et(t) && et(t.ui) ? { ui: N0(t.ui) } : { ui: {} };
+}
+function lr(t, i) {
+  return Ct(Ce, t, { ui: i });
+}
+const pr = /1\d{2}\*{4}\d{4}/, ur = /1\d{10}/;
+function Ar(t) {
+  return t.replace(/\s+/g, " ").trim();
+}
+function hr(t) {
+  if (!et(t) || t.source !== "ydrzPhoneControl")
+    return null;
+  const e = (typeof t.maskedMobile == "string" ? t.maskedMobile.trim() : "").match(pr)?.[0];
+  if (!e)
+    return null;
+  let n = e;
+  if (typeof t.rawText == "string") {
+    const x = Ar(t.rawText);
+    if (!x.includes(e) || ur.test(x))
+      return null;
+    n = x;
+  }
+  return {
+    maskedMobile: e,
+    rawText: n,
+    source: "ydrzPhoneControl"
+  };
+}
+function fr(t) {
+  return !et(t) || !or(t.height) ? null : {
+    height: Math.ceil(t.height),
+    ...typeof t.keyboardFocused == "boolean" ? { keyboardFocused: t.keyboardFocused } : {}
+  };
+}
+function kr(t) {
+  if (!et(t) || t.status !== "success")
+    return null;
+  const i = typeof t.token == "string" ? t.token : "", e = typeof t.idLast4 == "string" ? t.idLast4 : "", n = typeof t.keyA == "string" ? t.keyA : "";
+  return !i.trim() || !e.trim() || !n.trim() ? null : {
+    status: "success",
+    token: i,
+    idLast4: e,
+    keyA: n,
+    requestId: typeof t.requestId == "string" ? t.requestId : void 0,
+    message: typeof t.message == "string" ? t.message : void 0,
+    mock: typeof t.mock == "boolean" ? t.mock : void 0
+  };
+}
+const mr = ["ok", "wifi", "non-mobile", "ambiguous", "unknown"];
+function vr(t) {
+  const i = {};
+  for (const e of ["YD", "CT", "CU"])
+    typeof t[e] == "string" && (i[e] = t[e]);
+  return Object.keys(i).length > 0 ? i : void 0;
+}
+function gr(t) {
+  if (!et(t))
+    return { eligible: !1, reason: "unknown" };
+  const i = mr.includes(t.reason) ? t.reason : "unknown";
+  let e;
+  if (et(t.raw)) {
+    const n = et(t.raw.carriers) ? vr(t.raw.carriers) : void 0, x = t.raw.networkType, f = x === "wifi" || x === "cellular" || x === "unknown" ? x : void 0, b = {
+      ...typeof t.raw.code == "string" ? { code: t.raw.code } : {},
+      ...typeof t.raw.carrier == "string" ? { carrier: t.raw.carrier } : {},
+      ...n ? { carriers: n } : {},
+      ...f ? { networkType: f } : {}
+    };
+    Object.keys(b).length > 0 && (e = b);
+  }
+  return { eligible: i === "ok", reason: i, ...e ? { raw: e } : {} };
+}
+function yr(t) {
+  return !et(t) || !et(t.event) ? null : t.event.type === "idLast4Complete" ? { type: "idLast4Complete" } : t.event.type === "idLast4Incomplete" ? { type: "idLast4Incomplete" } : null;
+}
+function D0(t, i, e, n, x) {
+  const f = (b) => {
+    if (!(n && b.origin !== n) && sr(b.data, i) && !(x && "expectedSource" in x && (!x.expectedSourceTypes || x.expectedSourceTypes.includes(b.data.type)) && b.source !== x.expectedSource))
+      switch (b.data.type) {
+        case z0:
+          e.onReady?.();
+          break;
+        case L0:
+          e.onPresentationReady?.();
+          break;
+        case q0:
+          {
+            const u = kr(b.data.payload);
+            if (!u) {
+              e.onError?.({
+                code: "INVALID_SUCCESS_PAYLOAD",
+                message: "验证结果返回异常，请稍后重试。"
+              });
+              break;
+            }
+            e.onSuccess?.(u);
+          }
+          break;
+        case K0:
+          e.onCancel?.(b.data.payload);
+          break;
+        case W0:
+          e.onError?.(X0(b.data.payload));
+          break;
+        case j0:
+          e.onErrorNotice?.(xr(b.data.payload));
+          break;
+        case Ce:
+          e.onConfig?.(cr(b.data.payload));
+          break;
+        case V0:
+          {
+            const u = hr(b.data.payload);
+            u && e.onPhoneReady?.(u);
+          }
+          break;
+        case Be:
+          {
+            const u = fr(b.data.payload);
+            u && e.onResize?.(u);
+          }
+          break;
+        case le:
+          e.onClose?.();
+          break;
+        case G0:
+          e.onProbeResult?.(gr(b.data.payload));
+          break;
+        case pe:
+          {
+            const u = yr(b.data.payload);
+            u && e.onStateChange?.(u);
+          }
+          break;
+      }
+  };
+  return t.addEventListener("message", f), () => t.removeEventListener("message", f);
+}
+function Er(t) {
+  const i = new URL(t.loaderUrl);
+  if (!["http:", "https:"].includes(i.protocol) || !t.sessionId.trim() || Y0(t.parentOrigin) !== t.parentOrigin)
+    throw new TypeError("Invalid custom verification identity or loader URL");
+  return i.search = "", i.hash = "", i.searchParams.set("sessionId", t.sessionId), i.searchParams.set("parentOrigin", t.parentOrigin), i.searchParams.set("role", t.mode), t.docKey && i.searchParams.set("doc", t.docKey), i.href;
+}
+function w0(t, i) {
+  const e = new URL(t, i);
+  if (e.protocol !== "http:" && e.protocol !== "https:")
+    throw new TypeError("customPage addresses must use HTTP or HTTPS");
+  return e.toString();
+}
+function F0(t, i) {
+  if (typeof t != "object" || t === null || Array.isArray(t))
+    throw new TypeError("customPage must be an object");
+  const e = t, n = e.html !== void 0, x = e.url !== void 0;
+  if (n === x)
+    throw new TypeError("customPage must provide exactly one of html or url");
+  const f = n ? e.html : e.url;
+  if (typeof f != "string" || !f.trim())
+    throw new TypeError("customPage html or url must be a non-empty string");
+  const b = n ? { kind: "html", html: f } : { kind: "url", url: w0(f, i) };
+  for (const u of ["css", "js", "baseUrl"]) {
+    const m = e[u];
+    if (m !== void 0) {
+      if (typeof m != "string")
+        throw new TypeError(`customPage ${u} must be a string`);
+      if (u === "baseUrl") {
+        if (!m.trim()) throw new TypeError("customPage baseUrl must be non-empty");
+        b.baseUrl = w0(m, i);
+      } else
+        b[u] = m;
+    }
+  }
+  return b;
+}
+const J0 = 12, br = 1, Cr = 500;
+function ce(t) {
+  return Number.isFinite(t);
+}
+function Br(t) {
+  return ce(t) && t >= 0;
+}
+function Sr({
+  targetWindow: t,
+  frame: i,
+  positioningLayer: e,
+  constrainToViewport: n = !1
+}) {
+  let x = "idle", f = 0, b = !1, u = 0, m, r, a = !1, v = !1, o;
+  const A = () => {
+    const B = t.visualViewport;
+    return {
+      top: B?.offsetTop ?? 0,
+      height: B?.height ?? t.innerHeight
+    };
+  }, p = A().height, k = () => {
+    m !== void 0 && (t.cancelAnimationFrame(m), m = void 0);
+  }, l = () => {
+    r !== void 0 && (t.clearTimeout(r), r = void 0);
+  }, E = () => {
+    u = 0, e.style.transform = "", delete i.dataset.assistanceAuthKeyboardConstrained, b && (i.style.height = `${f}px`);
+  }, s = () => {
+    const B = t.visualViewport ?? void 0;
+    o !== B && (o?.removeEventListener("resize", g), o?.removeEventListener("scroll", g), o = B, a && (o?.addEventListener("resize", g), o?.addEventListener("scroll", g)));
+  }, c = () => {
+    a && (a = !1, t.removeEventListener("resize", g), o?.removeEventListener("resize", g), o?.removeEventListener("scroll", g), o = void 0);
+  }, h = () => {
+    x = "idle", k(), l(), c(), E();
+  }, d = () => {
+    if (m = void 0, v)
+      return;
+    if (s(), x === "idle" && !n) {
+      E();
+      return;
+    }
+    const B = A(), H = B.top + B.height, y = e.getBoundingClientRect();
+    if (!ce(B.top) || !ce(B.height) || B.height <= 0 || !ce(y.bottom))
+      return;
+    const S = Math.max(
+      1,
+      Math.floor(B.height - J0)
+    ), w = Math.min(f, S);
+    i.style.height = `${w}px`, w < f ? i.dataset.assistanceAuthKeyboardConstrained = "true" : delete i.dataset.assistanceAuthKeyboardConstrained;
+    const F = y.bottom + u;
+    u = Math.max(0, Math.ceil(F - H)), e.style.transform = u > 0 ? `translate3d(0, -${u}px, 0)` : "", x === "closing" && B.height >= p - br && h();
+  };
+  function g() {
+    v || (s(), m === void 0 && (m = t.requestAnimationFrame(d)));
+  }
+  const C = () => {
+    a || (a = !0, t.addEventListener("resize", g)), s();
+  };
+  return {
+    update(B) {
+      if (!v) {
+        if (Br(B.height) && (f = Math.ceil(B.height), b = !0), n) {
+          C(), g();
+          return;
+        }
+        if (B.keyboardFocused === !0) {
+          x = "focused", l(), C(), g();
+          return;
+        }
+        if (B.keyboardFocused === !1 && x !== "idle") {
+          const H = x !== "closing";
+          x = "closing", C(), g(), H && (l(), r = t.setTimeout(
+            h,
+            Cr
+          ));
+          return;
+        }
+        x === "idle" ? E() : g();
+      }
+    },
+    dispose() {
+      v = !0, k(), l(), c(), E();
+    }
+  };
+}
+const $0 = {
+  version: "1.0.6",
+  jsUrl: "https://authsafe.cmpassport.com/h5/js/jssdk_sf/jssdk-1.0.6.min.js",
+  cssUrl: "https://authsafe.cmpassport.com/h5/js/jssdk_sf/css/new-control-style.css",
+  localJsPath: "src/wrapper/vendor/jssdk-1.0.6.min.js",
+  localCssPath: "src/wrapper/vendor/new-control-style.css",
+  jsSha256: "caf9cd6ef6efe96fcc91111ac7d0bf7d314d0bc657a80c4a1db168afcac18486",
+  cssSha256: "35bc356791dc1b7c68bdb282baf31db7eac1edeef4853609f6869cb7286aeb1e",
+  retrievedAt: "2026-05-07",
+  license: "official-customer-documentation-no-redistribution-license-text-found",
+  redistributionStatus: "approved",
+  approvalSource: "Project owner approved official CSS use on 2026-05-07",
+  approvalDate: "2026-05-07",
+  h5CssStrategy: "env-dynamic-remote-css",
+  wrapperCssStrategy: "caller-required-local-asset",
+  updatePolicy: "replace only after source URL/hash/license review"
+};
+function Dr(t = $0) {
+  const i = [
+    "version",
+    "jsUrl",
+    "cssUrl",
+    "localCssPath",
+    "cssSha256",
+    "h5CssStrategy",
+    "wrapperCssStrategy"
+  ];
+  for (const e of i)
+    if (!t[e].trim())
+      throw new Error(`Mobile official JSSDK metadata is missing ${e}`);
+}
+function wr(t = {}) {
+  return $0;
+}
+const Fr = "10037e6f9d903f86019ed8cfb6320365", Ir = "8a9481c79c05c8bd019ed8d49fb81df2", Se = [Fr, Ir], tn = "8a9481c79c05c8bd019f6f42956924a0", Tr = {
+  "demo-brand": {
+    label: "示例品牌",
+    ui: {
+      themeColor: "#0A6CFF",
+      texts: { headerTitle: { text: "示例品牌身份核验" } },
+      agreements: [{ title: "示例品牌服务协议", url: "https://example.com/agreement" }]
+    }
+  },
+  // 协议文案由移动 SDK agreement slot 注入（勾选语义由 SDK 承担），此处不得配置
+  // ui.agreements：皮肤协议区无勾选框，配置了会让 customAgreementsAllAgreed 永假、授权按钮死锁。
+  "chinaums-sheet": {
+    label: "银联三要素授权",
+    skin: "chinaumsSheet",
+    ui: {
+      themeColor: "#f75110"
+    }
+  },
+  "chinaums-sheet-v23": {
+    label: "银杏助填版本 23",
+    skin: "chinaumsSheetV23",
+    ui: {
+      themeColor: "#ff4a19"
+    }
+  },
+  "haike-inline": {
+    label: "海客内嵌授权",
+    skin: "haikeInline"
+  }
+}, Rr = {
+  "demo-brand-001": "demo-brand",
+  [tn]: "chinaums-sheet-v23",
+  ...Object.fromEntries(Se.map((t) => [t, "chinaums-sheet-v23"]))
+}, Hr = new Map(
+  Object.entries(Rr).map(([t, i]) => [
+    t,
+    { appId: t, ...Tr[i] }
+  ])
+);
+function Pr(t, i) {
+  if (typeof i != "string")
+    return null;
+  const e = i.trim();
+  return e ? t.get(e) ?? null : null;
+}
+function Mr(t, i) {
+  return typeof t == "string" && t.trim(), Pr(Hr, t);
+}
+function en(t) {
+  const i = typeof t == "string" ? t.trim() : "";
+  return i === tn && Mr(i)?.skin === "chinaumsSheetV23";
+}
+function Bt(t) {
+  return typeof t == "string" && Se.includes(t.trim());
+}
+function De() {
+  return wr();
+}
+const _r = "assistance-mobile-auth-official-css", Or = "assistance-mobile-auth-frame-shell", Nr = "assistance-auth-frame-enter", Ur = 280, zr = "verification", Lr = 12e3, qr = "8a9481c79c05c8bd019ed8d7ab571df3";
+function Kr(t) {
+  return en(t) || Bt(t) ? "ginkgo-v23-viewport-modal" : "bottom-sheet";
+}
+function Wr() {
+  return !1;
+}
+function jr(t, i) {
+  return t === qr && i === "inline";
+}
+function pt(t, i, e) {
+  if (t)
+    try {
+      const n = e !== void 0 ? t(e) : t();
+      Promise.resolve(n).catch(() => {
+        `${i}`;
+      });
+    } catch {
+    }
+}
+function Vr(t) {
+  return Array.isArray(t) ? t.filter(
+    (i) => !!i && typeof i.name == "string" && typeof i.link == "string"
+  ) : [];
+}
+function Gr(t) {
+  if (typeof t != "string")
+    return t;
+  const i = document.querySelector(t);
+  if (!i)
+    throw new Error("AssistanceMobileAuth container not found");
+  return i;
+}
+function Qr(t) {
+  const i = typeof t == "string" ? document.querySelector(t) : t;
+  if (!(i instanceof HTMLElement))
+    throw new Error("AssistanceMobileAuth inline renderTo not found");
+  return i;
+}
+function Zr(t) {
+  if (!t.isConnected || !document.contains(t))
+    throw new Error("AssistanceMobileAuth inline renderTo is no longer connected");
+  return t;
+}
+const I0 = "assistance-mobile-auth-official-jssdk";
+function Yr() {
+  const t = De();
+  if (Dr(t), !t.jsUrl.trim())
+    throw new Error("Mobile official JSSDK remote jsUrl is missing");
+}
+function T0() {
+  if (typeof window > "u" || typeof document > "u")
+    return Promise.reject(new Error("Mobile official JSSDK requires a browser window and document"));
+  if (Ri(), window.YDRZAuthSF)
+    return Promise.resolve();
+  const t = De().jsUrl, i = document.getElementById(I0);
+  return i instanceof HTMLScriptElement ? i.dataset.assistanceMobileAuthLoaded === "true" && window.YDRZAuthSF ? Promise.resolve() : new Promise((e, n) => {
+    i.addEventListener(
+      "load",
+      () => {
+        i.dataset.assistanceMobileAuthLoaded = "true", e();
+      },
+      { once: !0 }
+    ), i.addEventListener(
+      "error",
+      () => n(new Error(`Failed to load mobile official JSSDK script: ${t}`)),
+      { once: !0 }
+    );
+  }) : new Promise((e, n) => {
+    const x = document.createElement("script");
+    x.id = I0, x.async = !0, x.src = t, x.addEventListener(
+      "load",
+      () => {
+        if (x.dataset.assistanceMobileAuthLoaded = "true", !window.YDRZAuthSF) {
+          n(new Error("Mobile official JSSDK loaded but did not initialize window.YDRZAuthSF"));
+          return;
+        }
+        e();
+      },
+      { once: !0 }
+    ), x.addEventListener(
+      "error",
+      () => n(new Error(`Failed to load mobile official JSSDK script: ${t}`)),
+      { once: !0 }
+    ), document.head.appendChild(x);
+  });
+}
+function Xr(t, i) {
+  return `${t ? t.replace(/\/?$/, "/") : ""}vendor/${i}`;
+}
+function Jr(t, i = !1) {
+  const e = document.createElement("div");
+  e.id = Or, e.setAttribute("role", "dialog"), e.setAttribute("aria-modal", "true"), e.dataset.assistanceAuthOverlay = "true", e.style.position = "fixed", e.style.inset = "0", e.style.zIndex = "2147483647", e.style.background = "rgba(15,23,42,0)", e.style.display = "flex", e.style.alignItems = "flex-end", e.style.justifyContent = "center", e.style.opacity = "0", e.style.transition = "opacity 220ms ease, background-color 220ms ease", e.style.willChange = "opacity, background-color";
+  const n = document.createElement("div");
+  return n.dataset.assistanceAuthPositioningLayer = "true", n.style.display = "flex", n.style.width = "100%", n.style.justifyContent = "center", n.style.willChange = "transform", (t === "ginkgo-v23-viewport-modal" || i) && (i || (n.dataset.assistanceAuthViewportModal = "true"), n.style.position = "fixed", n.style.left = "0", n.style.top = "0", n.style.height = "100vh", i && (n.style.alignItems = "flex-end")), e.appendChild(n), { shell: e, positioningLayer: n };
+}
+function $r(t, i) {
+  t.style.pointerEvents = "none", t.setAttribute("aria-hidden", "true"), t.inert = !0, t.removeAttribute("role"), t.removeAttribute("aria-modal"), i.setAttribute("aria-hidden", "true"), i.tabIndex = -1;
+}
+function to(t, i) {
+  t.style.pointerEvents = "auto", t.removeAttribute("aria-hidden"), t.inert = !1, t.setAttribute("role", "dialog"), t.setAttribute("aria-modal", "true"), i.removeAttribute("aria-hidden"), i.removeAttribute("tabindex");
+}
+function eo(t) {
+  const i = t.visualViewport;
+  return i && Number.isFinite(i.height) && i.height > 0 && Number.isFinite(i.offsetTop) && i.offsetTop >= 0 ? { height: `${i.height}px`, top: `${i.offsetTop}px` } : Number.isFinite(t.innerHeight) && t.innerHeight > 0 ? { height: `${t.innerHeight}px`, top: "0px" } : { height: typeof CSS < "u" && typeof CSS.supports == "function" && CSS.supports("height", "100dvh") ? "100dvh" : "100vh", top: "0px" };
+}
+function no({
+  targetWindow: t,
+  frame: i,
+  positioningLayer: e,
+  preserveFrameHeight: n = !1
+}) {
+  let x = !1, f;
+  const b = () => {
+    if (x)
+      return;
+    const r = eo(t);
+    e.style.top = r.top, e.style.height = r.height, n || (i.style.height = "100%");
+  }, u = () => {
+    const r = t.visualViewport ?? void 0;
+    f !== r && (f?.removeEventListener("resize", b), f?.removeEventListener("scroll", b), f = r, f?.addEventListener("resize", b), f?.addEventListener("scroll", b));
+  }, m = () => {
+    u(), b();
+  };
+  return t.addEventListener("resize", m), m(), () => {
+    x || (x = !0, t.removeEventListener("resize", m), f?.removeEventListener("resize", b), f?.removeEventListener("scroll", b), f = void 0);
+  };
+}
+function io(t) {
+  return /iPad|iPhone|iPod/i.test(t.userAgent) || t.platform === "MacIntel" && t.maxTouchPoints > 1;
+}
+function ro(t) {
+  if (!io(window.navigator))
+    return !1;
+  const i = document.createElement("input");
+  i.type = "text", i.inputMode = "text", i.autocomplete = "off", i.tabIndex = -1, i.dataset.assistanceAuthKeyboardActivator = "true", i.setAttribute("autocapitalize", "characters"), i.setAttribute("autocorrect", "off"), i.style.position = "fixed", i.style.left = "0", i.style.bottom = "0", i.style.width = "1px", i.style.height = "1px", i.style.border = "0", i.style.padding = "0", i.style.opacity = "0.01", i.style.pointerEvents = "none", i.style.fontSize = "16px", i.style.color = "transparent", i.style.background = "transparent", i.style.caretColor = "transparent", t.appendChild(i);
+  try {
+    i.focus({ preventScroll: !0 });
+  } catch {
+    i.focus();
+  }
+  return document.activeElement === i;
+}
+function oo(t) {
+  return typeof CSS < "u" && typeof CSS.supports == "function" && CSS.supports("height", "100dvh") ? `${t}dvh` : `${t}vh`;
+}
+function ve(t) {
+  return typeof t == "number" && Number.isFinite(t) && t > 0;
+}
+function ao(t) {
+  const i = t.getBoundingClientRect().height;
+  if (ve(i))
+    return i;
+  const e = /^(\d+(?:\.\d+)?)px$/.exec(t.style.height.trim())?.[1], n = e === void 0 ? Number.NaN : Number(e);
+  return ve(n) ? n : null;
+}
+function so(t, i) {
+  return ue(t) ?? i;
+}
+function ue(t) {
+  if (ve(t))
+    return `${t}px`;
+  if (typeof t != "string")
+    return null;
+  const i = t.trim();
+  if (!i || /url\s*\(|expression\s*\(|var\s*\(|[;{}"'<>]|[\u0000-\u001f\u007f]/i.test(i))
+    return null;
+  const e = "(?:px|vh|dvh|svh|lvh|%|rem)";
+  if (new RegExp(`^(?:0|[1-9]\\d*)(?:\\.\\d+)?${e}$`, "i").test(i))
+    return i;
+  const x = i.match(/^calc\((.*)\)$/i)?.[1];
+  if (x && /^[\d\s.+\-*/()%a-z]+$/i.test(x)) {
+    const f = new RegExp(`(?:0|[1-9]\\d*)(?:\\.\\d+)?${e}`, "gi"), b = x.replace(f, "");
+    if (/^[\d\s.+\-*/()]*$/.test(b))
+      return i;
+  }
+  return null;
+}
+const xo = "820px", St = "420px";
+function R0(t) {
+  const i = ue(t.authWindowHeight), e = i ? "fixed" : t.authWindowHeightMode === "auto" ? "auto" : "fixed";
+  return {
+    heightMode: e,
+    height: i ?? (e === "auto" ? St : oo(92)),
+    maxHeight: so(t.authWindowMaxHeight, xo)
+  };
+}
+function co(t, i, e, n) {
+  const x = document.createElement("iframe");
+  return x.title = i, x.src = t, x.dataset.assistanceAuthFrame = "true", x.style.width = "100%", x.style.height = n === "ginkgo-v23-viewport-modal" ? "100%" : e.height, x.style.maxHeight = n === "ginkgo-v23-viewport-modal" ? "none" : e.maxHeight, x.style.border = "0", x.style.borderRadius = n === "ginkgo-v23-viewport-modal" ? "0" : "24px 24px 0 0", x.style.background = n === "ginkgo-v23-viewport-modal" ? "transparent" : "#fff", x.style.boxShadow = n === "ginkgo-v23-viewport-modal" ? "none" : "0 -16px 40px rgba(15,23,42,0.18)", n === "bottom-sheet" && (x.style.transform = "translateY(100%)", x.style.transition = "transform 260ms cubic-bezier(0.22, 1, 0.36, 1)", x.style.willChange = "transform", x.className = Nr), x;
+}
+function ge(t, i = /* @__PURE__ */ new Set()) {
+  if (!(t === void 0 || typeof t == "function" || typeof t == "symbol")) {
+    if (t === null || typeof t == "string" || typeof t == "boolean" || typeof t == "number" && Number.isFinite(t)) return t;
+    if (typeof t != "object" || i.has(t) || !Array.isArray(t) && Object.getPrototypeOf(t) !== Object.prototype && Object.getPrototypeOf(t) !== null)
+      throw new TypeError("customPage transport options must contain finite plain data");
+    i.add(t);
+    try {
+      return Array.isArray(t) ? t.map((e) => ge(e, i)).filter((e) => e !== void 0) : Object.fromEntries(Object.entries(t).map(([e, n]) => [e, ge(n, i)]).filter(([, e]) => e !== void 0));
+    } finally {
+      i.delete(t);
+    }
+  }
+}
+function lo(t, i, e = !1) {
+  const n = document.createElement("iframe");
+  return n.title = i, n.src = t, n.dataset.assistanceAuthFrame = "true", n.dataset.assistanceAuthInline = "true", n.style.display = "block", n.style.width = "100%", n.style.height = e ? "100%" : St, n.style.maxHeight = "none", n.style.border = "0", n.style.borderRadius = "0", n.style.background = "transparent", n.style.boxShadow = "none", n.style.transform = "none", n.style.transition = "none", n;
+}
+function po(t) {
+  const i = document.createElement("iframe");
+  return i.src = t, i.title = "", i.dataset.assistanceAuthProbe = "true", i.setAttribute("aria-hidden", "true"), i.tabIndex = -1, i.style.position = "fixed", i.style.left = "-99999px", i.style.top = "0", i.style.width = "1px", i.style.height = "1px", i.style.border = "0", i.style.opacity = "0", i.style.pointerEvents = "none", i;
+}
+function uo() {
+  return be;
+}
+function H0() {
+  const t = uo();
+  return {
+    verificationUrl: new URL(zr, t).toString(),
+    allowedOrigin: new URL(t).origin
+  };
+}
+function Ao(t, i, e, n = !1) {
+  let x = !1, f;
+  t.getBoundingClientRect(), i.getBoundingClientRect();
+  const b = () => {
+    x || !t.isConnected || !i.isConnected || (t.style.background = n ? "transparent" : "rgba(15,23,42,0.35)", t.style.opacity = "1", e === "bottom-sheet" && (i.style.transform = "translateY(0)"));
+  }, u = requestAnimationFrame(() => {
+    x || (f = requestAnimationFrame(b));
+  });
+  return () => {
+    x = !0, cancelAnimationFrame(u), f !== void 0 && cancelAnimationFrame(f);
+  };
+}
+function ho(t, i, e, n) {
+  return new Promise((x) => {
+    let f = !1, b, u;
+    const m = () => {
+      f || (f = !0, b !== void 0 && window.clearTimeout(b), u !== void 0 && cancelAnimationFrame(u), r.removeEventListener("transitionend", m), x());
+    }, r = e === "bottom-sheet" ? i : t;
+    n(m), r.addEventListener("transitionend", m), b = window.setTimeout(m, Ur + 80), u = requestAnimationFrame(() => {
+      t.style.background = "rgba(15,23,42,0)", t.style.opacity = "0", e === "bottom-sheet" && (i.style.transform = "translateY(100%)");
+    });
+  });
+}
+function fo(t) {
+  const i = De();
+  return {
+    href: Xr(t, "new-control-style.css"),
+    integrity: `sha256-${i.cssSha256}`,
+    version: i.version
+  };
+}
+function Bo(t = {}) {
+  const i = t.document ?? document, e = t.id ?? _r, n = i.getElementById(e);
+  if (n instanceof i.defaultView.HTMLLinkElement)
+    return n;
+  const x = fo(t.baseUrl), f = i.createElement("link");
+  return f.id = e, f.rel = "stylesheet", f.href = x.href, f.integrity = x.integrity, f.dataset.assistanceMobileAuthOfficialCssVersion = x.version, i.head.appendChild(f), f;
+}
+function ko(t) {
+  const i = typeof t.appId == "string" ? t.appId.trim() : "";
+  if (!i)
+    throw new Error("AssistanceMobileAuth: appId is required since 0.2.0");
+  const e = t.customPage !== void 0;
+  if (e && (F0(t.customPage, window.location.href), t.container !== void 0))
+    throw new TypeError("customPage does not support container/authorize mode");
+  const n = t.display === "inline" ? "inline" : "modal", x = n === "inline" ? Qr(t.renderTo) : void 0, f = N0(t.ui, { warn: nr }), b = er(f), u = typeof t.onBeforeLogin == "function", m = typeof t.onStateChange == "function", r = dr(t.formHeaderImg);
+  let a;
+  if (!e && (t.container || t.authParams)) {
+    if (!t.container || !t.authParams)
+      throw new Error("AssistanceMobileAuth legacy authorize mode requires container and authParams");
+    Yr(), Gr(t.container), a = T0();
+  }
+  let v, o, A, p;
+  function k() {
+    return v ??= Pi(), v;
+  }
+  function l(d = o) {
+    if (d) {
+      if (d.allowedOrigin)
+        try {
+          d.frame.contentWindow?.postMessage(Ct(le, d.sessionId), d.allowedOrigin);
+        } catch {
+        }
+      if (o !== d) {
+        d.shell?.remove(), d.frame.remove();
+        return;
+      }
+      d.keyboardAvoidance?.dispose(), d.keyboardAvoidance = void 0, d.disposeViewportFrame?.(), d.disposeViewportFrame = void 0, d.cancelPendingEnterAnimation?.(), d.cancelPendingEnterAnimation = void 0, d.finishPendingExitAnimation?.(), d.finishPendingExitAnimation = void 0, d.disposeMessageListener?.(), d.disposeMessageListener = void 0, d.shell?.remove(), d.frame.remove(), d.presentation !== "inline" && (document.body.style.overflow = d.previousBodyOverflow ?? ""), o = void 0;
+    }
+  }
+  function E(d, g) {
+    if (d.settled) {
+      l(d);
+      return;
+    }
+    const C = d.reject;
+    d.settled = !0, l(d), C?.(g);
+  }
+  async function s(d) {
+    if (d.presentation === "inline") {
+      l(d);
+      return;
+    }
+    if (d.cancelPendingEnterAnimation?.(), d.cancelPendingEnterAnimation = void 0, d.disposeViewportFrame?.(), d.disposeViewportFrame = void 0, e && d.presentation === "bottom-sheet" && d.keyboardAvoidance) {
+      const g = d.frame.style.height, C = d.frame.parentElement, B = C.style.transform;
+      d.keyboardAvoidance.dispose(), d.keyboardAvoidance = void 0, d.frame.style.height = g, C.style.transform = B;
+    }
+    d.presented && d.shell && (await ho(d.shell, d.frame, d.presentation, (g) => {
+      d.finishPendingExitAnimation = g;
+    }), d.finishPendingExitAnimation = void 0), l(d);
+  }
+  function c(d) {
+    if (String(d.code) !== "103000") {
+      t.onError?.(d);
+      return;
+    }
+    k().initControl({
+      styleOption: Ni(t.styleOption),
+      beforeSubmit: () => !0,
+      authReady: t.onAuthReady,
+      success: t.onSuccess,
+      error: t.onError
+    });
+  }
+  const h = {
+    authorize() {
+      if (e) throw new TypeError("customPage does not support authorize mode; use open");
+      if (!t.container || !t.authParams)
+        throw new Error("AssistanceMobileAuth authorize requires container and authParams");
+      const d = Oi(t.authParams.authType), g = d === t.authParams.authType ? t.authParams : { ...t.authParams, authType: d }, C = a ?? T0();
+      a = C, C.then(() => {
+        k().showAuthPage({
+          data: g,
+          success: c,
+          error: t.onError
+        });
+      }).catch((B) => {
+        const H = B instanceof Error ? B : new Error(String(B));
+        t.onError?.({ code: "sdk-script-load-failed", message: H.message });
+      });
+    },
+    clear(d) {
+      k().clearControl(d);
+    },
+    open(d) {
+      return h.openVerification(d);
+    },
+    openVerification(d) {
+      if (typeof window > "u" || typeof document > "u")
+        return Promise.reject(new Error("Assistance auth requires a browser window and document"));
+      const g = Date.now();
+      let C, B, H, y, S, w = [];
+      try {
+        if (e) {
+          if (C = F0(t.customPage, window.location.href), H = ge(t.styleOption), t.agreements !== void 0 && !Array.isArray(t.agreements))
+            throw new TypeError("customPage agreements must be an array");
+          if (w = Array.from(t.agreements ?? [], (Q) => {
+            const G = Q?.name, Y = Q?.link;
+            if (typeof G != "string" || typeof Y != "string")
+              throw new TypeError("customPage agreement name and link must be strings");
+            return { name: G, link: Y };
+          }), t.authParams) {
+            const Q = ["version", "appId", "sign", "traceId", "timestamp", "authType", "scope"];
+            for (const Y of Q) {
+              const ot = t.authParams[Y];
+              if (!(Y === "version" && ot === void 0) && (typeof ot != "string" || !ot.trim()))
+                throw new TypeError(`customPage authParams.${Y} must be a non-empty string`);
+            }
+            const G = t.authParams;
+            y = {
+              ...G.version === void 0 ? {} : { version: G.version },
+              appId: G.appId,
+              sign: G.sign,
+              traceId: G.traceId,
+              timestamp: G.timestamp,
+              authType: G.authType,
+              scope: G.scope
+            };
+          }
+          if (d?.requestId !== void 0 && typeof d.requestId != "string") throw new TypeError("customPage requestId must be a string");
+          if (d?.scene !== void 0 && d.scene !== "native-number") throw new TypeError("customPage scene must be native-number");
+          S = { ...d?.requestId ? { requestId: d.requestId } : {}, ...d?.scene ? { scene: d.scene } : {} };
+        }
+        B = n === "inline" ? Zr(x) : void 0;
+      } catch (Q) {
+        if (e) return Promise.reject(Q);
+        throw Q;
+      }
+      const F = o;
+      F && E(F, new Error("Assistance auth replaced"));
+      const M = C0(), _ = "https://ginkgo.chinaums.com/sign-pay-pro/assist/0.3.0/custom-verification.html", N = e ? { verificationUrl: _, allowedOrigin: new URL(_).origin } : H0(), z = e && n !== "inline" && !0 && !0, O = n === "inline" ? "inline" : e ? z ? "bottom-sheet" : "ginkgo-v23-viewport-modal" : Kr(i), j = !e && jr(i, n), K = e ? R0({
+        ...t,
+        authWindowHeightMode: t.authWindowHeightMode ?? (n === "inline" || z ? "auto" : "fixed")
+      }) : void 0, D = ue(t.authWindowMaxHeight), T = `calc(100% - ${J0}px)`, R = e ? {
+        ...K,
+        height: ue(t.authWindowHeight) ?? (K.heightMode === "auto" ? St : "100%"),
+        maxHeight: z ? D ? `min(${D}, ${T})` : T : D ?? "none"
+      } : O === "inline" ? { heightMode: "auto", height: St, maxHeight: "none" } : O === "ginkgo-v23-viewport-modal" ? { heightMode: "fixed", height: "100%", maxHeight: "none" } : R0(t), I = rr({
+        closable: t.closable,
+        useCustomKeyboard: t.useCustomKeyboard,
+        heightMode: R.heightMode
+      }), V = e ? Er({
+        loaderUrl: _,
+        mode: "authorization",
+        sessionId: M,
+        parentOrigin: window.location.origin
+      }) : S0({
+        verificationUrl: N.verificationUrl,
+        sessionId: M,
+        request: d,
+        expectsUiConfig: b,
+        appId: i,
+        parentOrigin: window.location.origin,
+        ...O === "inline" ? { layout: "inline" } : {},
+        debugVConsole: O === "inline" && Wr()
+      }), W = O === "inline" ? void 0 : Jr(O, z), L = O === "inline" ? lo(
+        V,
+        t.authWindowTitle ?? "移动认证验证窗口",
+        j
+      ) : co(
+        V,
+        t.authWindowTitle ?? "移动认证验证窗口",
+        R,
+        O
+      );
+      W?.positioningLayer.appendChild(L), e && (L.style.height = R.height, L.style.maxHeight = R.maxHeight);
+      const P = {
+        sessionId: M,
+        shell: W?.shell,
+        frame: L,
+        previousBodyOverflow: O === "inline" ? void 0 : document.body.style.overflow,
+        settled: !1,
+        presentation: O,
+        presented: !1,
+        allowedOrigin: e ? N.allowedOrigin : void 0
+      }, rt = e || O !== "inline" && (en(i) || Bt(i));
+      rt && (P.shell && $r(P.shell, L), e && (L.style.opacity = "0", L.style.pointerEvents = "none", L.inert = !0, L.tabIndex = -1, L.setAttribute("aria-hidden", "true"))), (O === "ginkgo-v23-viewport-modal" || z) && (P.disposeViewportFrame = no({
+        targetWindow: window,
+        frame: L,
+        positioningLayer: W.positioningLayer,
+        preserveFrameHeight: e
+      })), O === "bottom-sheet" && R.heightMode === "auto" && (P.keyboardAvoidance = Sr({
+        targetWindow: window,
+        frame: L,
+        positioningLayer: W.positioningLayer,
+        constrainToViewport: z
+      }), z && P.keyboardAvoidance.update({ height: Number.parseFloat(St) })), o = P, O === "inline" ? B.appendChild(L) : document.body.appendChild(P.shell);
+      const st = () => {
+        !e && O === "inline" || P.settled || P.presented || O !== "inline" && !P.shell?.isConnected || !L.isConnected || (P.presented = !0, !(e && (L.style.opacity = "1", L.style.pointerEvents = "auto", L.inert = !1, L.removeAttribute("tabindex"), L.removeAttribute("aria-hidden"), O === "inline")) && (to(P.shell, L), document.body.style.overflow = "hidden", P.cancelPendingEnterAnimation = Ao(
+          P.shell,
+          L,
+          O,
+          e ? !z : Bt(i)
+        )));
+      };
+      if (rt || st(), !z && P.keyboardAvoidance && !I.useCustomKeyboard && ro(P.shell)) {
+        const Q = ao(L);
+        Q !== null && P.keyboardAvoidance.update({
+          height: Q,
+          keyboardFocused: !0
+        });
+      }
+      const xt = L.contentWindow;
+      let ct = !1;
+      const nt = C ? {
+        mode: "authorization",
+        sessionId: M,
+        parentOrigin: window.location.origin,
+        page: C,
+        appId: i,
+        request: S,
+        authParams: y,
+        styleOption: H,
+        agreements: w,
+        iframeOptions: I,
+        trustedBusinessBaseUrl: be,
+        deadline: g + 15e3,
+        beforeLoginNotificationEnabled: u,
+        stateChangeEnabled: m
+      } : void 0, $ = () => {
+        !b || !xt || xt.postMessage(
+          lr(M, f),
+          N.allowedOrigin
+        );
+      }, ft = () => {
+        xt?.postMessage(
+          Ct(
+            Q0,
+            M,
+            {
+              styleOption: Ui(t.styleOption) ?? {},
+              agreements: Vr(t.agreements),
+              iframeOptions: I,
+              beforeLoginNotificationEnabled: u,
+              stateChangeEnabled: m,
+              ...r ? { formHeaderImg: r } : {}
+            }
+          ),
+          N.allowedOrigin
+        );
+      };
+      return new Promise((Q, G) => {
+        P.reject = G;
+        let Y, ot;
+        const tt = (U) => {
+          if (!P.settled) {
+            if (P.settled = !0, clearTimeout(Y), e && (!z || !P.presented)) {
+              l(P), U();
+              return;
+            }
+            if (O === "inline") {
+              U();
+              return;
+            }
+            s(P).then(U);
+          }
+        }, X = (U) => {
+          if (e || Bt(i))
+            try {
+              t.onError?.(U);
+            } catch {
+            }
+          else
+            t.onError?.(U);
+          G(new Error(`Assistance auth error: ${U.message}`));
+        };
+        if (P.disposeMessageListener = D0(
+          window,
+          M,
+          {
+            onReady: () => {
+              if (o === P)
+                if (e) {
+                  if (P.settled || ct) return;
+                  if (Date.now() >= g + 15e3) {
+                    tt(() => X({ code: "AUTH_READY_TIMEOUT", message: "认证页面初始化超时，请稍后重试。" }));
+                    return;
+                  }
+                  ct = !0;
+                  try {
+                    xt?.postMessage(Ct(
+                      Z0,
+                      M,
+                      { runtimeSource: Gi, config: nt }
+                    ), N.allowedOrigin);
+                  } catch (U) {
+                    tt(() => X({ code: "CUSTOM_BOOT_FAILED", message: U instanceof Error ? U.message : String(U) }));
+                    return;
+                  }
+                  pt(t.onReady, "onReady");
+                } else
+                  ft(), $(), t.onReady?.();
+            },
+            onPresentationReady: () => {
+              if (e && Date.now() >= g + 15e3 && !P.presented) {
+                tt(() => X({ code: "AUTH_READY_TIMEOUT", message: "认证页面初始化超时，请稍后重试。" }));
+                return;
+              }
+              clearTimeout(Y), rt && st();
+            },
+            onStateChange: (U) => {
+              o !== P || P.settled || e && ot === U.type || (ot = U.type, pt(t.onStateChange, "onStateChange", U), U.type === "idLast4Complete" && pt(t.onBeforeLogin, "onBeforeLogin"));
+            },
+            onSuccess: (U) => tt(() => {
+              e ? pt(t.onSuccess, "onSuccess", U) : t.onSuccess?.(U), Q(U);
+            }),
+            onCancel: (U) => tt(() => {
+              e ? pt(t.onCancel, "onCancel", U) : t.onCancel?.(U), G(new Error("Assistance auth cancelled"));
+            }),
+            onError: (U) => tt(() => X(U)),
+            // 非终态通知：纯透传，不 settle、不关弹窗、不 reject —— 终态语义不变。
+            // settled 之后不再透传：关闭动画期间迟到的通知对调用方已无意义（流程已终结）。
+            onErrorNotice: (U) => {
+              o === P && !P.settled && t.onErrorNotice?.(U);
+            },
+            onPhoneReady: (U) => {
+              o === P && !P.settled && t.onPhoneReady?.(U);
+            },
+            onResize: (U) => {
+              if (e) {
+                o === P && !P.settled && I.heightMode === "auto" && (z ? P.keyboardAvoidance?.update(U) : L.style.height = `${U.height}px`);
+                return;
+              }
+              if (o === P && O === "inline") {
+                j || (P.frame.style.height = `${U.height}px`);
+                return;
+              }
+              o !== P || O === "ginkgo-v23-viewport-modal" || I.heightMode !== "auto" || !P.keyboardAvoidance || P.keyboardAvoidance.update(U);
+            },
+            onClose: () => tt(() => {
+              e ? pt(t.onClose, "onClose") : t.onClose?.(), G(new Error("Assistance auth closed"));
+            })
+          },
+          N.allowedOrigin,
+          {
+            expectedSource: xt,
+            expectedSourceTypes: e ? void 0 : O === "inline" ? [pe, Be] : [pe]
+          }
+        ), e || rt && Bt(i)) {
+          Y = setTimeout(() => tt(() => {
+            X({ code: "AUTH_READY_TIMEOUT", message: "认证页面初始化超时，请稍后重试。" });
+          }), e ? Math.max(0, g + 15e3 - Date.now()) : 15e3);
+          const U = P.disposeMessageListener;
+          P.disposeMessageListener = () => {
+            clearTimeout(Y), U?.();
+          };
+        }
+      });
+    },
+    precheck(d) {
+      if (typeof window > "u" || typeof document > "u")
+        return Promise.reject(new Error("Assistance auth precheck requires a browser window and document"));
+      if (A)
+        return A;
+      const g = d.timeoutMs ?? Lr, C = C0(), B = H0(), H = S0({
+        verificationUrl: B.verificationUrl,
+        sessionId: C,
+        request: { scene: d.scene, requestId: d.requestId },
+        mode: "probe",
+        appId: i
+      }), y = po(H), S = new Promise((w) => {
+        let F = !1, M, _;
+        const N = (z) => {
+          F || (F = !0, _ !== void 0 && clearTimeout(_), M?.(), y.remove(), w(z));
+        };
+        p = () => N({ eligible: !1, reason: "unknown" }), M = D0(
+          window,
+          C,
+          { onProbeResult: (z) => N(z) },
+          B.allowedOrigin
+        ), _ = setTimeout(() => N({ eligible: !1, reason: "unknown" }), g), document.body.appendChild(y);
+      }).finally(() => {
+        A = void 0, p = void 0;
+      });
+      return A = S, S;
+    },
+    close() {
+      const d = o;
+      if (d?.frame.contentWindow)
+        try {
+          d.frame.contentWindow.postMessage(Ct(le, d.sessionId), d.allowedOrigin ?? "*");
+        } catch {
+        }
+      if (d && !d.settled && d.reject) {
+        d.settled = !0;
+        const g = d.reject;
+        if (e && (d.presentation !== "bottom-sheet" || !d.presented)) {
+          l(d), pt(t.onClose, "onClose"), g(new Error("Assistance auth closed"));
+          return;
+        }
+        s(d).then(() => {
+          e ? pt(t.onClose, "onClose") : t.onClose?.(), g(new Error("Assistance auth closed"));
+        });
+        return;
+      }
+      l(d);
+    },
+    destroy() {
+      p?.();
+      const d = o;
+      d && E(d, new Error("Assistance auth destroyed"));
+    }
+  };
+  return h;
+}
+({
+  ...Object.fromEntries(Se.map((t) => [t, "yuanbao"]))
+});
+const mo = "《第三方共享个人信息清单》", vo = `<!doctype html>
+<html lang="zh-CN" data-custom-template="duodian-health">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>身份验证</title></head>
+<body>
+<main data-stage>
+  <section data-card aria-label="身份验证">
+    <button data-close type="button" aria-label="关闭" hidden>×</button>
+    <img data-security-title src="__DUODIAN_SECURITY_IMAGE__" width="318" height="47" alt="信息安全保障中">
+    <div data-phone-prompt><span>输入身份证后四位验证您</span><div id="ydrzPhoneControl"></div><span>的实名信息</span></div>
+    <img data-identity-guide src="__DUODIAN_IDENTITY_IMAGE__" width="649" height="120" alt="公民身份证号码示意，请填写后四位数">
+    <div data-id-entry>
+      <div data-id-grid role="button" tabindex="0" aria-label="编辑身份证后四位" aria-describedby="duodian-input-message">
+        <span data-id-box><span data-digit></span><span data-caret hidden></span></span>
+        <span data-id-box><span data-digit></span><span data-caret hidden></span></span>
+        <span data-id-box><span data-digit></span><span data-caret hidden></span></span>
+        <span data-id-box><span data-digit></span><span data-caret hidden></span></span>
+      </div>
+      <input data-id-value type="text" maxlength="4" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="身份证后四位" readonly inputmode="none" tabindex="-1">
+    </div>
+    <p data-message id="duodian-input-message" role="status" hidden></p>
+    <div data-sms><div id="ydrzYZMControl"></div><div id="ydrzYZMBtnControl"></div></div>
+    <div id="ydrzSubmitControl"></div>
+    <button data-other type="button">选择其他方式</button>
+    <section data-agreements aria-label="协议与授权说明">
+      <div id="ydrzAgreementControl"></div><div id="ydrzTipsControl"></div><div id="ydrzStateControl"></div>
+      <div data-caller-agreements></div>
+    </section>
+  </section>
+  <section data-keyboard aria-label="安全键盘" hidden>
+    <button data-collapse type="button">收起键盘</button>
+    <div data-key-grid>
+      <button data-key="1" type="button">1</button><button data-key="2" type="button">2</button><button data-key="3" type="button">3</button>
+      <button data-key="4" type="button">4</button><button data-key="5" type="button">5</button><button data-key="6" type="button">6</button>
+      <button data-key="7" type="button">7</button><button data-key="8" type="button">8</button><button data-key="9" type="button">9</button>
+      <button data-key="X" type="button">X</button><button data-key="0" type="button">0</button><button data-key="delete" type="button" aria-label="删除末位">删除</button>
+    </div>
+  </section>
+</main>
+</body></html>
+`, go = `[data-custom-root][data-custom-template="duodian-health"] {
+  width:100%; color:#252a32; background:#fff; border-radius:16px 16px 0 0;
+  font-family:"PingFang SC","Microsoft YaHei",sans-serif; -webkit-text-size-adjust:100%;
+}
+/* This stylesheet is injected only into the customer iframe and its reader. */
+html, body { margin:0; }
+[data-custom-template="duodian-health"] *, [data-custom-template="duodian-health"] *::before, [data-custom-template="duodian-health"] *::after { box-sizing:border-box; }
+[data-custom-template="duodian-health"] [hidden] { display:none !important; }
+[data-custom-template="duodian-health"] [data-stage] { display:flex; flex-direction:column; width:100%; max-height:var(--duodian-viewport-height,100dvh); overflow:hidden; border-radius:inherit; }
+[data-custom-template="duodian-health"] [data-card] { position:relative; flex:0 1 auto; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:28px 24px max(20px,env(safe-area-inset-bottom,0px)); }
+[data-custom-template="duodian-health"] [data-close] { position:absolute; right:12px; top:10px; width:30px; height:30px; padding:0; border:0; border-radius:50%; background:#f5f5f5; color:#7a7a7a; font-size:24px; }
+[data-custom-template="duodian-health"] [data-security-title] { display:block; width:48.6%; max-width:318px; height:auto; margin:0 auto 20px; }
+[data-custom-template="duodian-health"] [data-phone-prompt] { display:flex; align-items:center; justify-content:center; gap:2px; margin-bottom:14px; color:#8d8d92; font-size:clamp(12px,3.6vw,17px); line-height:1.6; text-align:center; }
+[data-custom-template="duodian-health"] #ydrzPhoneControl { display:inline-flex !important; width:auto !important; margin:0; font-size:inherit !important; }
+[data-custom-template="duodian-health"] #ydrzPhoneControl :is(.ydrz-maskphone-wrap,p) { max-width:100%; height:auto !important; margin:0 !important; padding:0 !important; font-family:inherit !important; line-height:1.6 !important; }
+[data-custom-template="duodian-health"] [data-identity-guide] { display:block; width:100%; height:auto; margin:0 auto 12px; }
+[data-custom-template="duodian-health"] [data-id-entry] { position:relative; margin:0 8px 24px; }
+[data-custom-template="duodian-health"] [data-id-grid] { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; cursor:text; outline-offset:4px; }
+[data-custom-template="duodian-health"] [data-id-box] { display:flex; align-items:center; justify-content:center; aspect-ratio:1.06; border:1px solid #dce8ff; border-radius:8px; background:#eef6ff; font-size:clamp(24px,7vw,38px); }
+[data-custom-template="duodian-health"] [data-id-box][data-active="true"] { border:2px solid #ff9b34; background:#fffaf3; }
+[data-custom-template="duodian-health"] [data-caret] { width:2px; height:66%; background:#0082ff; animation:duodian-caret 1s step-end infinite; }
+[data-custom-template="duodian-health"] [data-id-value] { position:absolute; width:1px; height:1px; padding:0; border:0; opacity:0; pointer-events:none; }
+[data-custom-template="duodian-health"][data-input-mode="native"] [data-id-value] { inset:0; width:100%; height:100%; font-size:16px; color:transparent; caret-color:transparent; pointer-events:auto; }
+[data-custom-template="duodian-health"] [data-message] { margin:-12px 0 12px; color:#ce4e25; font-size:12px; line-height:1.5; text-align:center; overflow-wrap:anywhere; }
+/* The official SDK owns these slots and all control visibility, including SMS. */
+[data-custom-template="duodian-health"] #ydrzSubmitControl { width:100%; aspect-ratio:638 / 116; margin:0; }
+[data-custom-template="duodian-health"] #ydrzSubmitControl > *, [data-custom-template="duodian-health"] #ydrzSubmitControl .submit-btn { width:100% !important; height:100% !important; margin:0 !important; border:0; border-radius:16px; font-family:inherit !important; font-weight:700; }
+[data-custom-template="duodian-health"] [data-other] { display:block; width:100%; margin:16px auto 18px; padding:0; border:0; background:transparent; color:#00bc4e; font:600 16px/1.5 "PingFang SC","Microsoft YaHei",sans-serif; cursor:pointer; }
+[data-custom-template="duodian-health"] [data-other]:disabled { opacity:.5; cursor:default; }
+[data-custom-template="duodian-health"] [data-agreements] { color:#8d8d92; font-size:12px; line-height:1.8; text-align:left; overflow-wrap:anywhere; }
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl) { max-width:100%; }
+/* Adapt provider text without changing its control visibility or checkbox layout. */
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl),
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl) :is(p,.auth-tips-title,.auth-tips,.expire-span) { color:#8d8d92 !important; text-align:left !important; white-space:normal; overflow-wrap:anywhere; }
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl,#ydrzStateControl) p { width:100%; min-width:0; max-width:100%; margin:0 !important; padding:0 !important; }
+/* Keep agreement and authorization copy in one flow; the state slot stays separate. */
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl),
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl) p { display:inline !important; width:auto !important; }
+/* Provider tips have an independent inline 14px default; match the 12px agreement. */
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl),
+[data-custom-template="duodian-health"] :is(#ydrzAgreementControl,#ydrzTipsControl) :is(p,span,a,.auth-tips-title,.auth-tips) { font-size:12px !important; }
+[data-custom-template="duodian-health"] #ydrzAgreementControl a { display:inline !important; color:#77777e !important; text-decoration:none; }
+[data-custom-template="duodian-health"] [data-caller-agreements] label { display:flex; align-items:flex-start; gap:4px; margin-top:5px; }
+[data-custom-template="duodian-health"] [data-caller-agreements] input { flex:0 0 auto; margin:4px 0 0; accent-color:#19be00; }
+[data-custom-template="duodian-health"] [data-caller-agreements] a { color:#77777e; text-decoration:none; }
+[data-custom-template="duodian-health"] [data-keyboard] { flex:0 0 auto; padding:0 6px max(6px,env(safe-area-inset-bottom,0px)); background:#d1d4da; }
+[data-custom-template="duodian-health"] [data-collapse] { display:block; width:100%; height:26px; padding:0 8px; border:0; background:transparent; color:#4b5563; font-size:12px; text-align:right; }
+[data-custom-template="duodian-health"] [data-key-grid] { display:grid; height:clamp(144px,43vw,204px); grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:repeat(4,minmax(0,1fr)); gap:6px; }
+[data-custom-template="duodian-health"] [data-key] { min-height:0; border:0; border-radius:5px; background:#fff; color:#252a32; font-size:24px; touch-action:manipulation; }
+[data-custom-template="duodian-health"] [data-key]:active { background:#eff0f3; }
+[data-custom-template="duodian-health"] [data-key="delete"] { background:transparent; font-size:15px; }
+/* Agreement reading belongs to the existing SDK reader, outside the page root. */
+.ydrz-confirm-iframe { max-width:100% !important; max-height:100% !important; }
+[data-custom-template="duodian-health"].custom-agreement-reader { min-height:100%; padding:16px; color:#333; background:#fff; }
+[data-custom-template="duodian-health"].custom-agreement-reader nav a { color:#77777e; }
+@keyframes duodian-caret { 0%,49% { opacity:1; } 50%,100% { opacity:0; } }
+@media(max-height:500px) { [data-custom-template="duodian-health"] [data-card] { padding-top:16px; } [data-custom-template="duodian-health"] [data-security-title] { margin-bottom:12px; } }
+@media(prefers-reduced-motion:reduce) { [data-custom-template="duodian-health"] [data-caret] { animation:none; } }
+`, yo = `(() => {
+  const root = document.querySelector('[data-custom-root][data-custom-template="duodian-health"]');
+  const api = window.AssistanceCustomPage;
+  const options = window.DuodianHealthPageConfig;
+  delete window.DuodianHealthPageConfig;
+  const keyboardMode = options.useCustomKeyboard !== false;
+  const stage = root.querySelector('[data-stage]');
+  const card = root.querySelector('[data-card]');
+  const input = root.querySelector('[data-id-value]');
+  const grid = root.querySelector('[data-id-grid]');
+  const keyboard = root.querySelector('[data-keyboard]');
+  const other = root.querySelector('[data-other]');
+  const close = root.querySelector('[data-close]');
+  const agreements = root.querySelector('[data-agreements]');
+  const checks = [];
+  const removers = [];
+  let state = { phase: 'initializing', idLast4: '', inputError: null, message: null, agreementReaderOpen: false };
+  let keyboardOpen = false;
+  let readerSnapshot;
+  let disposed = false;
+  root.dataset.inputMode = keyboardMode ? 'custom' : 'native';
+  input.readOnly = keyboardMode;
+  input.inputMode = keyboardMode ? 'none' : 'text';
+  close.hidden = !options.closable;
+
+  function listen(node, event, action, capture = false) {
+    node.addEventListener(event, action, capture);
+    removers.push(() => node.removeEventListener(event, action, capture));
+  }
+  function busy() { return state.phase === 'submitting' || state.phase === 'completed'; }
+  function editable() { return !disposed && !busy() && !state.agreementReaderOpen && (state.phase === 'ready' || state.phase === 'error'); }
+  function blocked() { return disposed || busy() || state.agreementReaderOpen; }
+  function render() {
+    if (disposed) return;
+    const canEdit = editable();
+    const active = canEdit && (keyboardMode ? keyboardOpen : document.activeElement === input);
+    const showKeyboard = keyboardMode && keyboardOpen && canEdit;
+    stage.dataset.keyboardOpen = String(showKeyboard);
+    card.dataset.submitting = String(busy());
+    card.dataset.error = String(Boolean(state.inputError));
+    keyboard.hidden = !showKeyboard;
+    input.value = state.idLast4;
+    input.disabled = !canEdit;
+    grid.tabIndex = canEdit ? 0 : -1;
+    grid.setAttribute('aria-disabled', String(!canEdit));
+    root.querySelectorAll('[data-id-box]').forEach((box, index) => {
+      box.querySelector('[data-digit]').textContent = state.idLast4[index] || '';
+      const current = active && state.idLast4.length < 4 && index === state.idLast4.length;
+      box.dataset.active = String(current);
+      box.querySelector('[data-caret]').hidden = !current;
+    });
+    const message = root.querySelector('[data-message]');
+    message.textContent = state.inputError || state.message || '';
+    message.hidden = !message.textContent;
+    other.disabled = blocked();
+    close.disabled = blocked();
+    agreements.inert = blocked();
+    checks.forEach(check => { check.node.disabled = blocked(); check.node.checked = check.checked; });
+    root.querySelectorAll('[data-key]').forEach(button => { button.disabled = !canEdit; });
+    updateNaturalHeight();
+  }
+  function update(value) {
+    if (editable() && value !== state.idLast4) api.setIdLast4(value);
+  }
+  function edit() {
+    if (!editable()) return;
+    keyboardOpen = keyboardMode;
+    if (keyboardMode) grid.focus({ preventScroll: true });
+    else input.focus({ preventScroll: true });
+    render();
+  }
+  listen(grid, 'click', edit);
+  listen(grid, 'keydown', event => {
+    if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); edit(); }
+  });
+  listen(input, 'input', () => {
+    if (!keyboardMode) update(input.value.replace(/[^0-9Xx]/g, '').toUpperCase().slice(0, 4));
+    render();
+  });
+  listen(input, 'focus', render);
+  listen(input, 'blur', render);
+  root.querySelectorAll('[data-key]').forEach(button => listen(button, 'click', () => {
+    if (!keyboardMode || !keyboardOpen || !editable()) return;
+    const key = button.dataset.key;
+    if (key === 'delete') update(state.idLast4.slice(0, -1));
+    else if (/^[0-9xX]$/.test(key) && state.idLast4.length < 4) update(state.idLast4 + key.toUpperCase());
+  }));
+  listen(root.querySelector('[data-collapse]'), 'click', () => {
+    if (!editable()) return;
+    keyboardOpen = false; render(); grid.focus({ preventScroll: true });
+  });
+  listen(other, 'click', () => { if (!blocked()) api.close(); });
+  listen(close, 'click', () => { if (options.closable && !blocked()) api.close(); });
+  // Capture precedes official agreement listeners and blocks even synthetic clicks.
+  listen(agreements, 'click', event => {
+    if (blocked()) { event.preventDefault(); event.stopImmediatePropagation(); }
+  }, true);
+  options.agreements.forEach((agreement, index) => {
+    const row = document.createElement('label');
+    const node = document.createElement('input'); node.type = 'checkbox';
+    node.setAttribute('aria-label', '同意' + agreement.name);
+    const text = document.createElement('span'); text.textContent = '已阅读并同意';
+    const link = document.createElement('a'); link.textContent = agreement.name;
+    link.href = agreement.link; link.target = '_blank'; link.rel = 'noopener';
+    row.append(node, text, link); agreements.querySelector('[data-caller-agreements]').append(row);
+    const check = { node, checked: false }; checks.push(check);
+    listen(node, 'change', () => {
+      if (!blocked()) { check.checked = node.checked; api.setCallerAgreementChecked(index, node.checked); }
+      render();
+    });
+  });
+  const viewport = window.visualViewport;
+  function updateNaturalHeight() {
+    if (disposed) return;
+    // Report intrinsic content to the existing RESIZE bridge. The visible stage
+    // still fits the iframe; wrapper applies its existing host viewport clamp.
+    const height = Math.ceil(card.scrollHeight + (keyboard.hidden ? 0 : keyboard.getBoundingClientRect().height));
+    if (height > 0 && root.style.minHeight !== height + 'px') root.style.minHeight = height + 'px';
+  }
+  function updateViewport() {
+    if (disposed) return;
+    const height = viewport ? viewport.height : window.innerHeight;
+    if (Number.isFinite(height) && height > 0) root.style.setProperty('--duodian-viewport-height', Math.round(height) + 'px');
+    updateNaturalHeight();
+  }
+  listen(window, 'resize', updateViewport);
+  listen(window, 'orientationchange', updateViewport);
+  if (viewport) { listen(viewport, 'resize', updateViewport); listen(viewport, 'scroll', updateViewport); }
+  const contentObserver = new MutationObserver(updateNaturalHeight);
+  contentObserver.observe(card, { childList: true, subtree: true, characterData: true });
+  removers.push(() => contentObserver.disconnect());
+  if (typeof ResizeObserver !== 'undefined') {
+    const sizeObserver = new ResizeObserver(updateNaturalHeight);
+    sizeObserver.observe(card); sizeObserver.observe(keyboard);
+    removers.push(() => sizeObserver.disconnect());
+  }
+  api.register({
+    onStateChange(next) {
+      if (disposed) return;
+      const openingReader = next.agreementReaderOpen && !state.agreementReaderOpen;
+      const closingReader = !next.agreementReaderOpen && state.agreementReaderOpen;
+      if (openingReader) {
+        readerSnapshot = { keyboardOpen, focus: root.contains(document.activeElement) ? document.activeElement : null };
+        keyboardOpen = false;
+      }
+      if (next.idLast4.length === 4 && state.idLast4.length !== 4 && !next.agreementReaderOpen) keyboardOpen = false;
+      state = next;
+      if (closingReader && readerSnapshot) {
+        keyboardOpen = readerSnapshot.keyboardOpen;
+        const focus = readerSnapshot.focus; readerSnapshot = undefined;
+        render();
+        if (editable() && focus && focus.isConnected) focus.focus({ preventScroll: true });
+      }
+      render();
+    },
+    dispose() {
+      disposed = true; readerSnapshot = undefined;
+      removers.splice(0).forEach(remove => remove());
+    },
+  });
+  updateViewport();
+  render();
+})();
+`, Eo = "data:image/jpeg;base64,/9j/4gxYSUNDX1BST0ZJTEUAAQEAAAxITGlubwIQAABtbnRyUkdCIFhZWiAHzgACAAkABgAxAABhY3NwTVNGVAAAAABJRUMgc1JHQgAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLUhQICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABFjcHJ0AAABUAAAADNkZXNjAAABhAAAAGx3dHB0AAAB8AAAABRia3B0AAACBAAAABRyWFlaAAACGAAAABRnWFlaAAACLAAAABRiWFlaAAACQAAAABRkbW5kAAACVAAAAHBkbWRkAAACxAAAAIh2dWVkAAADTAAAAIZ2aWV3AAAD1AAAACRsdW1pAAAD+AAAABRtZWFzAAAEDAAAACR0ZWNoAAAEMAAAAAxyVFJDAAAEPAAACAxnVFJDAAAEPAAACAxiVFJDAAAEPAAACAx0ZXh0AAAAAENvcHlyaWdodCAoYykgMTk5OCBIZXdsZXR0LVBhY2thcmQgQ29tcGFueQAAZGVzYwAAAAAAAAASc1JHQiBJRUM2MTk2Ni0yLjEAAAAAAAAAAAAAABJzUkdCIElFQzYxOTY2LTIuMQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWFlaIAAAAAAAAPNRAAEAAAABFsxYWVogAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z2Rlc2MAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5jaAAAAAAAAAAAAAAAFklFQyBodHRwOi8vd3d3LmllYy5jaAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABkZXNjAAAAAAAAAC5JRUMgNjE5NjYtMi4xIERlZmF1bHQgUkdCIGNvbG91ciBzcGFjZSAtIHNSR0IAAAAAAAAAAAAAAC5JRUMgNjE5NjYtMi4xIERlZmF1bHQgUkdCIGNvbG91ciBzcGFjZSAtIHNSR0IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZGVzYwAAAAAAAAAsUmVmZXJlbmNlIFZpZXdpbmcgQ29uZGl0aW9uIGluIElFQzYxOTY2LTIuMQAAAAAAAAAAAAAALFJlZmVyZW5jZSBWaWV3aW5nIENvbmRpdGlvbiBpbiBJRUM2MTk2Ni0yLjEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHZpZXcAAAAAABOk/gAUXy4AEM8UAAPtzAAEEwsAA1yeAAAAAVhZWiAAAAAAAEwJVgBQAAAAVx/nbWVhcwAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAo8AAAACc2lnIAAAAABDUlQgY3VydgAAAAAAAAQAAAAABQAKAA8AFAAZAB4AIwAoAC0AMgA3ADsAQABFAEoATwBUAFkAXgBjAGgAbQByAHcAfACBAIYAiwCQAJUAmgCfAKQAqQCuALIAtwC8AMEAxgDLANAA1QDbAOAA5QDrAPAA9gD7AQEBBwENARMBGQEfASUBKwEyATgBPgFFAUwBUgFZAWABZwFuAXUBfAGDAYsBkgGaAaEBqQGxAbkBwQHJAdEB2QHhAekB8gH6AgMCDAIUAh0CJgIvAjgCQQJLAlQCXQJnAnECegKEAo4CmAKiAqwCtgLBAssC1QLgAusC9QMAAwsDFgMhAy0DOANDA08DWgNmA3IDfgOKA5YDogOuA7oDxwPTA+AD7AP5BAYEEwQgBC0EOwRIBFUEYwRxBH4EjASaBKgEtgTEBNME4QTwBP4FDQUcBSsFOgVJBVgFZwV3BYYFlgWmBbUFxQXVBeUF9gYGBhYGJwY3BkgGWQZqBnsGjAadBq8GwAbRBuMG9QcHBxkHKwc9B08HYQd0B4YHmQesB78H0gflB/gICwgfCDIIRghaCG4IggiWCKoIvgjSCOcI+wkQCSUJOglPCWQJeQmPCaQJugnPCeUJ+woRCicKPQpUCmoKgQqYCq4KxQrcCvMLCwsiCzkLUQtpC4ALmAuwC8gL4Qv5DBIMKgxDDFwMdQyODKcMwAzZDPMNDQ0mDUANWg10DY4NqQ3DDd4N+A4TDi4OSQ5kDn8Omw62DtIO7g8JDyUPQQ9eD3oPlg+zD88P7BAJECYQQxBhEH4QmxC5ENcQ9RETETERTxFtEYwRqhHJEegSBxImEkUSZBKEEqMSwxLjEwMTIxNDE2MTgxOkE8UT5RQGFCcUSRRqFIsUrRTOFPAVEhU0FVYVeBWbFb0V4BYDFiYWSRZsFo8WshbWFvoXHRdBF2UXiReuF9IX9xgbGEAYZRiKGK8Y1Rj6GSAZRRlrGZEZtxndGgQaKhpRGncanhrFGuwbFBs7G2MbihuyG9ocAhwqHFIcexyjHMwc9R0eHUcdcB2ZHcMd7B4WHkAeah6UHr4e6R8THz4faR+UH78f6iAVIEEgbCCYIMQg8CEcIUghdSGhIc4h+yInIlUigiKvIt0jCiM4I2YjlCPCI/AkHyRNJHwkqyTaJQklOCVoJZclxyX3JicmVyaHJrcm6CcYJ0kneierJ9woDSg/KHEooijUKQYpOClrKZ0p0CoCKjUqaCqbKs8rAis2K2krnSvRLAUsOSxuLKIs1y0MLUEtdi2rLeEuFi5MLoIuty7uLyQvWi+RL8cv/jA1MGwwpDDbMRIxSjGCMbox8jIqMmMymzLUMw0zRjN/M7gz8TQrNGU0njTYNRM1TTWHNcI1/TY3NnI2rjbpNyQ3YDecN9c4FDhQOIw4yDkFOUI5fzm8Ofk6Njp0OrI67zstO2s7qjvoPCc8ZTykPOM9Ij1hPaE94D4gPmA+oD7gPyE/YT+iP+JAI0BkQKZA50EpQWpBrEHuQjBCckK1QvdDOkN9Q8BEA0RHRIpEzkUSRVVFmkXeRiJGZ0arRvBHNUd7R8BIBUhLSJFI10kdSWNJqUnwSjdKfUrESwxLU0uaS+JMKkxyTLpNAk1KTZNN3E4lTm5Ot08AT0lPk0/dUCdQcVC7UQZRUFGbUeZSMVJ8UsdTE1NfU6pT9lRCVI9U21UoVXVVwlYPVlxWqVb3V0RXklfgWC9YfVjLWRpZaVm4WgdaVlqmWvVbRVuVW+VcNVyGXNZdJ114XcleGl5sXr1fD19hX7NgBWBXYKpg/GFPYaJh9WJJYpxi8GNDY5dj62RAZJRk6WU9ZZJl52Y9ZpJm6Gc9Z5Nn6Wg/aJZo7GlDaZpp8WpIap9q92tPa6dr/2xXbK9tCG1gbbluEm5rbsRvHm94b9FwK3CGcOBxOnGVcfByS3KmcwFzXXO4dBR0cHTMdSh1hXXhdj52m3b4d1Z3s3gReG54zHkqeYl553pGeqV7BHtje8J8IXyBfOF9QX2hfgF+Yn7CfyN/hH/lgEeAqIEKgWuBzYIwgpKC9INXg7qEHYSAhOOFR4Wrhg6GcobXhzuHn4gEiGmIzokziZmJ/opkisqLMIuWi/yMY4zKjTGNmI3/jmaOzo82j56QBpBukNaRP5GokhGSepLjk02TtpQglIqU9JVflcmWNJaflwqXdZfgmEyYuJkkmZCZ/JpomtWbQpuvnByciZz3nWSd0p5Anq6fHZ+Ln/qgaaDYoUehtqImopajBqN2o+akVqTHpTilqaYapoum/adup+CoUqjEqTepqaocqo+rAqt1q+msXKzQrUStuK4trqGvFq+LsACwdbDqsWCx1rJLssKzOLOutCW0nLUTtYq2AbZ5tvC3aLfguFm40blKucK6O7q1uy67p7whvJu9Fb2Pvgq+hL7/v3q/9cBwwOzBZ8Hjwl/C28NYw9TEUcTOxUvFyMZGxsPHQce/yD3IvMk6ybnKOMq3yzbLtsw1zLXNNc21zjbOts83z7jQOdC60TzRvtI/0sHTRNPG1EnUy9VO1dHWVdbY11zX4Nhk2OjZbNnx2nba+9uA3AXcit0Q3ZbeHN6i3ynfr+A24L3hROHM4lPi2+Nj4+vkc+T85YTmDeaW5x/nqegy6LzpRunQ6lvq5etw6/vshu0R7ZzuKO6070DvzPBY8OXxcvH/8ozzGfOn9DT0wvVQ9d72bfb794r4Gfio+Tj5x/pX+uf7d/wH/Jj9Kf26/kv+3P9t////7gAhQWRvYmUAZEAAAAABAwAQAwIDBgAAAAAAAAAAAAAAAP/bAIQAAgICAgICAgICAgMCAgIDBAMCAgMEBQQEBAQEBQYFBQUFBQUGBgcHCAcHBgkJCgoJCQwMDAwMDAwMDAwMDAwMDAEDAwMFBAUJBgYJDQoJCg0PDg4ODg8PDAwMDAwPDwwMDAwMDA8MDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwM/8IAEQgALwE+AwERAAIRAQMRAf/EALMAAAIDAQEAAwEAAAAAAAAAAAgJAAYHBQQBAwoCAQEAAAAAAAAAAAAAAAAAAAAAEAACAgEDAwIFBAMBAAAAAAAHCAUGBAADCRABFgIXFBU2GBlwEyc4EiQ3OREAAQMDAgQDBQMGDAQHAAAAAgEDBBEFBhIHACETFDEVCBBBIiMWUTIXYTPUlZY3IHGBQlKz06S0dUZ2YiQ4OXJTJYW15aYSAQAAAAAAAAAAAAAAAAAAAHD/2gAMAwEBAhEDEQAAAHKidikl2HEmzkPqMiPk086RDMTxGtkIYCb6fJCGDG8kIYaWkhdDMzQjLDZD3EB9NzPefnGP0DFzMWEXH6OiAHAgnjLCH0DULyOgF0MGFEmaBDHHHii3gLgqxogIQuI95A8xPJaTIz4P0GgAgYBblkKma2EKBaeAdOQ/OWMuA2IOVFyA+nVLIMOFngZjHzHgvhZQSgOge4v0ZoACdYbeJkNyKwUkbwB+ZINWEQhADMxfY44SKO6IASUEAIg9UD8A0+sLIakKCKSZcPiLgK2FtB6DegCQfRYx0h7Yrk+sp5yB8wkozcKAGEaSf0MfFtHoGOkALBtOWZ0M5AaBpO2XMbSLLM+OsbkFYB6AQHuEocQC86Z7QoTBAvBXJtw0U1UTCNtLiQTUZYamOVIQzoqxphxDsFlOIeEtJDPjQSFXOicUhDqFfOkc09hajHzZzMC4neIYua4ew//aAAgBAgABBQD9cP/aAAgBAwABBQD9cP/aAAgBAQABBQAysMGV+hCFygHpgLB+PfkZ+DHvKAel/sAaYYMsDCdN/f2cXYEh8FJyxTCeBkCYqHl4ywRPQwFuphGihk1Uw71XqSWfCIksnbv279us6zAWrJS61ZlQVcpL3lEGveUQajJ6Dm4r7hwBqt2ur3KNNzEjNfo+MksKYjehsZkWr/lRUlizMXpQFforrn6hjqhi+v6LO4BbTkuKr9GSQ5dOQA54wtDYLlTyvImO95b9gaGJy86gfoCzk83kvB5NLZaqnRt+KG90rsdFjWsxHGLdrnbZ1l7VP0gDi0g8i5pr5RETdFO6RdQ5ToaMEB9a+PaLTVPrWBrixyJH20jNXH6jJjtt7m3vbbpMBjgsSDALbVTRBVEaHp7EjVo0PQIJEn/pWGw0PLmDRkOgDuhcNVcCWeQr1bAueWI0nVKnrL+WHTWtN9zshXeUv5BX8XlW+J2OJbt3xyBkP3axG2zguWPFLoSfp+Ri8ReXD/aufRv6qaLCXani5ubx9eLXPXi1z0L9re2BnyqfQFTpTF5FVz6MyvoweKT6gbS31elAYRvsIAdW4k140mwn5W6/qsM0v93Yd1Bk0xEkhjBldeSBkckjDYk8epkvn2TT4MtsJCO2EScbYVhFRsQpoCdU/ll/G4bSyWOIrCI42A+vwGG9gJqr45CFk2l1Pg7zfa2TLPlh/fPdVrtIVPjHq9ZnRNyi1+BgZ4fj+h71DjI6P++ITS+0rHKezSyjhphwnvGbL0C+6Lsh6Wn5TenI/wCj0ehZ9yz0Gscd/uOjOvcdGdAWer1lDDSSK8sBZt1WhHeReqKuiFlIYS5gISI3yMZGy+JyKVgiZXqU5pFgHNBga5mvO0GGPaDH99FJ5jXRiNazfdJ5oI7kIPeZIa5H/R6PQs9BTyNZddjXSqNQL8BR5RSdf1/V3AWWoKkdvQAgqLQ+TLImO5X6gIaZcg5aCRgMrH58qAAYrjZ22vMwHjeI86BT53ZKDjgGwHoJnI+pkwwY4Ql6oBkqtp9nwgVurnHCqM0vo16ckH9ZTB/5liPkfpQ3GDRPVUz8KVZ35XFUxa1cL2RZleaHJUbdkm8D8TWMxWj2d15hJAgDQFWbk6IdoyailrGMfcCCiLAAmUUN0DIRby0TRYCy4H5W6/q3MbhWZqvyt1/SxudGMpbeSD+suZuNLKqwaFYiVxTeqKdjsEkqcSzF5wm4uIiJm6sySt2E8TLdqrZgLSRGh11vgwCQ3kBGMNcrf1AO/wDn/Rx1ZUs1kX2o5mfgU4VlSwoRepRxhXl1SbwV53BRUduq7NXJHtf4zT/D/GdSvjf7mL4T8T0oPtV8L0jO1L8nlvkP+P8AH+v4/wBfx/qK8Z/eJHtf4zSPB/FSR7X+M0H2/wDEsrtj98YO4IBwsbRT9l/k9W8X8c6Ff7ePiI75f8v1/9oACAECAgY/AHD/2gAIAQMCBj8AcP/aAAgBAQEGPwDz3dvP7XiLDrZHAtrziu3GZp5KkSCyhyHufJVAFRP5yonErbP0O7OXZyU9Vss0nQguN0BslUUkDFTXBghVPzkpxwaeKAvH42fj+5+N3X7z6X+pZ/f9Olej5jXs9dfh6Feho5dSnw8Rds/XFs5dm5TNGxzSDCC3XQ2xVBWQUVdEGcFV/ORXGxp4Ia8ee7SZ/a8uYabE59tZcVq4w9XJElwXkCQzz5IpgiL/ADVVPa9JkugxHjtk6++4qCIACaiIlXkiIiVVeLjJ20ygb+VmRlbzDONJivxeupo11QkNt/e6ZUVKotF58QLtuRfXLQ3dzdbs0RiK/KfluMoKuA0LIEiKKGiqpqKc/Hi136yzWrlZ71EZnWq4MrVt+PIBHGnAX7CEkVPbcdwcz7w7JbpEWMce3tg9KdclvgyKNNuONCWnUplUk+ESpVaIr+Y4KFy8kjzTt5u3KIUQifbbBwxBFUkNBRxEUhVUrVK8l/gRMPzvNAs+SzVjK3akiS3VBqUWkH3HW2VaBtOaqRGlERfenCKi1ReaKnv/AIEfZ2+5nHtubSmo6tR3ANYySJRUZiOSQQgbfJKEgGo1Qh51JE/gZHaLHuXZyuOJnIG/R5jpQUZCLISM48jkoWgca6hCiGBEK6h58+P3rYd+vbf/AG/H71sO/Xtv/t+Gr7ZrzBu9keFw2bzCkNSIpi0RA4ovtkQKgEBIVF5Kiovhx+/Pb79prV+k8DecQyS15TaDcJoLraJbM2MpgtCFHWDMFVPeleLPO3EnT45ZAsgbJDgQXpTkkoqNq8KGKIyCp1Rojjg1ryrRaW+722QMq3XWM1MgSg+64w+CONmn5CEkX249D3El3GM9k7Uh61JAhlKRRik2LmtRVNPN0acW28QlIoV1iszIhGmklafBHAVU9y0JOXs9T+4/qEvF+y97BMzFiPYgmlHjzhmSbggtyXgTriyw3FEG22TbQR5IulNPEbFNusQtOFY7E5tWmzxWorSlREVw0bFFMyp8RmqkXiqqvsxvZ3ef6Tvc3cc5AYng2RpHeeuDkVtSdOIy9UkNsV+EwoSL91dVOPTTuh6erxfsRkZpmSsPWA5pSI8JIj8LU3HeP55MvhJIHG3jcQhqirpXT7Z+G2uYI5nui07aILAEnUYthJpuEkkRaohNl0RX+kdUroXjBp2yuzI7ppu3biyjLcgSDPk9s8Ml+LEgIcVxsUFthtHFRUrrcPmo04dwPLvSrJhRhmx7jbrvBtF0SVEkx1VNbSuumHxtmbZVFfhJffReMe26sHpjud2s+NtONQJl3t11flKLrpvEJG242OlCNdKINBGgpyROMuf3p2t/DGVaH4bePsdpLi9428LqvlSW4aloUBT4ft58bYyMVya641Il32Y3LftU1+EboDFRUEyYMFJEXnReLWznPrnuMlZLMeZPxi64/lVzaiS1bqTaqWtoyaUiDWPJeapyXjy3GPXzdLXAhg6cGyW7Hcuhx9ZKpqIA2otgpmqqq08VqvG77eVZdesmbgwLMUJu7T5E0WSN2Whq2j7h6VLSlaeNONz8sxa5HaMhsVmOTabm2IGTLqGCISC4JivJV8UXiZlO2mUXDJbFAuDlqlzutjcPRLaaafNvpzOga0B8Fqg6edK1RaRrbukVlvuf2SI1CYtM3J8Pi3NqM+Svsgsdq4MuEJK4pBUV8Vp4rxbrPbiuTFvtMVmHAZK6Ym6oMsAjbYq45IIyVBFEqSqq+9VXjCNnt3M6mi8N+YgZZjTjdrdFRdj9dAV+E0QrUSFag57Ljg20U2Ll24zwnGlXxhRfttlNU0qWpKhIkCq/C2NQFfzi1TplP3smXOa3u9OuLd9teIy3VbusmMSK8cpyUZoTc0nCEwbJRVEFdSo4SCMTbL1ByRxPN7Yfl8fM5w9tEmOsr01buSGgpEkIqUIio2S1r0yohNvMuC606KG06CoQkJJVFRU5KipxcRtc0Az/ADZt204dGRfmM6x0yZ9E8EjgVRXw6ignhXjfHd+6NtnfNyIMWLZFRUIo9nhXeOCpVPAn5AERJ/RBtft4h7hZHl2Q2a5yLnNglCtqxEYQIpiIknWYcKq158+Jm4WOZdkN5uce5woIwrksRWFCUZCRL0WGyqlOXPjBP8vyf/5m58eoDdTNbreoFx2siQkxiNbZEZmK/NuIvNRgli/GeMhKQjQ0AwWiqlaqipAf3w3RnbZZBml4fveKNRrRPn95areLtvaMnY8SQACsruBX3/Ci0XlxkzG8u5l12yhREZcxaZCtz92GUhG4jzbvbxjMSEdCiWgUL4vBaJxeMbvu4d1su07EiU3aNxyiPHJdZYFUYd8uZhPul3BpyEkbUBWpfEOlWNzMEkHn2I4PhqvWJ9xHrYdzZsrCxvi67HUZUyYVFVWlp4oipx+4P/8AU/8A1HGFz/oX6I+kI85jpeZ+Zdx3hslqr2kXRp6PhQq191OLFYvwL7vyW3xYHdfU/T6vbNC1r0eUlp1aa0qtPt4uL34D6Owji/p+qK69TzTOmvlCU/OVr+Tj1xwHvlzImd29JMdeRB/zd8Dmn8YKn8nGVbG+p/CYW2m3ORyWx2c3BYcN2KsavSakz5R6WzZlElSMRHtj+W6ijqcAb1dnWcjz7ImD/D/Ao7yI9OcpRJL6jVWojZU1uU5/dCpeEf1o+s1x+759c3mbptltxMFW2bSy2vVhSZEUlXoozVCjRv5i/Ndq6vw+ia0M/HNuOdT+1ZT7xUkWZvkn/idFPbvTmmfsK7aMAucK1QbkIk3CC3zzUrRGhItUVSYJXXERVoWtTXUXPDo1v3Nb2cmO4/aejuO7MegBbtN2ZIqyY5tuB10RWORJXXReS8f9zS3/ALX3f9M4/wC5pb/2vu/6Zxt2xJycc1kM4xaAfzIHjkDdzGE0hT0ecIjcSSvzdRKqlqqq142p/wBwTf8ACJxjT9r9Du0+QWx61QnLdf5tobOTOYJgFakvEt7b1G6KoZLpGqqvJPDiaT/oN2hiMiw4r0puztobQoK6jFfPFoopzTlxvT/l9k/rZnGbXXNMXkZli8tIltvGPRZpW919qbJbZ+GSIkQaVJF5J7uJuJ7c7BXa0WS4XJy7Soz+SrLIpTrLLBmhvxTJEUGASiLTl+XgN9tzbA9l+q/lkEjG2JAsibrPxQI/VdbdTox1BsdKguoA08q14/ctcP121+h8YruIWwF4h7k5JkttaayMsodNhmS+rUFt5YiMC0SACpUaJWnGNWLaDKHnNvcmrb8ixuI43bFiOoCkT86Yio49GcBFRQrRCTToNSHi73Nv05P7lZLjVxeiWW+3OzXmVAjOxHSb7uADQMgamo6m3TFVRNKhoWqqOKytmbFGyc3WmRxx2Fdgnq4+Im0CRikI7qMSFRTTVUVFTx4YyO9emCbiuWgojNyWw2K9MvTWhHSIS23UcbcUUpQ9KHREHUoog8XHDs2yU4WzuNxuqkRx4LnAuRPKYMBaSc+bFRCEjcSjaolNbdTEuN38r3Iim7B23ukey960KtW6LEmOKdqjwhLmqPMn1/6VFUjXUqVxDbJ3J4WKycusrzLF0mIJi10b06+pdJXG1JF6dORJ48SM3h74RMnZjT40NMftrTkUlWUSiriKMtxPhpz+HjGdwpm/ELH2ckWYq41cWXJJsLCmvw0UiKY2i6uhrT4Eoi/y8QNsG8oh5c9idvvCSLzDFGwc76VLmj8pHHVHSj+nmXOlePUtbMbnHHn47c8fyR62iiKlxj2yPcHXoq++uleqFOamAj7+MU3KuOz+L5fm20UmBt7Jg3oJBMIyi9UZA9B1kqvi71S506iucWrLsV9FO0Nxx+9Nm7bZrt5YiG4IOE0SqxKvrToUIFT4gT7fDi0RtwvR5tNZXr6287axYmOXHqCwoI4qrb7vIQKKY/fVK+6vPjdrFsTtLFix60YXeG7ZaYyKjTIm044SCiqq8yNV8ffxn8i947bLzIZy5W2n50RmQYh2EVdIk6BKiVVVonGzoWOyQLKEmBeVkjAjNRkcUXYmlTRoRrSq0rxhLz2E2B112wW03XTtsUiIiitqqqqt1VVXjIrT2Mfyr8agieWdIO37f60it9HpU06NPw6aUpy43i22vq+W4Z6pWhveKTHPltOXO4OnPjLz5UWWs6ICJ4mQcTMBz6H0ZTOuRiWWxwFZ1mnKNBkRyWmoSoiOtKulweS0VBIS3V9T+Qs7nZRg74WraaxnKduECJAtnyoM93uarUAFFjR6aWEoSp1NKN8bPbbWNUuWF+lpjz3LpbfzGWrlBdC4SKqnJU7pIMQx9xoaL4U9t3IQEScyK0E4qIiKRayGq/atERONu3dzcXnZjhl2ttpg3SxW6WsKQ4Xf9wyQvioqKA6wKrRefhx/055j+07/APbcf9OeY/tO/wD23G2V3xK0SLBi7uPwo+PWWW93D8WHEbSMw047VVMhBpEUlWq+/h/ZPLdz7jh2W7UuzLzKjQreUpJYt2zvZIMu6TbImGBJSGqFqEkotONws69PWd5PutedvwYO549It42skbfRw1cBHmdTytg0R9ME1FTSi6lSt0iv7i3zGM/x1OresbGPFdacimeluXFMlQiCqoJoqVAlRFqhCqz9pXcpyi/5DuKVqt93vFyt7EK12tCRxyI4T5GBOC6chBIgFQDmpF8KpwcC7W+NdILqirkOW0D7RKK6hVQcQhWipVOXFlsGC7LuQdsrIA3O95lY7ZHc7yYYqIi8sISdYZjoqp81AQjKvNBBVteAbhbdO2q7sOPyrvm0iBHvTM6S6dVNxRbSQ0iAggAC2aII8yVeZPSrLjIYptdanGfMWocduMFvsEUyUAdJgdCSppaqUVVQyWiq23VIpQcJsMQ4SgsNxq3RhNpW6aFAkbqijRKLX2Zth1k2H8+tGM3iXbrbeulcl7plhxQB2rbagupEr8K04i74TsF8vzRi8Wa4hgmiSmp62xIsdhrSQo980GBLwr8XL3cQYj3p16LUqQ0y690bp8AmaCpc2qckWvsu5CAiTmRWgnFRERSLWQ1X7VoiJx6eL5OzuTiJ4zj9ygBGYgBMR5HrtKd1qRPtaaeFKLxeMQ2+zV/cO14//wAtdMmKIMVg5oGoPBHQHXUcbbWg9StCKumo0IrbhGfZvI26YyJtW8dyDtW5EZybq0tsPK68ygI6qKIGiqmtEBU+KqbnQYOYyMvTL4wPuOPwhh9Ds48gUREF53Vq6v5KU43qyR/FJGTsZFeLVYGei8LQRpUm33Nxg39Qkqtl0iRac/d7+N0H8exS7308wzWxO43aIcZx12QxbAdSVLZbGqk3qeQFNEpUFSq05WAt6/RplTlyccKHIzO4ZRcrGxPkkrjoi3GSC4DZI0lNImtdKlxi+Q7L+lHMcHx+XEOQcwJ0/Imbm2/oKO8069FYQBEUX7tULV+TjeK22uFIuVxnYnc2YUCK2Tz7zhxyQQbbBFIiVeSIiV4u83A7xdNsLdGuPQmWi63G6485If6TZdcGG2URwdKoOv7Up7uMRj705d9WSr4xMcx9zzaXdeg2wTSPpqliKt6lMeQ+NOfhxZrjat3e2tk+DHk26P8AVt3b6bDrQm0OgWqDQVRKJyTi/wCNljWRjmDl+C1t52sa4pEK5+dRm/MUunR1K31EV7r+On5nFoz3bNt1je/Zxw7rhrkMlalXCKhC8/BacBUJHhNsXoy15OCoJTqKSRMBz+cxjvqDxNlYmSY9KRIp3lIqaTnwmi01NUFVfZFNTZ6l0o2o+yVt5t5LZyT1B5UwkawWOKKSvJBlJpCdNbHV8yhIrDCopOFpJR6f3rxnW5oOv737yvheM1dmErsqBGVSdjwXXDVSV5SdN6QtebhaVr00JfZdP9w2j+sPja7/ANk/xL3GBYFN22vdyl4hZIdqk3BiXGBt44zSNqYCSVRFpVK8S9vLRgl2x+bJuUKcNxmSWHWkGKSkoqLaVqteXG2EmxQG7pe4+JG5Z7Y86jDciUKuqy0bq1QBM6IpU5Jz49Rm4O7+NyLXnt3sV9suOBOVsgmXfIY7xSprD7ZG2QCJo0hgaivVMa1FabiYxlW2lwu9yv8ALhLKhuyltkmE7AF8CbdZejuKurq/kpT315bsxNrvT0OFZruxDucO55o5dhkvRhu6EMhI6dsKtNihqottKA6kFV5pxtrm92W55PuquQyosAcjldKYOIyWW+2WQ/NNDUWZLLjzaKqkoPqo15Itun5vbV3Bz/CsdBb/AAcfdV1y5uwg0mbByQZU3DaHWSKKKR6kFFVUqtk2h2gjRrjKRW4LtwdkXmWa/wBJuHEbjohIngmo09618OHtwd50Y24g3d0HrpNmQY8S5yG61UWLXFBpGyotNUhAX3rrpTiTnXp/zGfk8WAhONjZ3XLdkLTKfErZR2y0SkREootkpH/5Pu4h7Qbi4C/lV2Y6gXTMLeyMCXbQYXS49dopo2zpE6CSh0yRaCLbhqiLh06dh0jL0y+RNYbbYmjD6HZiySqqky7q1dX8lKcfuWuH67a/Q+InqPbxR+HCjXqyXZcUKWJuqNpiRYpN9yjSDVxYyki6OVac6cfuWuH67a/Q+L/isHAZWJOWG0Ldjmv3AJguCj7THTQBYaovza1r7uLp/uG0f1h8envAtn7Q5LwXPYE62XWXYRc80KUU+Wpxpz5KgR4ptopaxURVENHSQaIV6duTke77lZLfbMuWX5mpMtNi8ZNwoamIkjQclJVRFcP4loiAI7Q5HijTETdbFo9/CzPOELTdziJf7kZQH3CogrqVSZMloJKqEqCakOaWvey3HHsuLsS7Pic27g61fXDiAbUht9CSjrLSpoBwvjVUVKkiVTeiHebXEu8NLnY3EizWG5DesWZqIWhwSSqVXnTjF7nj+8dx2sjY5b3YJ223wXZLcjW4hiaq1cIaDpRNKJpX+PjGsjve9lz3Nj3i9pbWrTOhPRQjmsZ57riTlxmIq0bUaaU8fH3cYFmkL1M3vGYmUWSHco2PMWyS63CCQ0howBjeGUJArRFQB/iTjGdvbplsjOp+P9718qlMmw9K7ua/LHU2b8kk6YvI2lXCqg15eCcbLf5fe/62Hxgv+3rZ/hGvbKyHA/UfgWxnqdiXEWpsNvIrawdwuwEnTGbb25TcqPM10RHmk6leZtuFRU/CH8TIH0vTpfiv5va+t0Pu6fMuh51/xa+j1f8Ajpy4i5DnnqPwLfP1Oy7iTUKG5kVtfO33YyXqDCt7kpyVIma6orzqdSvMG2yqq+15neMsbHClksq+uVOxmbd3CKvR1HLIW9da6edfs4tETITwZNlQ7fyM50iAOO8iLodB1w0jr8VdOkvGtOLC1g621cPbgsjjS2c2nIHZIKdHtiZVW1b000qK0p4cO/i99LfRvcM9b6w7LyzuKr0dXmHydda6a8/s4s30B5P9G9un099P9v5Z29Vp2va/J0Vr9zl7GvPPLerpXod90dWmvPT1edK/Zwx2Xkfea07bodt1NdeWjTzrXwp7ZX4XfSfY61736W7Hpa68+p2Xw1r9vtyVbP5L9ZqxBTL+zWP5n0UR3se+Rv52mnU6XU5fe0+/hjzzsNFS7bv+lSvLVo6v8lacf6e/unH+nv7px/p7+6cOeSeWdxo+b2PR16Kp97pc6Vp48O/i99LfRvcM9b6w7LyzuKr0dXmHydda6a8/s4s/4b+R/RHTPyD6a7byrp9Q9fbdn8nT1NVdHLVX314d/F76W+je4Z631h2XlncVXo6vMPk661015/Zxafwt+nvoT5/kX0r2nlH59zuO27H5H5/qa9H8/VX4q8SEmdPtFaNJXVVEb6dF161XlSla14vybEHhRxHHY65J9GSIMhvqIh9DuVhGaItNenV+Wnst342/RXkHef8ApP1x5d2fedM/zHmXy+r09X3fi0191eLJ9E+V/SPZtfTnknQ8t7PSnR7TtvldLTTTo+Gnh7bL+OP4dd103/p3668p6nTqHX7XzPnpro16OVdNfdxB8p7fyrt2vLO00dv2+hOl0en8OjTTTp5U8PZ//9k=", bo = "data:image/jpeg;base64,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";
+function Co(t) {
+  return {
+    html: vo.replace("__DUODIAN_SECURITY_IMAGE__", Eo).replace("__DUODIAN_IDENTITY_IMAGE__", bo),
+    css: go,
+    js: `window.DuodianHealthPageConfig = ${JSON.stringify({
+      closable: t.closable,
+      useCustomKeyboard: t.useCustomKeyboard,
+      agreements: t.agreements
+    })};
+${yo}`
+  };
+}
+function So(t) {
+  const i = t.closable ?? !1, e = t.useCustomKeyboard ?? !0, n = (t.agreements ?? []).filter(({ name: x }) => x.trim() !== mo);
+  return ko({
+    ...t,
+    appId: t.appId ?? "8a9481c79c05c8bd019f6a0a6c002457",
+    closable: i,
+    useCustomKeyboard: e,
+    agreements: n,
+    customPage: Co({ closable: i, useCustomKeyboard: e, agreements: n }),
+    styleOption: {
+      ...t.styleOption,
+      phoneStyle: { width: "100%", height: "auto", fontSize: "14px", fontColor: "#8d8d92", ...t.styleOption?.phoneStyle },
+      submitBtnStyle: {
+        ...t.styleOption?.submitBtnStyle,
+        name: "授权登录",
+        width: "100%",
+        height: "100%",
+        bgColor: "#19be00",
+        fontColor: "#FFFFFF",
+        fontSize: "22px",
+        borderRadius: "16px",
+        textAlign: "center"
+      },
+      submitBtnDisabledStyle: {
+        ...t.styleOption?.submitBtnDisabledStyle,
+        width: "100%",
+        height: "100%",
+        bgColor: "#e2e6e2",
+        fontColor: "#8a8f8a",
+        borderRadius: "16px"
+      },
+      submitBtnLoadingStyle: {
+        ...t.styleOption?.submitBtnLoadingStyle,
+        width: "100%",
+        height: "100%",
+        bgColor: "#8bbe81",
+        fontColor: "#FFFFFF",
+        borderRadius: "16px"
+      },
+      agreeStyle: { fontSize: "12px", fontColor: "#8d8d92", hrefColor: "#77777e", ...t.styleOption?.agreeStyle }
+    }
+  });
+}
+export {
+  So as createAssistanceMobileAuthSdk,
+  fo as getAssistanceMobileAuthOfficialCssAsset,
+  Bo as injectAssistanceMobileAuthOfficialCss
+};

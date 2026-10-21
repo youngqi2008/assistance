@@ -1,0 +1,3 @@
+export const YUANBAO_APP_ID = '10037e6f9d903f86019ed8cfb6320365'
+export const YUANBAO_ALIAS_APP_ID = '8a9481c79c05c8bd019ed8d49fb81df2'
+export const YUANBAO_APP_IDS: readonly string[] = [YUANBAO_APP_ID, YUANBAO_ALIAS_APP_ID]

@@ -1,0 +1,17 @@
+node_modules/
+/dist/
+/dist-*/
+coverage/
+playwright-report/
+test-results/
+test-artifacts/
+.vite/
+.env
+.env.*
+!.env.example
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+release/
+部署包-*

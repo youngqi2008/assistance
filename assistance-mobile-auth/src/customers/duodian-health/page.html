@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN" data-custom-template="duodian-health">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>身份验证</title></head>
+<body>
+<main data-stage>
+  <section data-card aria-label="身份验证">
+    <button data-close type="button" aria-label="关闭" hidden>×</button>
+    <img data-security-title src="__DUODIAN_SECURITY_IMAGE__" width="318" height="47" alt="信息安全保障中">
+    <div data-phone-prompt><span>输入身份证后四位验证您</span><div id="ydrzPhoneControl"></div><span>的实名信息</span></div>
+    <img data-identity-guide src="__DUODIAN_IDENTITY_IMAGE__" width="649" height="120" alt="公民身份证号码示意，请填写后四位数">
+    <div data-id-entry>
+      <div data-id-grid role="button" tabindex="0" aria-label="编辑身份证后四位" aria-describedby="duodian-input-message">
+        <span data-id-box><span data-digit></span><span data-caret hidden></span></span>
+        <span data-id-box><span data-digit></span><span data-caret hidden></span></span>
+        <span data-id-box><span data-digit></span><span data-caret hidden></span></span>
+        <span data-id-box><span data-digit></span><span data-caret hidden></span></span>
+      </div>
+      <input data-id-value type="text" maxlength="4" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-label="身份证后四位" readonly inputmode="none" tabindex="-1">
+    </div>
+    <p data-message id="duodian-input-message" role="status" hidden></p>
+    <div data-sms><div id="ydrzYZMControl"></div><div id="ydrzYZMBtnControl"></div></div>
+    <div id="ydrzSubmitControl"></div>
+    <button data-other type="button">选择其他方式</button>
+    <section data-agreements aria-label="协议与授权说明">
+      <div id="ydrzAgreementControl"></div><div id="ydrzTipsControl"></div><div id="ydrzStateControl"></div>
+      <div data-caller-agreements></div>
+    </section>
+  </section>
+  <section data-keyboard aria-label="安全键盘" hidden>
+    <button data-collapse type="button">收起键盘</button>
+    <div data-key-grid>
+      <button data-key="1" type="button">1</button><button data-key="2" type="button">2</button><button data-key="3" type="button">3</button>
+      <button data-key="4" type="button">4</button><button data-key="5" type="button">5</button><button data-key="6" type="button">6</button>
+      <button data-key="7" type="button">7</button><button data-key="8" type="button">8</button><button data-key="9" type="button">9</button>
+      <button data-key="X" type="button">X</button><button data-key="0" type="button">0</button><button data-key="delete" type="button" aria-label="删除末位">删除</button>
+    </div>
+  </section>
+</main>
+</body></html>
