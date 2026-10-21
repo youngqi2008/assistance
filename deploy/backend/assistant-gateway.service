@@ -5,8 +5,9 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=__APP_HOME__
+Environment=JAVA_HOME=__JAVA_HOME__
 EnvironmentFile=-__APP_HOME__/gateway.env
-ExecStart=/usr/bin/java -jar __APP_HOME__/__JAR_NAME__
+ExecStart=__JAVA_BIN__ -jar __APP_HOME__/__JAR_NAME__
 SuccessExitStatus=143
 Restart=on-failure
 RestartSec=5
