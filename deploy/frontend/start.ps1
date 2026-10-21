@@ -20,7 +20,9 @@ if (-not (Test-Path $Src)) {
 }
 
 $Html = if ($env:NGINX_HTML) { $env:NGINX_HTML } else { Join-Path $RepoRoot "deploy\nginx\html" }
-New-Item -ItemType Directory -Force -Path $Html | Out-Null
-Copy-Item -Path (Join-Path $Src "*") -Destination $Html -Recurse -Force
-Write-Host "已同步到 $Html"
+$BasePath = if ($env:PUBLIC_BASE_PATH) { $env:PUBLIC_BASE_PATH.Trim("/") } else { "sign-pay-pro" }
+$Dest = Join-Path $Html $BasePath
+New-Item -ItemType Directory -Force -Path $Dest | Out-Null
+Copy-Item -Path (Join-Path $Src "*") -Destination $Dest -Recurse -Force
+Write-Host "已同步到 $Dest"
 Write-Host "生产前端无 Node 进程，请再运行 ..\nginx\start.ps1 以 HTTPS 对外。"

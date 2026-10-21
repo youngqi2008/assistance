@@ -19,9 +19,13 @@ if [[ ! -d "$SRC" ]]; then
 fi
 
 NGINX_HTML="${NGINX_HTML:-/var/www/assistant-h5}"
-mkdir -p "$NGINX_HTML"
-cp -a "$SRC"/. "$NGINX_HTML"/
-echo "已同步到 $NGINX_HTML"
+PUBLIC_BASE_PATH="${PUBLIC_BASE_PATH:-/sign-pay-pro/}"
+BASE_DIR="${PUBLIC_BASE_PATH#/}"
+BASE_DIR="${BASE_DIR%/}"
+DEST="$NGINX_HTML/$BASE_DIR"
+mkdir -p "$DEST"
+cp -a "$SRC"/. "$DEST"/
+echo "已同步到 $DEST"
 
 if command -v nginx >/dev/null 2>&1 || [[ -n "${NGINX_BIN:-}" ]]; then
   "${NGINX_BIN:-nginx}" -t
