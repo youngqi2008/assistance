@@ -1,9 +1,32 @@
 # 前后端部署说明（Maven / Java / 静态资源 / Nginx HTTPS）
 
-> 版本：v1.0  
-> 日期：2026-10-20  
+> 版本：v1.1  
+> 日期：2026-10-21  
 > 脚本目录：`deploy/`  
+> 目标机：`62.234.150.103`  
+> 域名：`sdk.zgzytech.com`（A 记录指向该 IP）  
 > 口径：Java 只监听本机 `127.0.0.1:8080`；**浏览器和客户后端看到的全部是 Nginx 的 HTTPS**。
+
+云主机上的公网 IP 经常是弹性 IP，不在网卡上。Nginx 监听 `0.0.0.0:443`，安全组放行 443。不要把 Java 或 Nginx 绑到 `62.234.150.103`。
+
+在 `62.234.150.103` 上的顺序（细节见下文各节）：
+
+```bash
+cp deploy/env.example deploy/gateway.env
+# 填写 ZHONGUAN_ADMIN_TOKEN；确认 SERVER_NAME=sdk.zgzytech.com、DEPLOY_HOST=62.234.150.103
+
+cd deploy/backend && chmod +x *.sh && ./package.sh && ./install-linux.sh
+curl -s http://127.0.0.1:8080/actuator/health
+
+cd ../frontend && chmod +x *.sh && ./build.sh && ./start.sh
+
+cd ../nginx && chmod +x *.sh
+# 已有 sdk.zgzytech.com 证书：在 gateway.env 填 SSL_CERT / SSL_KEY
+# 没有证书、仅联调：./gen-self-signed.sh sdk.zgzytech.com
+#   并把 SSL_CERT、SSL_KEY 改成 deploy/nginx/ssl/server.crt 与 server.key
+./start.sh
+curl -sk https://sdk.zgzytech.com/actuator/health
+```
 
 Windows 用 `*.ps1`，Linux 服务器用 `*.sh`。先复制环境文件：
 
